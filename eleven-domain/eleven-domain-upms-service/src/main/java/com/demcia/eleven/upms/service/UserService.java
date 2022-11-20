@@ -13,6 +13,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     public void saveUser(User user) {
+//        throw new IllegalStateException("假设");
         userRepository.save(user);
     }
 

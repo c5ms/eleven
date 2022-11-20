@@ -6,5 +6,5 @@ import java.io.Serializable;
 
 @Data
 public class UserCreateRequest implements Serializable {
-    private  String username;
+    private String username;
 }

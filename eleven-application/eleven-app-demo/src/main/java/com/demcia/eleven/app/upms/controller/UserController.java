@@ -27,6 +27,7 @@ public class UserController {
     public UserDto createUser(@RequestBody @Validated UserCreateRequest request) {
         var action = mapperFacade.map(request, UserCreateAction.class);
         System.out.println("处理了大量应用层面的逻辑，组合了多个远程服务和本地服务");
+        // TODO 这里会出现分布式事务的问题？！
         return remoteUserResource.createUser(action);
     }
 

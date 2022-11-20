@@ -13,9 +13,12 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>eleven-domain-core</module>
-        <module>eleven-domain-client</module>
-        <module>eleven-domain-service</module>
+        <!-- 领域层基础 -->
+        <module>eleven-domain-common-core</module>
+        <module>eleven-domain-common-client</module>
+        <module>eleven-domain-common-service</module>
+
+        <!-- 用户权限管理 -->
         <module>eleven-domain-upms-core</module>
         <module>eleven-domain-upms-client</module>
         <module>eleven-domain-upms-service</module>

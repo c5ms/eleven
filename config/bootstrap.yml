@@ -1,0 +1,16 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        enabled: false
+        group: SDP
+        namespace: dev
+        server-addr: 192.168.2.250:8848,192.168.2.250:8849,192.168.2.250:8850
+      discovery:
+        enabled: false
+        group: SDP
+        namespace: dev
+        server-addr: 192.168.2.250:8848,192.168.2.250:8849,192.168.2.250:8850
+  config:
+    import:
+      - optional:nacos:sdp.properties

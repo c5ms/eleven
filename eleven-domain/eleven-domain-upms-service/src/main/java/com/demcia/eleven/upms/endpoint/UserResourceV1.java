@@ -1,11 +1,12 @@
 package com.demcia.eleven.upms.endpoint;
 
+import com.demcia.eleven.endpoint.rest.RestResource;
+import com.demcia.eleven.upms.constants.UpmsConstants;
 import com.demcia.eleven.upms.convertor.UserConvertor;
 import com.demcia.eleven.upms.domain.User;
 import com.demcia.eleven.upms.domain.action.UserCreateAction;
 import com.demcia.eleven.upms.domain.dto.UserDto;
 import com.demcia.eleven.upms.service.UserService;
-import com.demcia.eleven.web.DomainResource;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -13,14 +14,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Slf4j
 @Tag(name = "users")
 @RequestMapping("/users")
-@DomainResource
+@RestResource
 @RequiredArgsConstructor
-public class UserResourceV1  {
+public class UserResourceV1 {
 
     private final UserService userService;
     private final UserConvertor userConvertor;
