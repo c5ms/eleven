@@ -1,0 +1,34 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <groupId>com.demacia</groupId>
+        <artifactId>eleven-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../eleven-parent/pom.xml</relativePath>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <version>1.0.0</version>
+
+    <artifactId>eleven-app</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>eleven-app-demo</module>
+<!--        <module>eleven-app-access</module>-->
+        <!-- <module>eleven-app-gateway</module> -->
+    </modules>
+
+    <properties>
+        <!-- use -Ddocker.host to instead of  -->
+        <dist.outputpath>${project.basedir}/../target</dist.outputpath>
+        <docker.expose>9000</docker.expose>
+        <docker.base-image>openjdk:17</docker.base-image>
+<!--        <docker.host>http://127.0.0.1:2375</docker.host>-->
+<!--        <docker.registry>192.168.2.30:5000</docker.registry>-->
+<!--        <docker.username>admin</docker.username>-->
+<!--        <docker.password>111111</docker.password>-->
+    </properties>
+
+
+</project>

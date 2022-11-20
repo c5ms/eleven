@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="run-demo" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="eleven-app-demo" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.eleven.DemoApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
