@@ -1,0 +1,628 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.demacia</groupId>
+    <artifactId>eleven</artifactId>
+    <packaging>pom</packaging>
+
+    <version>1.0.0-SNAPSHOT</version>
+
+    <modules>
+        <module>eleven-application</module>
+        <module>eleven-component</module>
+        <module>eleven-domain</module>
+        <module>eleven-deploy</module>
+	</modules>
+
+
+    <properties>
+        <!-- 构建环境 -->
+        <java.version>11</java.version>
+        <resource.delimiter>@</resource.delimiter>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!--  打包预设 -->
+        <appName>${project.artifactId}</appName>
+        <appMainClass/>
+        <dist.outputpath>${project.basedir}/target</dist.outputpath>
+
+        <!--  docker 预设 -->
+        <docker.baseImage>openjdk:11-jre</docker.baseImage>
+        <docker.expose>9000</docker.expose>
+        <docker.host>http://192.168.2.250:2375</docker.host>
+        <docker.registry>192.168.2.30:5000</docker.registry>
+        <docker.username>admin</docker.username>
+        <docker.password>111111</docker.password>
+
+
+        <!--  spring 家族 -->
+        <version.spring-boot>2.7.5</version.spring-boot>
+        <version.spring-boot-admin>2.7.6</version.spring-boot-admin>
+        <version.spring-session>2021.2.0</version.spring-session>
+        <version.spring-cloud>2021.0.4</version.spring-cloud>
+        <version.spring-cloud-alibaba-dependencies>2021.0.1.0</version.spring-cloud-alibaba-dependencies>
+        <version.spring-oauth2-authorization-server>0.3.1</version.spring-oauth2-authorization-server>
+
+        <!--开源通用工具包-->
+        <version.bcprov>1.69</version.bcprov>
+        <version.hutool>5.8.5</version.hutool>
+        <version.commons-io>2.11.0</version.commons-io>
+        <version.commons-collections>4.4</version.commons-collections>
+        <version.commons-compress>1.21</version.commons-compress>
+        <version.commons-text>1.9</version.commons-text>
+        <version.commons-net>3.8.0</version.commons-net>
+        <version.commons-vfs2>2.9.0</version.commons-vfs2>
+
+        <!-- 应用开发辅助组件 -->
+        <version.orika>2.3.2</version.orika>
+        <version.redisson>3.17.7</version.redisson>
+        <version.jsoup>1.15.3</version.jsoup>
+        <version.tinypinyin>2.0.3</version.tinypinyin>
+        <version.jetcache>2.7.0</version.jetcache>
+        <version.camel>3.18.0</version.camel>
+
+        <!-- 文档生成 -->
+        <version.swagger-v3>2.1.6</version.swagger-v3>
+        <version.springdoc>1.6.11</version.springdoc>
+        <version.knife4j>3.0.3</version.knife4j>
+
+        <!-- 办公文档处理 -->
+        <version.easyPoi>4.4.0</version.easyPoi>
+        <version.easyexcel>3.1.1</version.easyexcel>
+
+        <!-- 数据访问层 -->
+        <version.jpa-spec>3.2.5</version.jpa-spec>
+        <version.dynamic-datasource>3.5.1</version.dynamic-datasource>
+        <version.datasourceproxy>1.8</version.datasourceproxy>
+
+        <!-- 序列化组件 -->
+        <version.kryo>5.3.0</version.kryo>
+        <version.fst>2.57</version.fst>
+
+        <!-- 开发&运行&监控 -->
+        <version.findbugs>3.0.2</version.findbugs>
+        <version.mapstruct>1.4.0.Final</version.mapstruct>
+        <version.jmockdata>4.3.0</version.jmockdata>
+        <version.flyway>7.15.0</version.flyway>
+        <version.ecs-apm>1.5.0</version.ecs-apm>
+        <version.logback.logstash>7.2</version.logback.logstash>
+        <version.logstash.starter>1.2.2.RELEASE</version.logstash.starter>
+
+        <!-- CVE  -->
+        <version.jackson>2.13.4.2</version.jackson>
+
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${version.spring-boot}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${version.spring-cloud}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${version.spring-cloud-alibaba-dependencies}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.session</groupId>
+                <artifactId>spring-session-bom</artifactId>
+                <version>${version.spring-session}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-oauth2-authorization-server</artifactId>
+                <version>${version.spring-oauth2-authorization-server}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+                <version>${version.flyway}</version>
+            </dependency>
+
+            <!-- hutool -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-bom</artifactId>
+                <version>${version.hutool}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${version.hutool}</version>
+            </dependency>
+
+
+            <!-- Camel BOM -->
+            <dependency>
+                <groupId>org.apache.camel.springboot</groupId>
+                <artifactId>camel-spring-boot-bom</artifactId>
+                <version>${version.camel}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${version.commons-collections}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${version.commons-io}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>${version.commons-compress}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-text</artifactId>
+                <version>${version.commons-text}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-net</groupId>
+                <artifactId>commons-net</artifactId>
+                <version>${version.commons-net}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-vfs2</artifactId>
+                <version>${version.commons-vfs2}</version>
+            </dependency>
+
+
+            <!-- DB -->
+            <dependency>
+                <groupId>com.github.wenhao</groupId>
+                <artifactId>jpa-spec</artifactId>
+                <version>${version.jpa-spec}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sagframe</groupId>
+                <artifactId>sagacity-sqltoy-starter</artifactId>
+                <version>${version.sqltoy}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.ttddyy</groupId>
+                <artifactId>datasource-proxy</artifactId>
+                <version>${version.datasourceproxy}</version>
+            </dependency>
+
+
+            <!-- easy excel-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${version.easyexcel}</version>
+            </dependency>
+
+            <!-- redis -->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${version.redisson}</version>
+            </dependency>
+
+            <!-- 对象拷贝技术 -->
+            <dependency>
+                <groupId>dev.akkinoc.spring.boot</groupId>
+                <artifactId>orika-spring-boot-starter</artifactId>
+                <version>${version.orika}</version>
+            </dependency>
+
+            <!-- HTML 处理-->
+            <dependency>
+                <groupId>org.jsoup</groupId>
+                <artifactId>jsoup</artifactId>
+                <version>${version.jsoup}</version>
+            </dependency>
+
+            <!-- 汉语拼音 -->
+            <dependency>
+                <groupId>com.github.promeg</groupId>
+                <artifactId>tinypinyin</artifactId>
+                <version>${version.tinypinyin}</version>
+            </dependency>
+
+
+            <!-- javers -->
+            <dependency>
+                <groupId>org.javers</groupId>
+                <artifactId>javers-spring-boot-starter-sql</artifactId>
+                <version>${version.javers}</version>
+            </dependency>
+
+            <!-- 多数据源支持 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>${version.dynamic-datasource}</version>
+            </dependency>
+
+            <!-- 缓存 -->
+            <dependency>
+                <groupId>com.alicp.jetcache</groupId>
+                <artifactId>jetcache-starter-redis-lettuce</artifactId>
+                <version>${version.jetcache}</version>
+            </dependency>
+
+            <!-- 算法包 -->
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk15on</artifactId>
+                <version>${version.bcprov}</version>
+            </dependency>
+
+            <!-- 序列化工具 -->
+            <dependency>
+                <groupId>com.esotericsoftware</groupId>
+                <artifactId>kryo</artifactId>
+                <version>${version.kryo}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>de.ruedigermoeller</groupId>
+                <artifactId>fst</artifactId>
+                <version>${version.fst}</version>
+            </dependency>
+
+
+            <!-- doc -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-common</artifactId>
+                <version>${version.springdoc}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>${version.springdoc}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-webflux-ui</artifactId>
+                <version>${version.springdoc}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-springdoc-ui</artifactId>
+                <version>${version.knife4j}</version>
+            </dependency>
+
+            <!-- dev -->
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${version.mapstruct}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${version.mapstruct}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.jsonzou</groupId>
+                <artifactId>jmockdata</artifactId>
+                <version>${version.jmockdata}</version>
+            </dependency>
+
+            <!-- APM -->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>${version.spring-boot-admin}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-client</artifactId>
+                <version>${version.spring-boot-admin}</version>
+            </dependency>
+
+
+            <!-- logs -->
+            <dependency>
+                <groupId>co.elastic.logging</groupId>
+                <artifactId>logback-ecs-encoder</artifactId>
+                <version>${version.ecs-apm}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${version.logback.logstash}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.piomin</groupId>
+                <artifactId>logstash-logging-spring-boot-starter</artifactId>
+                <version>${version.logstash.starter}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+
+        <!-- doc -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-common</artifactId>
+        </dependency>
+        <!-- dev -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.2.1</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${version.spring-boot}</version>
+                    <executions>
+                        <execution>
+                            <id>spring-boot-repackage</id>
+                            <phase>none</phase>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>spring-boot-build-info</id>
+                            <goals>
+                                <goal>build-info</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>appassembler-maven-plugin</artifactId>
+                    <version>2.1.0</version>
+                    <configuration>
+                        <binFolder>bin</binFolder>
+                        <configurationDirectory>config</configurationDirectory>
+                        <copyConfigurationDirectory>false</copyConfigurationDirectory>
+                        <configurationSourceDirectory>src/main/resources</configurationSourceDirectory>
+                        <includeConfigurationDirectoryInClasspath>true</includeConfigurationDirectoryInClasspath>
+                        <generateRepository>false</generateRepository>
+                        <repositoryName>lib</repositoryName>
+                        <repositoryLayout>flat</repositoryLayout>
+                        <useWildcardClassPath>true</useWildcardClassPath>
+                        <encoding>UTF-8</encoding>
+                        <logsDirectory>logs</logsDirectory>
+                        <tempDirectory>tmp</tempDirectory>
+                        <projectArtifactFirstInClassPath>true</projectArtifactFirstInClassPath>
+                        <target>${project.build.directory}</target>
+                        <assembleDirectory>${project.build.directory}/assembly</assembleDirectory>
+                        <binFileName>app</binFileName>
+                        <daemons>
+                            <daemon>
+                                <id>app</id>
+                                <mainClass>${appMainClass}</mainClass>
+                                <platforms>
+                                    <platform>jsw</platform>
+                                </platforms>
+                                <generatorConfigurations>
+                                    <generatorConfiguration>
+                                        <generator>jsw</generator>
+                                        <configuration>
+                                            <property>
+                                                <name>wrapper.logfile</name>
+                                                <value>logs/wrapper.log</value>
+                                            </property>
+                                            <property>
+                                                <name>wrapper.console.title</name>
+                                                <value>${appName}</value>
+                                            </property>
+                                            <property>
+                                                <name>wrapper.ntservice.name</name>
+                                                <value>${appName}</value>
+                                            </property>
+                                            <property>
+                                                <name>wrapper.ntservice.displayname</name>
+                                                <value>${appName}</value>
+                                            </property>
+                                            <property>
+                                                <name>wrapper.console.loglevel</name>
+                                                <value>INFO</value>
+                                            </property>
+                                        </configuration>
+                                        <includes>
+                                            <include>windows-x86-32</include>
+                                            <include>windows-x86-64</include>
+                                            <include>linux-x86-32</include>
+                                            <include>linux-x86-64</include>
+                                            <include>macosx-universal-32</include>
+                                            <include>macosx-universal-64</include>
+                                        </includes>
+                                    </generatorConfiguration>
+                                </generatorConfigurations>
+                                <jvmSettings>
+                                    <initialMemorySize>128M</initialMemorySize>
+                                    <maxMemorySize>128M</maxMemorySize>
+                                    <extraArguments>
+                                        <extraArgument>-server</extraArgument>
+                                        <extraArgument>-Xloggc:logs/demo_gc.log</extraArgument>
+                                        <extraArgument>-XX:+HeapDumpOnOutOfMemoryError</extraArgument>
+                                        <extraArgument>-XX:HeapDumpPath=logs/java_heapdump.hprof</extraArgument>
+                                        <!--										<extraArgument>-Djava.io.tmpdir=%BASEDIR%/tmp</extraArgument>-->
+                                        <!--										<extraArgument>&#45;&#45;add-opens java.base/java.lang=ALL-UNNAMED</extraArgument>-->
+                                    </extraArguments>
+                                </jvmSettings>
+                            </daemon>
+                        </daemons>
+                        <programs>
+                            <program>
+                                <id>run</id>
+                                <mainClass>${appMainClass}</mainClass>
+                                <platforms>
+                                    <platform>all</platform>
+                                </platforms>
+                            </program>
+                        </programs>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>assemble</goal>
+                                <goal>create-repository</goal>
+                                <goal>generate-daemons</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>3.1.0</version>
+                    <configuration>
+                        <appendAssemblyId>false</appendAssemblyId>
+                        <attach>true</attach>
+                        <tarLongFileMode>gnu</tarLongFileMode>
+                        <formats>
+                            <format>tar.gz</format>
+                        </formats>
+                        <outputDirectory>${dist.outputpath}</outputDirectory>
+                        <descriptors>
+                            <descriptor>${project.basedir}/src/main/assembly/bin.xml</descriptor>
+                        </descriptors>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>single</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <!-- @see https://dmp.fabric8.io/#build-configuration -->
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>0.39.1</version>
+                    <configuration>
+                        <buildArchiveOnly>false</buildArchiveOnly>
+                        <outputDirectory>${dist.outputpath}/docker</outputDirectory>
+                        <images>
+                            <image>
+                                <name>%g/${project.artifactId}:%v</name>
+                                <build>
+                                    <from>${docker.baseImage}</from>
+                                    <tags>
+                                        <tag>${project.version}</tag>
+                                        <tag>latest</tag>
+                                    </tags>
+                                    <ports>
+                                        <port>${docker.expose}</port>
+                                    </ports>
+                                    <entryPoint>
+                                        <exec>
+                                            <arg>/app/bin/run</arg>
+                                        </exec>
+                                    </entryPoint>
+                                    <workdir>/app</workdir>
+                                    <buildOptions>
+                                        <forcerm>1</forcerm>
+                                    </buildOptions>
+                                    <assembly>
+                                        <mode>dir</mode>
+                                        <name>${project.build.finalName}</name>
+                                        <targetDir>/app</targetDir>
+                                        <descriptor>${project.basedir}/src/main/assembly/bin.xml</descriptor>
+                                        <exportTargetDir>/target</exportTargetDir>
+                                    </assembly>
+                                </build>
+                            </image>
+                        </images>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>build</goal>
+                                <goal>push</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+    </build>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>aliyun maven</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <layout>default</layout>
+            <!-- 是否开启发布版构件下载 -->
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <!-- 是否开启快照版构件下载 -->
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+</project>

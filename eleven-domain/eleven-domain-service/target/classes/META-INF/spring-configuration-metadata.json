@@ -1,0 +1,67 @@
+{
+  "groups": [
+    {
+      "name": "demcia.eleven.open-api",
+      "type": "com.demcia.eleven.openapi.openapi.OpenapiProperties",
+      "sourceType": "com.demcia.eleven.openapi.openapi.OpenapiProperties"
+    },
+    {
+      "name": "demcia.eleven.open-api.contact",
+      "type": "com.demcia.eleven.openapi.openapi.OpenapiProperties$Contact",
+      "sourceType": "com.demcia.eleven.openapi.openapi.OpenapiProperties"
+    },
+    {
+      "name": "demcia.eleven.open-api.license",
+      "type": "com.demcia.eleven.openapi.openapi.OpenapiProperties$License",
+      "sourceType": "com.demcia.eleven.openapi.openapi.OpenapiProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "demcia.eleven.open-api.contact.email",
+      "type": "java.lang.String",
+      "sourceType": "com.demcia.eleven.openapi.openapi.OpenapiProperties$Contact"
+    },
+    {
+      "name": "demcia.eleven.open-api.contact.name",
+      "type": "java.lang.String",
+      "sourceType": "com.demcia.eleven.openapi.openapi.OpenapiProperties$Contact"
+    },
+    {
+      "name": "demcia.eleven.open-api.contact.url",
+      "type": "java.lang.String",
+      "sourceType": "com.demcia.eleven.openapi.openapi.OpenapiProperties$Contact"
+    },
+    {
+      "name": "demcia.eleven.open-api.description",
+      "type": "java.lang.String",
+      "sourceType": "com.demcia.eleven.openapi.openapi.OpenapiProperties"
+    },
+    {
+      "name": "demcia.eleven.open-api.license.name",
+      "type": "java.lang.String",
+      "sourceType": "com.demcia.eleven.openapi.openapi.OpenapiProperties$License"
+    },
+    {
+      "name": "demcia.eleven.open-api.license.url",
+      "type": "java.lang.String",
+      "sourceType": "com.demcia.eleven.openapi.openapi.OpenapiProperties$License"
+    },
+    {
+      "name": "demcia.eleven.open-api.terms-of-service",
+      "type": "java.lang.String",
+      "sourceType": "com.demcia.eleven.openapi.openapi.OpenapiProperties"
+    },
+    {
+      "name": "demcia.eleven.open-api.title",
+      "type": "java.lang.String",
+      "sourceType": "com.demcia.eleven.openapi.openapi.OpenapiProperties"
+    },
+    {
+      "name": "demcia.eleven.open-api.version",
+      "type": "java.lang.String",
+      "sourceType": "com.demcia.eleven.openapi.openapi.OpenapiProperties"
+    }
+  ],
+  "hints": []
+}

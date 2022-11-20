@@ -1,0 +1,20 @@
+<component name="ProjectRunConfigurationManager">
+    <configuration default="false" name="UpmsServiceApplication" type="SpringBootApplicationConfigurationType"
+                   factoryName="Spring Boot" nameIsGenerated="true">
+        <option name="ACTIVE_PROFILES"/>
+        <option name="ALTERNATIVE_JRE_PATH" value="azul-11"/>
+        <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true"/>
+        <module name="eleven-domain-upms-service"/>
+        <option name="SPRING_BOOT_MAIN_CLASS" value="com.demcia.eleven.UpmsServiceApplication"/>
+        <option name="VM_PARAMETERS" value="--add-opens java.base/java.lang=ALL-UNNAMED  "/>
+        <extension name="coverage">
+            <pattern>
+                <option name="PATTERN" value="com.demcia.eleven.*"/>
+                <option name="ENABLED" value="true"/>
+            </pattern>
+        </extension>
+        <method v="2">
+            <option name="Make" enabled="true"/>
+        </method>
+    </configuration>
+</component>

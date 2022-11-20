@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="eleven-app-demo" />
+        <module name="eleven-domain-core" />
+        <module name="eleven-domain-client" />
+        <module name="eleven-domain-upms-client" />
+        <module name="eleven-domain-upms-service" />
+        <module name="eleven-domain-upms-core" />
+        <module name="eleven-domain-service" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>
