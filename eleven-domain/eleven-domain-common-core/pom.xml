@@ -15,6 +15,14 @@
 
     <dependencies>
 
+        <!-- doc -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-common</artifactId>
+        </dependency>
+
+
+
     </dependencies>
 
 </project>

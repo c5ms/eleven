@@ -373,12 +373,6 @@
     </dependencyManagement>
 
     <dependencies>
-
-        <!-- doc -->
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-common</artifactId>
-        </dependency>
         <!-- dev -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

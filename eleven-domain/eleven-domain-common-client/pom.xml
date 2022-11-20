@@ -13,7 +13,6 @@
     <artifactId>eleven-domain-common-client</artifactId>
 
     <dependencies>
-
         <!--fegin组件-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
