@@ -4,46 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad84c5a0-e07f-4a96-85ed-5ba2e1a8fbd6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.run/runConfigurations/UpmsServiceApplication.run.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-application/eleven-app-demo/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-application/eleven-app-demo/src/main/java/com/demcia/eleven/ElevenApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-application/eleven-app-demo/src/main/java/com/demcia/eleven/app/demo/openapi/OpenapiAutoconfigure.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-application/eleven-app-demo/src/main/java/com/demcia/eleven/app/demo/openapi/OpenapiProperties.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-application/eleven-app-demo/src/main/java/com/demcia/eleven/app/upms/configure/ApiConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-application/eleven-app-demo/src/main/java/com/demcia/eleven/app/upms/controller/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-application/eleven-app-demo/src/main/java/com/demcia/eleven/app/upms/request/UserCreateRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-application/eleven-app-demo/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-application/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-component/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-deploy/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-domain/eleven-domain-client/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-domain/eleven-domain-core/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-domain/eleven-domain-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-domain/eleven-domain-service/src/main/java/com/demcia/eleven/openapi/openapi/OpenapiAutoconfigure.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-domain/eleven-domain-service/src/main/java/com/demcia/eleven/openapi/openapi/OpenapiProperties.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-domain/eleven-domain-service/src/main/java/com/demcia/eleven/web/DomainResource.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-domain/eleven-domain-service/src/main/java/com/demcia/eleven/web/RestApiPredicate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-domain/eleven-domain-upms-client/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-domain/eleven-domain-upms-client/src/main/java/com/demcia/eleven/upms/client/RemoteUserResource.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-domain/eleven-domain-upms-core/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-domain/eleven-domain-upms-core/src/main/java/com/demcia/eleven/upms/constants/UpmsConstants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-domain/eleven-domain-upms-core/src/main/java/com/demcia/eleven/upms/domain/action/UserCreateAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-domain/eleven-domain-upms-core/src/main/java/com/demcia/eleven/upms/domain/dto/UserDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-domain/eleven-domain-upms-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-domain/eleven-domain-upms-service/src/main/java/com/demcia/eleven/UpmsServiceApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-domain/eleven-domain-upms-service/src/main/java/com/demcia/eleven/upms/configure/ApiConfiguration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-domain/eleven-domain-upms-service/src/main/java/com/demcia/eleven/upms/convertor/UserConvertor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-domain/eleven-domain-upms-service/src/main/java/com/demcia/eleven/upms/domain/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-domain/eleven-domain-upms-service/src/main/java/com/demcia/eleven/upms/domain/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-domain/eleven-domain-upms-service/src/main/java/com/demcia/eleven/upms/endpoint/UserResourceV1.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-domain/eleven-domain-upms-service/src/main/java/com/demcia/eleven/upms/service/UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-domain/eleven-domain-upms-service/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-domain/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/sql/schema.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-    </list>
+    <list default="true" id="ad84c5a0-e07f-4a96-85ed-5ba2e1a8fbd6" name="Changes" comment=" 初始化导入" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -200,8 +161,23 @@
       <workItem from="1668929154435" duration="3184000" />
       <workItem from="1668935560091" duration="907000" />
       <workItem from="1668936474063" duration="91000" />
-      <workItem from="1668936568646" duration="4327000" />
+      <workItem from="1668936568646" duration="4844000" />
     </task>
+    <task id="LOCAL-00001" summary=" 初始化导入">
+      <created>1668940940302</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1668940940302</updated>
+    </task>
+    <task id="LOCAL-00002" summary=" 初始化导入">
+      <created>1668941136644</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1668941136644</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -217,5 +193,11 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value=" 初始化导入" />
+    <option name="LAST_COMMIT_MESSAGE" value=" 初始化导入" />
   </component>
 </project>

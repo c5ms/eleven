@@ -18,6 +18,10 @@ micro service learning project
   - eleven-domain-upms-service  用户权限管理领域服务，提供通用业务逻辑
 - eleven-deploy 部署脚本
 
+
+#### 请求链路
+![请求链路](./doc/微服务请求链路.png "请求链路")
+
 #### 安装教程
 
 1. xxxx
