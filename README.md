@@ -22,6 +22,17 @@ micro service learning project
 #### 请求链路
 ![请求链路](./doc/微服务请求链路.png "请求链路")
 
+
+#### 技术选型
+- 注册中心 & 配置中心 使用 nacos 做配置中心和注册中心处理
+- 服务通信  服务之间通讯使用 spring cloud - openFeign 框架，数据序列化使用 jackson 。
+- 网关  网关使用 spring cloud - gateway
+- 负载均衡 docker swarm 自带负载均衡
+- 链路追踪  spring cloud - sleuth 处理请求链路，采集服务器使用 zipkin 框架，GUI 显示使用 jaeger(可考虑将 skywalking 封装到 docker 里面替代)
+- 日志检测  直接 tcp 写入到 logstash
+- mq  rabbitmq + 自研消息系统协调器
+- 缓存 本地缓存使用caffeine 分布式缓存使用 redis 缓存（redisson 做数据网格客户端）
+
 #### 安装教程
 
 1. xxxx
