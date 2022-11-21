@@ -9,6 +9,9 @@ public interface UpmsConstants {
      */
     String SERVICE_NAME = "eleven-upms-service";
 
+    /**
+     * 服务地址配置
+     */
     String SERVICE_URL = "${service.eleven-upms-service-url:9000:}";
 
     /**

@@ -14,8 +14,8 @@ import java.util.Optional;
 
 @FeignClient(contextId = "RemoteUserResource",
         name = UpmsConstants.SERVICE_NAME,
-        path = UpmsConstants.NAMESPACE_USERS,
-        url = "http://localhost:9000")
+        url = UpmsConstants.SERVICE_URL,
+        path = UpmsConstants.NAMESPACE_USERS)
 public interface RemoteUserResource {
 
     @PostMapping
