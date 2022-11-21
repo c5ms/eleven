@@ -1,0 +1,30 @@
+server:
+  port: 9000
+  error:
+    include-message: always
+
+spring:
+  application:
+    name: eleven-domain-upms-service
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/eleven_upms?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: eleven
+    password: eleven
+
+  jpa:
+    generate-ddl: true
+
+demcia:
+  eleven:
+    open-api:
+      title: 德玛西亚
+      version: 1.0.0.dev
+      terms-of-service: https://www.demcia.com/
+      contact:
+        email: demcia@demcia.com
+        name: 德玛西亚小分队
+        url: https://www.demcia.com/
+      license:
+        name: Apache 2.0
+        url: https://www.demcia.com/
