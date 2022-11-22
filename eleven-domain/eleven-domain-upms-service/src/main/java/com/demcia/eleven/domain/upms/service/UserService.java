@@ -1,27 +1,24 @@
 package com.demcia.eleven.domain.upms.service;
 
+import com.demcia.eleven.core.exception.DataNotFoundException;
+import com.demcia.eleven.core.pageable.PageResult;
+import com.demcia.eleven.domain.upms.action.UserQueryAction;
+import com.demcia.eleven.domain.upms.action.UserUpdateAction;
 import com.demcia.eleven.domain.upms.entity.User;
-import com.demcia.eleven.domain.upms.entity.UserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.UUID;
 
-@Service
-@RequiredArgsConstructor
-public class UserService {
-    private final UserRepository userRepository;
+public interface UserService {
+    void saveUser(User user);
 
-    public void saveUser(User user) {
-//        var exist = userRepository.getReferenceById("85");
-////        throw new IllegalStateException("假设");
-//        exist.setUsername(UUID.randomUUID().toString());
-        userRepository.save(user);
+    Optional<User> getUser(String id);
+
+    void updateUser(User user, UserUpdateAction action);
+
+    PageResult<User> queryUser(UserQueryAction queryAction);
+
+    default User requireUser(String id) {
+        return this.getUser(id).orElseThrow(() -> new DataNotFoundException("用户不存在"));
     }
 
-    public Optional<User> getUser(Long id) {
-//        return userRepository.findById(id);
-        return null;
-    }
 }

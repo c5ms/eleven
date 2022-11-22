@@ -1,16 +1,15 @@
-package com.demcia.eleven.core.rest.configure;
+package com.demcia.eleven.core.rest.autoconfigure;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Data
-@Component
-@ConfigurationProperties(prefix = "demcia.eleven.open-api")
-public class OpenapiProperties {
+@ConfigurationProperties(prefix = "eleven.open-api")
+public class ElevenOpenapiProperties {
     private String title;
-    private String description;
     private String version;
+    private String description;
     private String termsOfService;
 
     private Contact contact;

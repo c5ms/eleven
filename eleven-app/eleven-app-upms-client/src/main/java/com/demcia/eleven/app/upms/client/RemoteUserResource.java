@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.Optional;
 
 @FeignClient(contextId = "RemoteUserResource",
-        name = "eleven-domain-upms-service",
+        name = "eleven-upms",
         url = "${service.eleven-domain-upms-service-url:9000:}",
         path = "/users")
 public interface RemoteUserResource {

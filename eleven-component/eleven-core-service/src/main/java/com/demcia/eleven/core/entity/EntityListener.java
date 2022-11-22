@@ -15,7 +15,7 @@ import javax.persistence.PreUpdate;
 public class EntityListener {
 
     @PrePersist
-    public void touchForCreate(BaseEntity<?> baseEntity) {
+    public void touchForCreate(BaseEntity baseEntity) {
         log.debug("创建 JPA 对象 ID : {}#{}", baseEntity.getClass(), baseEntity.getId());
         if (StringUtils.isBlank(baseEntity.getId())) {
 //            log.debug("自动生成 JPA 对象 ID : {}#{}", baseEntity.getClass(), id);
@@ -27,12 +27,12 @@ public class EntityListener {
 
 
     @PreUpdate
-    public void touchForUpdate(BaseEntity<?> baseEntity) {
+    public void touchForUpdate(BaseEntity baseEntity) {
         log.debug("更新 JPA 对象 ID : {}#{}", baseEntity.getClass(), baseEntity.getId());
     }
 
     @PreRemove
-    public void touchForDelete(BaseEntity<?> baseEntity) {
+    public void touchForDelete(BaseEntity baseEntity) {
         log.debug("删除 JPA 对象 ID : {}#{}", baseEntity.getClass(), baseEntity.getId());
         if (baseEntity.isReserved()) {
             // todo 需要自定义异常

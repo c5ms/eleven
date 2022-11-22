@@ -1,7 +1,7 @@
 package com.demcia.eleven.app.upms.listener;
 
 import com.demcia.eleven.domain.upms.events.UserCreatedEvent;
-import com.demcia.eleven.domain.upms.events.UserUpdateEvent;
+import com.demcia.eleven.domain.upms.events.UserUpdatedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +13,8 @@ public class UserListener {
         System.out.println("用户创建");
     }
 
-    @EventListener(UserUpdateEvent.class)
-    public  void onCreate(UserUpdateEvent userUpdateEvent){
+    @EventListener(UserUpdatedEvent.class)
+    public  void onCreate(UserUpdatedEvent userUpdatedEvent){
         System.out.println("用户更新");
     }
 }

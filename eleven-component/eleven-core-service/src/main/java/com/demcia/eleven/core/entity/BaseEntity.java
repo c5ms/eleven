@@ -3,6 +3,7 @@ package com.demcia.eleven.core.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.FieldNameConstants;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -18,9 +19,10 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@FieldNameConstants
 @EntityListeners({AuditingEntityListener.class, EntityListener.class})
 @MappedSuperclass
-public abstract class BaseEntity<T extends  BaseEntity<T>> extends AbstractAggregateRoot<T> implements Serializable, Persistable<String> {
+public abstract class BaseEntity implements Serializable, Persistable<String> {
     private static final long serialVersionUID = 1L;
 
     @CreatedBy
