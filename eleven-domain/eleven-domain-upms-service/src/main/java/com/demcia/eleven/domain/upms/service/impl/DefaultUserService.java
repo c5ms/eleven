@@ -1,11 +1,15 @@
 package com.demcia.eleven.domain.upms.service.impl;
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.demcia.eleven.core.helper.PageableQueryHelper;
 import com.demcia.eleven.core.pageable.PageResult;
+import com.demcia.eleven.domain.upms.action.UserCreateAction;
 import com.demcia.eleven.domain.upms.action.UserQueryAction;
 import com.demcia.eleven.domain.upms.action.UserUpdateAction;
 import com.demcia.eleven.domain.upms.entity.User;
 import com.demcia.eleven.domain.upms.entity.UserRepository;
+import com.demcia.eleven.domain.upms.events.UserCreatedEvent;
+import com.demcia.eleven.domain.upms.events.UserUpdatedEvent;
 import com.demcia.eleven.domain.upms.service.UserService;
 import com.github.wenhao.jpa.Specifications;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +26,13 @@ public class DefaultUserService implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public void saveUser(User user) {
+    public User createUser(UserCreateAction action) {
+        var user = new User();
+        user.setUsername(action.getUsername());
         userRepository.save(user);
+        SpringUtil.publishEvent(new UserCreatedEvent());
+        return user;
     }
-
 
     @Override
     public Optional<User> getUser(String id) {
@@ -34,8 +41,10 @@ public class DefaultUserService implements UserService {
 
     @Override
     public void updateUser(User user, UserUpdateAction action) {
-        user.update(action);
-        userRepository.save(user);
+        if (StringUtils.isNotBlank(action.getNickname())) {
+            user.setNickname(action.getNickname());
+        }
+        SpringUtil.publishEvent(new UserUpdatedEvent());
     }
 
     @Override

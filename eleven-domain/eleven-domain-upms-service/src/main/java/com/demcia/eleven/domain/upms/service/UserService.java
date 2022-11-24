@@ -2,6 +2,7 @@ package com.demcia.eleven.domain.upms.service;
 
 import com.demcia.eleven.core.exception.DataNotFoundException;
 import com.demcia.eleven.core.pageable.PageResult;
+import com.demcia.eleven.domain.upms.action.UserCreateAction;
 import com.demcia.eleven.domain.upms.action.UserQueryAction;
 import com.demcia.eleven.domain.upms.action.UserUpdateAction;
 import com.demcia.eleven.domain.upms.entity.User;
@@ -9,7 +10,7 @@ import com.demcia.eleven.domain.upms.entity.User;
 import java.util.Optional;
 
 public interface UserService {
-    void saveUser(User user);
+    User createUser(UserCreateAction action);
 
     Optional<User> getUser(String id);
 

@@ -1,14 +1,10 @@
 package com.demcia.eleven.domain.upms.entity;
 
-import com.demcia.eleven.core.entity.BaseAggregateRoot;
-import com.demcia.eleven.domain.upms.action.UserUpdateAction;
+import com.demcia.eleven.core.entity.BaseEntity;
 import com.demcia.eleven.domain.upms.enums.UserState;
-import com.demcia.eleven.domain.upms.events.UserCreatedEvent;
-import com.demcia.eleven.domain.upms.events.UserUpdatedEvent;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
 
@@ -17,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @FieldNameConstants
 @Table(name = "upms_user")
-public class User extends BaseAggregateRoot {
+public class User extends BaseEntity {
 
     public static final String USER_TYPE_SYSTEM = "sys_inner";
 
@@ -56,15 +52,5 @@ public class User extends BaseAggregateRoot {
 //    @Column(name = "role_code_", length = 50)
 //    private Set<String> roles = new HashSet<>();
 
-    @PostPersist
-    public void onCreate() {
-        this.registerEvent(new UserCreatedEvent());
-    }
 
-    public void update(UserUpdateAction action) {
-        if (StringUtils.isNotBlank(action.getNickname())) {
-            this.setNickname(action.getNickname());
-        }
-        this.registerEvent(new UserUpdatedEvent());
-    }
 }

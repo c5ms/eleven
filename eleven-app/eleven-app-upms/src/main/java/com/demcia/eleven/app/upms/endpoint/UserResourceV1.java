@@ -7,7 +7,6 @@ import com.demcia.eleven.domain.upms.action.UserQueryAction;
 import com.demcia.eleven.domain.upms.action.UserUpdateAction;
 import com.demcia.eleven.domain.upms.convertor.UserConvertor;
 import com.demcia.eleven.domain.upms.dto.UserDto;
-import com.demcia.eleven.domain.upms.entity.User;
 import com.demcia.eleven.domain.upms.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -31,9 +30,7 @@ public class UserResourceV1 {
     @Operation(summary = "创建用户")
     @PostMapping
     public UserDto createUser(@RequestBody @Validated UserCreateAction action) {
-        var user = new User();
-        user.setUsername(action.getUsername());
-        userService.saveUser(user);
+        var user = userService.createUser(action);
         return userConvertor.toDto(user);
     }
 
@@ -45,7 +42,7 @@ public class UserResourceV1 {
 
     @Operation(summary = "读取用户")
     @GetMapping("/{id}")
-    public UserDto getUser(@PathVariable("id") String id, WebRequest webRequest) {
+    public UserDto getUser(@PathVariable("id") String id) {
         var user = userService.requireUser(id);
         return userConvertor.toDto(user);
     }
