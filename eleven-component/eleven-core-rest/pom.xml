@@ -21,7 +21,6 @@
         </dependency>
 
 
-
         <!-- jackson 扩展 -->
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
@@ -35,9 +34,8 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
-
 
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -48,7 +46,7 @@
         <!-- doc -->
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
+            <artifactId>springdoc-openapi-webflux-ui</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.xiaoymin</groupId>

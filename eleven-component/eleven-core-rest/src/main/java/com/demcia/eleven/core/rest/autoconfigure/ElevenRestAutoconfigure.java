@@ -1,7 +1,5 @@
 package com.demcia.eleven.core.rest.autoconfigure;
 
-import com.demcia.eleven.core.rest.bootstrap.Bootstrap;
-import com.demcia.eleven.core.rest.support.RestApiPredicate;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -15,10 +13,6 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Contact;
-import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.info.License;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,8 +25,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -45,7 +37,7 @@ import java.util.stream.Collectors;
 @Configuration(proxyBeanMethods = false)
 @RequiredArgsConstructor
 @EnableConfigurationProperties(ElevenRestProperties.class)
-public class ElevenRestAutoconfigure implements WebMvcConfigurer  {
+public class ElevenRestAutoconfigure {
     private final ElevenRestProperties elevenRestProperties;
 
     private static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
@@ -108,14 +100,13 @@ public class ElevenRestAutoconfigure implements WebMvcConfigurer  {
     }
 
 
-
-    @Override
-    public void configurePathMatch(PathMatchConfigurer configurer) {
-        configurer.addPathPrefix(elevenRestProperties.getPrefix(), new RestApiPredicate(
-                elevenRestProperties.getPackages(),
-                elevenRestProperties.getAnnotations()
-        ));
-        Bootstrap.log("全局 API 路径处理，统一前缀 : " + elevenRestProperties.getPrefix());
-    }
+//    @Override
+//    public void configurePathMatch(PathMatchConfigurer configurer) {
+//        configurer.addPathPrefix(elevenRestProperties.getPrefix(), new RestApiPredicate(
+//                elevenRestProperties.getPackages(),
+//                elevenRestProperties.getAnnotations()
+//        ));
+//        Bootstrap.log("全局 API 路径处理，统一前缀 : " + elevenRestProperties.getPrefix());
+//    }
 
 }

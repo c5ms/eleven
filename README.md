@@ -33,6 +33,12 @@ micro service learning project
 - mq  rabbitmq + 自研消息系统协调器
 - 缓存 本地缓存使用caffeine 分布式缓存使用 redis 缓存（redisson 做数据网格客户端）
 
+
+#### todo 
+1. 数据库采用自增还是 UUID，还是雪花算法/雨滴算法？
+2. 该不该使用聚合根？和 command Handler 模式？
+
+
 #### 安装教程
 
 1. xxxx

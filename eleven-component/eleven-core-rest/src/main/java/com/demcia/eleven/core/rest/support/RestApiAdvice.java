@@ -2,6 +2,9 @@ package com.demcia.eleven.core.rest.support;
 
 import com.demcia.eleven.core.exception.DataNotFoundException;
 import com.demcia.eleven.core.exception.PermissionDeadException;
+import com.demcia.eleven.core.rest.constants.RestApiConstants;
+import com.demcia.eleven.core.rest.support.result.RestApiFailureResult;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,7 +21,7 @@ public class RestApiAdvice {
     public void customException(DataNotFoundException e) {
 //        return new RestApiFailureResult()
 //                .setMessage(StringUtils.defaultIfBlank(e.getMessage(),"资源不存在"))
-//                .setError("resource not found");
+//                .setError(RestApiConstants.ERROR_RESOURCE_NOT_EXIST);
     }
 
 
@@ -26,10 +29,10 @@ public class RestApiAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(PermissionDeadException.class)
-    public void customException(PermissionDeadException e) {
-//        return new RestApiFailureResult()
-//                .setMessage(StringUtils.defaultIfBlank(e.getMessage(),"权限不足"))
-//                .setError("permission dead");
+    public RestApiFailureResult customException(PermissionDeadException e) {
+        return new RestApiFailureResult()
+                .setMessage(StringUtils.defaultIfBlank(e.getMessage(),"权限不足"))
+                .setError(RestApiConstants.ERROR_PERMISSION_DEAD);
     }
 
 }
