@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -18,7 +17,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class PageableQueryAction implements Serializable {
+public class Pagination implements Serializable {
     public static final Integer DEFAULT_PAGE = 1;
     public static final Integer DEFAULT_PAGE_SIZE = 20;
 

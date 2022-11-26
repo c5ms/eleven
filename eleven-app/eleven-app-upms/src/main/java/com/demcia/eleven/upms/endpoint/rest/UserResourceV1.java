@@ -1,6 +1,7 @@
 package com.demcia.eleven.upms.endpoint.rest;
 
-import com.demcia.eleven.core.pageable.PageResult;
+import com.demcia.eleven.core.pageable.PaginationResult;
+import com.demcia.eleven.core.pageable.Pagination;
 import com.demcia.eleven.core.rest.annonation.RestResource;
 import com.demcia.eleven.upms.core.action.UserCreateAction;
 import com.demcia.eleven.upms.core.action.UserQuery;
@@ -35,8 +36,9 @@ public class UserResourceV1 {
 
     @Operation(summary = "查询用户")
     @GetMapping
-    public PageResult<UserDto> queryUser(@ParameterObject UserQuery queryAction) {
-        return userService.queryUser(queryAction).map(userConvertor::toDto);
+    public PaginationResult<UserDto> queryUser(@ParameterObject UserQuery queryAction ,
+                                               @ParameterObject Pagination pagination) {
+        return userService.queryUser(queryAction, pagination).map(userConvertor::toDto);
     }
 
     @Operation(summary = "读取用户")

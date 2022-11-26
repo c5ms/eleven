@@ -1,7 +1,8 @@
 package com.demcia.eleven.upms.service;
 
 import com.demcia.eleven.core.exception.DataNotFoundException;
-import com.demcia.eleven.core.pageable.PageResult;
+import com.demcia.eleven.core.pageable.PaginationResult;
+import com.demcia.eleven.core.pageable.Pagination;
 import com.demcia.eleven.upms.core.action.UserCreateAction;
 import com.demcia.eleven.upms.core.action.UserUpdateAction;
 import com.demcia.eleven.upms.domain.User;
@@ -14,7 +15,7 @@ public interface UserService {
     // ======================== read ========================
     Optional<User> getUser(Long id);
 
-    PageResult<User> queryUser(UserQuery queryAction);
+    PaginationResult<User> queryUser(UserQuery queryAction, Pagination pagination);
 
     default User requireUser(Long id) {
         return this.getUser(id).orElseThrow(() -> new DataNotFoundException("用户不存在"));

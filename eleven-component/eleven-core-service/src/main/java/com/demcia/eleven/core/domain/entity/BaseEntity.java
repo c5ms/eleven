@@ -1,4 +1,4 @@
-package com.demcia.eleven.core.domain;
+package com.demcia.eleven.core.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;

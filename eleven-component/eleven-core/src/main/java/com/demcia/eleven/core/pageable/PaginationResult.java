@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 @Schema(description = "分页结果")
-public class PageResult<T> implements Iterable<T> {
+public class PaginationResult<T> implements Iterable<T> {
 
 	@Schema(description = "每页条数")
 	private int pageSize;
@@ -22,53 +22,53 @@ public class PageResult<T> implements Iterable<T> {
 	@Schema(description = "本页数据")
 	private Collection<T> elements;
 
-	public PageResult(Collection<T> elements) {
+	public PaginationResult(Collection<T> elements) {
 		this.elements = Objects.isNull(elements)
 			? Collections.emptyList()
 			: Collections.unmodifiableCollection(elements);
 		this.pageSize = this.elements.size();
 	}
 
-	public static <T> PageResult<T> of(Collection<T> elements) {
-		return new PageResult<>(elements);
+	public static <T> PaginationResult<T> of(Collection<T> elements) {
+		return new PaginationResult<>(elements);
 	}
 
-	public static <T> PageResult<T> of(PageResult<T> pageResult) {
-		return new PageResult<>(pageResult.elements)
-			.withSize(pageResult.pageSize)
-			.withTotalSize(pageResult.totalSize);
+	public static <T> PaginationResult<T> of(PaginationResult<T> paginationResult) {
+		return new PaginationResult<>(paginationResult.elements)
+			.withSize(paginationResult.pageSize)
+			.withTotalSize(paginationResult.totalSize);
 	}
 
-	public static <T> PageResult<T> of(PageResult<T> pageResult, Collection<T> elements) {
-		return new PageResult<>(elements)
-			.withSize(pageResult.pageSize)
-			.withTotalSize(pageResult.totalSize);
+	public static <T> PaginationResult<T> of(PaginationResult<T> paginationResult, Collection<T> elements) {
+		return new PaginationResult<>(elements)
+			.withSize(paginationResult.pageSize)
+			.withTotalSize(paginationResult.totalSize);
 	}
 
-	public static <T> PageResult<T> empty() {
-		return new PageResult<>(Collections.emptyList());
+	public static <T> PaginationResult<T> empty() {
+		return new PaginationResult<>(Collections.emptyList());
 	}
 
-	public PageResult<T> withSize(int size) {
+	public PaginationResult<T> withSize(int size) {
 		this.pageSize = size;
 		return this;
 	}
 
-	public PageResult<T> withTotalSize(long totalSize) {
+	public PaginationResult<T> withTotalSize(long totalSize) {
 		this.totalSize = totalSize;
 		return this;
 	}
 
-	public <R> PageResult<R> withElements(Collection<R> elements) {
-		return new PageResult<>(elements)
+	public <R> PaginationResult<R> withElements(Collection<R> elements) {
+		return new PaginationResult<>(elements)
 			.withTotalSize(this.totalSize)
 			.withSize(this.pageSize);
 	}
 
-	public <R> PageResult<R> withElements(Iterable<R> elements) {
+	public <R> PaginationResult<R> withElements(Iterable<R> elements) {
 		var list = new ArrayList<R>();
 		elements.forEach(list::add);
-		return new PageResult<>(list)
+		return new PaginationResult<>(list)
 			.withTotalSize(this.totalSize)
 			.withSize(this.pageSize);
 	}
@@ -92,13 +92,13 @@ public class PageResult<T> implements Iterable<T> {
 		this.totalSize = totalSize;
 	}
 
-	public <R> PageResult<R> map(Function<T, R> mapper) {
-		return new PageResult<>(this.elements.stream().map(mapper).collect(Collectors.toUnmodifiableList()))
+	public <R> PaginationResult<R> map(Function<T, R> mapper) {
+		return new PaginationResult<>(this.elements.stream().map(mapper).collect(Collectors.toUnmodifiableList()))
 			.withTotalSize(this.totalSize);
 	}
 
 
-	public <S> PageResult<S> mapDto(Class<S> tClass) {
+	public <S> PaginationResult<S> mapDto(Class<S> tClass) {
 		return this.map(t -> {
 			try {
 				S instance = tClass.getDeclaredConstructor().newInstance();

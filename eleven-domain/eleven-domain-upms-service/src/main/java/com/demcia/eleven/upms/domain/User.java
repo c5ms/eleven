@@ -1,6 +1,6 @@
 package com.demcia.eleven.upms.domain;
 
-import com.demcia.eleven.core.domain.BaseEntity;
+import com.demcia.eleven.core.domain.entity.BaseEntity;
 import com.demcia.eleven.upms.core.enums.UserState;
 import lombok.Getter;
 import lombok.Setter;

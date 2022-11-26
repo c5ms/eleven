@@ -1,16 +1,11 @@
-package com.demcia.eleven.core.domain;
+package com.demcia.eleven.core.domain.entity;
 
-import com.demcia.eleven.core.exception.PermissionDeadException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.PrePersist;
 import javax.persistence.PreRemove;
 import javax.persistence.PreUpdate;
-import java.util.Locale;
-import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor

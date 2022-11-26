@@ -1,7 +1,7 @@
 package com.demcia.eleven.core.helper;
 
-import com.demcia.eleven.core.pageable.PageResult;
-import com.demcia.eleven.core.pageable.PageableQueryAction;
+import com.demcia.eleven.core.pageable.PaginationResult;
+import com.demcia.eleven.core.pageable.Pagination;
 import lombok.experimental.UtilityClass;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -10,17 +10,16 @@ import org.springframework.data.domain.Sort;
 @UtilityClass
 public class PageableQueryHelper {
 
-
-    public static Pageable toSpringDataPageable(PageableQueryAction queryAction,Sort sort) {
+    public static Pageable toSpringDataPageable(Pagination queryAction, Sort sort) {
         return PageRequest.of(queryAction.getPage() - 1, queryAction.getSize(),sort);
     }
 
-    public static Pageable toSpringDataPageable(PageableQueryAction queryAction) {
+    public static Pageable toSpringDataPageable(Pagination queryAction) {
         return toSpringDataPageable(queryAction,Sort.unsorted());
     }
 
-    public static <T> PageResult<T> toPageResult(org.springframework.data.domain.Page<T> page) {
-        return PageResult.of(page.getContent())
+    public static <T> PaginationResult<T> toPageResult(org.springframework.data.domain.Page<T> page) {
+        return PaginationResult.of(page.getContent())
                 .withSize(page.getSize())
                 .withTotalSize(page.getTotalElements());
     }

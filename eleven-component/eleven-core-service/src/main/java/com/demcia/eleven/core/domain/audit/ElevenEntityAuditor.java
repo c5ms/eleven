@@ -1,4 +1,4 @@
-package com.demcia.eleven.core.domain;
+package com.demcia.eleven.core.domain.audit;
 
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.lang.NonNull;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class BaseEntityAuditor implements AuditorAware<String> {
+public class ElevenEntityAuditor implements AuditorAware<String> {
 
     @Override
     @NonNull

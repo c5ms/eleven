@@ -2,7 +2,8 @@ package com.demcia.eleven.upms.service.impl;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.demcia.eleven.core.helper.PageableQueryHelper;
-import com.demcia.eleven.core.pageable.PageResult;
+import com.demcia.eleven.core.pageable.Pagination;
+import com.demcia.eleven.core.pageable.PaginationResult;
 import com.demcia.eleven.upms.core.action.UserCreateAction;
 import com.demcia.eleven.upms.core.action.UserUpdateAction;
 import com.demcia.eleven.upms.domain.User;
@@ -49,14 +50,14 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public PageResult<User> queryUser(UserQuery queryAction) {
+    public PaginationResult<User> queryUser(UserQuery queryAction, Pagination pagination) {
         var spec = Specifications.<User>and()
                 .like(StringUtils.isNotBlank(queryAction.getUsername()), User.Fields.username, "%" + StringUtils.trim(queryAction.getUsername()) + "%")
                 .eq(StringUtils.isNotBlank(queryAction.getType()), User.Fields.type, StringUtils.trim(queryAction.getType()))
                 .eq(Objects.nonNull(queryAction.getState()), User.Fields.state, queryAction.getState())
                 .build();
         var sort = Sort.by(User.Fields.id).descending();
-        var pageable = PageableQueryHelper.toSpringDataPageable(queryAction, sort);
+        var pageable = PageableQueryHelper.toSpringDataPageable(pagination, sort);
         var page = userRepository.findAll(spec, pageable);
         return PageableQueryHelper.toPageResult(page);
     }

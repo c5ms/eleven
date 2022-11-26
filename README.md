@@ -26,6 +26,11 @@ micro service learning project
   - /src/main/docker/rabbitmq rabbitmq 镜像封装
   - ...
 
+#### 编码约定
+1. xxxHelper 为特定业务场景下的工具类，提供静态方法,比如：PageableQueryHelper 将系统的分页模型->技术手段分页模型，AuthenticationHelper  
+2. xxxUtil   为特定技术场景下的工具类，提供静态方法,比如：NetworkUtil#ping(ip)
+3. xxxConvertor 为业务领域下的转换类，只可以单向转换 domain->Dto(DataTransferObject),domain->Vo(ViewObject)
+4. domain+Service 位领域对象的服务层，提供最核心的领域服务，只直接处理领域下的使用场（Action 命令），和领域事件发布
 
 #### 请求链路
 ![请求链路](./doc/微服务请求链路.png "请求链路")
