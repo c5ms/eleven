@@ -11,6 +11,11 @@ micro service learning project
   - eleven-app-upms 用户权限管理的应用层，可运行，可作为微服务发布
   - eleven-app-upms-client  用户权限管理的应用层客户端，可以作为其他应用层远程微服务调用
 - eleven-component 公共组件层，提供工具包，基础库。
+  - eleven-core        核心包，提供：工具库，通用场景类，通用异常类，通用枚举类，通用工具类
+  - eleven-core-feign  远程客户端调用核心支持
+  - eleven-core-rest   Web Restful Endpoint 层支持
+  - eleven-core-app    核心应用层支持
+  - eleven-core-service 公共领域服务层支持
 - eleven-domain 领域服务层，提供无状态领域服务
   - eleven-domain-upms-core 用户权限管理的共享内核
   - eleven-domain-upms-service 用户权限管理领域的服务层
