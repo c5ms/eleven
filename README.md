@@ -8,14 +8,12 @@ micro service learning project
 
 - eleven-application 应用层，提供有状态的应用逻辑
   - eleven-app-demo 一个示例应用，运行于用户接入网络，对接 GUI 界面，提供定制化应用逻辑！
+  - eleven-app-upms 用户权限管理的应用层，可运行，可作为微服务发布
+  - eleven-app-upms-client  用户权限管理的应用层客户端，可以作为其他应用层远程微服务调用
 - eleven-component 公共组件层，提供工具包，基础库。
 - eleven-domain 领域服务层，提供无状态领域服务
-  - eleven-domain-client 领域客户端层支持
-  - eleven-domain-core  领域内核层支持
-  - eleven-domain-service  领域服务层支持
-  - eleven-domain-upms-client   用户权限管理领域客户端
-  - eleven-domain-upms-core     用户权限管理领域内核
-  - eleven-domain-upms-service  用户权限管理领域服务，提供通用业务逻辑
+  - eleven-domain-upms-core 用户权限管理的共享内核
+  - eleven-domain-upms-service 用户权限管理领域的服务层
 - eleven-deploy 部署脚本
 
 
@@ -35,8 +33,10 @@ micro service learning project
 
 
 #### todo 
-1. 数据库采用自增还是 UUID，还是雪花算法/雨滴算法？
-2. 该不该使用聚合根？和 command Handler 模式？
+1. ID 策略，数据库采用自增还是 UUID，还是雪花算法/雨滴算法？
+2. CQRS的使用，该不该使用聚合根？和 command Handler 模式？
+3. 是否需要领域层+应用层的模式？
+4. 搭建框架用的业务领域，建议做个 TODO 最简单
 
 
 #### 安装教程
