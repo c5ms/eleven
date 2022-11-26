@@ -1,12 +1,12 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="运行-示例应用" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <option name="ACTIVE_PROFILES" />
-    <module name="eleven-app-demo" />
-    <option name="SPRING_BOOT_MAIN_CLASS" value="com.demcia.eleven.ElevenApplication" />
+    <module name="eleven-app-openapi" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.demcia.eleven.DemoElevenApplication" />
     <option name="VM_PARAMETERS" value="--add-opens java.base/java.lang=ALL-UNNAMED  " />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="com.demcia.eleven.*" />
+        <option name="PATTERN" value="com.demcia.eleven.demo.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

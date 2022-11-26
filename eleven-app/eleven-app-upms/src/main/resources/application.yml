@@ -1,23 +1,22 @@
 server:
   port: 9000
-  error:
-    include-message: always
 
 spring:
   application:
     name: eleven-upms
 
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/eleven_upms?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
-    username: eleven
-    password: eleven
-
-  jpa:
-    generate-ddl: true
-    show-sql: true
-    properties:
-      hibernate:
-        enable_lazy_load_no_trans: true
+    dynamic:
+      primary: master
+      strict: false
+      datasource:
+        master:
+          url: ${db.upms.url}
+          username: ${db.upms.username}
+          password: ${db.upms.password}
+          hikari:
+            max-lifetime: ${db.upms.maxLifetime:30000}
+            max-pool-size: ${db.upms.maxSize:5}
 
 eleven:
   rest:
@@ -34,3 +33,10 @@ eleven:
     license:
       name: Apache 2.0
       url: https://www.demcia.com/
+
+logging:
+  level:
+    sql: info
+    web: info
+    root: info
+    'sleuth.sql': debug

@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @FeignClient(contextId = "RemoteUserResource",
         name = "eleven-upms",
-        url = "${service.eleven-domain-upms-service-url:9000:}",
+        url = "${service.eleven-upms.url:}",
         path = "/users")
 public interface RemoteUserResource {
 

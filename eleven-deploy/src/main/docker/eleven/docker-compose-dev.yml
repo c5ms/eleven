@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+
+  upms:
+    image: demacia/eleven-app-upms:latest
+    environment:
+      - JAVA_OPTS=-Xms200m -Xmx200m
+      - DB_UPMS_URL=jdbc:mysql://192.168.1.102:3306/eleven_upms?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+      - DB_UPMS_USERNAME=eleven
+      - DB_UPMS_PASSWORD=eleven
+    ports:
+      - "9000:9000"
+
+  openapi:
+    image: demacia/eleven-app-openapi:latest
+    environment:
+      - JAVA_OPTS=-Xms200m -Xmx200m
+      - SERVICE_ELEVEN_UPMS_URL=http://upms:9000
+    ports:
+      - "8000:8000"

@@ -16,8 +16,18 @@
         <module>eleven-core</module>
         <module>eleven-core-rest</module>
         <module>eleven-core-feign</module>
-        <module>eleven-core-service</module>
+        <module>eleven-core-domain</module>
     </modules>
 
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
