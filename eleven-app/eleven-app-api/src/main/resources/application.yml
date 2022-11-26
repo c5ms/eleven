@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: eleven-app-openapi
+    name: eleven-api
 
 eleven:
   open-api:
@@ -18,3 +18,12 @@ eleven:
     license:
       name: Apache 2.0
       url: https://www.demcia.com/
+
+
+logging:
+  level:
+    sql: info
+    web: debug
+    root: info
+    'com.demcia': debug
+    'sleuth.sql': debug

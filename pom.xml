@@ -581,7 +581,7 @@
                                         <timeout>3s</timeout>
                                         <startPeriod>10s</startPeriod>
                                         <retries>120</retries>
-                                        <cmd>curl -f http://localhost:${docker.expose}/actuator/health || exit 1</cmd>
+                                        <cmd>curl http://localhost:${docker.expose}/actuator/health</cmd>
                                     </healthCheck>
                                     <assembly>
                                         <mode>dir</mode>

@@ -10,39 +10,52 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>eleven-app-openapi</artifactId>
+    <artifactId>eleven-gateway</artifactId>
     <packaging>jar</packaging>
 
     <properties>
-        <appMainClass>com.demcia.eleven.DemoElevenApplication</appMainClass>
+        <appMainClass>com.demcia.eleven.ElevenGatewayApplication</appMainClass>
         <dist.outputpath>${project.basedir}/../target</dist.outputpath>
-        <docker.expose>8000</docker.expose>
+        <docker.expose>80</docker.expose>
     </properties>
 
 
     <dependencies>
-
         <dependency>
-            <groupId>com.demacia</groupId>
-            <artifactId>eleven-core-rest</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-resolver-dns-native-macos</artifactId>
+            <classifier>osx-aarch_64</classifier>
         </dependency>
 
         <dependency>
-            <groupId>com.demacia</groupId>
-            <artifactId>eleven-app-upms-client</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-gateway-webflux</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
 
 
-        <!-- doc -->
         <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-webflux-ui</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-springdoc-ui</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-loadbalancer</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-consul-discovery</artifactId>
+        </dependency>
+
+        <!-- actuator -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
     </dependencies>

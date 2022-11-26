@@ -4,18 +4,62 @@ services:
 
   upms:
     image: demacia/eleven-app-upms:latest
+    restart: on-failure
+    networks:
+      - eleven
     environment:
       - JAVA_OPTS=-Xms200m -Xmx200m
       - DB_UPMS_URL=jdbc:mysql://192.168.1.102:3306/eleven_upms?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
       - DB_UPMS_USERNAME=eleven
       - DB_UPMS_PASSWORD=eleven
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_CLOUD_CONSUL_PORT=8500
+      - SPRING_CLOUD_CONSUL_DISCOVERY_PREFER_IP_ADDRESS=true
+      - SPRING_CLOUD_INETUTILS_PREFERRED_NETWORKS=10.0.2
     ports:
       - "9000:9000"
 
-  openapi:
-    image: demacia/eleven-app-openapi:latest
+  api:
+    image: demacia/eleven-app-api:latest
+    restart: on-failure
+    networks:
+      - eleven
     environment:
       - JAVA_OPTS=-Xms200m -Xmx200m
-      - SERVICE_ELEVEN_UPMS_URL=http://upms:9000
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_CLOUD_CONSUL_PORT=8500
+      - SPRING_CLOUD_CONSUL_DISCOVERY_PREFER_IP_ADDRESS=true
+      - SPRING_CLOUD_INETUTILS_PREFERRED_NETWORKS=10.0.2
     ports:
       - "8000:8000"
+
+  gateway:
+    image: demacia/eleven-gateway:latest
+    restart: on-failure
+    networks:
+      - eleven
+    environment:
+      - JAVA_OPTS=-Xms200m -Xmx200m
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_CLOUD_CONSUL_PORT=8500
+      - SPRING_CLOUD_CONSUL_DISCOVERY_PREFER_IP_ADDRESS=true
+      - SPRING_CLOUD_INETUTILS_PREFERRED_NETWORKS=10.0.2
+    ports:
+      - "80:80"
+
+  consul:
+    image: consul:latest
+    restart: always
+    networks:
+      - eleven
+    ports:
+      - "8500:8500"
+
+networks:
+  eleven:
+    attachable: true
+    driver: overlay
+    ipam:
+      driver: default
+      config:
+        - subnet: "10.0.2.0/24"

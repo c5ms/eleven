@@ -1,0 +1,16 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: eleven-gateway
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+
+management.endpoint.gateway.enabled: true # default value
+management.endpoints.web.exposure.include: gateway # 暴露gateway端点，* 是暴露全部端点
+

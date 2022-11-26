@@ -18,9 +18,10 @@ spring:
             max-lifetime: ${db.upms.maxLifetime:30000}
             max-pool-size: ${db.upms.maxSize:5}
 
+
+
+
 eleven:
-  rest:
-    prefix: /api
   open-api:
     title: 用户授权管理
     description: 这是一个伟大而又了不起的工程！
@@ -37,6 +38,6 @@ eleven:
 logging:
   level:
     sql: info
-    web: info
+    web: debug
     root: info
     'sleuth.sql': debug
