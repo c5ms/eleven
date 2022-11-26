@@ -20,6 +20,11 @@ micro service learning project
   - eleven-domain-upms-core 用户权限管理的共享内核
   - eleven-domain-upms-service 用户权限管理领域的服务层
 - eleven-deploy 部署脚本
+  - /src/main/docker/jvm jvm 环境镜像封装，提供链路追踪，日志采集层基础组件
+  - /src/main/docker/ElasticSearch es 镜像封装，提供使用的分词插件等支持
+  - /src/main/docker/mysql mysql 镜像封装
+  - /src/main/docker/rabbitmq rabbitmq 镜像封装
+  - ...
 
 
 #### 请求链路
