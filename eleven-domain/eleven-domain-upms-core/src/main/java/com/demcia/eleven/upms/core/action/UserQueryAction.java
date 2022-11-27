@@ -7,10 +7,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserQuery  {
+public class UserQueryAction {
 
     @Parameter(description = "登录账号")
-    private String username;
+    private String login;
 
     @Parameter(description = "类型")
     private String type;

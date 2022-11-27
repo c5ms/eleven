@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class UserCreateAction {
 
-    @NotBlank
-    private String username;
+    @NotBlank(message = "登入账号不能为空")
+    private String login;
 
 }

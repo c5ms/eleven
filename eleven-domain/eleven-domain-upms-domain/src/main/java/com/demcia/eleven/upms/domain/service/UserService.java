@@ -6,18 +6,18 @@ import com.demcia.eleven.core.pageable.Pagination;
 import com.demcia.eleven.upms.core.action.UserCreateAction;
 import com.demcia.eleven.upms.core.action.UserUpdateAction;
 import com.demcia.eleven.upms.domain.entity.User;
-import com.demcia.eleven.upms.core.action.UserQuery;
+import com.demcia.eleven.upms.core.action.UserQueryAction;
 
 import java.util.Optional;
 
 public interface UserService {
 
     // ======================== read ========================
-    Optional<User> getUser(Long id);
+    Optional<User> getUser(String id);
 
-    PaginationResult<User> queryUser(UserQuery queryAction, Pagination pagination);
+    PaginationResult<User> queryUser(UserQueryAction queryAction, Pagination pagination);
 
-    default User requireUser(Long id) {
+    default User requireUser(String id) {
         return this.getUser(id).orElseThrow(() -> new DataNotFoundException("用户不存在"));
     }
 
@@ -27,4 +27,5 @@ public interface UserService {
 
     void updateUser(User user, UserUpdateAction action);
 
+    void deleteUser(User user);
 }

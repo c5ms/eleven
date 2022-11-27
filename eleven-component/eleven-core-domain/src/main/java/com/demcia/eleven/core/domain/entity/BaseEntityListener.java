@@ -1,5 +1,7 @@
 package com.demcia.eleven.core.domain.entity;
 
+import cn.hutool.extra.spring.SpringUtil;
+import com.demcia.eleven.core.domain.identity.IdGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,12 +18,12 @@ public class BaseEntityListener {
 //        if(1==1){
 //            throw  new PermissionDeadException("演示环境，不允许修改数据");
 //        }
-        log.debug("创建 JPA 对象 ID : {}#{}", baseEntity.getClass(), baseEntity.getId());
-        if (null==baseEntity.getId()) {
-//            log.debug("自动生成 JPA 对象 ID : {}#{}", baseEntity.getClass(), id);
-//            baseEntity.setId(id);
+        if (null == baseEntity.getId()) {
+            var id = SpringUtil.getBean(IdGenerator.class).nextId(baseEntity.getClass());
+            log.debug("创建 JPA 对象 ID : {}#{}", baseEntity.getClass(), id);
+            baseEntity.setId(id);
         } else {
-//            log.debug("更新 JPA 对象 ID : {}#{}", baseEntity.getClass(), baseEntity.getId());
+            log.debug("更新 JPA 对象 ID : {}#{}", baseEntity.getClass(), baseEntity.getId());
         }
     }
 

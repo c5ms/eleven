@@ -58,7 +58,6 @@ services:
 networks:
   eleven:
     attachable: true
-    driver: overlay
     ipam:
       driver: default
       config:

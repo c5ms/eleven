@@ -14,18 +14,25 @@ import java.util.Set;
 @Setter
 @Entity
 @FieldNameConstants
-@Table(name = "upms_user")
+@Table(name = "upms_user",
+        indexes = {
+                @Index(name = "idx_user_from_id_", columnList = "from_id_"),
+                @Index(name = "idx_user_type_", columnList = "type_")
+        },
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uc_user_login_", columnNames = {"login_"})
+        }
+)
 public class User extends BaseEntity {
 
-    public static final String USER_TYPE_SYSTEM = "sys_inner";
+    public static final String USER_TYPE_SYSTEM = "user";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_", nullable = false, length = 50)
-    private Long id;
+    @Column(name = "id_", nullable = false, length = 100)
+    private String id;
 
-    @Column(name = "username_", length = 100,unique = true)
-    private String username;
+    @Column(name = "login_", length = 100, unique = true)
+    private String login;
 
     @Column(name = "password_", length = 100)
     private String password;

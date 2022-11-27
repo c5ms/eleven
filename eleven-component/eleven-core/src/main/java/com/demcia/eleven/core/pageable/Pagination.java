@@ -21,6 +21,10 @@ public class Pagination implements Serializable {
     public static final Integer DEFAULT_PAGE = 1;
     public static final Integer DEFAULT_PAGE_SIZE = 20;
 
+    public static final Pagination ALL = new Pagination()
+            .setPage(-1)
+            .setPage(-1);
+
     @NotNull(message = "页码不能为空")
     @Min(value = 0, message = "页码不能为负")
     @Schema(name = "页码", type = "integer", minimum = "0", defaultValue = "1")

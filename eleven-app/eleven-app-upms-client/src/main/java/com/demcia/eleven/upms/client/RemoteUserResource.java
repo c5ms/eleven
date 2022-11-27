@@ -11,16 +11,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Optional;
 
-@FeignClient(contextId = "RemoteUserResource",
-        name = "eleven-upms",
-        url = "${service.eleven-upms.url:}",
-        path = "/users")
+@FeignClient(contextId = "RemoteUserResource", name = "eleven-upms",
+        url = "${service.eleven-upms.url:}", path = "/users")
 public interface RemoteUserResource {
 
     @PostMapping
     UserDto createUser(@RequestBody @Validated UserCreateAction action);
 
     @GetMapping("/{id}")
-    Optional<UserDto> getUser(@PathVariable("id") Long id);
+    Optional<UserDto> getUser(@PathVariable("id") String id);
 
 }
