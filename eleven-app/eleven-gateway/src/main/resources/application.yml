@@ -1,0 +1,12 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: eleven-gateway
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true

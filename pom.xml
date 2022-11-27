@@ -15,7 +15,7 @@
         <module>eleven-component</module>
         <module>eleven-domain</module>
         <module>eleven-deploy</module>
-	</modules>
+    </modules>
 
 
     <properties>
@@ -35,10 +35,10 @@
         <!--  docker 预设 -->
         <docker.baseImage>openjdk:11-jre</docker.baseImage>
         <docker.expose>9000</docker.expose>
-        <docker.host>http://192.168.2.250:2375</docker.host>
-        <docker.registry>192.168.2.30:5000</docker.registry>
-        <docker.username>admin</docker.username>
-        <docker.password>111111</docker.password>
+<!--        <docker.host>http://192.168.2.250:2375</docker.host>-->
+<!--        <docker.registry>192.168.2.30:5000</docker.registry>-->
+<!--        <docker.username>admin</docker.username>-->
+<!--        <docker.password>111111</docker.password>-->
 
 
         <!--  spring 家族 -->
@@ -416,8 +416,8 @@
                                         <extraArgument>-Xloggc:logs/demo_gc.log</extraArgument>
                                         <extraArgument>-XX:+HeapDumpOnOutOfMemoryError</extraArgument>
                                         <extraArgument>-XX:HeapDumpPath=logs/java_heapdump.hprof</extraArgument>
-                                        <!--										<extraArgument>-Djava.io.tmpdir=%BASEDIR%/tmp</extraArgument>-->
-                                        <!--										<extraArgument>&#45;&#45;add-opens java.base/java.lang=ALL-UNNAMED</extraArgument>-->
+                                        <!--                                        <extraArgument>-Djava.io.tmpdir=%BASEDIR%/tmp</extraArgument>-->
+                                        <extraArgument>--add-opens java.base/java.lang=ALL-UNNAMED</extraArgument>
                                     </extraArguments>
                                 </jvmSettings>
                             </daemon>
@@ -497,6 +497,13 @@
                                     <buildOptions>
                                         <forcerm>1</forcerm>
                                     </buildOptions>
+                                    <healthCheck>
+                                        <interval>10s</interval>
+                                        <timeout>3s</timeout>
+                                        <startPeriod>10s</startPeriod>
+                                        <retries>120</retries>
+                                        <cmd>curl http://localhost:${docker.expose}/actuator/health</cmd>
+                                    </healthCheck>
                                     <assembly>
                                         <mode>dir</mode>
                                         <name>${project.build.finalName}</name>
@@ -513,14 +520,13 @@
                             <phase>package</phase>
                             <goals>
                                 <goal>build</goal>
-                                <goal>push</goal>
+                                <!--                                <goal>push</goal>-->
                             </goals>
                         </execution>
                     </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
-
     </build>
 
     <repositories>

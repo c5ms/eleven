@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -19,12 +18,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -36,12 +35,11 @@ import java.util.stream.Collectors;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @Configuration(proxyBeanMethods = false)
 @RequiredArgsConstructor
-@EnableConfigurationProperties(ElevenRestProperties.class)
-public class ElevenRestAutoconfigure {
-    private final ElevenRestProperties elevenRestProperties;
+public class ElevenRestAutoconfigure implements WebMvcConfigurer {
 
     private static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
     private static final String DEFAULT_TIME_FORMAT = "HH:mm:ss";
+
 
     @Value("${epeius.rest.date-format:yyyy-MM-dd}")
     private String dateFormat = DEFAULT_DATE_FORMAT;
@@ -64,13 +62,6 @@ public class ElevenRestAutoconfigure {
 
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
-
-        Hibernate5Module hibernate5Module = new Hibernate5Module();
-        // 保证懒加载的数据一定会被加载
-        hibernate5Module.enable(Hibernate5Module.Feature.FORCE_LAZY_LOADING);
-        // 使用 jdk 自带的 集合类代替 hibernate 的懒加载类（跟上面组合搭配用于持久化 lazy loading 的属性）
-        hibernate5Module.enable(Hibernate5Module.Feature.REPLACE_PERSISTENT_COLLECTIONS);
-
         return builder -> builder
                 .serializerByType(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(datetimeFormat)))
                 .serializerByType(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern(dateFormat)))
@@ -94,19 +85,8 @@ public class ElevenRestAutoconfigure {
                 )
                 .modules(
                         new Jdk8Module(),
-                        new JavaTimeModule(),
-                        hibernate5Module
+                        new JavaTimeModule()
                 );
     }
-
-
-//    @Override
-//    public void configurePathMatch(PathMatchConfigurer configurer) {
-//        configurer.addPathPrefix(elevenRestProperties.getPrefix(), new RestApiPredicate(
-//                elevenRestProperties.getPackages(),
-//                elevenRestProperties.getAnnotations()
-//        ));
-//        Bootstrap.log("全局 API 路径处理，统一前缀 : " + elevenRestProperties.getPrefix());
-//    }
 
 }

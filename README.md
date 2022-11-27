@@ -8,16 +8,29 @@ micro service learning project
 
 - eleven-application 应用层，提供有状态的应用逻辑
   - eleven-app-demo 一个示例应用，运行于用户接入网络，对接 GUI 界面，提供定制化应用逻辑！
+  - eleven-app-upms 用户权限管理的应用层，可运行，可作为微服务发布
+  - eleven-app-upms-client  用户权限管理的应用层客户端，可以作为其他应用层远程微服务调用
 - eleven-component 公共组件层，提供工具包，基础库。
+  - eleven-core        核心包，提供：工具库，通用场景类，通用异常类，通用枚举类，通用工具类
+  - eleven-core-feign  远程客户端调用核心支持
+  - eleven-core-rest   Web Restful Endpoint 层支持
+  - eleven-core-app    核心应用层支持
+  - eleven-core-service 公共领域服务层支持
 - eleven-domain 领域服务层，提供无状态领域服务
-  - eleven-domain-client 领域客户端层支持
-  - eleven-domain-core  领域内核层支持
-  - eleven-domain-service  领域服务层支持
-  - eleven-domain-upms-client   用户权限管理领域客户端
-  - eleven-domain-upms-core     用户权限管理领域内核
-  - eleven-domain-upms-service  用户权限管理领域服务，提供通用业务逻辑
+  - eleven-domain-upms-core 用户权限管理的共享内核
+  - eleven-domain-upms-service 用户权限管理领域的服务层
 - eleven-deploy 部署脚本
+  - /src/main/docker/jvm jvm 环境镜像封装，提供链路追踪，日志采集层基础组件
+  - /src/main/docker/ElasticSearch es 镜像封装，提供使用的分词插件等支持
+  - /src/main/docker/mysql mysql 镜像封装
+  - /src/main/docker/rabbitmq rabbitmq 镜像封装
+  - ...
 
+#### 编码约定
+1. xxxHelper 为特定业务场景下的工具类，提供静态方法,比如：PageableQueryHelper 将系统的分页模型->技术手段分页模型，AuthenticationHelper  
+2. xxxUtil   为特定技术场景下的工具类，提供静态方法,比如：NetworkUtil#ping(ip)
+3. xxxConvertor 为业务领域下的转换类，只可以单向转换 domain->Dto(DataTransferObject),domain->Vo(ViewObject)
+4. domain+Service 位领域对象的服务层，提供最核心的领域服务，只直接处理领域下的使用场（Action 命令），和领域事件发布
 
 #### 请求链路
 ![请求链路](./doc/微服务请求链路.png "请求链路")
@@ -35,8 +48,10 @@ micro service learning project
 
 
 #### todo 
-1. 数据库采用自增还是 UUID，还是雪花算法/雨滴算法？
-2. 该不该使用聚合根？和 command Handler 模式？
+1. ID 策略，数据库采用自增还是 UUID，还是雪花算法/雨滴算法？
+2. CQRS的使用，该不该使用聚合根？和 command Handler 模式？
+3. 是否需要领域层+应用层的模式？
+4. 搭建框架用的业务领域，建议做个 TODO 最简单
 
 
 #### 安装教程

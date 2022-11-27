@@ -16,7 +16,7 @@
 
         <!-- 用户权限管理 -->
         <module>eleven-domain-upms-core</module>
-        <module>eleven-domain-upms-service</module>
+        <module>eleven-domain-upms-domain</module>
 
     </modules>
 

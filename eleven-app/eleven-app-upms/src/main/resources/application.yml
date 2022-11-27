@@ -1,27 +1,27 @@
 server:
   port: 9000
-  error:
-    include-message: always
 
 spring:
   application:
     name: eleven-upms
 
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/eleven_upms?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
-    username: eleven
-    password: eleven
+    dynamic:
+      primary: master
+      strict: false
+      datasource:
+        master:
+          url: ${db.upms.url}
+          username: ${db.upms.username}
+          password: ${db.upms.password}
+          hikari:
+            max-lifetime: ${db.upms.maxLifetime:30000}
+            max-pool-size: ${db.upms.maxSize:5}
 
-  jpa:
-    generate-ddl: true
-    show-sql: true
-    properties:
-      hibernate:
-        enable_lazy_load_no_trans: true
+
+
 
 eleven:
-  rest:
-    prefix: /api
   open-api:
     title: 用户授权管理
     description: 这是一个伟大而又了不起的工程！
@@ -34,3 +34,10 @@ eleven:
     license:
       name: Apache 2.0
       url: https://www.demcia.com/
+
+logging:
+  level:
+    sql: info
+    web: debug
+    root: info
+    'sleuth.sql': debug
