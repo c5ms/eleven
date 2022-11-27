@@ -128,27 +128,13 @@
             </dependency>
 
             <dependency>
-                <groupId>org.springframework.session</groupId>
-                <artifactId>spring-session-bom</artifactId>
-                <version>${version.spring-session}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-oauth2-authorization-server</artifactId>
                 <version>${version.spring-oauth2-authorization-server}</version>
             </dependency>
 
 
-            <dependency>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-core</artifactId>
-                <version>${version.flyway}</version>
-            </dependency>
-
-            <!-- hutool -->
+            <!-- hutool util工具组件 -->
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-bom</artifactId>
@@ -163,14 +149,7 @@
             </dependency>
 
 
-            <!-- Camel BOM -->
-            <dependency>
-                <groupId>org.apache.camel.springboot</groupId>
-                <artifactId>camel-spring-boot-bom</artifactId>
-                <version>${version.camel}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+            <!-- apache common -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
@@ -210,14 +189,16 @@
                 <version>${version.jpa-spec}</version>
             </dependency>
             <dependency>
-                <groupId>com.sagframe</groupId>
-                <artifactId>sagacity-sqltoy-starter</artifactId>
-                <version>${version.sqltoy}</version>
-            </dependency>
-            <dependency>
                 <groupId>net.ttddyy</groupId>
                 <artifactId>datasource-proxy</artifactId>
                 <version>${version.datasourceproxy}</version>
+            </dependency>
+
+            <!-- 多数据源支持 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>${version.dynamic-datasource}</version>
             </dependency>
 
 
@@ -235,47 +216,18 @@
                 <version>${version.redisson}</version>
             </dependency>
 
-            <!-- 对象拷贝技术 -->
-            <dependency>
-                <groupId>dev.akkinoc.spring.boot</groupId>
-                <artifactId>orika-spring-boot-starter</artifactId>
-                <version>${version.orika}</version>
-            </dependency>
-
-            <!-- HTML 处理-->
-            <dependency>
-                <groupId>org.jsoup</groupId>
-                <artifactId>jsoup</artifactId>
-                <version>${version.jsoup}</version>
-            </dependency>
-
-            <!-- 汉语拼音 -->
-            <dependency>
-                <groupId>com.github.promeg</groupId>
-                <artifactId>tinypinyin</artifactId>
-                <version>${version.tinypinyin}</version>
-            </dependency>
-
-
-            <!-- javers -->
-            <dependency>
-                <groupId>org.javers</groupId>
-                <artifactId>javers-spring-boot-starter-sql</artifactId>
-                <version>${version.javers}</version>
-            </dependency>
-
-            <!-- 多数据源支持 -->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-                <version>${version.dynamic-datasource}</version>
-            </dependency>
-
             <!-- 缓存 -->
             <dependency>
                 <groupId>com.alicp.jetcache</groupId>
                 <artifactId>jetcache-starter-redis-lettuce</artifactId>
                 <version>${version.jetcache}</version>
+            </dependency>
+
+            <!-- 对象拷贝技术 -->
+            <dependency>
+                <groupId>dev.akkinoc.spring.boot</groupId>
+                <artifactId>orika-spring-boot-starter</artifactId>
+                <version>${version.orika}</version>
             </dependency>
 
             <!-- 算法包 -->
@@ -284,20 +236,6 @@
                 <artifactId>bcprov-jdk15on</artifactId>
                 <version>${version.bcprov}</version>
             </dependency>
-
-            <!-- 序列化工具 -->
-            <dependency>
-                <groupId>com.esotericsoftware</groupId>
-                <artifactId>kryo</artifactId>
-                <version>${version.kryo}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>de.ruedigermoeller</groupId>
-                <artifactId>fst</artifactId>
-                <version>${version.fst}</version>
-            </dependency>
-
 
             <!-- doc -->
             <dependency>
@@ -319,23 +257,6 @@
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-springdoc-ui</artifactId>
                 <version>${version.knife4j}</version>
-            </dependency>
-
-            <!-- dev -->
-            <dependency>
-                <groupId>org.mapstruct</groupId>
-                <artifactId>mapstruct</artifactId>
-                <version>${version.mapstruct}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.mapstruct</groupId>
-                <artifactId>mapstruct-processor</artifactId>
-                <version>${version.mapstruct}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.jsonzou</groupId>
-                <artifactId>jmockdata</artifactId>
-                <version>${version.jmockdata}</version>
             </dependency>
 
             <!-- APM -->
