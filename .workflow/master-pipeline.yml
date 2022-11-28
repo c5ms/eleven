@@ -23,7 +23,7 @@ stages:
         artifacts:
           - name: BUILD_ARTIFACT
             path:
-              - ./target
+              - ./eleven-app/target
         caches:
           - ~/.m2
         strategy: {}
