@@ -31,7 +31,7 @@ stages:
         name: publish_general_artifacts
         displayName: 上传制品
         dependArtifact: BUILD_ARTIFACT
-        artifactName: output
+        artifactName: eleven_backend
         strategy: {}
         dependsOn: build_maven
   - name: release
