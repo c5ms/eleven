@@ -24,12 +24,15 @@ stages:
           - name: BUILD_ARTIFACT
             path:
               - ./target
+        caches:
+          - ~/.m2
         strategy: {}
       - step: publish@general_artifacts
         name: publish_general_artifacts
         displayName: 上传制品
         dependArtifact: BUILD_ARTIFACT
         artifactName: output
+        strategy: {}
         dependsOn: build_maven
   - name: release
     displayName: 发布
@@ -42,3 +45,4 @@ stages:
         dependArtifact: output
         version: 1.0.0.0
         autoIncrement: true
+        strategy: {}
