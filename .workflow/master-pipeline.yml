@@ -42,7 +42,7 @@ stages:
       - step: publish@release_artifacts
         name: publish_release_artifacts
         displayName: 发布
-        dependArtifact: output
+        dependArtifact: eleven_backend
         version: 1.0.0.0
         autoIncrement: true
         strategy: {}
