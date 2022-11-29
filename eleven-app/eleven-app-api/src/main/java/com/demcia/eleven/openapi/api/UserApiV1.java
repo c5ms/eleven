@@ -23,7 +23,7 @@ public class UserApiV1 {
     private final RemoteUserResource remoteUserResource;
 
     @PostMapping
-    @Operation(summary = "创建用户")
+    @Operation(summary = "用户创建")
     public UserDto createUser(@RequestBody @Validated UserCreateAction action) {
         System.out.println("处理了大量应用层面的逻辑，组合了多个远程服务和本地服务");
         // TODO 这里会出现分布式事务的问题？！
@@ -32,7 +32,7 @@ public class UserApiV1 {
 
 
     @GetMapping("/{id}")
-    @Operation(summary = "读取用户")
+    @Operation(summary = "用户读取")
     public Optional<UserDto> getUser(@PathVariable("id") String id) {
         return remoteUserResource.getUser(id);
     }

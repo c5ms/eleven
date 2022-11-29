@@ -28,21 +28,21 @@ public class UserResourceV1 {
     private final UserService userService;
     private final UserConvertor userConvertor;
 
-    @Operation(summary = "查询用户")
+    @Operation(summary = "用户查询")
     @GetMapping
     public PaginationResult<UserDto> queryUser(@ParameterObject UserQueryAction queryAction,
                                                @ParameterObject Pagination pagination) {
         return userService.queryUser(queryAction, pagination).map(userConvertor::toDto);
     }
 
-    @Operation(summary = "读取用户")
+    @Operation(summary = "用户读取")
     @GetMapping("/{id}")
     public UserDto getUser(@PathVariable("id") String id) {
         var user = userService.requireUser(id);
         return userConvertor.toDto(user);
     }
 
-    @Operation(summary = "创建用户")
+    @Operation(summary = "用户创建")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto createUser(@RequestBody @Validated UserCreateAction action) {
@@ -50,8 +50,8 @@ public class UserResourceV1 {
         return userConvertor.toDto(user);
     }
 
-    @Operation(summary = "更新用户")
-    @PostMapping("/{id}")
+    @Operation(summary = "用户更新")
+    @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public UserDto updateUser(@PathVariable("id") String id, @RequestBody UserUpdateAction updateAction) {
         var user = userService.requireUser(id);
@@ -59,7 +59,7 @@ public class UserResourceV1 {
         return userConvertor.toDto(user);
     }
 
-    @Operation(summary = "删除用户")
+    @Operation(summary = "用户删除")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable("id") String id) {
