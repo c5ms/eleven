@@ -36,10 +36,6 @@ import static org.springframework.core.annotation.AnnotatedElementUtils.findMerg
 public class FeignInnerContract extends SpringMvcContract {
     @Override
     protected void processAnnotationOnMethod(feign.MethodMetadata data, Annotation methodAnnotation, Method method) {
-
-        if (methodAnnotation instanceof Inner) {
-            Inner inner = findMergedAnnotation(method, Inner.class);
-        }
         super.processAnnotationOnMethod(data, methodAnnotation, method);
     }
 

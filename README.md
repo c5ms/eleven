@@ -7,17 +7,17 @@ micro service learning project
 #### 代码结构
 
 - eleven-application 应用层，提供有状态的应用逻辑
-    - eleven-app-demo 一个示例应用，运行于用户接入网络，对接 GUI 界面，提供定制化应用逻辑！
-    - eleven-app-upms 用户权限管理的应用层，可运行，可作为微服务发布
-    - eleven-app-upms-client 用户权限管理的应用层客户端，可以作为其他应用层远程微服务调用
+    - eleven-demo 一个示例应用，运行于用户接入网络，对接 GUI 界面，提供定制化应用逻辑！
+    - eleven-upms 用户权限管理的应用层，可运行，可作为微服务发布
+    - eleven-upms-client 用户权限管理的应用层客户端，可以作为其他应用层远程微服务调用
 - eleven-component 公共组件层，提供工具包，基础库。
     - eleven-core 核心包，提供：工具库，通用场景类，通用异常类，通用枚举类，通用工具类
     - eleven-core-feign 远程客户端调用核心支持
     - eleven-core-rest Web层 Restful Api 层支持
     - eleven-core-domain 公共领域服务层支持
 - eleven-domain 领域服务层，提供无状态领域服务
-    - eleven-domain-upms-core 用户权限管理的共享内核
-    - eleven-domain-upms-service 用户权限管理领域的服务层
+    - eleven-upms-core 用户权限管理的共享内核
+    - eleven-upms-service 用户权限管理领域的服务层
 - eleven-deploy 部署脚本
     - /src/main/docker/jvm jvm 环境镜像封装，提供链路追踪，日志采集层基础组件
     - /src/main/docker/ElasticSearch es 镜像封装，提供使用的分词插件等支持
@@ -68,11 +68,12 @@ micro service learning project
 
 ##### 2xx 使用
 
-200 暂定只使用 200 一个状态，既：只要服务器能正确处理请求，并且处理正确，则相应 200
+2xx 状态码暂定只使用 200 一个状态，既：只要服务器能正确处理请求，并且处理正确，则相应 200
 状态码。有一个歧义是，比如登入的时候用户名错误这种响应，其实并不不存在任何处理错误，而是正确处理的结果，所以首先状态码应该响应
 200，然后在相应内容中应该包含登入失败的原因/编码。
 
 比如：
+
 ```
 POST /auth/credentials/verify {username,password}
 
@@ -82,13 +83,21 @@ status 200
 {pass:false,message:"your login id is not found!"}
 
 ```
+
 诸如此类，在特定场景下的处理结果被拒绝，需要给出拒绝理由的场景，服务器应该响应 200，并且在结果中描述清楚结果代码以及原因。
 
 ##### rest api 设计
 
 - 创建 POST /XXX 响应为 200 OK 表示资源被创建,成功的时候相应创建的资源，拒绝的时候响应失败原因，带有 4xx 状态
 - 读取 GET /XXX 响应为 200 OK 表示资源被读取到，成功的时候响应此资源，拒绝的时候响应失败原因，带有 4xx 状态
-- 更新 PUT /XXX 响应为 200 OK 表示全量修改一个资源，比如根据用户 ID 修改用户全部信息,此类操作接口幂等，成功的时候不响应任何结果，拒绝的时候响应失败原因，带有 4xx 状态
+- 更新 PUT /XXX 响应为 200 OK 表示全量修改一个资源，比如根据用户 ID 修改用户全部信息,此类操作接口幂等，成功的时候不响应任何结果，拒绝的时候响应失败原因，带有
+  4xx 状态
 - 修改 PATCH /XXX 响应为 200 OK 表示局部更新一个资源，比如修单独修改用户名，或者是将一个网站文档进行发布（PATCH
   /art/{16}/publish）此接口可返回资源处理结果，比如文章发布的流水记录；拒绝的时候响应失败原因，带有 4xx 状态
 - DELETE /XXX 响应为 200 OK 表示资源被删除，成功的时候不响应任何结果，拒绝的时候响应失败原因，带有 4xx 状态
+
+##### 常见问题
+
+1. 为什么不全部响应 200，然后在自定义结果中给出错误提示？
+
+> 业务逻辑的处理前提 api 文档中会说的很清楚，为什么没有运行成功调用接口的客户端应该非常清楚才对。如果是由于其他用户没有执行某种操作导致业务无法继续执行，并不是统一接口设计的问题，而是具体业务场景的问题。

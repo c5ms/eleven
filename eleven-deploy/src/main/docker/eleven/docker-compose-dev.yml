@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   upms:
-    image: demacia/eleven-app-upms:latest
+    image: demacia/eleven-upms:latest
     restart: on-failure
     networks:
       - eleven
@@ -20,7 +20,7 @@ services:
       - "9000:9000"
 
   api:
-    image: demacia/eleven-app-api:latest
+    image: demacia/eleven-api:latest
     restart: on-failure
     networks:
       - eleven

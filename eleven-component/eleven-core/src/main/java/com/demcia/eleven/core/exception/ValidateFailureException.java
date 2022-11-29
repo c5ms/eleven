@@ -1,6 +1,6 @@
 package com.demcia.eleven.core.exception;
 
-public class ValidateFailureException extends RuntimeException {
+public class ValidateFailureException extends ElevenRuntimeException {
 
     public ValidateFailureException(String message) {
         super(message);
@@ -9,9 +9,5 @@ public class ValidateFailureException extends RuntimeException {
     public ValidateFailureException() {
     }
 
-    @Override
-    public synchronized Throwable fillInStackTrace() {
-        return this;
-    }
 
 }
