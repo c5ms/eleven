@@ -44,15 +44,13 @@ public class UserResourceV1 {
 
     @Operation(summary = "用户创建")
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public UserDto createUser(@RequestBody @Validated UserCreateAction action) {
         var user = userService.createUser(action);
         return userConvertor.toDto(user);
     }
 
     @Operation(summary = "用户更新")
-    @PatchMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/{id}")
     public UserDto updateUser(@PathVariable("id") String id, @RequestBody UserUpdateAction updateAction) {
         var user = userService.requireUser(id);
         userService.updateUser(user, updateAction);
@@ -61,7 +59,6 @@ public class UserResourceV1 {
 
     @Operation(summary = "用户删除")
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable("id") String id) {
         var user = userService.requireUser(id);
         userService.deleteUser(user);
