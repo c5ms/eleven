@@ -29,9 +29,8 @@ public class UserResourceV1 {
 
     @Operation(summary = "用户查询")
     @GetMapping
-    public PaginationResult<UserDto> queryUser(@ParameterObject UserQueryAction queryAction,
-                                               @ParameterObject Pagination pagination) {
-        return userService.queryUser(queryAction, pagination).map(userConvertor::toDto);
+    public PaginationResult<UserDto> queryUser(@ParameterObject UserQueryAction queryAction) {
+        return userService.queryUser(queryAction).map(userConvertor::toDto);
     }
 
     @Operation(summary = "用户读取")

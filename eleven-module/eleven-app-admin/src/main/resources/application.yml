@@ -1,29 +1,13 @@
 server:
-  port: 9000
+  port: 8000
 
 spring:
   application:
-    name: upms
-
-  datasource:
-    dynamic:
-      primary: master
-      strict: false
-      datasource:
-        master:
-          url: ${db.upms.url}
-          username: ${db.upms.username}
-          password: ${db.upms.password}
-          hikari:
-            max-lifetime: ${db.upms.maxLifetime:30000}
-            max-pool-size: ${db.upms.maxSize:5}
-
-  jpa:
-    generate-ddl: true
+    name: api
 
 eleven:
   open-api:
-    title: 用户授权管理
+    title: 开放 API 服务
     description: 这是一个伟大而又了不起的工程！
     version: 1.0.0.dev
     terms-of-service: https://www.demcia.com/
@@ -35,9 +19,11 @@ eleven:
       name: Apache 2.0
       url: https://www.demcia.com/
 
+
 logging:
   level:
     sql: info
     web: debug
     root: info
+    'com.demcia': debug
     'sleuth.sql': debug

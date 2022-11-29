@@ -60,14 +60,14 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public PaginationResult<User> queryUser(UserQueryAction queryAction, Pagination pagination) {
+    public PaginationResult<User> queryUser(UserQueryAction queryAction) {
         var spec = Specifications.<User>and()
                 .eq(StringUtils.isNotBlank(queryAction.getLogin()), User.Fields.login, StringUtils.trim(queryAction.getLogin()))
                 .eq(StringUtils.isNotBlank(queryAction.getType()), User.Fields.type, StringUtils.trim(queryAction.getType()))
                 .eq(Objects.nonNull(queryAction.getState()), User.Fields.state, queryAction.getState())
                 .build();
         var sort = Sort.by(User.Fields.id).descending();
-        var pageable = PageableQueryHelper.toSpringDataPageable(pagination, sort);
+        var pageable = PageableQueryHelper.toSpringDataPageable(queryAction, sort);
         var page = userRepository.findAll(spec, pageable);
         return PageableQueryHelper.toPageResult(page);
     }

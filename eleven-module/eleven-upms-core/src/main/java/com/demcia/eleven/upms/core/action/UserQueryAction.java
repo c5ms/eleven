@@ -1,5 +1,6 @@
 package com.demcia.eleven.upms.core.action;
 
+import com.demcia.eleven.core.pageable.Pagination;
 import com.demcia.eleven.upms.core.enums.UserState;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.Getter;
@@ -7,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserQueryAction {
+public class UserQueryAction extends Pagination {
 
     @Parameter(description = "登录账号")
     private String login;

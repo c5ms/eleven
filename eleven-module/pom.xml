@@ -13,8 +13,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>eleven-api</module>
-        <module>eleven-gateway</module>
+        <module>eleven-app-api</module>
+        <module>eleven-app-admin</module>
+        <module>eleven-app-gateway</module>
         <module>eleven-upms-core</module>
         <module>eleven-upms-client</module>
         <module>eleven-upms-service</module>

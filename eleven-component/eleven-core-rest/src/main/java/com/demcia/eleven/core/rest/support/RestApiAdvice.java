@@ -64,8 +64,13 @@ public class RestApiAdvice {
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(BindException.class)
     public RestfulFailure onMethodArgumentNotValidException(BindException e) {
+                String message = e.getAllErrors().stream()
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                .filter(StringUtils::isNotBlank)
+                .sorted(Comparator.naturalOrder())
+                .collect(Collectors.joining(";"));
         return new RestfulFailure()
-                .setMessage("数据校验失败")
+                .setMessage(message)
                 .setError(HttpStatus.UNPROCESSABLE_ENTITY.getReasonPhrase());
     }
 

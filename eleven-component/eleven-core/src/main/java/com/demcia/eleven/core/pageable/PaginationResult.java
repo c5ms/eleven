@@ -1,6 +1,8 @@
 package com.demcia.eleven.core.pageable;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 
 import java.lang.reflect.InvocationTargetException;
@@ -10,6 +12,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+@Setter
+@NoArgsConstructor
 @Schema(description = "分页结果")
 public class PaginationResult<T> implements Iterable<T> {
 
@@ -21,6 +25,7 @@ public class PaginationResult<T> implements Iterable<T> {
 
 	@Schema(description = "本页数据")
 	private Collection<T> elements;
+
 
 	public PaginationResult(Collection<T> elements) {
 		this.elements = Objects.isNull(elements)

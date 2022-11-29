@@ -15,7 +15,7 @@ public interface UserService {
     // ======================== read ========================
     Optional<User> getUser(String id);
 
-    PaginationResult<User> queryUser(UserQueryAction queryAction, Pagination pagination);
+    PaginationResult<User> queryUser(UserQueryAction queryAction);
 
     default User requireUser(String id) {
         return this.getUser(id).orElseThrow(() -> new DataNotFoundException("用户不存在"));

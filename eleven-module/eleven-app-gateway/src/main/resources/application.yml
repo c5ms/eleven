@@ -1,0 +1,14 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: eleven-gateway
+
+  cloud:
+    gateway:
+      routes:
+        #  API 服务
+        - uri: lb://api
+          predicates:
+            - Path=/api/**

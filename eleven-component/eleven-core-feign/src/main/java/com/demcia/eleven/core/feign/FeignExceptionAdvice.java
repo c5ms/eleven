@@ -27,7 +27,7 @@ public class FeignExceptionAdvice {
 
     @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(FeignServiceUnAvailableException.class)
     public RestfulFailure onException(FeignServiceUnAvailableException e) {
         return new RestfulFailure()
                 .setMessage("服务器错误")
