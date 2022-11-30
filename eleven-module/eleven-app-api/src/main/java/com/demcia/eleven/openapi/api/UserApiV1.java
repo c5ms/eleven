@@ -1,5 +1,9 @@
 package com.demcia.eleven.openapi.api;
 
+import com.demcia.eleven.core.exception.DataNotFoundException;
+import com.demcia.eleven.core.exception.PermissionDeadException;
+import com.demcia.eleven.core.exception.ProcessFailureException;
+import com.demcia.eleven.core.exception.UnauthorizedException;
 import com.demcia.eleven.core.pageable.PaginationResult;
 import com.demcia.eleven.core.rest.annonation.RestResource;
 import com.demcia.eleven.upms.client.UserResourceClient;
@@ -30,7 +34,6 @@ public class UserApiV1 {
         return userResourceClient.createUser(action);
     }
 
-
     @GetMapping("/{id}")
     @Operation(summary = "用户读取")
     public Optional<UserDto> getUser(@PathVariable("id") String id) {
@@ -41,8 +44,9 @@ public class UserApiV1 {
     @GetMapping
     @Operation(summary = "用户查询")
     public PaginationResult<UserDto> queryUser(@ParameterObject UserQueryAction queryAction) {
-        // 假设这个用户是个普通用户，在这里会将其终止请求
-        return userResourceClient.queryUser(queryAction);
+//        throw DataNotFoundException.of("数据不存在");
+        throw  new IllegalStateException();
+//        return userResourceClient.queryUser(queryAction);
     }
 
 }

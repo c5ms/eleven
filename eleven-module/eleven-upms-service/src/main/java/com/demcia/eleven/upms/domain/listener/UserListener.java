@@ -1,7 +1,7 @@
 package com.demcia.eleven.upms.domain.listener;
 
-import com.demcia.eleven.upms.core.events.UserCreatedEvent;
-import com.demcia.eleven.upms.core.events.UserUpdatedEvent;
+import com.demcia.eleven.upms.core.event.UserCreatedEvent;
+import com.demcia.eleven.upms.core.event.UserUpdatedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 

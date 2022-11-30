@@ -6,9 +6,9 @@ import com.demcia.eleven.core.pageable.PaginationResult;
 import com.demcia.eleven.upms.core.action.UserCreateAction;
 import com.demcia.eleven.upms.core.action.UserQueryAction;
 import com.demcia.eleven.upms.core.action.UserUpdateAction;
-import com.demcia.eleven.upms.core.constants.UserErrors;
-import com.demcia.eleven.upms.core.events.UserCreatedEvent;
-import com.demcia.eleven.upms.core.events.UserUpdatedEvent;
+import com.demcia.eleven.upms.core.code.UserErrors;
+import com.demcia.eleven.upms.core.event.UserCreatedEvent;
+import com.demcia.eleven.upms.core.event.UserUpdatedEvent;
 import com.demcia.eleven.upms.domain.entity.User;
 import com.demcia.eleven.upms.domain.entity.UserRepository;
 import com.demcia.eleven.upms.domain.service.UserService;
@@ -30,6 +30,7 @@ public class DefaultUserService implements UserService {
 
     @Override
     public User createUser(UserCreateAction action) {
+        // 验证，用户名不能重复
         userRepository.findByLogin(action.getLogin()).ifPresent(user -> {
             throw ProcessFailureException.of(UserErrors.USER_NAME_REPEAT);
         });

@@ -6,7 +6,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class RestfulSuccess<T> {
-    private String code;
+    private String code = "0";
     private String message;
     private T data;
 }
