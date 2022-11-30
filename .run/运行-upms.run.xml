@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="运行-身份服务" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+  <configuration default="false" name="运行-upms" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <option name="ACTIVE_PROFILES" />
     <option name="ALTERNATIVE_JRE_PATH" value="azul-11" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />

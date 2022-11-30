@@ -1,6 +1,6 @@
 package com.demcia.eleven.core.feign;
 
-import com.demcia.eleven.core.feign.exception.FeignFailureException;
+import com.demcia.eleven.core.exception.ProcessFailureException;
 import com.demcia.eleven.core.feign.exception.FeignServiceUnAvailableException;
 import com.demcia.eleven.core.rest.RestfulFailure;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,13 +28,21 @@ public class FeignErrorDecoder implements ErrorDecoder {
     @Override
     public Exception decode(String methodKey, Response response) {
         var httpStatus = HttpStatus.valueOf(response.status());
-        // 客户端错误
-        if (httpStatus.is4xxClientError()) {
+        // 服务端错误
+        if (httpStatus.is5xxServerError()) {
+            // 服务不存在
+            if (httpStatus == HttpStatus.SERVICE_UNAVAILABLE) {
+                throw new FeignServiceUnAvailableException(response.request());
+            }
+        }
+
+        // 422 错误，请求逻辑无法处理,还原拒绝理由
+        if (httpStatus == HttpStatus.UNPROCESSABLE_ENTITY) {
             for (String type : response.headers().get(HttpHeaders.CONTENT_TYPE)) {
                 if (MediaType.parseMediaType(type).isCompatibleWith(MediaType.APPLICATION_JSON)) {
                     try (InputStream is = response.body().asInputStream()) {
                         var restApiFailureResult = objectMapper.readValue(is, RestfulFailure.class);
-                        throw new FeignFailureException(HttpStatus.valueOf(response.status()), restApiFailureResult);
+                        throw ProcessFailureException.of(restApiFailureResult.getError(), restApiFailureResult.getMessage());
                     } catch (IOException e) {
                         log.error("feign error decode error", e);
                         throw new RuntimeException(e);
@@ -42,14 +50,7 @@ public class FeignErrorDecoder implements ErrorDecoder {
                 }
             }
         }
-        // 服务端错误
-        if (httpStatus.is5xxServerError()) {
 
-            // 服务不存在
-            if (httpStatus == HttpStatus.SERVICE_UNAVAILABLE) {
-                throw new FeignServiceUnAvailableException(response.request());
-            }
-        }
         return defaultErrorDecoder.decode(methodKey, response);
     }
 

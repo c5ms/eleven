@@ -18,24 +18,32 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.lang.annotation.Annotation;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.TimeZone;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @Configuration(proxyBeanMethods = false)
 @RequiredArgsConstructor
-public class ElevenRestAutoconfigure implements WebMvcConfigurer {
+@EnableConfigurationProperties(ElevenRestfulProperties.class)
+@PropertySource("classpath:/config/application-rest.properties")
+public class ElevenRestfulAutoconfigure implements WebMvcConfigurer {
 
     private static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
     private static final String DEFAULT_TIME_FORMAT = "HH:mm:ss";
@@ -58,6 +66,17 @@ public class ElevenRestAutoconfigure implements WebMvcConfigurer {
     @ConditionalOnMissingBean
     public HttpMessageConverters messageConverters(ObjectProvider<HttpMessageConverter<?>> converters) {
         return new HttpMessageConverters(converters.orderedStream().collect(Collectors.toList()));
+    }
+
+    private final ElevenRestfulProperties elevenRestfulProperties;
+
+
+    @Override
+    public void configurePathMatch(PathMatchConfigurer configurer) {
+        configurer.addPathPrefix(elevenRestfulProperties.getPrefix(), new RestfulPredicate(
+                elevenRestfulProperties.getPackages(),
+                elevenRestfulProperties.getAnnotations()
+        ));
     }
 
     @Bean
@@ -89,4 +108,26 @@ public class ElevenRestAutoconfigure implements WebMvcConfigurer {
                 );
     }
 
+    @RequiredArgsConstructor
+    public static class RestfulPredicate implements Predicate<Class<?>> {
+
+        private final List<String> packages;
+        private final List<Class<? extends Annotation>> annotations;
+
+        @Override
+        public boolean test(Class<?> aClass) {
+
+            for (String aPackage : packages) {
+                if (aClass.getPackageName().startsWith(aPackage)) {
+                    return true;
+                }
+            }
+            for (Class<? extends Annotation> annotatedInterface : annotations) {
+                if (null != aClass.getAnnotation(annotatedInterface)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
 }

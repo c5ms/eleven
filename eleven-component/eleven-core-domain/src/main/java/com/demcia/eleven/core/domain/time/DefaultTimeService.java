@@ -9,15 +9,15 @@ import java.time.ZoneId;
 @RequiredArgsConstructor
 public class DefaultTimeService implements TimeService {
 
-	private final Clock clock;
+    private final Clock clock;
 
-	@Override
-	public ZoneId getZoneId() {
-		return clock.getZone();
-	}
+    @Override
+    public ZoneId getZoneId() {
+        return clock.getZone();
+    }
 
-	@Override
-	public Instant getInstant() {
-		return clock.instant();
-	}
+    @Override
+    public Instant getInstant() {
+        return clock.instant();
+    }
 }

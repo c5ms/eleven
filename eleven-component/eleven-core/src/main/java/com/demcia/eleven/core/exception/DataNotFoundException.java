@@ -5,9 +5,11 @@ package com.demcia.eleven.core.exception;
  */
 public class DataNotFoundException extends ElevenRuntimeException {
 
-    public DataNotFoundException(String message) {
+    private DataNotFoundException(String message) {
         super(message);
     }
 
-
+    public static DataNotFoundException of(String message) {
+        return new DataNotFoundException(message);
+    }
 }

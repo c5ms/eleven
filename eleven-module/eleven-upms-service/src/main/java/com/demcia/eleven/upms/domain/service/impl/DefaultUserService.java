@@ -1,12 +1,12 @@
 package com.demcia.eleven.upms.domain.service.impl;
 
 import com.demcia.eleven.core.domain.helper.PageableQueryHelper;
-import com.demcia.eleven.core.exception.ValidateFailureException;
-import com.demcia.eleven.core.pageable.Pagination;
+import com.demcia.eleven.core.exception.ProcessFailureException;
 import com.demcia.eleven.core.pageable.PaginationResult;
 import com.demcia.eleven.upms.core.action.UserCreateAction;
 import com.demcia.eleven.upms.core.action.UserQueryAction;
 import com.demcia.eleven.upms.core.action.UserUpdateAction;
+import com.demcia.eleven.upms.core.constants.UserErrors;
 import com.demcia.eleven.upms.core.events.UserCreatedEvent;
 import com.demcia.eleven.upms.core.events.UserUpdatedEvent;
 import com.demcia.eleven.upms.domain.entity.User;
@@ -31,7 +31,7 @@ public class DefaultUserService implements UserService {
     @Override
     public User createUser(UserCreateAction action) {
         userRepository.findByLogin(action.getLogin()).ifPresent(user -> {
-            throw new ValidateFailureException("用户名已存在");
+            throw ProcessFailureException.of(UserErrors.USER_NAME_REPEAT);
         });
         var user = new User();
         user.setLogin(action.getLogin());

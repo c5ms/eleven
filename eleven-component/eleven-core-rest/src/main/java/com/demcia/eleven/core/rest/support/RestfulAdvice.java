@@ -2,7 +2,8 @@ package com.demcia.eleven.core.rest.support;
 
 import com.demcia.eleven.core.exception.DataNotFoundException;
 import com.demcia.eleven.core.exception.PermissionDeadException;
-import com.demcia.eleven.core.exception.ValidateFailureException;
+import com.demcia.eleven.core.exception.ProcessFailureException;
+import com.demcia.eleven.core.exception.UnauthorizedException;
 import com.demcia.eleven.core.rest.RestfulFailure;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -21,23 +22,24 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @ApiResponses({
+        @ApiResponse(description = "需要认证授权", responseCode = "401"),
         @ApiResponse(description = "资源不存在", responseCode = "404"),
         @ApiResponse(description = "权限不足", responseCode = "403"),
-        @ApiResponse(description = "校验失败", responseCode = "422"),
+        @ApiResponse(description = "处理失败", responseCode = "422"),
         @ApiResponse(description = "服务器错误", responseCode = "500"),
 })
 @ControllerAdvice
-public class RestApiAdvice {
+public class RestfulAdvice {
 
-    // 资源不存在 404
+    // 需要认证授权 - 401
     @ResponseBody
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(DataNotFoundException.class)
-    public RestfulFailure onDataNotFoundException(DataNotFoundException e) {
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(UnauthorizedException.class)
+    public RestfulFailure onUnAuthenticatedException(UnauthorizedException e) {
         return new RestfulFailure()
-                .setMessage(StringUtils.defaultIfBlank(e.getMessage(), "资源不存在"))
-                .setError(HttpStatus.NOT_FOUND.getReasonPhrase());
+                .setError(HttpStatus.UNAUTHORIZED.getReasonPhrase());
     }
+
 
     // 权限不足 - 403
     @ResponseBody
@@ -45,44 +47,43 @@ public class RestApiAdvice {
     @ExceptionHandler(PermissionDeadException.class)
     public RestfulFailure onPermissionDeadException(PermissionDeadException e) {
         return new RestfulFailure()
-                .setMessage(StringUtils.defaultIfBlank(e.getMessage(), "权限不足"))
                 .setError(HttpStatus.FORBIDDEN.getReasonPhrase());
     }
 
-    // 校验失败 - 422
+
+    // 资源不存在 404
     @ResponseBody
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    @ExceptionHandler(ValidateFailureException.class)
-    public RestfulFailure onValidateFailureException(ValidateFailureException e) {
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(DataNotFoundException.class)
+    public RestfulFailure onDataNotFoundException(DataNotFoundException e) {
         return new RestfulFailure()
-                .setMessage(StringUtils.defaultIfBlank(e.getMessage(), "业务校验失败"))
-                .setError(HttpStatus.UNPROCESSABLE_ENTITY.getReasonPhrase());
+                .setError(HttpStatus.NOT_FOUND.getReasonPhrase());
     }
 
-    // 校验失败 - 422
+    // 校验失败 - 400
     @ResponseBody
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BindException.class)
     public RestfulFailure onMethodArgumentNotValidException(BindException e) {
-                String message = e.getAllErrors().stream()
-                .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                .filter(StringUtils::isNotBlank)
-                .sorted(Comparator.naturalOrder())
-                .collect(Collectors.joining(";"));
         return new RestfulFailure()
-                .setMessage(message)
-                .setError(HttpStatus.UNPROCESSABLE_ENTITY.getReasonPhrase());
+                .setError(HttpStatus.BAD_REQUEST.getReasonPhrase())
+                .setMessage(
+                        e.getAllErrors().stream()
+                                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                                .filter(StringUtils::isNotBlank)
+                                .sorted(Comparator.naturalOrder())
+                                .collect(Collectors.joining(";"))
+                );
     }
 
-    // 服务器错误 - 500
+    // 请求被拒绝 - 422
     @ResponseBody
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(Exception.class)
-    public RestfulFailure onException(Exception e) {
-        log.error("服务器错误", e);
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ExceptionHandler(ProcessFailureException.class)
+    public RestfulFailure onValidateFailureException(ProcessFailureException e) {
         return new RestfulFailure()
-                .setMessage("服务器错误")
-                .setError(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
+                .setMessage(StringUtils.defaultIfBlank(e.getMessage(), "服务器拒绝处理"))
+                .setError(StringUtils.defaultIfBlank(e.getError(), "Failure"));
     }
 
 }

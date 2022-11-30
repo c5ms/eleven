@@ -6,7 +6,7 @@ import feign.Request;
 public class FeignServiceUnAvailableException extends ElevenRuntimeException {
     private final Request request;
 
-    public FeignServiceUnAvailableException( Request request) {
+    public FeignServiceUnAvailableException(Request request) {
         super(request.url());
         this.request = request;
     }

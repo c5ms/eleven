@@ -22,14 +22,11 @@ import java.time.LocalDateTime;
 @Setter(AccessLevel.PACKAGE)
 @FieldNameConstants
 @MappedSuperclass
-@GenericGenerator(name = BaseEntity.ID_GENERATOR,strategy = "com.demcia.eleven.core.domain.entity.id.ElevenIdentifierGenerator")
+@GenericGenerator(name = BaseEntity.ID_GENERATOR, strategy = "com.demcia.eleven.core.domain.entity.id.ElevenIdentifierGenerator")
 @EntityListeners({AuditingEntityListener.class, BaseEntityListener.class})
 public abstract class BaseEntity implements Serializable, Persistable<String> {
+    public static final String ID_GENERATOR = "elevenId";
     private static final long serialVersionUID = 1L;
-
-    public static final String ID_GENERATOR="elevenId";
-
-
     @CreatedBy
     @Column(name = "_create_by", updatable = false, length = 100)
     private String createBy;
@@ -73,8 +70,9 @@ public abstract class BaseEntity implements Serializable, Persistable<String> {
 
     /**
      * 设置 ID 的逻辑
+     *
      * @param id ID
      */
-   public   abstract void setId(String id);
+    public abstract void setId(String id);
 
 }

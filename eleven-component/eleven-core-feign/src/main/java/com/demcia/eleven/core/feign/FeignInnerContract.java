@@ -30,8 +30,6 @@ import org.springframework.cloud.openfeign.support.SpringMvcContract;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import static org.springframework.core.annotation.AnnotatedElementUtils.findMergedAnnotation;
-
 
 public class FeignInnerContract extends SpringMvcContract {
     @Override

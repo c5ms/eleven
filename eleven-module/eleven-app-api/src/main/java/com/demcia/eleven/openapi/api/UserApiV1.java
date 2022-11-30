@@ -1,8 +1,7 @@
 package com.demcia.eleven.openapi.api;
 
-import com.demcia.eleven.core.exception.PermissionDeadException;
-import com.demcia.eleven.core.pageable.Pagination;
 import com.demcia.eleven.core.pageable.PaginationResult;
+import com.demcia.eleven.core.rest.annonation.RestResource;
 import com.demcia.eleven.upms.client.UserResourceClient;
 import com.demcia.eleven.upms.core.action.UserCreateAction;
 import com.demcia.eleven.upms.core.action.UserQueryAction;
@@ -19,8 +18,8 @@ import java.util.Optional;
 
 @Slf4j
 @Tag(name = "用户")
-@RequestMapping("/api/users")
-@RestController
+@RequestMapping("/users")
+@RestResource
 @RequiredArgsConstructor
 public class UserApiV1 {
     private final UserResourceClient userResourceClient;
@@ -28,7 +27,6 @@ public class UserApiV1 {
     @PostMapping
     @Operation(summary = "用户创建")
     public UserDto createUser(@RequestBody @Validated UserCreateAction action) {
-        System.out.println("处理了大量应用层面的逻辑，组合了多个远程服务和本地服务");
         return userResourceClient.createUser(action);
     }
 
@@ -43,7 +41,6 @@ public class UserApiV1 {
     @GetMapping
     @Operation(summary = "用户查询")
     public PaginationResult<UserDto> queryUser(@ParameterObject UserQueryAction queryAction) {
-//        throw  new PermissionDeadException("你是个普通用户，没权限查看系统用户");
         // 假设这个用户是个普通用户，在这里会将其终止请求
         return userResourceClient.queryUser(queryAction);
     }

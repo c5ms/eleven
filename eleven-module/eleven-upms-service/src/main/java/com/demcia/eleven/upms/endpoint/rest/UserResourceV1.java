@@ -1,6 +1,5 @@
 package com.demcia.eleven.upms.endpoint.rest;
 
-import com.demcia.eleven.core.pageable.Pagination;
 import com.demcia.eleven.core.pageable.PaginationResult;
 import com.demcia.eleven.core.rest.annonation.RestResource;
 import com.demcia.eleven.upms.core.action.UserCreateAction;

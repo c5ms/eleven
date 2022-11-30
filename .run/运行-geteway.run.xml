@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="运行-应用网关" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+  <configuration default="false" name="运行-geteway" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <option name="ACTIVE_PROFILES" />
     <module name="eleven-app-gateway" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.demcia.eleven.ElevenGatewayApplication" />

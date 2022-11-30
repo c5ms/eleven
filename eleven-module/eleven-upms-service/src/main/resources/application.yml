@@ -1,6 +1,7 @@
 server:
   port: 9000
 
+
 spring:
   application:
     name: upms
@@ -38,6 +39,6 @@ eleven:
 logging:
   level:
     sql: info
-    web: debug
+    web: info
     root: info
     'sleuth.sql': debug

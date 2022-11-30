@@ -22,7 +22,6 @@
         </dependency>
 
 
-
         <!-- 校验 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -29,11 +29,6 @@ import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
-
-import java.util.List;
 
 
 public class FeignRequestInterceptor implements RequestInterceptor {

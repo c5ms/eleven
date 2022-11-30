@@ -1,6 +1,7 @@
 package com.demcia.eleven.core.rest.filter;
 
 import cn.hutool.extra.spring.SpringUtil;
+import com.demcia.eleven.core.rest.constants.RestfulConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
@@ -23,7 +24,7 @@ public class WebTracingFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        response.setHeader("X-Service-Provider", SpringUtil.getApplicationName());
+        response.setHeader(RestfulConstants.HEADER_RESP_SERVICE_NAME, SpringUtil.getApplicationName());
         filterChain.doFilter(request, response);
     }
 

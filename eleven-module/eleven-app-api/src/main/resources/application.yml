@@ -4,8 +4,12 @@ server:
 spring:
   application:
     name: api
+  mvc:
+    throw-exception-if-no-handler-found: true
 
 eleven:
+  restful:
+    prefix: /api
   open-api:
     title: 开放 API 服务
     description: 这是一个伟大而又了不起的工程！
@@ -23,7 +27,9 @@ eleven:
 logging:
   level:
     sql: info
-    web: debug
+    web: info
     root: info
     'com.demcia': debug
     'sleuth.sql': debug
+
+

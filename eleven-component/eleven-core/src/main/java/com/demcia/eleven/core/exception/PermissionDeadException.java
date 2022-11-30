@@ -5,12 +5,12 @@ package com.demcia.eleven.core.exception;
  */
 public class PermissionDeadException extends ElevenRuntimeException {
 
-    public PermissionDeadException(String message) {
+    private PermissionDeadException(String message) {
         super(message);
     }
 
-    public PermissionDeadException() {
+    public static PermissionDeadException of(String message) {
+        return new PermissionDeadException(message);
     }
-
 
 }

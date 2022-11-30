@@ -9,6 +9,6 @@ spring:
     gateway:
       routes:
         #  API 服务
-        - uri: lb://api
+        - uri: lb://upms
           predicates:
-            - Path=/api/**
+            - Path=/users/**

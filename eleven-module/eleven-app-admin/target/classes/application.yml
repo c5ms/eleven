@@ -23,7 +23,7 @@ eleven:
 logging:
   level:
     sql: info
-    web: debug
+    web: info
     root: info
     'com.demcia': debug
     'sleuth.sql': debug
