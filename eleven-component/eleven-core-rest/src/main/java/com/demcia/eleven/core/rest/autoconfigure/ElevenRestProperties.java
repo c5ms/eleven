@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @ConfigurationProperties(prefix = "eleven.restful")
-public class ElevenRestfulProperties {
+public class ElevenRestProperties {
 
     /**
      * 统一 API 路径，通常我们可以直接全局指定 context-path ，但是那样会造成静态文件、动态 HTML 都归属到这个路径下，如果只希望 rest 接口全局修改一个路径，则使用这个配置会很有效，

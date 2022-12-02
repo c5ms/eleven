@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class FeignExceptionAdvice {
 
     @ResponseBody
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
     @ExceptionHandler(FeignServiceUnAvailableException.class)
     public RestfulFailure onException(FeignServiceUnAvailableException e) {
         return new RestfulFailure()
                 .setMessage("服务器错误")
-                .setError(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
+                .setError(HttpStatus.SERVICE_UNAVAILABLE.getReasonPhrase());
     }
 
 

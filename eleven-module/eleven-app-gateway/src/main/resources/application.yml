@@ -7,8 +7,12 @@ spring:
 
   cloud:
     gateway:
+      default-filters:
+        - StripPrefix=1
+        - PreserveHostHeader
       routes:
-        #  API 服务
-        - uri: lb://upms
+        #  UPMS 用户权限管理
+        - id: upms
+          uri: lb://eleven-upms
           predicates:
-            - Path=/users/**
+            - Path=/api/users/**,/

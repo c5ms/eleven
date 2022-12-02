@@ -22,11 +22,10 @@ import java.time.LocalDateTime;
 @Setter(AccessLevel.PACKAGE)
 @FieldNameConstants
 @MappedSuperclass
-@GenericGenerator(name = BaseEntity.ID_GENERATOR, strategy = "com.demcia.eleven.core.domain.entity.id.ElevenIdentifierGenerator")
 @EntityListeners({AuditingEntityListener.class, BaseEntityListener.class})
 public abstract class BaseEntity implements Serializable, Persistable<String> {
-    public static final String ID_GENERATOR = "elevenId";
     private static final long serialVersionUID = 1L;
+
     @CreatedBy
     @Column(name = "_create_by", updatable = false, length = 100)
     private String createBy;
@@ -53,12 +52,16 @@ public abstract class BaseEntity implements Serializable, Persistable<String> {
     @Transient
     private boolean isNew = true;
 
+//    @Column(name = "_is_deleted")
+//    private boolean isDeleted = false;
+
 
     @JsonIgnore
     @Transient
     public boolean isNew() {
         return this.isNew;
     }
+
 
     @PostUpdate
     @PostPersist

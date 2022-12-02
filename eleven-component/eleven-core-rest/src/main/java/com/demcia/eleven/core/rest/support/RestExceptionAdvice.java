@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
         @ApiResponse(description = "服务器错误", responseCode = "500"),
 })
 @ControllerAdvice
-public class RestfulAdvice {
+public class RestExceptionAdvice {
 
     // 需要认证授权 - 401
     @ResponseBody
@@ -65,15 +65,14 @@ public class RestfulAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BindException.class)
     public RestfulFailure onMethodArgumentNotValidException(BindException e) {
+        var msg=e.getAllErrors().stream()
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                .filter(StringUtils::isNotBlank)
+                .sorted(Comparator.naturalOrder())
+                .collect(Collectors.joining(";"));
         return new RestfulFailure()
                 .setError(HttpStatus.BAD_REQUEST.getReasonPhrase())
-                .setMessage(
-                        e.getAllErrors().stream()
-                                .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                                .filter(StringUtils::isNotBlank)
-                                .sorted(Comparator.naturalOrder())
-                                .collect(Collectors.joining(";"))
-                );
+                ;
     }
 
     // 请求被拒绝 - 422

@@ -41,9 +41,9 @@ import java.util.stream.Collectors;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @Configuration(proxyBeanMethods = false)
 @RequiredArgsConstructor
-@EnableConfigurationProperties(ElevenRestfulProperties.class)
+@EnableConfigurationProperties(ElevenRestProperties.class)
 @PropertySource("classpath:/config/application-rest.properties")
-public class ElevenRestfulAutoconfigure implements WebMvcConfigurer {
+public class ElevenRestAutoconfigure implements WebMvcConfigurer {
 
     private static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
     private static final String DEFAULT_TIME_FORMAT = "HH:mm:ss";
@@ -68,14 +68,14 @@ public class ElevenRestfulAutoconfigure implements WebMvcConfigurer {
         return new HttpMessageConverters(converters.orderedStream().collect(Collectors.toList()));
     }
 
-    private final ElevenRestfulProperties elevenRestfulProperties;
+    private final ElevenRestProperties elevenRestProperties;
 
 
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
-        configurer.addPathPrefix(elevenRestfulProperties.getPrefix(), new RestfulPredicate(
-                elevenRestfulProperties.getPackages(),
-                elevenRestfulProperties.getAnnotations()
+        configurer.addPathPrefix(elevenRestProperties.getPrefix(), new RestfulPredicate(
+                elevenRestProperties.getPackages(),
+                elevenRestProperties.getAnnotations()
         ));
     }
 

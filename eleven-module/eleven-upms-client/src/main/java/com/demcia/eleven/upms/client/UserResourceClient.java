@@ -3,19 +3,18 @@ package com.demcia.eleven.upms.client;
 import com.demcia.eleven.core.pageable.PaginationResult;
 import com.demcia.eleven.upms.core.action.UserCreateAction;
 import com.demcia.eleven.upms.core.action.UserQueryAction;
+import com.demcia.eleven.upms.core.action.UserUpdateAction;
 import com.demcia.eleven.upms.core.dto.UserDto;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @FeignClient(
-        name = "upms",
+        name = "eleven-upms",
         url = "${service.eleven-upms.url:}",
         path = "${service.eleven-upms.path:/users}"
 )
@@ -30,4 +29,9 @@ public interface UserResourceClient {
     @GetMapping
     PaginationResult<UserDto> queryUser(@SpringQueryMap UserQueryAction queryAction);
 
+    @PostMapping("/{id}")
+    UserDto updateUser(@PathVariable("id") String id, @RequestBody UserUpdateAction updateAction);
+
+    @DeleteMapping("/{id}")
+     void deleteUser(@PathVariable("id") String id);
 }

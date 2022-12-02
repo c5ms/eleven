@@ -57,8 +57,7 @@ public class UserResourceV1 {
     @Operation(summary = "用户删除")
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable("id") String id) {
-        var user = userService.requireUser(id);
-        userService.deleteUser(user);
+        userService.getUser(id).ifPresent(userService::deleteUser);
     }
 
 }

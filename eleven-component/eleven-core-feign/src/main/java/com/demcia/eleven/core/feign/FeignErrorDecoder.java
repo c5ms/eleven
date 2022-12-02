@@ -34,6 +34,10 @@ public class FeignErrorDecoder implements ErrorDecoder {
             if (httpStatus == HttpStatus.SERVICE_UNAVAILABLE) {
                 throw new FeignServiceUnAvailableException(response.request());
             }
+            // 服务不存在
+            if (httpStatus == HttpStatus.BAD_GATEWAY) {
+                throw new FeignServiceUnAvailableException(response.request());
+            }
         }
 
         // 422 错误，请求逻辑无法处理,还原拒绝理由

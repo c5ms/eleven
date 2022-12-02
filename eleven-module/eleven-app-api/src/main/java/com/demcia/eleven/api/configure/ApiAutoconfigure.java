@@ -1,4 +1,4 @@
-package com.demcia.eleven.openapi.configure;
+package com.demcia.eleven.api.configure;
 
 import com.demcia.eleven.ApiElevenApplication;
 import org.springdoc.core.GroupedOpenApi;
@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class DemoRestAutoconfigure {
+public class ApiAutoconfigure {
 
     @Bean
     public GroupedOpenApi messageApi() {

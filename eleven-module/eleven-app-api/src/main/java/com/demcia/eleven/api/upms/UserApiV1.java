@@ -1,14 +1,11 @@
-package com.demcia.eleven.openapi.api;
+package com.demcia.eleven.api.upms;
 
-import com.demcia.eleven.core.exception.DataNotFoundException;
-import com.demcia.eleven.core.exception.PermissionDeadException;
-import com.demcia.eleven.core.exception.ProcessFailureException;
-import com.demcia.eleven.core.exception.UnauthorizedException;
 import com.demcia.eleven.core.pageable.PaginationResult;
 import com.demcia.eleven.core.rest.annonation.RestResource;
 import com.demcia.eleven.upms.client.UserResourceClient;
 import com.demcia.eleven.upms.core.action.UserCreateAction;
 import com.demcia.eleven.upms.core.action.UserQueryAction;
+import com.demcia.eleven.upms.core.action.UserUpdateAction;
 import com.demcia.eleven.upms.core.dto.UserDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -34,6 +31,18 @@ public class UserApiV1 {
         return userResourceClient.createUser(action);
     }
 
+    @Operation(summary = "用户删除")
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable("id") String id) {
+        userResourceClient.deleteUser(id);
+    }
+
+    @Operation(summary = "用户更新")
+    @PostMapping("/{id}")
+    public UserDto updateUser(@PathVariable("id") String id, @RequestBody UserUpdateAction updateAction) {
+        return userResourceClient.updateUser(id, updateAction);
+    }
+
     @GetMapping("/{id}")
     @Operation(summary = "用户读取")
     public Optional<UserDto> getUser(@PathVariable("id") String id) {
@@ -44,9 +53,7 @@ public class UserApiV1 {
     @GetMapping
     @Operation(summary = "用户查询")
     public PaginationResult<UserDto> queryUser(@ParameterObject UserQueryAction queryAction) {
-//        throw DataNotFoundException.of("数据不存在");
-        throw  new IllegalStateException();
-//        return userResourceClient.queryUser(queryAction);
+        return userResourceClient.queryUser(queryAction);
     }
 
 }

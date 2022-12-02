@@ -34,7 +34,7 @@
         <!--  docker 预设 -->
         <docker.baseImage>openjdk:11-jre</docker.baseImage>
         <docker.expose>9000</docker.expose>
-<!--        <docker.host>http://192.168.2.250:2375</docker.host>-->
+        <docker.host>http://192.168.2.250:2375</docker.host>
 <!--        <docker.registry>192.168.2.30:5000</docker.registry>-->
 <!--        <docker.username>admin</docker.username>-->
 <!--        <docker.password>111111</docker.password>-->

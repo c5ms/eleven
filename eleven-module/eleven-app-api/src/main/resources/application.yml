@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: api
+    name: eleven-api
   mvc:
     throw-exception-if-no-handler-found: true
 

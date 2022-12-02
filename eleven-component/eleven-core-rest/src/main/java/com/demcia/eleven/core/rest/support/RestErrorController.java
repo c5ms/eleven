@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Hidden
 @Controller
-public class RestfulErrorController implements ErrorController {
+public class RestErrorController implements ErrorController {
 
     @ResponseBody
     @RequestMapping("/error")

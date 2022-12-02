@@ -14,6 +14,7 @@ import com.demcia.eleven.upms.domain.entity.UserRepository;
 import com.demcia.eleven.upms.domain.service.UserService;
 import com.github.wenhao.jpa.Specifications;
 import lombok.RequiredArgsConstructor;
+import ma.glasnost.orika.MapperFacade;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Sort;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -28,14 +30,15 @@ public class DefaultUserService implements UserService {
     private final UserRepository userRepository;
     private final ApplicationEventPublisher eventPublisher;
 
+    private final MapperFacade mapperFacade;
+
     @Override
     public User createUser(UserCreateAction action) {
         // 验证，用户名不能重复
         userRepository.findByLogin(action.getLogin()).ifPresent(user -> {
             throw ProcessFailureException.of(UserErrors.USER_NAME_REPEAT);
         });
-        var user = new User();
-        user.setLogin(action.getLogin());
+        var user = mapperFacade.map(action,User.class);
         userRepository.save(user);
         eventPublisher.publishEvent(new UserCreatedEvent());
         return user;
@@ -48,9 +51,10 @@ public class DefaultUserService implements UserService {
 
     @Override
     public void updateUser(User user, UserUpdateAction action) {
-        if (StringUtils.isNotBlank(action.getNickname())) {
-            user.setNickname(action.getNickname());
+        if (Objects.nonNull(action.getNickname())) {
+            user.setNickname(StringUtils.trim(action.getNickname()));
         }
+
         userRepository.save(user);
         eventPublisher.publishEvent(new UserUpdatedEvent());
     }
