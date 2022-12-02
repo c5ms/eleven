@@ -1,5 +1,7 @@
 package com.demcia.eleven.alfred.domain.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.map.MapUtil;
 import com.demcia.eleven.alfred.core.action.TaskCreateAction;
 import com.demcia.eleven.alfred.core.action.TaskQueryAction;
 import com.demcia.eleven.alfred.core.action.TaskUpdateAction;
@@ -13,6 +15,8 @@ import com.demcia.eleven.upms.domain.entity.User;
 import com.github.wenhao.jpa.Specifications;
 import lombok.RequiredArgsConstructor;
 import ma.glasnost.orika.MapperFacade;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -52,6 +56,12 @@ public class DefaultTaskService implements TaskService {
 
     @Override
     public void updateTask(Task task, TaskUpdateAction updateAction) {
+        if(StringUtils.isNotBlank(updateAction.getSubject())){
+            task.setSubject(updateAction.getSubject());
+        }
+        if(StringUtils.isNotBlank(updateAction.getDescription())){
+            task.setDescription(updateAction.getDescription());
+        }
         taskRepository.save(task);
     }
 

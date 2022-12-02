@@ -22,6 +22,8 @@ spring:
   jpa:
     generate-ddl: true
 
+
+
 eleven:
   open-api:
     title: 用户授权管理
@@ -42,3 +44,4 @@ logging:
     web: info
     root: info
     'sleuth.sql': debug
+
