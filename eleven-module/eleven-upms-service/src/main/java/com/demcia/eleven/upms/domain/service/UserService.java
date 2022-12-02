@@ -12,9 +12,10 @@ import java.util.Optional;
 public interface UserService {
 
     // ======================== read ========================
-    Optional<User> getUser(String id);
 
     PaginationResult<User> queryUser(UserQueryAction queryAction);
+
+    Optional<User> getUser(String id);
 
     default User requireUser(String id) {
         return this.getUser(id).orElseThrow(() -> DataNotFoundException.of("用户不存在"));

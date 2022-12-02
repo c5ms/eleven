@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +37,7 @@ public class DefaultUserService implements UserService {
         userRepository.findByLogin(action.getLogin()).ifPresent(user -> {
             throw ProcessFailureException.of(UserErrors.USER_NAME_REPEAT);
         });
-        var user = mapperFacade.map(action,User.class);
+        var user = mapperFacade.map(action, User.class);
         userRepository.save(user);
         eventPublisher.publishEvent(new UserCreatedEvent());
         return user;

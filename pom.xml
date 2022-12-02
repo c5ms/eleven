@@ -41,7 +41,7 @@
 
 
         <!--  spring 家族 -->
-        <version.spring-boot>2.7.5</version.spring-boot>
+        <version.spring-boot>2.7.6</version.spring-boot>
         <version.spring-boot-admin>2.7.6</version.spring-boot-admin>
         <version.spring-session>2021.2.0</version.spring-session>
         <version.spring-cloud>2021.0.4</version.spring-cloud>
