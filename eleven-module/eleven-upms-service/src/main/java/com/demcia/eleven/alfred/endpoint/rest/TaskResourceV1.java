@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Tag(name = "任务")
-@RequestMapping("/task")
+@RequestMapping("/tasks")
 @RestResource
 @RequiredArgsConstructor
 public class TaskResourceV1 {

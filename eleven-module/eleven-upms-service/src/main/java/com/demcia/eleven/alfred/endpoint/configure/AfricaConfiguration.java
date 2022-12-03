@@ -15,7 +15,7 @@ public class AfricaConfiguration {
     @Bean
     public GroupedOpenApi africaApi() {
         return GroupedOpenApi.builder()
-                .group("africa")
+                .group("alfred")
                 .displayName("项目管理")
                 .packagesToScan(
                         AlfredModule.class.getPackageName()

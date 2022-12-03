@@ -15,4 +15,9 @@ spring:
         - id: upms
           uri: lb://eleven-upms
           predicates:
-            - Path=/api/users/**,/
+            - Path=/api/users/**,
+        #  alfred 项目管理应用
+        - id: upms
+          uri: lb://eleven-upms
+          predicates:
+            - Path=/api/tasks/**
