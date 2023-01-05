@@ -9,6 +9,4 @@ import lombok.Setter;
 public class TaskQueryAction extends Pagination {
 
 
-
-
 }

@@ -11,11 +11,21 @@ spring:
         - StripPrefix=1
         - PreserveHostHeader
       routes:
+
         #  UPMS 用户权限管理
         - id: upms
           uri: lb://eleven-upms
           predicates:
             - Path=/api/users/**,
+
+
+        #  CMS 内容管理
+        - id: cms
+          uri: lb://eleven-cms
+          predicates:
+            - Path=/api/cms/**,
+
+
         #  alfred 项目管理应用
         - id: upms
           uri: lb://eleven-upms

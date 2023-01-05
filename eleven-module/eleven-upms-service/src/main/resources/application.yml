@@ -23,7 +23,6 @@ spring:
     generate-ddl: true
 
 
-
 eleven:
   open-api:
     title: 用户授权管理

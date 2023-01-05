@@ -4,7 +4,7 @@ import com.demcia.eleven.alfred.core.action.TaskCreateAction;
 import com.demcia.eleven.alfred.core.action.TaskQueryAction;
 import com.demcia.eleven.alfred.core.action.TaskUpdateAction;
 import com.demcia.eleven.alfred.core.dto.TaskDto;
-import com.demcia.eleven.alfred.domain.convertor.TaskConvertor;
+import com.demcia.eleven.alfred.domain.convertor.TaskConverter;
 import com.demcia.eleven.alfred.domain.entity.Task;
 import com.demcia.eleven.alfred.domain.service.TaskService;
 import com.demcia.eleven.core.pageable.PaginationResult;
@@ -26,26 +26,26 @@ public class TaskResourceV1 {
 
 
     private final TaskService taskService;
-    private final TaskConvertor taskConvertor;
+    private final TaskConverter taskConverter;
 
     @Operation(summary = "任务查询")
     @GetMapping
     public PaginationResult<TaskDto> queryTask(@ParameterObject TaskQueryAction queryAction) {
-        return taskService.queryTask(queryAction).map(taskConvertor::toDto);
+        return taskService.queryTask(queryAction).map(taskConverter::toDto);
     }
 
     @Operation(summary = "任务读取")
     @GetMapping("/{id}")
     public TaskDto getTask(@PathVariable("id") String id) {
         var task = taskService.requireTask(id);
-        return taskConvertor.toDto(task);
+        return taskConverter.toDto(task);
     }
 
     @Operation(summary = "任务创建")
     @PostMapping
     public TaskDto createTask(@RequestBody @Validated TaskCreateAction action) {
         var task = taskService.createTask(action);
-        return taskConvertor.toDto(task);
+        return taskConverter.toDto(task);
     }
 
     @Operation(summary = "任务更新")
@@ -53,7 +53,7 @@ public class TaskResourceV1 {
     public TaskDto updateTask(@PathVariable("id") String id, @RequestBody TaskUpdateAction updateAction) {
         Task task = taskService.requireTask(id);
         taskService.updateTask(task, updateAction);
-        return taskConvertor.toDto(task);
+        return taskConverter.toDto(task);
     }
 
     @Operation(summary = "任务删除")

@@ -6,7 +6,7 @@ import com.demcia.eleven.upms.core.action.UserCreateAction;
 import com.demcia.eleven.upms.core.action.UserQueryAction;
 import com.demcia.eleven.upms.core.action.UserUpdateAction;
 import com.demcia.eleven.upms.core.dto.UserDto;
-import com.demcia.eleven.upms.domain.convertor.UserConvertor;
+import com.demcia.eleven.upms.domain.convertor.UserConverter;
 import com.demcia.eleven.upms.domain.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,26 +24,26 @@ import org.springframework.web.bind.annotation.*;
 public class UserResourceV1 {
 
     private final UserService userService;
-    private final UserConvertor userConvertor;
+    private final UserConverter userConverter;
 
     @Operation(summary = "用户查询")
     @GetMapping
     public PaginationResult<UserDto> queryUser(@ParameterObject UserQueryAction queryAction) {
-        return userService.queryUser(queryAction).map(userConvertor::toDto);
+        return userService.queryUser(queryAction).map(userConverter::toDto);
     }
 
     @Operation(summary = "用户读取")
     @GetMapping("/{id}")
     public UserDto getUser(@PathVariable("id") String id) {
         var user = userService.requireUser(id);
-        return userConvertor.toDto(user);
+        return userConverter.toDto(user);
     }
 
     @Operation(summary = "用户创建")
     @PostMapping
     public UserDto createUser(@RequestBody @Validated UserCreateAction action) {
         var user = userService.createUser(action);
-        return userConvertor.toDto(user);
+        return userConverter.toDto(user);
     }
 
     @Operation(summary = "用户更新")
@@ -51,7 +51,7 @@ public class UserResourceV1 {
     public UserDto updateUser(@PathVariable("id") String id, @RequestBody UserUpdateAction updateAction) {
         var user = userService.requireUser(id);
         userService.updateUser(user, updateAction);
-        return userConvertor.toDto(user);
+        return userConverter.toDto(user);
     }
 
     @Operation(summary = "用户删除")

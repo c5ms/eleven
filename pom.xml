@@ -69,7 +69,7 @@
         <!-- 文档生成 -->
         <version.swagger-v3>2.1.6</version.swagger-v3>
         <version.springdoc>1.6.11</version.springdoc>
-        <version.knife4j>3.0.3</version.knife4j>
+        <version.knife4j>4.0.0</version.knife4j>
 
         <!-- 办公文档处理 -->
         <version.easyPoi>4.4.0</version.easyPoi>
@@ -254,7 +254,7 @@
             </dependency>
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-springdoc-ui</artifactId>
+                <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
                 <version>${version.knife4j}</version>
             </dependency>
 

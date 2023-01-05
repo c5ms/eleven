@@ -4,11 +4,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
-public class TaskCreateAction {
+public class TaskCreateAction implements Serializable {
 
     @Schema(description = "任务主题")
     @NotBlank(message = "任务主题不能为空")

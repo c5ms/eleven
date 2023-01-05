@@ -1,4 +1,4 @@
 package com.demcia.eleven.upms;
 
-public class UpmsModule {
+public interface UpmsModule {
 }
