@@ -1,13 +1,21 @@
 package com.demcia.eleven.cms.domain.service.impl;
 
 import com.demcia.eleven.cms.core.action.CmsContentCreateAction;
+import com.demcia.eleven.cms.core.action.CmsContentQueryAction;
 import com.demcia.eleven.cms.core.action.CmsContentUpdateAction;
-import com.demcia.eleven.cms.domain.entity.CmsChannelRepository;
 import com.demcia.eleven.cms.domain.entity.CmsContent;
-import com.demcia.eleven.cms.domain.entity.CmsContentRepository;
+import com.demcia.eleven.cms.domain.entity.CmsContentBody;
+import com.demcia.eleven.cms.domain.repository.CmsChannelRepository;
+import com.demcia.eleven.cms.domain.repository.CmsContentRepository;
 import com.demcia.eleven.cms.domain.service.CmsContentService;
+import com.demcia.eleven.core.domain.helper.PageableQueryHelper;
 import com.demcia.eleven.core.exception.ProcessFailureException;
+import com.demcia.eleven.core.pageable.PaginationResult;
+import com.github.wenhao.jpa.Specifications;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,19 +29,17 @@ public class DefaultCmsContentService implements CmsContentService {
     @Override
     public CmsContent createContent(CmsContentCreateAction action) {
         var channel = cmsChannelRepository.findById(action.getChannel()).orElseThrow(() -> ProcessFailureException.of("栏目不存在"));
-
         var content = new CmsContent();
-        content.setTitle(action.getTitle());
+        BeanUtils.copyProperties(action, content);
         content.setChannel(channel);
-
-        var body = new CmsContent.CmsContentBody(action.getBody());
-        content.setBody(body);
+        content.setBody(new CmsContentBody(action.getBody()));
         cmsContentRepository.save(content);
         return content;
     }
 
     @Override
     public void updateContent(CmsContent content, CmsContentUpdateAction action) {
+        // TODO content update logic
         cmsContentRepository.save(content);
     }
 
@@ -46,5 +52,16 @@ public class DefaultCmsContentService implements CmsContentService {
     @Override
     public void deleteContent(CmsContent content) {
         cmsContentRepository.delete(content);
+    }
+
+    @Override
+    public PaginationResult<CmsContent> queryContent(CmsContentQueryAction queryAction) {
+        var spec = Specifications.<CmsContent>and()
+                .eq(StringUtils.isNotBlank(queryAction.getChannel()), CmsContent.Fields.channelId, StringUtils.trim(queryAction.getChannel()))
+                .build();
+        var sort = Sort.by(CmsContent.Fields.id).descending();
+        var pageable = PageableQueryHelper.toSpringDataPageable(queryAction, sort);
+        var page = cmsContentRepository.findAll(spec, pageable);
+        return PageableQueryHelper.toPageResult(page);
     }
 }

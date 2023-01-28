@@ -1,13 +1,11 @@
 package com.demcia.eleven.alfred.domain.service.impl;
 
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.map.MapUtil;
 import com.demcia.eleven.alfred.core.action.TaskCreateAction;
 import com.demcia.eleven.alfred.core.action.TaskQueryAction;
 import com.demcia.eleven.alfred.core.action.TaskUpdateAction;
 import com.demcia.eleven.alfred.core.event.TaskCreatedEvent;
 import com.demcia.eleven.alfred.domain.entity.Task;
-import com.demcia.eleven.alfred.domain.entity.TaskRepository;
+import com.demcia.eleven.alfred.domain.repository.TaskRepository;
 import com.demcia.eleven.alfred.domain.service.TaskService;
 import com.demcia.eleven.core.domain.helper.PageableQueryHelper;
 import com.demcia.eleven.core.pageable.PaginationResult;
@@ -16,7 +14,6 @@ import com.github.wenhao.jpa.Specifications;
 import lombok.RequiredArgsConstructor;
 import ma.glasnost.orika.MapperFacade;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;

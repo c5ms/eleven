@@ -1,6 +1,6 @@
 package com.demcia.eleven.cms.domain.entity;
 
-import com.demcia.eleven.core.domain.entity.BaseEntity;
+import com.demcia.eleven.core.domain.entity.BaseAuditableEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Entity
 @FieldNameConstants
 @Table(name = "cms_channel")
-public class CmsChannel extends BaseEntity {
+public class CmsChannel extends BaseAuditableEntity {
 
     @Id
     @Column(name = "id_", nullable = false, length = 100)

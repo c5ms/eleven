@@ -10,7 +10,7 @@ import com.demcia.eleven.upms.core.code.UserErrors;
 import com.demcia.eleven.upms.core.event.UserCreatedEvent;
 import com.demcia.eleven.upms.core.event.UserUpdatedEvent;
 import com.demcia.eleven.upms.domain.entity.User;
-import com.demcia.eleven.upms.domain.entity.UserRepository;
+import com.demcia.eleven.upms.domain.repository.UserRepository;
 import com.demcia.eleven.upms.domain.service.UserService;
 import com.github.wenhao.jpa.Specifications;
 import lombok.RequiredArgsConstructor;

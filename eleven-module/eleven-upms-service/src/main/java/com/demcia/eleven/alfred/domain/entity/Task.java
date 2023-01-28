@@ -1,6 +1,6 @@
 package com.demcia.eleven.alfred.domain.entity;
 
-import com.demcia.eleven.core.domain.entity.BaseEntity;
+import com.demcia.eleven.core.domain.entity.BaseAuditableEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Entity
 @FieldNameConstants
 @Table(name = "africa_task")
-public class Task extends BaseEntity {
+public class Task extends BaseAuditableEntity {
 
     @Id
     @Column(name = "id_", nullable = false, length = 100)

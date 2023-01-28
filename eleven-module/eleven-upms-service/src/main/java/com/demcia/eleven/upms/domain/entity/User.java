@@ -1,6 +1,6 @@
 package com.demcia.eleven.upms.domain.entity;
 
-import com.demcia.eleven.core.domain.entity.BaseEntity;
+import com.demcia.eleven.core.domain.entity.BaseAuditableEntity;
 import com.demcia.eleven.upms.core.enums.UserState;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +23,7 @@ import java.util.Set;
                 @UniqueConstraint(name = "uc_user_login_", columnNames = {"login_"})
         }
 )
-public class User extends BaseEntity {
+public class User extends BaseAuditableEntity {
 
     public static final String USER_TYPE_SYSTEM = "user";
 

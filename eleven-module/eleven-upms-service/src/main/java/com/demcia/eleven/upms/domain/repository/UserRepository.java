@@ -1,5 +1,6 @@
-package com.demcia.eleven.upms.domain.entity;
+package com.demcia.eleven.upms.domain.repository;
 
+import com.demcia.eleven.upms.domain.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

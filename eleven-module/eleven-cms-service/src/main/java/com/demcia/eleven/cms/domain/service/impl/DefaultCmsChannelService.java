@@ -4,7 +4,7 @@ import com.demcia.eleven.cms.core.action.CmsChannelCreateAction;
 import com.demcia.eleven.cms.core.action.CmsChannelQueryAction;
 import com.demcia.eleven.cms.core.action.CmsChannelUpdateAction;
 import com.demcia.eleven.cms.domain.entity.CmsChannel;
-import com.demcia.eleven.cms.domain.entity.CmsChannelRepository;
+import com.demcia.eleven.cms.domain.repository.CmsChannelRepository;
 import com.demcia.eleven.cms.domain.service.CmsChannelService;
 import com.github.wenhao.jpa.Specifications;
 import lombok.RequiredArgsConstructor;
