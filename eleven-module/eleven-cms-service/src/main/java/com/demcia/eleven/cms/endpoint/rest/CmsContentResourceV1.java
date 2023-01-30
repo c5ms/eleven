@@ -2,6 +2,7 @@ package com.demcia.eleven.cms.endpoint.rest;
 
 import com.demcia.eleven.cms.core.action.CmsContentCreateAction;
 import com.demcia.eleven.cms.core.action.CmsContentQueryAction;
+import com.demcia.eleven.cms.core.action.CmsContentPublishAction;
 import com.demcia.eleven.cms.core.action.CmsContentUpdateAction;
 import com.demcia.eleven.cms.core.dto.CmsContentDto;
 import com.demcia.eleven.cms.domain.convertor.CmsContentConverter;
@@ -33,6 +34,15 @@ public class CmsContentResourceV1 {
         return cmsContentService.queryContent(queryAction).map(cmsContentConverter::toDto);
     }
 
+
+
+    @Operation(summary = "内容读取")
+    @GetMapping("/{id}")
+    public CmsContentDto getContent(@PathVariable ("id") String id) {
+        var content = cmsContentService.requireContent(id);
+        return cmsContentConverter.toDto(content);
+    }
+
     @Operation(summary = "内容创建")
     @PostMapping
     public CmsContentDto createContent(@RequestBody @Validated CmsContentCreateAction action) {
@@ -52,6 +62,14 @@ public class CmsContentResourceV1 {
     public CmsContentDto updateContent(@PathVariable("id") String id, @RequestBody @Validated CmsContentUpdateAction action) {
         CmsContent content = cmsContentService.requireContent(id);
         cmsContentService.updateContent(content, action);
+        return cmsContentConverter.toDto(content);
+    }
+
+    @Operation(summary = "内容发布")
+    @PutMapping("/{id}/publish")
+    public CmsContentDto publishContent(@PathVariable ("id") String id, @RequestBody @Validated CmsContentPublishAction action) {
+        var content = cmsContentService.requireContent(id);
+      /* var result=*/ cmsContentService.publish(content,action);
         return cmsContentConverter.toDto(content);
     }
 

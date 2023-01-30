@@ -12,8 +12,7 @@ public class CmsChannelConverter {
     private final MapperFacade mapperFacade;
 
     public CmsChannelDto toDto(CmsChannel channel) {
-        var dto = mapperFacade.map(channel, CmsChannelDto.class);
-        return dto;
+        return mapperFacade.map(channel, CmsChannelDto.class);
     }
 
 }

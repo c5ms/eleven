@@ -5,10 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,5 +27,46 @@ public class CmsChannel extends BaseAuditableEntity {
 
     @Column(name = "description_", length = 200)
     private String description;
+
+    @ManyToOne(fetch = FetchType.LAZY,  optional = false)
+    @JoinColumn(name = "parent_id_", nullable = true)
+    private CmsChannel parent;
+
+    @Column(name = "parent_id_", nullable = true, length = 100,updatable = false,insertable = false)
+    private String parentId;
+
+    @OneToMany(mappedBy = "parent", orphanRemoval = true)
+    @OrderBy("id desc")
+    private List<CmsChannel> children = new java.util.ArrayList<>();
+
+
+    /**
+     * 读取父栏目 ID
+     *
+     * @return 父栏目 ID
+     */
+    public String getParentId() {
+        if (null != this.parentId) {
+            return this.parentId;
+        }
+        if (null != this.parent) {
+            return this.parent.getId();
+        }
+        return null;
+    }
+
+    /**
+     * 设置父栏目
+     *
+     * @param parent 父栏目
+     * @return this
+     */
+    public CmsChannel setParent(CmsChannel parent) {
+        this.parent = parent;
+        this.setParentId(parent.getId());
+        return this;
+    }
+
+
 
 }

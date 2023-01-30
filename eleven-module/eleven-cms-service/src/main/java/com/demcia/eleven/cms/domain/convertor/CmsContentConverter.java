@@ -12,10 +12,9 @@ public class CmsContentConverter {
     private final MapperFacade mapperFacade;
 
     public CmsContentDto toDto(CmsContent content) {
-        var dto = mapperFacade.map(content, CmsContentDto.class);
-        dto.setBody(content.getBody().getText());
-        return dto;
+        return mapperFacade.map(content, CmsContentDto.class);
     }
+
 
 
 }

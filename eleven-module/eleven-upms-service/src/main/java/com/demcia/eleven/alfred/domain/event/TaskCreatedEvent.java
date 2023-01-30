@@ -1,4 +1,4 @@
-package com.demcia.eleven.alfred.core.event;
+package com.demcia.eleven.alfred.domain.event;
 
 import lombok.Value;
 

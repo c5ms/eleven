@@ -3,7 +3,7 @@ package com.demcia.eleven.alfred.domain.service.impl;
 import com.demcia.eleven.alfred.core.action.TaskCreateAction;
 import com.demcia.eleven.alfred.core.action.TaskQueryAction;
 import com.demcia.eleven.alfred.core.action.TaskUpdateAction;
-import com.demcia.eleven.alfred.core.event.TaskCreatedEvent;
+import com.demcia.eleven.alfred.domain.event.TaskCreatedEvent;
 import com.demcia.eleven.alfred.domain.entity.Task;
 import com.demcia.eleven.alfred.domain.repository.TaskRepository;
 import com.demcia.eleven.alfred.domain.service.TaskService;

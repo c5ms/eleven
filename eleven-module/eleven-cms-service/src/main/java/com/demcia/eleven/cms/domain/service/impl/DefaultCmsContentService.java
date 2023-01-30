@@ -1,10 +1,10 @@
 package com.demcia.eleven.cms.domain.service.impl;
 
-import com.demcia.eleven.cms.core.action.CmsContentCreateAction;
-import com.demcia.eleven.cms.core.action.CmsContentQueryAction;
-import com.demcia.eleven.cms.core.action.CmsContentUpdateAction;
+import com.demcia.eleven.cms.core.action.*;
 import com.demcia.eleven.cms.domain.entity.CmsContent;
 import com.demcia.eleven.cms.domain.entity.CmsContentBody;
+import com.demcia.eleven.cms.domain.entity.CmsContentExt;
+import com.demcia.eleven.cms.domain.entity.CmsContentTitle;
 import com.demcia.eleven.cms.domain.repository.CmsChannelRepository;
 import com.demcia.eleven.cms.domain.repository.CmsContentRepository;
 import com.demcia.eleven.cms.domain.service.CmsContentService;
@@ -28,21 +28,42 @@ public class DefaultCmsContentService implements CmsContentService {
 
     @Override
     public CmsContent createContent(CmsContentCreateAction action) {
-        var channel = cmsChannelRepository.findById(action.getChannel()).orElseThrow(() -> ProcessFailureException.of("栏目不存在"));
         var content = new CmsContent();
-        BeanUtils.copyProperties(action, content);
-        content.setChannel(channel);
-        content.setBody(new CmsContentBody(action.getBody()));
+        fillContent(action, content);
         cmsContentRepository.save(content);
         return content;
     }
 
     @Override
     public void updateContent(CmsContent content, CmsContentUpdateAction action) {
-        // TODO content update logic
+        fillContent(action, content);
         cmsContentRepository.save(content);
     }
 
+    @Override
+    public CmsContentPublishResult publish(CmsContent content, CmsContentPublishAction action) {
+        content.submit();
+        cmsContentRepository.save(content);
+        return new CmsContentPublishResult().setState(content.getState());
+    }
+
+    private void fillContent(CmsContentCreateAction action, CmsContent content) {
+        content.setChannel(cmsChannelRepository.findById(action.getChannel()).orElseThrow(() -> ProcessFailureException.of("栏目不存在")));
+        if (null == content.getBody()) {
+            content.setBody(new CmsContentBody());
+        }
+        if (null == content.getExt()) {
+            content.setExt(new CmsContentExt());
+        }
+        if (null == content.getTitle()) {
+            content.setTitle(new CmsContentTitle());
+        }
+        BeanUtils.copyProperties(action, content);
+        BeanUtils.copyProperties(action, content.getExt());
+        BeanUtils.copyProperties(action, content.getBody());
+        BeanUtils.copyProperties(action, content.getTitle());
+        content.getBody().setText(action.getBody());
+    }
 
     @Override
     public Optional<CmsContent> getContent(String id) {
@@ -64,4 +85,6 @@ public class DefaultCmsContentService implements CmsContentService {
         var page = cmsContentRepository.findAll(spec, pageable);
         return PageableQueryHelper.toPageResult(page);
     }
+
+
 }

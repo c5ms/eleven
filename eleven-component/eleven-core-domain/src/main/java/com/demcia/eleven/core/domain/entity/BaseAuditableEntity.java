@@ -50,9 +50,6 @@ public abstract class BaseAuditableEntity extends BaseEntity {
     @Column(name = "_is_reserved")
     private boolean isReserved = false;
 
-    @Transient
-    private boolean isNew = true;
-
 //    @Column(name = "_is_deleted")
 //    private boolean isDeleted = false;
 

@@ -1,4 +1,4 @@
-package com.demcia.eleven.upms.core.event;
+package com.demcia.eleven.upms.domain.event;
 
 import java.io.Serializable;
 

@@ -6,6 +6,7 @@ import com.demcia.eleven.cms.core.action.CmsChannelUpdateAction;
 import com.demcia.eleven.cms.domain.entity.CmsChannel;
 import com.demcia.eleven.cms.domain.repository.CmsChannelRepository;
 import com.demcia.eleven.cms.domain.service.CmsChannelService;
+import com.demcia.eleven.core.exception.ProcessFailureException;
 import com.github.wenhao.jpa.Specifications;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -13,7 +14,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -24,22 +24,25 @@ public class DefaultCmsChannelService implements CmsChannelService {
     @Override
     public CmsChannel createChannel(CmsChannelCreateAction action) {
         var cmsChannel = new CmsChannel();
-        cmsChannel.setDescription(action.getDescription());
-        cmsChannel.setTitle(action.getTitle());
+        fill(cmsChannel, action);
         cmsChannelRepository.save(cmsChannel);
         return cmsChannel;
     }
 
     @Override
     public void updateChannel(CmsChannel channel, CmsChannelUpdateAction action) {
-        if (Objects.nonNull(action.getTitle())) {
-            channel.setTitle(StringUtils.trim(action.getTitle()));
-        }
-        if (Objects.nonNull(action.getDescription())) {
-            channel.setDescription(StringUtils.trim(action.getDescription()));
-        }
+        fill(channel, action);
         cmsChannelRepository.save(channel);
     }
+
+    private void fill(CmsChannel cmsChannel, CmsChannelCreateAction action) {
+        cmsChannel.setTitle(StringUtils.trim(action.getTitle()));
+        cmsChannel.setDescription(StringUtils.trim(action.getDescription()));
+        if (StringUtils.isNotBlank(action.getParentId())) {
+            cmsChannel.setParent(cmsChannelRepository.findById(action.getParentId()).orElseThrow(() -> ProcessFailureException.of("父级栏目不存在")));
+        }
+    }
+
 
     @Override
     public Collection<CmsChannel> listChannels(CmsChannelQueryAction action) {

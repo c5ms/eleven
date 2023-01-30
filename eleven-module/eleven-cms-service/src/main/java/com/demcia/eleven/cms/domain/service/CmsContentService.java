@@ -1,8 +1,6 @@
 package com.demcia.eleven.cms.domain.service;
 
-import com.demcia.eleven.cms.core.action.CmsContentCreateAction;
-import com.demcia.eleven.cms.core.action.CmsContentQueryAction;
-import com.demcia.eleven.cms.core.action.CmsContentUpdateAction;
+import com.demcia.eleven.cms.core.action.*;
 import com.demcia.eleven.cms.domain.entity.CmsContent;
 import com.demcia.eleven.core.exception.DataNotFoundException;
 import com.demcia.eleven.core.pageable.PaginationResult;
@@ -10,11 +8,6 @@ import com.demcia.eleven.core.pageable.PaginationResult;
 import java.util.Optional;
 
 public interface CmsContentService {
-    // ======================== write ========================
-    CmsContent createContent(CmsContentCreateAction action);
-
-    void updateContent(CmsContent channel, CmsContentUpdateAction action);
-
 
     // ======================== read ========================
 
@@ -27,4 +20,13 @@ public interface CmsContentService {
     void deleteContent(CmsContent channel);
 
     PaginationResult<CmsContent> queryContent(CmsContentQueryAction queryAction);
+
+
+    // ======================== write ========================
+    CmsContent createContent(CmsContentCreateAction action);
+
+    void updateContent(CmsContent channel, CmsContentUpdateAction action);
+
+    CmsContentPublishResult publish(CmsContent content, CmsContentPublishAction action);
+
 }

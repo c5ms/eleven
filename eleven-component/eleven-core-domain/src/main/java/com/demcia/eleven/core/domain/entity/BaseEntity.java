@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
+import org.springframework.data.domain.AbstractAggregateRoot;
 import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
@@ -17,7 +18,7 @@ import java.io.Serializable;
 @FieldNameConstants
 @MappedSuperclass
 @EntityListeners({ BaseEntityListener.class})
-public abstract class BaseEntity implements Serializable, Persistable<String> {
+public abstract class BaseEntity extends AbstractAggregateRoot<BaseEntity> implements Serializable, Persistable<String> {
     private static final long serialVersionUID = 1L;
 
     @Transient
