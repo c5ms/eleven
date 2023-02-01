@@ -28,11 +28,11 @@ public class CmsChannel extends BaseAuditableEntity {
     @Column(name = "description_", length = 200)
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY,  optional = false)
-    @JoinColumn(name = "parent_id_", nullable = true)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "parent_id_")
     private CmsChannel parent;
 
-    @Column(name = "parent_id_", nullable = true, length = 100,updatable = false,insertable = false)
+    @Column(name = "parent_id_", length = 100, updatable = false, insertable = false)
     private String parentId;
 
     @OneToMany(mappedBy = "parent", orphanRemoval = true)
@@ -66,7 +66,6 @@ public class CmsChannel extends BaseAuditableEntity {
         this.setParentId(parent.getId());
         return this;
     }
-
 
 
 }

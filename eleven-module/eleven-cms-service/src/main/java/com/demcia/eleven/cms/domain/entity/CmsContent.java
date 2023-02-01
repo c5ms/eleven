@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Entity
 @FieldNameConstants
 @Table(name = "cms_content")
-public class CmsContent extends BaseSortableEntity  {
+public class CmsContent extends BaseSortableEntity {
 
     @Id
     @Column(name = "id_", nullable = false, length = 100)
@@ -146,8 +146,12 @@ public class CmsContent extends BaseSortableEntity  {
     /**
      * 提交内容
      */
-    public void submit() {
-        this.setState(CmsContentState.APPROVING);
+    public void publish() {
+        if (getState() == CmsContentState.CANCELLED) {
+            setState(CmsContentState.PUBLISHED);
+        } else {
+            setState(CmsContentState.APPROVING);
+        }
         registerEvent(new CmsContentPublishEvent(this));
     }
 }

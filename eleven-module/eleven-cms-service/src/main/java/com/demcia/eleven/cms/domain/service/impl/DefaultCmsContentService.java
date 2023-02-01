@@ -42,7 +42,8 @@ public class DefaultCmsContentService implements CmsContentService {
 
     @Override
     public CmsContentPublishResult publish(CmsContent content, CmsContentPublishAction action) {
-        content.submit();
+
+        content.publish();
         cmsContentRepository.save(content);
         return new CmsContentPublishResult().setState(content.getState());
     }

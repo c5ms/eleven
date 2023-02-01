@@ -36,11 +36,14 @@ public class DefaultCmsChannelService implements CmsChannelService {
     }
 
     private void fill(CmsChannel cmsChannel, CmsChannelCreateAction action) {
-        cmsChannel.setTitle(StringUtils.trim(action.getTitle()));
-        cmsChannel.setDescription(StringUtils.trim(action.getDescription()));
+        if (StringUtils.equals(action.getParentId(), cmsChannel.getId())) {
+            throw ProcessFailureException.of("父栏目不可以是自己");
+        }
         if (StringUtils.isNotBlank(action.getParentId())) {
             cmsChannel.setParent(cmsChannelRepository.findById(action.getParentId()).orElseThrow(() -> ProcessFailureException.of("父级栏目不存在")));
         }
+        cmsChannel.setTitle(StringUtils.trim(action.getTitle()));
+        cmsChannel.setDescription(StringUtils.trim(action.getDescription()));
     }
 
 

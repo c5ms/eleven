@@ -14,7 +14,7 @@
 
 
     <properties>
-        <appMainClass>com.demcia.eleven.CmsServiceApplication</appMainClass>
+        <appMainClass>com.demcia.CmsServiceApplication</appMainClass>
         <dist.outputpath>${project.basedir}/../target</dist.outputpath>
         <docker.expose>9000</docker.expose>
     </properties>
