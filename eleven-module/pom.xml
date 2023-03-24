@@ -13,13 +13,11 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>eleven-app-api</module>
+        <module>eleven-app</module>
         <module>eleven-app-gateway</module>
         <module>eleven-upms-core</module>
         <module>eleven-upms-client</module>
         <module>eleven-upms-service</module>
-        <module>eleven-cms-core</module>
-        <module>eleven-cms-service</module>
     </modules>
 
 
