@@ -85,4 +85,15 @@ public class RestExceptionAdvice {
                 .setError(StringUtils.defaultIfBlank(e.getError(), "Failure"));
     }
 
+    // 服务器错误
+    @ResponseBody
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Exception.class)
+    public RestfulFailure onException(Exception e) {
+        log.error("服务器错误",e);
+        return new RestfulFailure()
+                .setMessage(StringUtils.defaultIfBlank(e.getMessage(), "服务器错误"))
+                .setError(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
+    }
+
 }

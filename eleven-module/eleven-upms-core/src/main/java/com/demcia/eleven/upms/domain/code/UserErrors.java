@@ -1,4 +1,4 @@
-package com.demcia.eleven.upms.core.code;
+package com.demcia.eleven.upms.domain.code;
 
 import com.demcia.eleven.core.codes.ElevenCode;
 import lombok.AllArgsConstructor;

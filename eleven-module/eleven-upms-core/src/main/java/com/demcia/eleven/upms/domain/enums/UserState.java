@@ -1,4 +1,4 @@
-package com.demcia.eleven.upms.core.enums;
+package com.demcia.eleven.upms.domain.enums;
 
 import com.demcia.eleven.core.enums.ElevenEnum;
 import lombok.Getter;

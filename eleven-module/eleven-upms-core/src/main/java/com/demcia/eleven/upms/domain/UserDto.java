@@ -1,12 +1,10 @@
-package com.demcia.eleven.upms.core.dto;
+package com.demcia.eleven.upms.domain;
 
-import com.demcia.eleven.upms.core.enums.UserState;
+import com.demcia.eleven.upms.domain.enums.UserState;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 
 @Schema(description = "用户")
@@ -26,7 +24,4 @@ public class UserDto implements Serializable {
 
     @Schema(description = "状态")
     private UserState state = UserState.NORMAL;
-
-    @Schema(description = "角色")
-    private Set<Long> roles = new HashSet<>();
 }

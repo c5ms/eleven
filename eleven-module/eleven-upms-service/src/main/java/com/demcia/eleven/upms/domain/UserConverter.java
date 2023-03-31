@@ -1,7 +1,5 @@
-package com.demcia.eleven.upms.domain.convertor;
+package com.demcia.eleven.upms.domain;
 
-import com.demcia.eleven.upms.core.dto.UserDto;
-import com.demcia.eleven.upms.domain.entity.User;
 import lombok.RequiredArgsConstructor;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Service;
@@ -13,7 +11,6 @@ public class UserConverter {
 
     public UserDto toDto(User user) {
         var userDto = mapperFacade.map(user, UserDto.class);
-        // do something else ...
         return userDto;
     }
 

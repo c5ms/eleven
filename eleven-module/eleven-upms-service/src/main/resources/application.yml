@@ -21,9 +21,6 @@ spring:
   jpa:
     generate-ddl: true
 
-orika:
-  enabled: true
-
 eleven:
   open-api:
     title: 用户授权管理

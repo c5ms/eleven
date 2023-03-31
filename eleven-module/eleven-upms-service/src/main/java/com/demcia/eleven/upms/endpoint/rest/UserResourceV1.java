@@ -2,12 +2,14 @@ package com.demcia.eleven.upms.endpoint.rest;
 
 import com.demcia.eleven.core.pageable.PaginationResult;
 import com.demcia.eleven.core.rest.annonation.RestResource;
-import com.demcia.eleven.upms.core.action.UserCreateAction;
-import com.demcia.eleven.upms.core.action.UserQueryAction;
-import com.demcia.eleven.upms.core.action.UserUpdateAction;
-import com.demcia.eleven.upms.core.dto.UserDto;
-import com.demcia.eleven.upms.domain.convertor.UserConverter;
-import com.demcia.eleven.upms.domain.service.UserService;
+import com.demcia.eleven.upms.domain.Authority;
+import com.demcia.eleven.upms.domain.action.UserCreateAction;
+import com.demcia.eleven.upms.domain.action.UserGrantAction;
+import com.demcia.eleven.upms.domain.action.UserQueryAction;
+import com.demcia.eleven.upms.domain.action.UserUpdateAction;
+import com.demcia.eleven.upms.domain.UserDto;
+import com.demcia.eleven.upms.domain.UserConverter;
+import com.demcia.eleven.upms.domain.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @Slf4j
 @Tag(name = "用户")
@@ -59,5 +63,20 @@ public class UserResourceV1 {
     public void deleteUser(@PathVariable("id") String id) {
         userService.getUser(id).ifPresent(userService::deleteUser);
     }
+
+    @Operation(summary = "用户权限列表")
+    @GetMapping("/{id}/authorities")
+    public Set<Authority> getUserAuthorities(@PathVariable("id") String id) {
+        var user = userService.requireUser(id);
+        return userService.authoritiesOfUser(user).getAuthorities();
+    }
+
+    @Operation(summary = "用户授权")
+    @PostMapping("/{id}/authorities")
+    public void grantUser(@PathVariable("id") String id ,@RequestBody @Validated UserGrantAction action) {
+        var user = userService.requireUser(id);
+         userService.grant(user,action);
+    }
+
 
 }

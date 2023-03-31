@@ -1,11 +1,13 @@
-package com.demcia.eleven.upms.core.action;
+package com.demcia.eleven.upms.domain.action;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.experimental.Accessors;
 
 @Data
+@Accessors(chain = true)
 public class UserCreateAction {
 
     @Schema(description = "登入账号")

@@ -1,13 +1,14 @@
-package com.demcia.eleven.upms.core.action;
+package com.demcia.eleven.upms.domain.action;
 
 import com.demcia.eleven.core.pageable.Pagination;
-import com.demcia.eleven.upms.core.enums.UserState;
+import com.demcia.eleven.upms.domain.enums.UserState;
 import io.swagger.v3.oas.annotations.Parameter;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.experimental.Accessors;
 
-@Getter
-@Setter
+
+@Data
+@Accessors(chain = true)
 public class UserQueryAction extends Pagination {
 
     @Parameter(description = "登录账号")

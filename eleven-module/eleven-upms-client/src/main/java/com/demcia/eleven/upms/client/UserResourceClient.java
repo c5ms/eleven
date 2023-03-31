@@ -1,11 +1,10 @@
 package com.demcia.eleven.upms.client;
 
 import com.demcia.eleven.core.pageable.PaginationResult;
-import com.demcia.eleven.upms.core.action.UserCreateAction;
-import com.demcia.eleven.upms.core.action.UserQueryAction;
-import com.demcia.eleven.upms.core.action.UserUpdateAction;
-import com.demcia.eleven.upms.core.dto.UserDto;
-import io.swagger.v3.oas.annotations.Operation;
+import com.demcia.eleven.upms.domain.action.UserCreateAction;
+import com.demcia.eleven.upms.domain.action.UserQueryAction;
+import com.demcia.eleven.upms.domain.action.UserUpdateAction;
+import com.demcia.eleven.upms.domain.UserDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.validation.annotation.Validated;
