@@ -1,7 +1,6 @@
 server:
   port: 9000
 
-
 spring:
   application:
     name: eleven-upms
@@ -22,6 +21,8 @@ spring:
   jpa:
     generate-ddl: true
 
+orika:
+  enabled: true
 
 eleven:
   open-api:
@@ -42,5 +43,4 @@ logging:
     sql: info
     web: info
     root: info
-    'sleuth.sql': debug
 

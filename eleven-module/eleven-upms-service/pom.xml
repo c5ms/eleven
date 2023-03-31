@@ -29,20 +29,13 @@
 
         <dependency>
             <groupId>com.demacia</groupId>
-            <artifactId>eleven-core-domain</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.demacia</groupId>
             <artifactId>eleven-core-rest</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
-
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
         </dependency>
     </dependencies>
 

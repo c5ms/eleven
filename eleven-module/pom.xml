@@ -14,7 +14,6 @@
 
     <modules>
         <module>eleven-app</module>
-        <module>eleven-app-gateway</module>
         <module>eleven-upms-core</module>
         <module>eleven-upms-client</module>
         <module>eleven-upms-service</module>

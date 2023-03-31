@@ -1,12 +1,12 @@
 package com.demcia.eleven.upms.domain.entity;
 
-import com.demcia.eleven.core.domain.entity.BaseAuditableEntity;
+import com.demcia.eleven.domain.entity.BaseAuditableEntity;
 import com.demcia.eleven.upms.core.enums.UserState;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 

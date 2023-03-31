@@ -16,7 +16,6 @@
         <module>eleven-core</module>
         <module>eleven-core-rest</module>
         <module>eleven-core-feign</module>
-        <module>eleven-core-domain</module>
     </modules>
 
 

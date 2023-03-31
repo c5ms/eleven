@@ -19,7 +19,7 @@
 
     <properties>
         <!-- 构建环境 -->
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <resource.delimiter>@</resource.delimiter>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -39,19 +39,17 @@
 <!--        <docker.username>admin</docker.username>-->
 <!--        <docker.password>111111</docker.password>-->
 
-
         <!--  spring 家族 -->
-        <version.spring-boot>2.7.6</version.spring-boot>
-        <version.spring-boot-admin>2.7.6</version.spring-boot-admin>
-        <version.spring-session>2021.2.0</version.spring-session>
-        <version.spring-cloud>2021.0.4</version.spring-cloud>
-        <version.spring-cloud-alibaba-dependencies>2021.0.1.0</version.spring-cloud-alibaba-dependencies>
-        <version.spring-oauth2-authorization-server>0.3.1</version.spring-oauth2-authorization-server>
+        <version.spring-boot>3.0.5</version.spring-boot>
+        <version.spring-cloud>2022.0.2</version.spring-cloud>
+        <version.spring-cloud-alibaba>2021.0.4.0</version.spring-cloud-alibaba>
+        <version.spring-oauth2-authorization-server>1.0.0</version.spring-oauth2-authorization-server>
 
         <!--开源通用工具包-->
         <version.bcprov>1.69</version.bcprov>
-        <version.hutool>5.8.5</version.hutool>
+        <version.hutool>5.8.16</version.hutool>
         <version.commons-io>2.11.0</version.commons-io>
+        <version.commons-lang3>3.12.0</version.commons-lang3>
         <version.commons-collections>4.4</version.commons-collections>
         <version.commons-compress>1.21</version.commons-compress>
         <version.commons-text>1.9</version.commons-text>
@@ -59,17 +57,14 @@
         <version.commons-vfs2>2.9.0</version.commons-vfs2>
 
         <!-- 应用开发辅助组件 -->
-        <version.orika>2.3.2</version.orika>
-        <version.redisson>3.17.7</version.redisson>
-        <version.jsoup>1.15.3</version.jsoup>
-        <version.tinypinyin>2.0.3</version.tinypinyin>
-        <version.jetcache>2.7.0</version.jetcache>
-        <version.camel>3.18.0</version.camel>
+        <version.orika>1.4.2</version.orika>
+        <version.javassist>3.29.2-GA</version.javassist>
+        <version.redisson>3.20.1</version.redisson>
+        <version.jetcache>2.7.3</version.jetcache>
 
         <!-- 文档生成 -->
-        <version.swagger-v3>2.1.6</version.swagger-v3>
-        <version.springdoc>1.6.11</version.springdoc>
-        <version.knife4j>4.0.0</version.knife4j>
+        <version.springdoc>2.0.4</version.springdoc>
+        <version.knife4j>4.1.0</version.knife4j>
 
         <!-- 办公文档处理 -->
         <version.easyPoi>4.4.0</version.easyPoi>
@@ -77,24 +72,16 @@
 
         <!-- 数据访问层 -->
         <version.jpa-spec>3.2.5</version.jpa-spec>
-        <version.dynamic-datasource>3.5.1</version.dynamic-datasource>
+        <version.dynamic-datasource>3.6.0</version.dynamic-datasource>
         <version.datasourceproxy>1.8</version.datasourceproxy>
 
-        <!-- 序列化组件 -->
-        <version.kryo>5.3.0</version.kryo>
-        <version.fst>2.57</version.fst>
+        <!-- logging & tracing -->
+        <version.logstash.starter>1.2.2.RELEASE</version.logstash.starter>
 
         <!-- 开发&运行&监控 -->
         <version.findbugs>3.0.2</version.findbugs>
         <version.mapstruct>1.4.0.Final</version.mapstruct>
         <version.jmockdata>4.3.0</version.jmockdata>
-        <version.flyway>7.15.0</version.flyway>
-        <version.ecs-apm>1.5.0</version.ecs-apm>
-        <version.logback.logstash>7.2</version.logback.logstash>
-        <version.logstash.starter>1.2.2.RELEASE</version.logstash.starter>
-
-        <!-- CVE  -->
-        <version.jackson>2.13.4.2</version.jackson>
 
     </properties>
 
@@ -121,7 +108,7 @@
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${version.spring-cloud-alibaba-dependencies}</version>
+                <version>${version.spring-cloud-alibaba}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -149,6 +136,11 @@
 
 
             <!-- apache common -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${version.commons-lang3}</version>
+            </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
@@ -200,7 +192,6 @@
                 <version>${version.dynamic-datasource}</version>
             </dependency>
 
-
             <!-- easy excel-->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -224,32 +215,20 @@
 
             <!-- 对象拷贝技术 -->
             <dependency>
-                <groupId>dev.akkinoc.spring.boot</groupId>
-                <artifactId>orika-spring-boot-starter</artifactId>
+                <groupId>ma.glasnost.orika</groupId>
+                <artifactId>orika-core</artifactId>
                 <version>${version.orika}</version>
             </dependency>
-
-            <!-- 算法包 -->
             <dependency>
-                <groupId>org.bouncycastle</groupId>
-                <artifactId>bcprov-jdk15on</artifactId>
-                <version>${version.bcprov}</version>
+                <groupId>org.javassist</groupId>
+                <artifactId>javassist</artifactId>
+                <version>${version.javassist}</version>
             </dependency>
 
             <!-- doc -->
             <dependency>
                 <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-common</artifactId>
-                <version>${version.springdoc}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-ui</artifactId>
-                <version>${version.springdoc}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-webflux-ui</artifactId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
                 <version>${version.springdoc}</version>
             </dependency>
             <dependency>
@@ -258,31 +237,8 @@
                 <version>${version.knife4j}</version>
             </dependency>
 
-            <!-- APM -->
-            <dependency>
-                <groupId>de.codecentric</groupId>
-                <artifactId>spring-boot-admin-starter-server</artifactId>
-                <version>${version.spring-boot-admin}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>de.codecentric</groupId>
-                <artifactId>spring-boot-admin-starter-client</artifactId>
-                <version>${version.spring-boot-admin}</version>
-            </dependency>
-
 
             <!-- logs -->
-            <dependency>
-                <groupId>co.elastic.logging</groupId>
-                <artifactId>logback-ecs-encoder</artifactId>
-                <version>${version.ecs-apm}</version>
-            </dependency>
-            <dependency>
-                <groupId>net.logstash.logback</groupId>
-                <artifactId>logstash-logback-encoder</artifactId>
-                <version>${version.logback.logstash}</version>
-            </dependency>
             <dependency>
                 <groupId>com.github.piomin</groupId>
                 <artifactId>logstash-logging-spring-boot-starter</artifactId>
