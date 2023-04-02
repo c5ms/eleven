@@ -1,7 +1,7 @@
 package com.demcia.eleven.core.feign;
 
 import com.demcia.eleven.core.feign.exception.FeignServiceUnAvailableException;
-import com.demcia.eleven.core.rest.RestFailure;
+import com.demcia.eleven.core.rest.dto.RestFailure;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;

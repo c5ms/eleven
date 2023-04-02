@@ -5,7 +5,6 @@ import com.demcia.eleven.upms.dto.UserDto;
 import com.demcia.eleven.upms.request.UserCreateRequest;
 import com.demcia.eleven.upms.request.UserQueryRequest;
 import com.demcia.eleven.upms.request.UserUpdateRequest;
-import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.validation.annotation.Validated;

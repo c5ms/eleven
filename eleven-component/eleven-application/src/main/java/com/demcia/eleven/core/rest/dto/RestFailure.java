@@ -1,4 +1,4 @@
-package com.demcia.eleven.core.rest;
+package com.demcia.eleven.core.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;

@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="运行-app" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-    <module name="eleven-app" />
+  <configuration default="false" name="运行-api" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="eleven-api" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.demcia.eleven.ApiElevenApplication" />
     <option name="VM_PARAMETERS" value="--add-opens java.base/java.lang=ALL-UNNAMED  " />
     <extension name="coverage">

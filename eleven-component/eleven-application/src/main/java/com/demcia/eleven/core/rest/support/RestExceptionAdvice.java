@@ -4,7 +4,7 @@ import com.demcia.eleven.core.exception.DataNotFoundException;
 import com.demcia.eleven.core.exception.PermissionDeadException;
 import com.demcia.eleven.core.exception.ProcessFailureException;
 import com.demcia.eleven.core.exception.UnauthorizedException;
-import com.demcia.eleven.core.rest.RestFailure;
+import com.demcia.eleven.core.rest.dto.RestFailure;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;

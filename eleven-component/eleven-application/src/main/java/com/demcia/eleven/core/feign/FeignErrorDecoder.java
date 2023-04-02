@@ -2,7 +2,7 @@ package com.demcia.eleven.core.feign;
 
 import com.demcia.eleven.core.exception.ProcessFailureException;
 import com.demcia.eleven.core.feign.exception.FeignServiceUnAvailableException;
-import com.demcia.eleven.core.rest.RestFailure;
+import com.demcia.eleven.core.rest.dto.RestFailure;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Response;
 import feign.codec.ErrorDecoder;

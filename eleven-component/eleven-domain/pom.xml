@@ -43,13 +43,6 @@
             <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
         </dependency>
 
-        <!-- doc -->
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
-        </dependency>
-
-
     </dependencies>
 
 </project>
