@@ -1,14 +1,15 @@
 package com.demcia.eleven.domain.identity.provider;
 
-import com.demcia.eleven.domain.identity.IdGenerator;
+import cn.hutool.core.util.IdUtil;
+import com.demcia.eleven.domain.identity.IdentityGenerator;
 
 import java.util.UUID;
 
-public class UuidGenerator implements IdGenerator {
+public class UuidGenerator implements IdentityGenerator {
 
     @Override
-    public String nextId(String schema) {
-        return UUID.randomUUID().toString().replace("-", "").toUpperCase();
+    public String next() {
+        return IdUtil.simpleUUID();
     }
 
 }

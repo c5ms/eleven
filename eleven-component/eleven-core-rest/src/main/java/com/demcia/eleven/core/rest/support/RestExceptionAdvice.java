@@ -4,7 +4,7 @@ import com.demcia.eleven.core.exception.DataNotFoundException;
 import com.demcia.eleven.core.exception.PermissionDeadException;
 import com.demcia.eleven.core.exception.ProcessFailureException;
 import com.demcia.eleven.core.exception.UnauthorizedException;
-import com.demcia.eleven.core.rest.RestfulFailure;
+import com.demcia.eleven.core.rest.RestFailure;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
@@ -35,8 +35,8 @@ public class RestExceptionAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(UnauthorizedException.class)
-    public RestfulFailure onUnAuthenticatedException(UnauthorizedException e) {
-        return new RestfulFailure()
+    public RestFailure onUnAuthenticatedException(UnauthorizedException e) {
+        return new RestFailure()
                 .setError(HttpStatus.UNAUTHORIZED.getReasonPhrase());
     }
 
@@ -45,8 +45,8 @@ public class RestExceptionAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(PermissionDeadException.class)
-    public RestfulFailure onPermissionDeadException(PermissionDeadException e) {
-        return new RestfulFailure()
+    public RestFailure onPermissionDeadException(PermissionDeadException e) {
+        return new RestFailure()
                 .setError(HttpStatus.FORBIDDEN.getReasonPhrase());
     }
 
@@ -55,8 +55,8 @@ public class RestExceptionAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(DataNotFoundException.class)
-    public RestfulFailure onDataNotFoundException(DataNotFoundException e) {
-        return new RestfulFailure()
+    public RestFailure onDataNotFoundException(DataNotFoundException e) {
+        return new RestFailure()
                 .setError(HttpStatus.NOT_FOUND.getReasonPhrase());
     }
 
@@ -64,13 +64,13 @@ public class RestExceptionAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BindException.class)
-    public RestfulFailure onMethodArgumentNotValidException(BindException e) {
+    public RestFailure onMethodArgumentNotValidException(BindException e) {
         var msg=e.getAllErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .filter(StringUtils::isNotBlank)
                 .sorted(Comparator.naturalOrder())
                 .collect(Collectors.joining(";"));
-        return new RestfulFailure()
+        return new RestFailure()
                 .setError(HttpStatus.BAD_REQUEST.getReasonPhrase())
                 ;
     }
@@ -79,8 +79,8 @@ public class RestExceptionAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(ProcessFailureException.class)
-    public RestfulFailure onValidateFailureException(ProcessFailureException e) {
-        return new RestfulFailure()
+    public RestFailure onValidateFailureException(ProcessFailureException e) {
+        return new RestFailure()
                 .setMessage(StringUtils.defaultIfBlank(e.getMessage(), "服务器拒绝处理"))
                 .setError(StringUtils.defaultIfBlank(e.getError(), "Failure"));
     }
@@ -89,9 +89,9 @@ public class RestExceptionAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
-    public RestfulFailure onException(Exception e) {
+    public RestFailure onException(Exception e) {
         log.error("服务器错误",e);
-        return new RestfulFailure()
+        return new RestFailure()
                 .setMessage(StringUtils.defaultIfBlank(e.getMessage(), "服务器错误"))
                 .setError(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
     }

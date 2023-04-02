@@ -1,17 +1,14 @@
 package com.demcia.eleven.api.upms;
 
-import com.demcia.eleven.core.pageable.PaginationResult;
 import com.demcia.eleven.core.rest.annonation.RestResource;
 import com.demcia.eleven.upms.client.UserResourceClient;
-import com.demcia.eleven.upms.domain.action.UserCreateAction;
-import com.demcia.eleven.upms.domain.action.UserQueryAction;
-import com.demcia.eleven.upms.domain.action.UserUpdateAction;
 import com.demcia.eleven.upms.domain.UserDto;
+import com.demcia.eleven.upms.domain.request.UserCreateRequest;
+import com.demcia.eleven.upms.domain.request.UserUpdateRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +24,7 @@ public class UserApiV1 {
 
     @PostMapping
     @Operation(summary = "用户创建")
-    public UserDto createUser(@RequestBody @Validated UserCreateAction action) {
+    public UserDto createUser(@RequestBody @Validated UserCreateRequest action) {
         return userResourceClient.createUser(action);
     }
 
@@ -39,7 +36,7 @@ public class UserApiV1 {
 
     @Operation(summary = "用户更新")
     @PostMapping("/{id}")
-    public UserDto updateUser(@PathVariable("id") String id, @RequestBody UserUpdateAction updateAction) {
+    public UserDto updateUser(@PathVariable("id") String id, @RequestBody UserUpdateRequest updateAction) {
         return userResourceClient.updateUser(id, updateAction);
     }
 
@@ -49,11 +46,5 @@ public class UserApiV1 {
         return userResourceClient.getUser(id);
     }
 
-
-    @GetMapping
-    @Operation(summary = "用户查询")
-    public PaginationResult<UserDto> queryUser(@ParameterObject UserQueryAction queryAction) {
-        return userResourceClient.queryUser(queryAction);
-    }
 
 }

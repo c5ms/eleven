@@ -14,9 +14,10 @@
 
     <modules>
         <module>eleven-app</module>
-        <module>eleven-upms-core</module>
+        <module>eleven-upms-api</module>
         <module>eleven-upms-client</module>
-        <module>eleven-upms-service</module>
+        <module>eleven-upms-domain</module>
+        <module>eleven-upms-endpoint</module>
     </modules>
 
 

@@ -46,7 +46,6 @@
         <version.spring-oauth2-authorization-server>1.0.0</version.spring-oauth2-authorization-server>
 
         <!--开源通用工具包-->
-        <version.bcprov>1.69</version.bcprov>
         <version.hutool>5.8.16</version.hutool>
         <version.commons-io>2.11.0</version.commons-io>
         <version.commons-lang3>3.12.0</version.commons-lang3>
@@ -74,6 +73,7 @@
         <version.jpa-spec>3.2.5</version.jpa-spec>
         <version.dynamic-datasource>3.6.0</version.dynamic-datasource>
         <version.datasourceproxy>1.8</version.datasourceproxy>
+        <version.mybatis>3.0.1</version.mybatis>
 
         <!-- logging & tracing -->
         <version.logstash.starter>1.2.2.RELEASE</version.logstash.starter>
@@ -184,6 +184,11 @@
                 <artifactId>datasource-proxy</artifactId>
                 <version>${version.datasourceproxy}</version>
             </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${version.mybatis}</version>
+            </dependency>
 
             <!-- 多数据源支持 -->
             <dependency>
@@ -267,6 +272,15 @@
     <build>
         <pluginManagement>
             <plugins>
+               <plugin>
+                   <groupId>org.apache.maven.plugins</groupId>
+                   <artifactId>maven-compiler-plugin</artifactId>
+                   <configuration>
+                       <compilerArgs>
+                           <arg>-parameters</arg>
+                       </compilerArgs>
+                   </configuration>
+               </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>

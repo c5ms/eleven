@@ -2,7 +2,7 @@ package com.demcia.eleven.core.feign;
 
 import com.demcia.eleven.core.exception.ProcessFailureException;
 import com.demcia.eleven.core.feign.exception.FeignServiceUnAvailableException;
-import com.demcia.eleven.core.rest.RestfulFailure;
+import com.demcia.eleven.core.rest.RestFailure;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Response;
 import feign.codec.ErrorDecoder;
@@ -45,7 +45,7 @@ public class FeignErrorDecoder implements ErrorDecoder {
             for (String type : response.headers().get(HttpHeaders.CONTENT_TYPE)) {
                 if (MediaType.parseMediaType(type).isCompatibleWith(MediaType.APPLICATION_JSON)) {
                     try (InputStream is = response.body().asInputStream()) {
-                        var restApiFailureResult = objectMapper.readValue(is, RestfulFailure.class);
+                        var restApiFailureResult = objectMapper.readValue(is, RestFailure.class);
                         throw ProcessFailureException.of(restApiFailureResult.getError(), restApiFailureResult.getMessage());
                     } catch (IOException e) {
                         log.error("feign error decode error", e);

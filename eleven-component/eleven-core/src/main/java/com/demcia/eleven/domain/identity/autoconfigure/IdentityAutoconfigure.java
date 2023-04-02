@@ -1,10 +1,9 @@
 package com.demcia.eleven.domain.identity.autoconfigure;
 
-import com.demcia.eleven.domain.identity.IdGenerator;
-import com.demcia.eleven.domain.identity.provider.RaindropIdGenerator;
-import com.demcia.eleven.domain.identity.provider.SnowflakeIdGenerator;
-import com.demcia.eleven.domain.identity.provider.SnowflakeIdWorker;
-import com.demcia.eleven.domain.identity.provider.UuidGenerator;
+import cn.hutool.core.util.IdUtil;
+import com.demcia.eleven.domain.identity.IdentityGenerator;
+import com.demcia.eleven.domain.identity.provider.*;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -20,15 +19,14 @@ public class IdentityAutoconfigure {
 
 
     @Bean
-    public IdGenerator idGenerator() {
-        switch (dataProperties.getIdType()) {
-            case SNOWFLAKE:
-                return new SnowflakeIdGenerator(new SnowflakeIdWorker(dataProperties.getSnowflake().getWordId(), dataProperties.getSnowflake().getDatacenterId()));
-            case RAINDROP:
-                return new RaindropIdGenerator(dataProperties.getRaindrop().getPrefix());
-            default:
-                return new UuidGenerator();
-        }
+    public IdentityGenerator idGenerator() {
+        return switch (dataProperties.getIdType()) {
+            case SNOWFLAKE -> new SnowflakeIdentityGenerator(IdUtil.getSnowflake(dataProperties.getSnowflake().getDatacenterId()));
+            case NANOID -> new NanoIdGenerator();
+            case OBJECT -> new ObjectIdGenerator();
+            case RAINDROP -> new RaindropGenerator(dataProperties.getSnowflake().getDatacenterId());
+            default -> new UuidGenerator();
+        };
     }
 
 
