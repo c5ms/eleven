@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/users")
 @RestResource
 @RequiredArgsConstructor
-public class UserEndpointV1 implements UserApi {
+public class UserRestfulV1 implements UserApi {
 
     private final UserService userService;
     private final UserConverter userConverter;
