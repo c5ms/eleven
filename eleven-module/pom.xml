@@ -15,8 +15,8 @@
     <modules>
         <module>eleven-api</module>
         <module>eleven-upms-domain</module>
+        <module>eleven-upms-api</module>
         <module>eleven-upms-app</module>
-        <module>eleven-upms-app-api</module>
     </modules>
 
 
