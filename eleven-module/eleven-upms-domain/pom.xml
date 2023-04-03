@@ -17,7 +17,7 @@
 
         <dependency>
             <groupId>com.demacia</groupId>
-            <artifactId>eleven-domain</artifactId>
+            <artifactId>eleven-starter-domain</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>

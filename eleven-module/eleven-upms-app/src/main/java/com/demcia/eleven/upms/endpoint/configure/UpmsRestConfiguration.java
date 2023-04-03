@@ -1,9 +1,8 @@
 package com.demcia.eleven.upms.endpoint.configure;
 
-import com.demcia.eleven.upms.UpmsModule;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springdoc.core.GroupedOpenApi;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,7 +16,7 @@ public class UpmsRestConfiguration {
         return GroupedOpenApi.builder()
                 .group("upms")
                 .displayName("用户权限")
-                .packagesToScan(UpmsModule.class.getPackageName())
+                .packagesToScan("com.demcia.eleven.upms.endpoint")
                 .build();
     }
 

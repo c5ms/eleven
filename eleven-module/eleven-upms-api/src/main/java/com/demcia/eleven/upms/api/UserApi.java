@@ -12,25 +12,21 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@FeignClient(
-        name = "eleven-upms",
-        url = "${service.eleven-upms.url:http://127.0.0.1:9000}",
-        path = "${service.eleven-upms.path:/users}"
-)
+@FeignClient(value = "eleven-upms")
 public interface UserApi {
 
-    @GetMapping
+    @GetMapping("/users")
     QueryResult<UserDto> queryUser(@SpringQueryMap UserQueryRequest request);
 
-    @PostMapping
+    @PostMapping("/users")
     UserDto createUser(@RequestBody @Validated UserCreateRequest action);
 
-    @GetMapping("/{id}")
+    @GetMapping("/users/{id}")
     Optional<UserDto> getUser(@PathVariable("id") String id);
 
-    @PostMapping("/{id}")
+    @PostMapping("/users/{id}")
     UserDto updateUser(@PathVariable("id") String id, @RequestBody UserUpdateRequest updateAction);
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/users/{id}")
     void deleteUser(@PathVariable("id") String id);
 }

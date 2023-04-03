@@ -1,5 +1,6 @@
 package com.demcia.eleven.upms.domain;
 
+import com.demcia.eleven.core.exception.UnauthorizedException;
 import com.demcia.eleven.core.query.Pagination;
 import com.demcia.eleven.core.query.QueryResult;
 import com.demcia.eleven.domain.identity.IdentityGenerator;
@@ -7,6 +8,7 @@ import com.demcia.eleven.upms.domain.action.UserCreateAction;
 import com.demcia.eleven.upms.domain.action.UserFilter;
 import com.demcia.eleven.upms.domain.action.UserUpdateAction;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jdbc.core.JdbcAggregateTemplate;
@@ -19,6 +21,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -34,7 +37,6 @@ public class UserService {
         var id = identityGenerator.next();
         action.setLogin(UUID.randomUUID().toString());
         var user = new User(id, action);
-        user.setPassword("asd");
         userValidator.validate(user);
         return userRepository.save(user);
     }
@@ -54,6 +56,10 @@ public class UserService {
     }
 
     public QueryResult<User> queryUser(UserFilter filter, Pagination pagination) {
+        if(1==1){
+            throw UnauthorizedException.of();
+        }
+
         var criteria = Criteria.empty();
         if (Objects.nonNull(filter.getState())) {
             criteria = criteria.and(Criteria.where("state_").is(filter.getState()));

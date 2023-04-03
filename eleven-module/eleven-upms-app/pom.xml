@@ -13,13 +13,6 @@
     <artifactId>eleven-upms-app</artifactId>
 
 
-    <properties>
-        <appMainClass>com.demcia.CmsServiceApplication</appMainClass>
-        <dist.outputpath>${project.basedir}/../target</dist.outputpath>
-        <docker.expose>9000</docker.expose>
-    </properties>
-
-
     <dependencies>
 
         <dependency>
@@ -37,32 +30,5 @@
     </dependencies>
 
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>appassembler-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-
-
-    <profiles>
-        <profile>
-            <id>docker</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>io.fabric8</groupId>
-                        <artifactId>docker-maven-plugin</artifactId>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
 </project>

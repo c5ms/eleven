@@ -1,6 +1,6 @@
 package com.demcia.eleven.upms.domain;
 
-import com.demcia.eleven.core.enums.ElevenEnum;
+import com.demcia.eleven.core.ElevenEnum;
 import com.demcia.eleven.domain.entity.AbstractDomain;
 import com.demcia.eleven.domain.entity.AuditMetadata;
 import com.demcia.eleven.upms.domain.action.UserCreateAction;

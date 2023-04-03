@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>com.demacia</groupId>
-            <artifactId>eleven-application</artifactId>
+            <artifactId>eleven-starter-application</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

@@ -13,7 +13,8 @@
     <modules>
         <module>eleven-module</module>
         <module>eleven-component</module>
-        <module>eleven-deploy</module>
+
+        <module>eleven-application</module>
     </modules>
 
 
@@ -30,14 +31,6 @@
         <appName>${project.artifactId}</appName>
         <appMainClass/>
         <dist.outputpath>${project.basedir}/target</dist.outputpath>
-
-        <!--  docker 预设 -->
-        <docker.baseImage>openjdk:11-jre</docker.baseImage>
-        <docker.expose>9000</docker.expose>
-        <docker.host>http://192.168.2.250:2375</docker.host>
-<!--        <docker.registry>192.168.2.30:5000</docker.registry>-->
-<!--        <docker.username>admin</docker.username>-->
-<!--        <docker.password>111111</docker.password>-->
 
         <!--  spring 家族 -->
         <version.spring-boot>3.0.5</version.spring-boot>
@@ -237,8 +230,13 @@
                 <version>${version.springdoc}</version>
             </dependency>
             <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${version.springdoc}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
+                <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
                 <version>${version.knife4j}</version>
             </dependency>
 
@@ -330,7 +328,7 @@
                         <useWildcardClassPath>true</useWildcardClassPath>
                         <encoding>UTF-8</encoding>
                         <logsDirectory>logs</logsDirectory>
-                        <tempDirectory>tmp</tempDirectory>
+                        <!--						<tempDirectory>tmp</tempDirectory>-->
                         <projectArtifactFirstInClassPath>true</projectArtifactFirstInClassPath>
                         <target>${project.build.directory}</target>
                         <assembleDirectory>${project.build.directory}/assembly</assembleDirectory>
@@ -347,8 +345,24 @@
                                         <generator>jsw</generator>
                                         <configuration>
                                             <property>
+                                                <name>wrapper.console.format</name>
+                                                <value>M</value>
+                                            </property>
+                                            <property>
                                                 <name>wrapper.logfile</name>
-                                                <value>logs/wrapper.log</value>
+                                                <value></value>
+                                            </property>
+                                            <property>
+                                                <name>wrapper.logfile.format</name>
+                                                <value>M</value>
+                                            </property>
+                                            <property>
+                                                <name>wrapper.logfile.maxsize</name>
+                                                <value>10m</value>
+                                            </property>
+                                            <property>
+                                                <name>wrapper.logfile.maxfiles</name>
+                                                <value>100</value>
                                             </property>
                                             <property>
                                                 <name>wrapper.console.title</name>
@@ -362,10 +376,7 @@
                                                 <name>wrapper.ntservice.displayname</name>
                                                 <value>${appName}</value>
                                             </property>
-                                            <property>
-                                                <name>wrapper.console.loglevel</name>
-                                                <value>INFO</value>
-                                            </property>
+
                                         </configuration>
                                         <includes>
                                             <include>windows-x86-32</include>
@@ -382,11 +393,10 @@
                                     <maxMemorySize>128M</maxMemorySize>
                                     <extraArguments>
                                         <extraArgument>-server</extraArgument>
-                                        <extraArgument>-Xloggc:logs/demo_gc.log</extraArgument>
+                                        <extraArgument>-Xloggc:logs/${appName}_gc.log</extraArgument>
                                         <extraArgument>-XX:+HeapDumpOnOutOfMemoryError</extraArgument>
                                         <extraArgument>-XX:HeapDumpPath=logs/java_heapdump.hprof</extraArgument>
-                                        <!--                                        <extraArgument>-Djava.io.tmpdir=%BASEDIR%/tmp</extraArgument>-->
-                                        <extraArgument>--add-opens java.base/java.lang=ALL-UNNAMED</extraArgument>
+                                        <extraArgument>--illegal-access=warn</extraArgument>
                                     </extraArguments>
                                 </jvmSettings>
                             </daemon>
@@ -398,7 +408,17 @@
                                 <platforms>
                                     <platform>all</platform>
                                 </platforms>
+                                <jvmSettings>
+                                    <extraArguments>
+                                        <extraArgument>-server</extraArgument>
+                                        <extraArgument>-Xloggc:logs/${appName}_gc.log</extraArgument>
+                                        <extraArgument>-XX:+HeapDumpOnOutOfMemoryError</extraArgument>
+                                        <extraArgument>-XX:HeapDumpPath=logs/java_heapdump.hprof</extraArgument>
+                                        <extraArgument>--illegal-access=warn</extraArgument>
+                                    </extraArguments>
+                                </jvmSettings>
                             </program>
+
                         </programs>
                     </configuration>
                     <executions>
@@ -433,63 +453,6 @@
                             <phase>package</phase>
                             <goals>
                                 <goal>single</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <!-- @see https://dmp.fabric8.io/#build-configuration -->
-                    <groupId>io.fabric8</groupId>
-                    <artifactId>docker-maven-plugin</artifactId>
-                    <version>0.39.1</version>
-                    <configuration>
-                        <buildArchiveOnly>false</buildArchiveOnly>
-                        <outputDirectory>${dist.outputpath}/docker</outputDirectory>
-                        <images>
-                            <image>
-                                <name>%g/${project.artifactId}:%v</name>
-                                <build>
-                                    <from>${docker.baseImage}</from>
-                                    <tags>
-                                        <tag>${project.version}</tag>
-                                        <tag>latest</tag>
-                                    </tags>
-                                    <ports>
-                                        <port>${docker.expose}</port>
-                                    </ports>
-                                    <entryPoint>
-                                        <exec>
-                                            <arg>/app/bin/run</arg>
-                                        </exec>
-                                    </entryPoint>
-                                    <workdir>/app</workdir>
-                                    <buildOptions>
-                                        <forcerm>1</forcerm>
-                                    </buildOptions>
-                                    <healthCheck>
-                                        <interval>10s</interval>
-                                        <timeout>3s</timeout>
-                                        <startPeriod>10s</startPeriod>
-                                        <retries>120</retries>
-                                        <cmd>curl http://localhost:${docker.expose}/actuator/health</cmd>
-                                    </healthCheck>
-                                    <assembly>
-                                        <mode>dir</mode>
-                                        <name>${project.build.finalName}</name>
-                                        <targetDir>/app</targetDir>
-                                        <descriptor>${project.basedir}/src/main/assembly/bin.xml</descriptor>
-                                        <exportTargetDir>/target</exportTargetDir>
-                                    </assembly>
-                                </build>
-                            </image>
-                        </images>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>build</goal>
-                                <!--                                <goal>push</goal>-->
                             </goals>
                         </execution>
                     </executions>
