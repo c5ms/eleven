@@ -1,6 +1,5 @@
 package com.demcia.eleven.upms.domain;
 
-import com.demcia.eleven.core.exception.ProcessFailureException;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -20,7 +19,7 @@ public class UserValidator {
         userRepository.findByLogin(user.getLogin())
                 .filter(exist-> !StringUtils.equals(exist.getId(),user.getId()))
                 .ifPresent(exist -> {
-                    throw ProcessFailureException.of(UserErrors.USER_NAME_REPEAT);
+                    throw UserErrors.USER_NAME_REPEAT.reject();
                 });
     }
 

@@ -1,8 +1,8 @@
 package com.demcia.eleven.upms.domain;
 
-import com.demcia.eleven.core.ElevenEnum;
-import com.demcia.eleven.domain.entity.AbstractDomain;
-import com.demcia.eleven.domain.entity.AuditMetadata;
+import com.demcia.eleven.core.codes.ElevenEnum;
+import com.demcia.eleven.security.domain.AbstractDomain;
+import com.demcia.eleven.security.domain.AuditMetadata;
 import com.demcia.eleven.upms.domain.action.UserCreateAction;
 import com.demcia.eleven.upms.domain.action.UserUpdateAction;
 import com.demcia.eleven.upms.domain.event.UserCreatedEvent;
@@ -23,6 +23,8 @@ import java.util.Objects;
 @Getter
 @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
 public class User extends AbstractDomain<User> {
+
+    public static final String PRINCIPAL_TYPE = "user";
 
     @Id
     @Column("id_")

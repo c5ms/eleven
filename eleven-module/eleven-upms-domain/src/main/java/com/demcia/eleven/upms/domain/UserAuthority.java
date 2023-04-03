@@ -1,13 +1,12 @@
 package com.demcia.eleven.upms.domain;
 
-import com.demcia.eleven.domain.entity.AbstractDomain;
+import com.demcia.eleven.security.domain.AbstractDomain;
 import com.demcia.eleven.upms.domain.event.UserGrantedEvent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.annotation.Version;
-import org.springframework.data.domain.AbstractAggregateRoot;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 

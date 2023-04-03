@@ -1,9 +1,9 @@
 package com.demcia.eleven.upms.domain;
 
-import com.demcia.eleven.core.exception.UnauthorizedException;
+import com.demcia.eleven.core.generate.IdentityGenerator;
 import com.demcia.eleven.core.query.Pagination;
 import com.demcia.eleven.core.query.QueryResult;
-import com.demcia.eleven.domain.identity.IdentityGenerator;
+import com.demcia.eleven.core.security.SecurityUtil;
 import com.demcia.eleven.upms.domain.action.UserCreateAction;
 import com.demcia.eleven.upms.domain.action.UserFilter;
 import com.demcia.eleven.upms.domain.action.UserUpdateAction;
@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jdbc.core.JdbcAggregateTemplate;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.data.relational.core.query.Query;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -55,11 +56,9 @@ public class UserService {
         userRepository.delete(user);
     }
 
+    @PreAuthorize("isAuthenticated()")
     public QueryResult<User> queryUser(UserFilter filter, Pagination pagination) {
-        if(1==1){
-            throw UnauthorizedException.of();
-        }
-
+        System.out.println(SecurityUtil.getCurrentSubject());
         var criteria = Criteria.empty();
         if (Objects.nonNull(filter.getState())) {
             criteria = criteria.and(Criteria.where("state_").is(filter.getState()));

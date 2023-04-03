@@ -13,9 +13,10 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>eleven-upms-domain</module>
+
         <module>eleven-upms-api</module>
         <module>eleven-upms-app</module>
+        <module>eleven-upms-domain</module>
     </modules>
 
 

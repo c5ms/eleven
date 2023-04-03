@@ -13,9 +13,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>eleven-starter-core</module>
-        <module>eleven-starter-domain</module>
-        <module>eleven-starter-application</module>
+        <module>eleven-core</module>
+        <module>eleven-core-app</module>
+        <module>eleven-core-domain</module>
     </modules>
 
 

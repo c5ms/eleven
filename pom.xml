@@ -49,7 +49,7 @@
         <version.commons-vfs2>2.9.0</version.commons-vfs2>
 
         <!-- 应用开发辅助组件 -->
-        <version.orika>1.4.2</version.orika>
+        <version.orika>1.5.4</version.orika>
         <version.javassist>3.29.2-GA</version.javassist>
         <version.redisson>3.20.1</version.redisson>
         <version.jetcache>2.7.3</version.jetcache>
@@ -223,6 +223,7 @@
                 <version>${version.javassist}</version>
             </dependency>
 
+
             <!-- doc -->
             <dependency>
                 <groupId>org.springdoc</groupId>
@@ -232,6 +233,11 @@
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${version.springdoc}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
                 <version>${version.springdoc}</version>
             </dependency>
             <dependency>
