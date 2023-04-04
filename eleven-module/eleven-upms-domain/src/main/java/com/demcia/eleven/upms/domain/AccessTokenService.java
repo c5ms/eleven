@@ -1,8 +1,6 @@
 package com.demcia.eleven.upms.domain;
 
-import com.demcia.eleven.core.security.Principal;
 import com.demcia.eleven.core.security.Token;
-import com.demcia.eleven.core.security.TokenDetail;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

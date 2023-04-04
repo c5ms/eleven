@@ -1,11 +1,12 @@
 package com.demcia.eleven.core.time.autoconfigure;
 
-import com.demcia.eleven.core.time.support.DataBaseTimestampProvider;
 import com.demcia.eleven.core.time.DynamicAdjustableClock;
 import com.demcia.eleven.core.time.TimestampProvider;
+import com.demcia.eleven.core.time.support.DataBaseTimestampProvider;
 import com.demcia.eleven.core.time.support.LocalTimestampProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,13 +22,15 @@ public class DateTimeAutoconfigure {
     private final DateTimeProperties properties;
 
     @Bean
-    public TimestampProvider nowProvider(DataSource dataSource) {
+    public TimestampProvider nowProvider(ListableBeanFactory listableBeanFactory) {
         switch (properties.getProvider()) {
-            case DATE_BASE:
+            case DATE_BASE -> {
+                var dataSource = listableBeanFactory.getBean(DataSource.class);
                 return new DataBaseTimestampProvider(dataSource);
-            case LOCAL_CLOCK:
-            default:
+            }
+            default -> {
                 return new LocalTimestampProvider();
+            }
         }
     }
 

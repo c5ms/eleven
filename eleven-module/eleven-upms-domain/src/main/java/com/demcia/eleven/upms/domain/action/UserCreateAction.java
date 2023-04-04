@@ -8,6 +8,6 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 public class UserCreateAction {
-  private    String login;
-     private    String nickname;
+    private String login;
+    private String nickname;
 }

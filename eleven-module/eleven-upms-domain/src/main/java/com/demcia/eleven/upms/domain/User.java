@@ -1,8 +1,7 @@
 package com.demcia.eleven.upms.domain;
 
-import com.demcia.eleven.core.codes.ElevenEnum;
-import com.demcia.eleven.security.domain.AbstractDomain;
-import com.demcia.eleven.security.domain.AuditMetadata;
+import com.demcia.eleven.core.domain.AbstractDomain;
+import com.demcia.eleven.core.domain.AuditMetadata;
 import com.demcia.eleven.upms.domain.action.UserCreateAction;
 import com.demcia.eleven.upms.domain.action.UserUpdateAction;
 import com.demcia.eleven.upms.domain.event.UserCreatedEvent;
@@ -25,18 +24,14 @@ import java.util.Objects;
 public class User extends AbstractDomain<User> {
 
     public static final String PRINCIPAL_TYPE = "user";
-
+    @Column("login_")
+    private final String login;
     @Id
     @Column("id_")
     private String id;
-
     @Version
     @Column("_version")
     private Integer version;
-
-    @Column("login_")
-    private final String login;
-
     /**
      * 如果用户类型不是 system，表示上一个外部系统用户，则会有对应的外部系统用户 ID
      */
@@ -60,20 +55,6 @@ public class User extends AbstractDomain<User> {
 
     @Embedded.Nullable
     private AuditMetadata audit = new AuditMetadata();
-
-    /**
-     * 系统用户状态
-     */
-    @Getter
-    @RequiredArgsConstructor
-    public enum UserState implements ElevenEnum {
-        NORMAL("正常"),
-        DISABLED("禁用"),
-        READONLY("只读");
-
-        private final String label;
-    }
-
 
     /**
      * 创建新用户
@@ -101,6 +82,19 @@ public class User extends AbstractDomain<User> {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * 系统用户状态
+     */
+    @Getter
+    @RequiredArgsConstructor
+    public enum UserState {
+        NORMAL("正常"),
+        DISABLED("禁用"),
+        READONLY("只读");
+
+        private final String label;
     }
 
 

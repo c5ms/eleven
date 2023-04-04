@@ -1,6 +1,6 @@
 package com.demcia.eleven.core.exception;
 
-import com.demcia.eleven.core.codes.ElevenCode;
+import com.demcia.eleven.core.errors.Errors;
 
 /**
  * 请求被拒绝异常，可能由于某种原因，逻辑无法继续正确执行下去。
@@ -21,8 +21,8 @@ public class ProcessRejectedException extends RuntimeException {
         return new ProcessRejectedException(null, message);
     }
 
-    public static ProcessRejectedException of(ElevenCode errorCode) {
-        return new ProcessRejectedException(errorCode.getCode(), errorCode.getMessage());
+    public static ProcessRejectedException of(Errors codes) {
+        return new ProcessRejectedException(codes.getCode(), codes.getMessage());
     }
 
     public String getError() {

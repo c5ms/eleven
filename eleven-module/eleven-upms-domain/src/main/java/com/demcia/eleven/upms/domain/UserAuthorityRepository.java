@@ -18,8 +18,8 @@ public interface UserAuthorityRepository extends CrudRepository<UserAuthority, S
               and name_=:name
             """)
     void deleteByUserAndAuthority(@Param("user") String user,
-                                 @Param("type") String type,
-                                 @Param("name") String name);
+                                  @Param("type") String type,
+                                  @Param("name") String name);
 
     @Query("""
             select * from upms_user_authority

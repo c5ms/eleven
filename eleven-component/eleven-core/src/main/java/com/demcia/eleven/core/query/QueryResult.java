@@ -15,12 +15,18 @@ public class QueryResult<T> {
 
     private List<T> items;
 
-    @Data
-    @Accessors(chain = true)
-    public static class QueryResultMate {
-        private long total;
-        private long page;
-        private long size;
+    public static <T> QueryResult<T> of(List<T> items, long total) {
+        return new QueryResult<T>()
+                .setItems(items)
+                .setMate(new QueryResultMate().setTotal(total))
+                ;
+    }
+
+    public static <T> QueryResult<T> of(List<T> items) {
+        return new QueryResult<T>()
+                .setItems(items)
+                .setMate(new QueryResultMate().setTotal(items.size()))
+                ;
     }
 
     public QueryResult<T> withPagination(Pagination pagination) {
@@ -45,20 +51,12 @@ public class QueryResult<T> {
                 .setMate(this.getMate());
     }
 
-
-    public static <T> QueryResult<T> of(List<T> items, long total) {
-        return new QueryResult<T>()
-                .setItems(items)
-                .setMate(new QueryResultMate().setTotal(total))
-                ;
-    }
-
-
-    public static <T> QueryResult<T> of(List<T> items) {
-        return new QueryResult<T>()
-                .setItems(items)
-                .setMate(new QueryResultMate().setTotal(items.size()))
-                ;
+    @Data
+    @Accessors(chain = true)
+    public static class QueryResultMate {
+        private long total;
+        private long page;
+        private long size;
     }
 
 

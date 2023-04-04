@@ -1,6 +1,6 @@
 package com.demcia.eleven.upms.domain;
 
-import com.demcia.eleven.security.domain.AbstractDomain;
+import com.demcia.eleven.core.domain.AbstractDomain;
 import com.demcia.eleven.upms.domain.event.UserGrantedEvent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,7 +1,7 @@
 package com.demcia.eleven.upms.domain;
 
+import com.demcia.eleven.core.domain.AbstractDomain;
 import com.demcia.eleven.core.security.Token;
-import com.demcia.eleven.security.domain.AbstractDomain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.With;

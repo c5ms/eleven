@@ -13,7 +13,6 @@
     <modules>
         <module>eleven-module</module>
         <module>eleven-component</module>
-
         <module>eleven-application</module>
     </modules>
 

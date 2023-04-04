@@ -1,12 +1,13 @@
 package com.demcia.eleven.api.upms;
 
+import com.demcia.eleven.core.application.rest.Download;
 import com.demcia.eleven.core.query.QueryResult;
-import com.demcia.eleven.core.rest.annonation.RestResource;
-import com.demcia.eleven.upms.application.api.UserApi;
-import com.demcia.eleven.upms.application.dto.UserDto;
-import com.demcia.eleven.upms.application.request.UserCreateRequest;
-import com.demcia.eleven.upms.application.request.UserQueryRequest;
-import com.demcia.eleven.upms.application.request.UserUpdateRequest;
+import com.demcia.eleven.core.application.rest.annonation.RestResource;
+import com.demcia.eleven.upms.api.UserApi;
+import com.demcia.eleven.upms.dto.UserDto;
+import com.demcia.eleven.upms.request.UserCreateRequest;
+import com.demcia.eleven.upms.request.UserQueryRequest;
+import com.demcia.eleven.upms.request.UserUpdateRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -49,10 +50,12 @@ public class UserApiV1 {
         return userApi.getUser(id);
     }
 
-
     @GetMapping
     @Operation(summary = "用户查询")
     public QueryResult<UserDto> queryUser(@ParameterObject UserQueryRequest request) {
         return userApi.queryUser(request);
     }
+
+
+
 }

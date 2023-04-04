@@ -1,7 +1,6 @@
 package com.demcia.eleven.upms.domain;
 
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import java.util.Optional;
 

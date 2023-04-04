@@ -51,10 +51,11 @@ public final class TimeContext {
 
     /**
      * 当前时间戳
+     *
      * @return 时间戳
      */
-    public  static Instant instant(){
-        return  Instant.now(getClock());
+    public static Instant instant() {
+        return Instant.now(getClock());
     }
 
     @Order(Ordered.HIGHEST_PRECEDENCE)

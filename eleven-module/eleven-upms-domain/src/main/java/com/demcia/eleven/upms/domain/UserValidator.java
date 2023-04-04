@@ -17,9 +17,9 @@ public class UserValidator {
     public void validate(User user) {
         // 验证，用户名不能重复
         userRepository.findByLogin(user.getLogin())
-                .filter(exist-> !StringUtils.equals(exist.getId(),user.getId()))
+                .filter(exist -> !StringUtils.equals(exist.getId(), user.getId()))
                 .ifPresent(exist -> {
-                    throw UserErrors.USER_NAME_REPEAT.reject();
+                    throw UserErrors.USER_NAME_REPEAT.makeRejectException();
                 });
     }
 
