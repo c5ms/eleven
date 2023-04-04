@@ -1,6 +1,6 @@
-package com.demcia.eleven.upms.configure;
+package com.demcia.eleven.upms.app.configure;
 
-import com.demcia.eleven.upms.rest.UserResourceV1;
+import com.demcia.eleven.upms.app.rest.UserResourceV1;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.models.GroupedOpenApi;

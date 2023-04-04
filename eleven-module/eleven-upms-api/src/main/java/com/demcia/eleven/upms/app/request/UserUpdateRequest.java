@@ -1,4 +1,4 @@
-package com.demcia.eleven.upms.request;
+package com.demcia.eleven.upms.app.request;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

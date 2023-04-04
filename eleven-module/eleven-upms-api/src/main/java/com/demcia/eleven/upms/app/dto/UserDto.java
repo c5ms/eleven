@@ -1,4 +1,4 @@
-package com.demcia.eleven.upms.dto;
+package com.demcia.eleven.upms.app.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

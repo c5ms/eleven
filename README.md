@@ -7,23 +7,16 @@ micro service learning project
 #### 代码结构
 
 - eleven-application 应用层，提供有状态的应用逻辑
-    - eleven-demo 一个示例应用，运行于用户接入网络，对接 GUI 界面，提供定制化应用逻辑！
-    - eleven-upms 用户权限管理的应用层，可运行，可作为微服务发布
-    - eleven-upms-client 用户权限管理的应用层客户端，可以作为其他应用层远程微服务调用
+    - eleven-api    一个示例应用，描述了一个聚合的 API 层，你可以假设这里的东西是你的开放接口 API
+    - eleven-deploy 运行部署脚本，给 devOps 团队使用的
+    - eleven-upms   用户权限管理可运行程序
 - eleven-component 公共组件层，提供工具包，基础库。
-    - eleven-core 核心包，提供：工具库，通用场景类，通用异常类，通用枚举类，通用工具类
-    - eleven-core-feign 远程客户端调用核心支持
-    - eleven-core-rest Web层 Restful Api 层支持
-    - eleven-core-domain 公共领域服务层支持
-- eleven-domain 领域服务层，提供无状态领域服务
-    - eleven-upms-core 用户权限管理的共享内核
-    - eleven-upms-service 用户权限管理领域的服务层
-- eleven-deploy 部署脚本
-    - /src/main/docker/jvm jvm 环境镜像封装，提供链路追踪，日志采集层基础组件
-    - /src/main/docker/ElasticSearch es 镜像封装，提供使用的分词插件等支持
-    - /src/main/docker/mysql mysql 镜像封装
-    - /src/main/docker/rabbitmq rabbitmq 镜像封装
-    - ...
+    - eleven-core 核心包，提供：工具库，通用场景类，通用异常类，通用枚举类，通用工具类，安全模块
+    - eleven-core-app 应用层支持
+    - eleven-core-domain 领域层支持
+- eleven-module 业务模块
+    - eleven-upms-api 用户权限管理模块-应用层共享内核
+    - eleven-upms-domain 用户权限管理模块-核心领域业务
 
 #### 编码约定
 

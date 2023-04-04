@@ -1,4 +1,4 @@
-package com.demcia.eleven.upms.rest;
+package com.demcia.eleven.upms.app.rest;
 
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.extra.servlet.JakartaServletUtil;
@@ -8,11 +8,11 @@ import com.demcia.eleven.core.security.Principal;
 import com.demcia.eleven.core.security.Token;
 import com.demcia.eleven.core.security.TokenDetail;
 import com.demcia.eleven.core.time.TimeContext;
-import com.demcia.eleven.upms.api.AccessTokenApi;
-import com.demcia.eleven.upms.application.AccessTokenConverter;
+import com.demcia.eleven.upms.app.api.AccessTokenApi;
+import com.demcia.eleven.upms.app.AccessTokenConverter;
 import com.demcia.eleven.upms.domain.AccessTokenService;
-import com.demcia.eleven.upms.dto.AccessTokenDto;
-import com.demcia.eleven.upms.request.AccessTokenCreateRequest;
+import com.demcia.eleven.upms.app.dto.AccessTokenDto;
+import com.demcia.eleven.upms.app.request.AccessTokenCreateRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;

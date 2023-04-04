@@ -1,10 +1,10 @@
-package com.demcia.eleven.upms.application;
+package com.demcia.eleven.upms.app;
 
 import com.demcia.eleven.core.security.Principal;
 import com.demcia.eleven.core.security.Token;
 import com.demcia.eleven.core.security.TokenDetail;
 import com.demcia.eleven.upms.domain.AccessToken;
-import com.demcia.eleven.upms.dto.AccessTokenDto;
+import com.demcia.eleven.upms.app.dto.AccessTokenDto;
 import lombok.RequiredArgsConstructor;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Service;

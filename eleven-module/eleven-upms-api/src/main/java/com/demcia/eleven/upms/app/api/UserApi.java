@@ -1,12 +1,12 @@
-package com.demcia.eleven.upms.api;
+package com.demcia.eleven.upms.app.api;
 
 import com.demcia.eleven.core.query.QueryResult;
-import com.demcia.eleven.upms.dto.UserAuthorityDto;
-import com.demcia.eleven.upms.dto.UserDto;
-import com.demcia.eleven.upms.request.UserCreateRequest;
-import com.demcia.eleven.upms.request.UserGrantRequest;
-import com.demcia.eleven.upms.request.UserQueryRequest;
-import com.demcia.eleven.upms.request.UserUpdateRequest;
+import com.demcia.eleven.upms.app.dto.UserDto;
+import com.demcia.eleven.upms.app.request.UserCreateRequest;
+import com.demcia.eleven.upms.app.request.UserUpdateRequest;
+import com.demcia.eleven.upms.app.dto.UserAuthorityDto;
+import com.demcia.eleven.upms.app.request.UserGrantRequest;
+import com.demcia.eleven.upms.app.request.UserQueryRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;

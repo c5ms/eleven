@@ -1,4 +1,4 @@
-package com.demcia.eleven.upms.application;
+package com.demcia.eleven.upms.app;
 
 import com.demcia.eleven.core.security.Token;
 import com.demcia.eleven.core.security.TokenReader;

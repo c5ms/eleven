@@ -1,15 +1,15 @@
-package com.demcia.eleven.upms.application;
+package com.demcia.eleven.upms.app;
 
 import com.demcia.eleven.upms.domain.User;
 import com.demcia.eleven.upms.domain.UserAuthority;
 import com.demcia.eleven.upms.domain.UserFilter;
 import com.demcia.eleven.upms.domain.action.UserCreateAction;
 import com.demcia.eleven.upms.domain.action.UserUpdateAction;
-import com.demcia.eleven.upms.dto.UserAuthorityDto;
-import com.demcia.eleven.upms.dto.UserDto;
-import com.demcia.eleven.upms.request.UserCreateRequest;
-import com.demcia.eleven.upms.request.UserQueryRequest;
-import com.demcia.eleven.upms.request.UserUpdateRequest;
+import com.demcia.eleven.upms.app.dto.UserAuthorityDto;
+import com.demcia.eleven.upms.app.dto.UserDto;
+import com.demcia.eleven.upms.app.request.UserCreateRequest;
+import com.demcia.eleven.upms.app.request.UserQueryRequest;
+import com.demcia.eleven.upms.app.request.UserUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Service;

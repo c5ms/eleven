@@ -1,4 +1,4 @@
-package com.demcia.eleven.upms.request;
+package com.demcia.eleven.upms.app.request;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.Data;
