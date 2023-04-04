@@ -26,13 +26,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Tag(name = "用户")
 @RequestMapping("/users")
 @RestResource
-@PreAuthorize("isAuthenticated()")
 @RequiredArgsConstructor
 public class UserResourceV1 implements UserApi {
 
@@ -60,6 +60,7 @@ public class UserResourceV1 implements UserApi {
     @PostMapping
     public UserDto createUser(@RequestBody @Validated UserCreateRequest request) {
         var action = userConverter.toAction(request);
+        action.setLogin(UUID.randomUUID().toString());
         var user = userService.createUser(action);
         return userConverter.toDto(user);
     }

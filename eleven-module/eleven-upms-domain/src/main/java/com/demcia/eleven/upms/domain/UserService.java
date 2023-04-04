@@ -33,7 +33,6 @@ public class UserService {
 
     public User createUser(UserCreateAction action) {
         var id = identityGenerator.next();
-        action.setLogin(UUID.randomUUID().toString());
         var user = new User(id, action);
         userValidator.validate(user);
         return userRepository.save(user);

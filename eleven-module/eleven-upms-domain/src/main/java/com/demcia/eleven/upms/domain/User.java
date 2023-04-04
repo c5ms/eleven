@@ -24,6 +24,7 @@ import java.util.Objects;
 public class User extends AbstractDomain<User> {
 
     public static final String PRINCIPAL_TYPE = "user";
+
     @Column("login_")
     private final String login;
     @Id
@@ -39,7 +40,7 @@ public class User extends AbstractDomain<User> {
     private String fromId;
 
     /**
-     * 用户类型，用于标记用户是什么系统的用户，默认是 system 类型，表示是系统内部用户
+     * 用户类型，用于标记用户是什么系统的用户
      */
     @Column("type_")
     private String type;
@@ -65,6 +66,7 @@ public class User extends AbstractDomain<User> {
         this.id = id;
         this.login = action.getLogin();
         this.nickname = action.getNickname();
+        this.type = User.PRINCIPAL_TYPE;
         super.andEvent(new UserCreatedEvent(id));
         super.markNew();
     }
