@@ -1,6 +1,5 @@
 package com.demcia.eleven.core.security;
 
-import com.demcia.eleven.core.security.support.ElevenAuthentication;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;

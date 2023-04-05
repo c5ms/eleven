@@ -1,0 +1,10 @@
+/Users/wangzc/ideaProjects/eleven/eleven-module/upms-api/src/main/java/com/demcia/eleven/upms/application/request/UserCreateRequest.java
+/Users/wangzc/ideaProjects/eleven/eleven-module/upms-api/src/main/java/com/demcia/eleven/upms/application/request/UserUpdateRequest.java
+/Users/wangzc/ideaProjects/eleven/eleven-module/upms-api/src/main/java/com/demcia/eleven/upms/application/dto/UserDto.java
+/Users/wangzc/ideaProjects/eleven/eleven-module/upms-api/src/main/java/com/demcia/eleven/upms/application/dto/UserAuthorityDto.java
+/Users/wangzc/ideaProjects/eleven/eleven-module/upms-api/src/main/java/com/demcia/eleven/upms/application/request/UserGrantRequest.java
+/Users/wangzc/ideaProjects/eleven/eleven-module/upms-api/src/main/java/com/demcia/eleven/upms/client/AccessTokenClient.java
+/Users/wangzc/ideaProjects/eleven/eleven-module/upms-api/src/main/java/com/demcia/eleven/upms/application/dto/AccessTokenDto.java
+/Users/wangzc/ideaProjects/eleven/eleven-module/upms-api/src/main/java/com/demcia/eleven/upms/application/request/AccessTokenCreateRequest.java
+/Users/wangzc/ideaProjects/eleven/eleven-module/upms-api/src/main/java/com/demcia/eleven/upms/client/UserClient.java
+/Users/wangzc/ideaProjects/eleven/eleven-module/upms-api/src/main/java/com/demcia/eleven/upms/application/request/UserQueryRequest.java

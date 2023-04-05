@@ -3,10 +3,11 @@ package com.demcia.eleven;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jdbc.repository.config.MyBatisJdbcConfiguration;
 
-
+@EnableFeignClients
 @SpringBootApplication
 public class UpmsServiceApplication {
 

@@ -69,6 +69,12 @@
             <artifactId>spring-security-oauth2-authorization-server</artifactId>
         </dependency>
 
+        <!-- doc -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-common</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

@@ -1,0 +1,7 @@
+com/demcia/eleven/core/domain/AbstractDomain.class
+com/demcia/eleven/core/domain/AuditMetadata.class
+com/demcia/eleven/core/domain/AbstractDomainListener.class
+com/demcia/eleven/core/domain/autoconfigure/DomainAutoconfigure.class
+com/demcia/eleven/core/domain/ElevenEntityAuditor.class
+com/demcia/eleven/core/domain/ElevenDateTimeProvider.class
+com/demcia/eleven/core/domain/autoconfigure/OrikaAutoConfiguration.class

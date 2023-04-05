@@ -2,6 +2,7 @@ package com.demcia.eleven.core.security;
 
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -10,6 +11,7 @@ import java.util.Objects;
  */
 @Data
 public class Principal implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
     /**
      * 主体名 通常是账号，ID，等唯一标识
