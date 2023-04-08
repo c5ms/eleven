@@ -1,0 +1,18 @@
+{
+  "groups": [
+    {
+      "name": "eleven.security",
+      "type": "com.eleven.security.autoconfigure.SecurityProperties",
+      "sourceType": "com.eleven.security.autoconfigure.SecurityProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "eleven.security.auth-mode",
+      "type": "com.eleven.security.autoconfigure.SecurityProperties$AuthMode",
+      "description": "认证模式",
+      "sourceType": "com.eleven.security.autoconfigure.SecurityProperties"
+    }
+  ],
+  "hints": []
+}

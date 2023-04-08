@@ -2,23 +2,13 @@
   "groups": [
     {
       "name": "eleven.domain.datetime",
-      "type": "com.demcia.eleven.core.time.autoconfigure.DateTimeProperties",
-      "sourceType": "com.demcia.eleven.core.time.autoconfigure.DateTimeProperties"
+      "type": "com.eleven.core.time.autoconfigure.DateTimeProperties",
+      "sourceType": "com.eleven.core.time.autoconfigure.DateTimeProperties"
     },
     {
       "name": "eleven.domain.identity",
-      "type": "com.demcia.eleven.core.generate.autoconfigure.IdentityProperties",
-      "sourceType": "com.demcia.eleven.core.generate.autoconfigure.IdentityProperties"
-    },
-    {
-      "name": "eleven.domain.identity.raindrop",
-      "type": "com.demcia.eleven.core.generate.autoconfigure.IdentityProperties$Raindrop",
-      "sourceType": "com.demcia.eleven.core.generate.autoconfigure.IdentityProperties"
-    },
-    {
-      "name": "eleven.domain.identity.snowflake",
-      "type": "com.demcia.eleven.core.generate.autoconfigure.IdentityProperties$Snowflake",
-      "sourceType": "com.demcia.eleven.core.generate.autoconfigure.IdentityProperties"
+      "type": "com.eleven.core.generate.autoconfigure.IdentityProperties",
+      "sourceType": "com.eleven.core.generate.autoconfigure.IdentityProperties"
     }
   ],
   "properties": [
@@ -26,36 +16,36 @@
       "name": "eleven.domain.datetime.clock-expiration",
       "type": "java.time.Duration",
       "description": "时钟过期时间，默认是 2 分钟",
-      "sourceType": "com.demcia.eleven.core.time.autoconfigure.DateTimeProperties"
+      "sourceType": "com.eleven.core.time.autoconfigure.DateTimeProperties"
     },
     {
       "name": "eleven.domain.datetime.provider",
-      "type": "com.demcia.eleven.core.time.autoconfigure.DateTimeProperties$Provider",
+      "type": "com.eleven.core.time.autoconfigure.DateTimeProperties$Provider",
       "description": "时间提供服务",
-      "sourceType": "com.demcia.eleven.core.time.autoconfigure.DateTimeProperties"
+      "sourceType": "com.eleven.core.time.autoconfigure.DateTimeProperties"
     },
     {
       "name": "eleven.domain.datetime.zone-id",
       "type": "java.time.ZoneId",
       "description": "时区",
-      "sourceType": "com.demcia.eleven.core.time.autoconfigure.DateTimeProperties"
+      "sourceType": "com.eleven.core.time.autoconfigure.DateTimeProperties"
+    },
+    {
+      "name": "eleven.domain.identity.datacenter-id",
+      "type": "java.lang.Long",
+      "description": "数据中心ID",
+      "sourceType": "com.eleven.core.generate.autoconfigure.IdentityProperties"
     },
     {
       "name": "eleven.domain.identity.id-type",
-      "type": "com.demcia.eleven.core.generate.autoconfigure.IdentityProperties$IdGeneratorType",
-      "sourceType": "com.demcia.eleven.core.generate.autoconfigure.IdentityProperties"
+      "type": "com.eleven.core.generate.autoconfigure.IdentityProperties$IdGeneratorType",
+      "sourceType": "com.eleven.core.generate.autoconfigure.IdentityProperties"
     },
     {
-      "name": "eleven.domain.identity.raindrop.datacenter-id",
+      "name": "eleven.domain.identity.max-worker-id",
       "type": "java.lang.Long",
-      "description": "如果是雨滴算法，需要配置数据中心ID",
-      "sourceType": "com.demcia.eleven.core.generate.autoconfigure.IdentityProperties$Raindrop"
-    },
-    {
-      "name": "eleven.domain.identity.snowflake.datacenter-id",
-      "type": "java.lang.Long",
-      "description": "如果是雪花算法，需要配置数据中心ID",
-      "sourceType": "com.demcia.eleven.core.generate.autoconfigure.IdentityProperties$Snowflake"
+      "description": "最大的机器号 ID",
+      "sourceType": "com.eleven.core.generate.autoconfigure.IdentityProperties"
     }
   ],
   "hints": []

@@ -19,6 +19,8 @@ spring:
             max-pool-size: ${db.upms.maxSize:5}
 
 eleven:
+  security:
+    auth-mode: none
   open-api:
     title: 用户授权管理
     description: 这是一个伟大而又了不起的工程！

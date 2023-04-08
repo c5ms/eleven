@@ -5,8 +5,9 @@ spring:
   application:
     name: eleven-api
 
-
 eleven:
+  security:
+    auth-mode: remote
   restful:
     prefix: /api
   open-api:
@@ -28,7 +29,5 @@ logging:
     sql: info
     web: info
     root: info
-    'com.demcia': debug
-    'sleuth.sql': debug
 
 

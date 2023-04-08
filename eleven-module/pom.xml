@@ -13,10 +13,11 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>upms-api</module>
+        <module>upms-client</module>
+        <module>upms-service</module>
+        <module>upms-security</module>
         <module>upms-domain</module>
-        <module>upms-app-core</module>
-        <module>upms-app-service</module>
-        <module>upms-app-client</module>
     </modules>
 
 

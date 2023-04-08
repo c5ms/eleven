@@ -14,7 +14,7 @@
         <module>eleven-module</module>
         <module>eleven-component</module>
         <module>eleven-application</module>
-        <module>eleven-module/upms-app-service</module>
+        <module>eleven-module/upms-service</module>
     </modules>
 
 
@@ -245,7 +245,6 @@
                 <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
                 <version>${version.knife4j}</version>
             </dependency>
-
 
             <!-- logs -->
             <dependency>
