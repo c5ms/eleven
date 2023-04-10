@@ -1,5 +1,6 @@
 package com.eleven.core.service.rest;
 
+import com.eleven.core.service.rest.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.Order;
@@ -37,16 +38,10 @@ public class ElevenResponseAdvice implements ResponseBodyAdvice<Object> {
         if (body instanceof Optional<?> bodyOptional) {
             body = bodyOptional.orElse(null);
         }
-
-        HttpStatus status = null;
         if (request.getMethod() == HttpMethod.GET) {
             if (null == body) {
-                status = HttpStatus.NOT_FOUND;
+               throw new NotFoundException();
             }
-        }
-
-        if (null != status) {
-            response.setStatusCode(HttpStatusCode.valueOf(status.value()));
         }
 
         return body;

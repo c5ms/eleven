@@ -16,7 +16,8 @@
       "name": "eleven.domain.datetime.clock-expiration",
       "type": "java.time.Duration",
       "description": "时钟过期时间，默认是 2 分钟",
-      "sourceType": "com.eleven.core.time.autoconfigure.DateTimeProperties"
+      "sourceType": "com.eleven.core.time.autoconfigure.DateTimeProperties",
+      "defaultValue": "2m"
     },
     {
       "name": "eleven.domain.datetime.provider",
@@ -31,20 +32,8 @@
       "sourceType": "com.eleven.core.time.autoconfigure.DateTimeProperties"
     },
     {
-      "name": "eleven.domain.identity.datacenter-id",
-      "type": "java.lang.Long",
-      "description": "数据中心ID",
-      "sourceType": "com.eleven.core.generate.autoconfigure.IdentityProperties"
-    },
-    {
       "name": "eleven.domain.identity.id-type",
       "type": "com.eleven.core.generate.autoconfigure.IdentityProperties$IdGeneratorType",
-      "sourceType": "com.eleven.core.generate.autoconfigure.IdentityProperties"
-    },
-    {
-      "name": "eleven.domain.identity.max-worker-id",
-      "type": "java.lang.Long",
-      "description": "最大的机器号 ID",
       "sourceType": "com.eleven.core.generate.autoconfigure.IdentityProperties"
     }
   ],

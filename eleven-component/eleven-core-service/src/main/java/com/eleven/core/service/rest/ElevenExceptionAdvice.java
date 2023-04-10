@@ -2,12 +2,13 @@ package com.eleven.core.service.rest;
 
 import com.eleven.core.exception.ProcessErroredException;
 import com.eleven.core.exception.ProcessRejectedException;
-import com.eleven.core.exception.ResourceNotFoundException;
-import feign.FeignException;
+import com.eleven.core.service.errors.GlobalErrors;
+import com.eleven.core.service.rest.exception.ClientErrorException;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.security.access.AccessDeniedException;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -33,70 +37,61 @@ public class ElevenExceptionAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(AccessDeniedException.class)
-    public RestFailure onAccessDenied(AccessDeniedException e) {
-//        return new RestFailure()
-//                .setError(HttpStatus.FORBIDDEN.getReasonPhrase());
-        return null;
-    }
-
-    // 资源不存在 404
-    @ResponseBody
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ProblemDetail onDataNotFoundException(ResourceNotFoundException e) {
-//        return new RestFailure()
-//                .setError(HttpStatus.NOT_FOUND.getReasonPhrase());
-        return null;
+    public ProblemDetail onAccessDenied() {
+        var pd = ProblemDetail.forStatus(HttpStatus.FORBIDDEN);
+        pd.setTitle("权限不足");
+        return pd;
     }
 
     // 校验失败 - 400
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BindException.class)
-    public RestFailure onMethodArgumentNotValidException(BindException e) {
-//        var msg = e.getAllErrors().stream()
-//                .map(DefaultMessageSourceResolvable::getDefaultMessage)
-//                .filter(StringUtils::isNotBlank)
-//                .sorted(Comparator.naturalOrder())
-//                .collect(Collectors.joining(";"));
-//        return new RestFailure()
-//                .setError(HttpStatus.BAD_REQUEST.getReasonPhrase())
-//                ;
-        return null;
-    }
-
-    // 请求被拒绝 - 422
-    @ResponseBody
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    @ExceptionHandler
-    public RestFailure onProcessFailureException(ProcessRejectedException e) {
-        return new RestFailure()
-                .setMessage(StringUtils.defaultIfBlank(e.getMessage(), "服务器拒绝处理"))
-                .setError(StringUtils.defaultIfBlank(e.getError(), "Failure"));
-    }
-
-
-
-    // Feign  服务调用错误 - 500
-    @ResponseBody
-    @ExceptionHandler(FeignException.class)
-    public ProblemDetail on(FeignException e) {
-        log.error("内部微服务调用异常,{}", e.status(), e);
-        var pd=  ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-        pd.setDetail("非法请求体");
-        pd.setTitle("错误");
+    public ProblemDetail onMethodArgumentNotValidException(BindException e) {
+        var msg = e.getAllErrors().stream()
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                .filter(StringUtils::isNotBlank)
+                .sorted(Comparator.naturalOrder())
+                .collect(Collectors.joining(";"));
+        var pd = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        pd.setTitle("校验失败");
+        pd.setProperty("error", GlobalErrors.VALIDATE_FAILURE.getCode());
+        pd.setProperty("fields",msg);
         return pd;
+    }
+
+    @ResponseBody
+    @ExceptionHandler
+    public ProblemDetail onProcessFailureException(ProcessRejectedException e) {
+        var pd = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        pd.setTitle("请求无效");
+        pd.setProperty("error", e.getError());
+        return pd;
+    }
+
+//    @ResponseBody
+//    @ExceptionHandler
+//    public ProblemDetail onProcessErroredException(ProcessErroredException e) {
+//        log.error("内部错误", e);
+//        var pd = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+//        pd.setTitle("内部错误");
+//        return pd;
+//    }
+
+    @ResponseBody
+    @ExceptionHandler(ClientErrorException.class)
+    public ProblemDetail on(ClientErrorException e) {
+        return ProblemDetail.forStatus(e.getStatus());
     }
 
 
     // 服务器错误 - 500
     @ResponseBody
     @ExceptionHandler
-    public ProblemDetail onException(ProcessErroredException e) {
+    public ProblemDetail onException(Exception e) {
         log.error("内部错误", e);
-        var pd=  ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-        pd.setDetail("内部错误");
-        pd.setTitle("错误");
+        var pd = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+        pd.setTitle("内部错误");
         return pd;
     }
 

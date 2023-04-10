@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-@ConditionalOnMissingBean
 public class DefaultAuditorAware implements AuditorAware<String> {
 
     @Override

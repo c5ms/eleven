@@ -1,5 +1,6 @@
 package com.eleven.core.generate.support;
 
+import cn.hutool.core.util.IdUtil;
 import com.eleven.core.generate.IdentityGenerator;
 import com.eleven.core.time.TimeContext;
 
@@ -12,7 +13,9 @@ public class RaindropGenerator implements IdentityGenerator {
     private final long workerId;
     private final long datacenterId;
 
-    public RaindropGenerator(long datacenterId,long workerId) {
+    public RaindropGenerator() {
+        var datacenterId = IdUtil.getDataCenterId(99);
+        var workerId = IdUtil.getWorkerId(datacenterId, 99);
         this.datacenterId = datacenterId;
         this.workerId = workerId;
     }
@@ -20,7 +23,7 @@ public class RaindropGenerator implements IdentityGenerator {
     @Override
     public synchronized String next() {
         LocalDateTime localDate = LocalDateTime.now(TimeContext.getClock());
-        return String.format("%d%03d%02d%02d%02d%02d%02d%02d%06d",
+        return String.format("%02d%02d%02d%02d%02d%02d%02d%02d%06d",
                 datacenterId,
                 workerId,
                 localDate.getYear(),

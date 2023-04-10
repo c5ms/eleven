@@ -27,18 +27,9 @@ import java.util.Optional;
 @Configuration
 @RequiredArgsConstructor
 @EnableConfigurationProperties(SecurityProperties.class)
-@Import({SecurityConfigure.None.class, SecurityConfigure.Local.class})
+@Import({SecurityConfigure.None.class,SecurityConfigure.Remote.class, SecurityConfigure.Local.class})
 public class SecurityConfigure {
 
-    @RequiredArgsConstructor
-    @ConditionalOnUseRemoteAuthenticate
-    public static class None {
-        @Bean
-        @ConditionalOnMissingBean
-        public TokenReader unSupportTokenReader() {
-            return token -> Optional.empty();
-        }
-    }
 
     @RequiredArgsConstructor
     @ConditionalOnUseRemoteAuthenticate
@@ -58,7 +49,6 @@ public class SecurityConfigure {
 
     }
 
-
     @RequiredArgsConstructor
     @ConditionalOnUseLocalAuthenticate
     public static class Local {
@@ -75,6 +65,17 @@ public class SecurityConfigure {
             return new LocalUserPrincipalAuthenticatorProvider(userService);
         }
 
+
+    }
+
+    @RequiredArgsConstructor
+    public static class None {
+
+        @Bean
+        @ConditionalOnMissingBean(TokenReader.class)
+          TokenReader unSupportTokenReader() {
+            return token -> Optional.empty();
+        }
 
     }
 

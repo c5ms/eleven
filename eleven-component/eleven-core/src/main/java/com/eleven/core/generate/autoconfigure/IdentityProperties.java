@@ -11,16 +11,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class IdentityProperties {
 
     private IdGeneratorType idType = IdGeneratorType.RAINDROP;
-    /**
-     * 数据中心ID
-     */
-    private long datacenterId = 1;
-
-    /**
-     * 最大的机器号 ID
-     */
-    private long maxWorkerId = 1024;
-
 
     enum IdGeneratorType {
         UUID,

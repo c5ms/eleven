@@ -18,6 +18,7 @@ spring:
             max-lifetime: ${db.upms.maxLifetime:30000}
             max-pool-size: ${db.upms.maxSize:5}
 
+
 eleven:
   security:
     auth-mode: none

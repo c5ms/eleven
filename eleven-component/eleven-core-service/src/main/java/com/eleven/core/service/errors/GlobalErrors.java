@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum GlobalErrors implements Errors {
-
+    VALIDATE_FAILURE("validate_failure", "校验失败");
     ;
 
     final String code;

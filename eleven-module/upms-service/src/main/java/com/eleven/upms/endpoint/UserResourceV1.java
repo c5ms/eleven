@@ -1,9 +1,11 @@
 package com.eleven.upms.endpoint;
 
-import com.eleven.core.exception.ResourceNotFoundException;
+import com.eleven.core.exception.ProcessRejectedException;
 import com.eleven.core.query.Pagination;
 import com.eleven.core.query.QueryResult;
 import com.eleven.core.service.rest.annonation.RestResource;
+import com.eleven.core.service.rest.exception.ClientErrorException;
+import com.eleven.core.service.rest.exception.NotFoundException;
 import com.eleven.upms.api.dto.UserAuthorityDto;
 import com.eleven.upms.api.dto.UserDto;
 import com.eleven.upms.api.request.UserCreateRequest;
@@ -19,6 +21,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,7 +59,6 @@ public class UserResourceV1 {
     @PostMapping
     public UserDto createUser(@RequestBody @Validated UserCreateRequest request) {
         var action = userConverter.toAction(request);
-        action.setLogin(UUID.randomUUID().toString());
         var user = userService.createUser(action);
         return userConverter.toDto(user);
     }
@@ -94,7 +97,7 @@ public class UserResourceV1 {
     }
 
     public User requireUser(String id) {
-        return userService.getUser(id).orElseThrow(ResourceNotFoundException::new);
+        return userService.getUser(id).orElseThrow(NotFoundException::new);
     }
 
 }

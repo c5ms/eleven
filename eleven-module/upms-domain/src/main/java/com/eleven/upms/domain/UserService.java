@@ -54,7 +54,7 @@ public class UserService {
 
     public QueryResult<User> queryUser(UserFilter filter, Pagination pagination) {
         var criteria = Criteria.empty();
-        if (Objects.nonNull(filter.getState())) {
+        if (StringUtils.isNotBlank(filter.getState())) {
             criteria = criteria.and(Criteria.where("state_").is(filter.getState()));
         }
         if (StringUtils.isNotBlank(filter.getLogin())) {
