@@ -16,8 +16,7 @@
       "name": "eleven.domain.datetime.clock-expiration",
       "type": "java.time.Duration",
       "description": "时钟过期时间，默认是 2 分钟",
-      "sourceType": "com.eleven.core.time.autoconfigure.DateTimeProperties",
-      "defaultValue": "2m"
+      "sourceType": "com.eleven.core.time.autoconfigure.DateTimeProperties"
     },
     {
       "name": "eleven.domain.datetime.provider",
