@@ -1,6 +1,0 @@
-/Users/wangzc/ideaProjects/eleven/eleven-component/eleven-core-domain/src/main/java/com/eleven/core/domain/autoconfigure/DomainAutoconfigure.java
-/Users/wangzc/ideaProjects/eleven/eleven-component/eleven-core-domain/src/main/java/com/eleven/core/domain/AbstractDomain.java
-/Users/wangzc/ideaProjects/eleven/eleven-component/eleven-core-domain/src/main/java/com/eleven/core/domain/audit/DefaultDateTimeProvider.java
-/Users/wangzc/ideaProjects/eleven/eleven-component/eleven-core-domain/src/main/java/com/eleven/core/domain/AbstractDomainListener.java
-/Users/wangzc/ideaProjects/eleven/eleven-component/eleven-core-domain/src/main/java/com/eleven/core/domain/AuditMetadata.java
-/Users/wangzc/ideaProjects/eleven/eleven-component/eleven-core-domain/src/main/java/com/eleven/core/domain/audit/DefaultAuditorAware.java
