@@ -7,19 +7,23 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="eleven-learning" />
+        <module name="upms-app-api" />
         <module name="eleven-upms" />
         <module name="eleven-core-domain" />
         <module name="eleven-core-app" />
         <module name="eleven-api" />
+        <module name="eleven-learn-algorithm" />
         <module name="eleven-core" />
         <module name="upms-app-security" />
-        <module name="upms-app" />
         <module name="upms-domain" />
         <module name="upms-app-provider" />
         <module name="upms-app-client" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="eleven-learn-vertx" target="11" />
+      <module name="starter" target="11" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
@@ -31,10 +35,11 @@
       <module name="eleven-core-app" options="-parameters" />
       <module name="eleven-core-domain" options="-parameters" />
       <module name="eleven-deploy" options="" />
-      <module name="eleven-learning" options="-parameters" />
+      <module name="eleven-learn-algorithm" options="-parameters" />
+      <module name="eleven-learn-vertx" options="-parameters" />
       <module name="eleven-module" options="" />
       <module name="eleven-upms" options="-parameters" />
-      <module name="upms-app" options="-parameters" />
+      <module name="upms-app-api" options="-parameters" />
       <module name="upms-app-client" options="-parameters" />
       <module name="upms-app-provider" options="-parameters" />
       <module name="upms-app-security" options="-parameters" />
