@@ -14,7 +14,7 @@
 
     <modules>
         <module>eleven-core</module>
-        <module>eleven-core-application</module>
+        <module>eleven-core-app</module>
         <module>eleven-core-domain</module>
     </modules>
 

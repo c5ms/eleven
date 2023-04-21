@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="EntryPointsManager">
+    <writeAnnotations>
+      <writeAnnotation name="org.springframework.data.annotation.CreatedDate" />
+    </writeAnnotations>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/demo" />
+    <file type="web" url="file://$PROJECT_DIR$/demo2" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/eleven-app/eleven-app-upms-core/pom.xml" />
+        <option value="$PROJECT_DIR$/eleven-component/eleven-core-api/pom.xml" />
+        <option value="$PROJECT_DIR$/eleven-component/eleven-core-common/pom.xml" />
+        <option value="$PROJECT_DIR$/eleven-component/eleven-core-rest/pom.xml" />
+        <option value="$PROJECT_DIR$/eleven-component/eleven-core-security/pom.xml" />
+        <option value="$PROJECT_DIR$/eleven-domain/pom.xml" />
+        <option value="$PROJECT_DIR$/eleven-module/eleven-app-admin/pom.xml" />
+        <option value="$PROJECT_DIR$/eleven-module/eleven-app-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/eleven-module/eleven-cms-core/pom.xml" />
+        <option value="$PROJECT_DIR$/eleven-module/eleven-cms-service/pom.xml" />
+        <option value="$PROJECT_DIR$/eleven-module/eleven-upms-client/pom.xml" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="azul-17" project-jdk-type="JavaSDK" />
+  <component name="ProjectType">
+    <option name="id" value="jpab" />
+  </component>
+</project>

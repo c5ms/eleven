@@ -12,10 +12,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jdbc.core.JdbcAggregateTemplate;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.data.relational.core.query.Query;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -29,16 +29,23 @@ public class UserService {
     private final UserValidator userValidator;
     private final UserRepository userRepository;
     private final UserAuthorityRepository userAuthorityRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public User createUser(UserCreateAction action) {
         var id = identityGenerator.next();
         var user = new User(id, action);
+        user.setPassword(passwordEncoder.encode("123456"));
         userValidator.validate(user);
         return userRepository.save(user);
     }
 
+
     public Optional<User> getUser(String id) {
         return userRepository.findById(id);
+    }
+
+    public Optional<User> readUser(String login) {
+        return userRepository.findByLogin(login);
     }
 
     public void updateUser(User user, UserUpdateAction action) {
@@ -47,10 +54,29 @@ public class UserService {
         userRepository.save(user);
     }
 
+    /**
+     * 验证用户
+     *
+     * @param login    登入账号
+     * @param password 验证口令
+     * @return 如果可以找到指定登入账号的用户，并且密码相符，则返回该用户，否则返回空。
+     */
+    public Optional<User> readUser(String login, String password) {
+        var userOptional = readUser(login);
+        if (userOptional.isEmpty()) {
+            return userOptional;
+        }
+        var user = userOptional.get();
+        var pass = passwordEncoder.matches(password, user.getPassword());
+        if (pass) {
+            return userOptional;
+        }
+        return Optional.empty();
+    }
+
     public void deleteUser(User user) {
         userRepository.delete(user);
     }
-
 
     public QueryResult<User> queryUser(UserFilter filter, Pagination pagination) {
         var criteria = Criteria.empty();

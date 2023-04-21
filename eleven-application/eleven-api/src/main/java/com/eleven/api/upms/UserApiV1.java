@@ -1,19 +1,12 @@
 package com.eleven.api.upms;
 
-import cn.hutool.core.net.NetUtil;
-import cn.hutool.core.util.IdUtil;
-import cn.hutool.core.util.RuntimeUtil;
-import cn.hutool.extra.spring.SpringUtil;
-import cn.hutool.json.JSONUtil;
-import com.eleven.core.generate.IdentityGenerator;
-import com.eleven.core.generate.support.RaindropGenerator;
 import com.eleven.core.query.QueryResult;
-import com.eleven.core.service.rest.annonation.RestResource;
-import com.eleven.upms.api.dto.UserDto;
-import com.eleven.upms.api.request.UserCreateRequest;
-import com.eleven.upms.api.request.UserQueryRequest;
-import com.eleven.upms.api.request.UserUpdateRequest;
-import com.eleven.upms.client.UserClient;
+import com.eleven.core.app.rest.annonation.RestResource;
+import com.eleven.upms.app.dto.UserDto;
+import com.eleven.upms.app.request.UserCreateRequest;
+import com.eleven.upms.app.request.UserQueryRequest;
+import com.eleven.upms.app.request.UserUpdateRequest;
+import com.eleven.upms.app.client.UserClient;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +15,6 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 @Slf4j

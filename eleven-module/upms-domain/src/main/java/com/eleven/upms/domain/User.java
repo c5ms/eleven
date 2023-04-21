@@ -85,6 +85,10 @@ public class User extends AbstractDomain<User> {
         }
     }
 
+    /**
+     * 设置用户密码
+     * @param password 用户密码
+     */
     public void setPassword(String password) {
         this.password = password;
     }
