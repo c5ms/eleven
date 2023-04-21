@@ -10,7 +10,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>upms-app</artifactId>
+    <artifactId>upms-app-api</artifactId>
 
 
     <dependencies>
