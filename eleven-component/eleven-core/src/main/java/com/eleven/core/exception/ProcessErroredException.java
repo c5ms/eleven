@@ -3,7 +3,7 @@ package com.eleven.core.exception;
 /**
  * 请求处理失败，通常是由于服务器错误，跟客户端关系不大
  */
-public class ProcessErroredException extends RuntimeException {
+public class ProcessErroredException extends ElevenRuntimeException {
 
     public ProcessErroredException(Throwable cause) {
         super(cause);

@@ -1,9 +1,9 @@
-package com.eleven.core.errors;
+package com.eleven.core.code;
 
 
 import com.eleven.core.exception.ProcessRejectedException;
 
-public interface Errors {
+public interface ElevenCode {
 
     /**
      * 获取编码

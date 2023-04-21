@@ -1,12 +1,12 @@
 package com.eleven.core.app.errors;
 
-import com.eleven.core.errors.Errors;
+import com.eleven.core.code.ElevenCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum CoreErrors implements Errors {
+public enum CoreError implements ElevenCode {
     VALIDATE_FAILURE("validate_failure", "校验失败");
     ;
 

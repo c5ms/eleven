@@ -1,11 +1,11 @@
 package com.eleven.core.exception;
 
-import com.eleven.core.errors.Errors;
+import com.eleven.core.code.ElevenCode;
 
 /**
  * 请求被拒绝异常，可能由于某种原因，逻辑无法继续正确执行下去。
  */
-public class ProcessRejectedException extends RuntimeException {
+public class ProcessRejectedException extends ElevenRuntimeException {
     private final String error;
 
     private ProcessRejectedException(String error, String message) {
@@ -21,7 +21,7 @@ public class ProcessRejectedException extends RuntimeException {
         return new ProcessRejectedException(null, message);
     }
 
-    public static ProcessRejectedException of(Errors codes) {
+    public static ProcessRejectedException of(ElevenCode codes) {
         return new ProcessRejectedException(codes.getCode(), codes.getMessage());
     }
 

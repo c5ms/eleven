@@ -10,20 +10,23 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>upms-domain</artifactId>
+    <artifactId>upms-security</artifactId>
 
 
     <dependencies>
 
         <dependency>
             <groupId>com.demacia</groupId>
-            <artifactId>eleven-core-domain</artifactId>
+            <artifactId>upms-client</artifactId>
             <version>1.0.0-SNAPSHOT</version>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
+            <groupId>com.demacia</groupId>
+            <artifactId>upms-service</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <optional>true</optional>
         </dependency>
 
 

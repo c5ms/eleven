@@ -10,7 +10,7 @@ import com.eleven.core.app.rest.annonation.RestResource;
 import com.eleven.core.time.TimeContext;
 import com.eleven.upms.app.constants.UpmsConstants;
 import com.eleven.upms.app.request.AccessTokenCreateRequest;
-import com.eleven.upms.app.errors.UpmsErrors;
+import com.eleven.upms.app.errors.UpmsError;
 import com.eleven.upms.domain.AccessToken;
 import com.eleven.upms.domain.AccessTokenService;
 import com.eleven.upms.domain.UserService;
@@ -46,12 +46,12 @@ public class AccessTokenResourceV1 {
         if (StringUtils.equals(UpmsConstants.PRINCIPAL_TYPE_LOCAL_USER, principal.getType())) {
             var userOptional = userService.readUser(principal.getName(), credential);
             if (userOptional.isEmpty()) {
-                throw UpmsErrors.LOGIN_PASSWORD_ERROR.makeRejectException();
+                throw UpmsError.LOGIN_PASSWORD_ERROR.makeRejectException();
             }
         }
         // 其他身份不支持
         else {
-            throw UpmsErrors.UNSUPPORTED_IDENTITY.makeRejectException();
+            throw UpmsError.UNSUPPORTED_IDENTITY.makeRejectException();
         }
 
         var clientIp = context.getIp();

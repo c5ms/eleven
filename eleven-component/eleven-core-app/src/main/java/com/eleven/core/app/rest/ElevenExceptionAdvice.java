@@ -1,7 +1,7 @@
 package com.eleven.core.app.rest;
 
 import com.eleven.core.exception.ProcessRejectedException;
-import com.eleven.core.app.errors.CoreErrors;
+import com.eleven.core.app.errors.CoreError;
 import com.eleven.core.app.rest.exception.ClientErrorException;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -58,7 +58,7 @@ public class ElevenExceptionAdvice {
                 .filter(StringUtils::isNotBlank)
                 .sorted(Comparator.naturalOrder())
                 .collect(Collectors.joining(";"));
-        return RestFailure.of(CoreErrors.VALIDATE_FAILURE).setMessage(msg);
+        return RestFailure.of(CoreError.VALIDATE_FAILURE).setMessage(msg);
     }
 
     // 处理拒绝 - 422

@@ -10,27 +10,17 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>upms-app-security</artifactId>
+    <artifactId>upms-client</artifactId>
 
 
     <dependencies>
 
         <dependency>
             <groupId>com.demacia</groupId>
-            <artifactId>upms-app-client</artifactId>
+            <artifactId>upms-api</artifactId>
             <version>1.0.0-SNAPSHOT</version>
-            <optional>true</optional>
         </dependency>
-
-        <dependency>
-            <groupId>com.demacia</groupId>
-            <artifactId>upms-domain</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-            <optional>true</optional>
-        </dependency>
-
 
     </dependencies>
-
 
 </project>

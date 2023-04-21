@@ -16,11 +16,11 @@ public class UserValidator {
      */
     public void validate(User user) {
         // 验证，用户名不能重复
-        userRepository.findByLogin(user.getLogin())
-                .filter(exist -> !StringUtils.equals(exist.getId(), user.getId()))
-                .ifPresent(exist -> {
-                    throw UserErrors.USER_NAME_REPEAT.makeRejectException();
-                });
+        var existUser = userRepository.findByLogin(user.getLogin())
+            .filter(check -> !StringUtils.equals(check.getId(), user.getId()));
+        if (existUser.isPresent()) {
+            throw UserError.USER_NAME_REPEAT.makeRejectException();
+        }
     }
 
 

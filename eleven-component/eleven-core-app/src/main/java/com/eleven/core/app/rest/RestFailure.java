@@ -1,6 +1,6 @@
 package com.eleven.core.app.rest;
 
-import com.eleven.core.errors.Errors;
+import com.eleven.core.code.ElevenCode;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -22,7 +22,7 @@ public class RestFailure {
         return new RestFailure(error, message);
     }
 
-    public static RestFailure of(Errors codes) {
+    public static RestFailure of(ElevenCode codes) {
         return new RestFailure(codes.getCode(), codes.getMessage());
     }
 }

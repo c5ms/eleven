@@ -23,13 +23,13 @@
 
         <dependency>
             <groupId>com.demacia</groupId>
-            <artifactId>upms-app-client</artifactId>
+            <artifactId>upms-client</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.demacia</groupId>
-            <artifactId>upms-app-security</artifactId>
+            <artifactId>upms-security</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
