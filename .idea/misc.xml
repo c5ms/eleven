@@ -24,6 +24,7 @@
         <option value="$PROJECT_DIR$/eleven-component/eleven-core-rest/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-component/eleven-core-security/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-domain/pom.xml" />
+        <option value="$PROJECT_DIR$/eleven-learn/eleven-learn-vertx/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-module/eleven-app-admin/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-module/eleven-app-gateway/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-module/eleven-cms-core/pom.xml" />
