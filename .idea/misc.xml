@@ -21,6 +21,7 @@
         <option value="$PROJECT_DIR$/eleven-app/eleven-app-upms-core/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-component/eleven-core-api/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-component/eleven-core-common/pom.xml" />
+        <option value="$PROJECT_DIR$/eleven-component/eleven-core-message/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-component/eleven-core-rest/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-component/eleven-core-security/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-domain/pom.xml" />
@@ -30,7 +31,6 @@
         <option value="$PROJECT_DIR$/eleven-module/eleven-cms-core/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-module/eleven-cms-service/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-module/eleven-upms-client/pom.xml" />
-        <option value="$PROJECT_DIR$/eleven-module/upms-domain/pom.xml" />
       </set>
     </option>
   </component>

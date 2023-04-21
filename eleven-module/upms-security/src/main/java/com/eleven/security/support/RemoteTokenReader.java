@@ -2,7 +2,7 @@ package com.eleven.security.support;
 
 import com.eleven.core.security.Token;
 import com.eleven.core.security.TokenReader;
-import com.eleven.upms.app.client.AccessTokenClient;
+import com.eleven.upms.client.AccessTokenClient;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;

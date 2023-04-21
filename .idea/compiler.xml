@@ -7,22 +7,23 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="upms-api" />
         <module name="eleven-upms" />
         <module name="eleven-core-domain" />
         <module name="eleven-core-app" />
-        <module name="upms-service" />
         <module name="eleven-api" />
         <module name="eleven-learn-algorithm" />
         <module name="eleven-core" />
         <module name="upms-client" />
+        <module name="upms-app" />
+        <module name="upms-core" />
+        <module name="upms-domain" />
         <module name="upms-security" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="eleven-learn-vertx" target="11" />
-      <module name="starter" target="11" />
-      <module name="upms-domain" target="17" />
+      <module name="eleven-core (1)" target="17" />
+      <module name="eleven-core (2)" target="17" />
+      <module name="eleven-core-message" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -32,18 +33,20 @@
       <module name="eleven-application" options="" />
       <module name="eleven-component" options="" />
       <module name="eleven-core" options="-parameters" />
+      <module name="eleven-core (1)" options="-parameters" />
+      <module name="eleven-core (2)" options="-parameters" />
       <module name="eleven-core-app" options="-parameters" />
       <module name="eleven-core-domain" options="-parameters" />
+      <module name="eleven-core-message" options="-parameters" />
       <module name="eleven-deploy" options="" />
       <module name="eleven-learn-algorithm" options="-parameters" />
-      <module name="eleven-learn-vertx" options="-parameters" />
       <module name="eleven-module" options="" />
       <module name="eleven-upms" options="-parameters" />
-      <module name="upms-api" options="-parameters" />
+      <module name="upms-app" options="-parameters" />
       <module name="upms-client" options="-parameters" />
+      <module name="upms-core" options="-parameters" />
       <module name="upms-domain" options="-parameters" />
       <module name="upms-security" options="-parameters" />
-      <module name="upms-service" options="-parameters" />
     </option>
   </component>
 </project>

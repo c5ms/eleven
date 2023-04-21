@@ -2,11 +2,11 @@ package com.eleven.api.upms;
 
 import com.eleven.core.query.QueryResult;
 import com.eleven.core.app.rest.annonation.RestResource;
-import com.eleven.upms.app.dto.UserDto;
-import com.eleven.upms.app.request.UserCreateRequest;
-import com.eleven.upms.app.request.UserQueryRequest;
-import com.eleven.upms.app.request.UserUpdateRequest;
-import com.eleven.upms.app.client.UserClient;
+import com.eleven.upms.dto.UserDto;
+import com.eleven.upms.request.UserCreateRequest;
+import com.eleven.upms.request.UserQueryRequest;
+import com.eleven.upms.request.UserUpdateRequest;
+import com.eleven.upms.client.UserClient;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

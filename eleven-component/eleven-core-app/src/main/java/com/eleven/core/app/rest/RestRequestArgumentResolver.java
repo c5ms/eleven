@@ -10,7 +10,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-
+@Deprecated
 @Service
 public class RestRequestArgumentResolver implements HandlerMethodArgumentResolver {
 
@@ -29,7 +29,6 @@ public class RestRequestArgumentResolver implements HandlerMethodArgumentResolve
                 .ip(fixIp(JakartaServletUtil.getClientIP(httpServletRequest)))
                 .build();
     }
-
 
     private String fixIp(String clientIp) {
         if (clientIp.equals("::1") || clientIp.equals("0:0:0:0:0:0:0:1") || clientIp.equals("127.0.0.1")) {

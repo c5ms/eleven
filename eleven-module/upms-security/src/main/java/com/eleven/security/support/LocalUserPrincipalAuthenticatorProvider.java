@@ -3,7 +3,7 @@ package com.eleven.security.support;
 import com.eleven.core.security.Principal;
 import com.eleven.core.security.PrincipalAuthenticatorProvider;
 import com.eleven.core.security.Subject;
-import com.eleven.upms.app.constants.UpmsConstants;
+import com.eleven.upms.core.UpmsConstants;
 import com.eleven.upms.domain.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
