@@ -18,8 +18,9 @@ spring:
             max-lifetime: ${db.upms.maxLifetime:30000}
             max-pool-size: ${db.upms.maxSize:5}
 
-
 eleven:
+  upms:
+    default-password: 123456
   security:
     auth-mode: local
   open-api:

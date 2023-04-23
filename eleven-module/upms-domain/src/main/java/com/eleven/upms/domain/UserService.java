@@ -1,7 +1,6 @@
 package com.eleven.upms.domain;
 
 import com.eleven.core.generate.IdentityGenerator;
-import com.eleven.core.message.MessageManager;
 import com.eleven.core.query.Pagination;
 import com.eleven.core.query.QueryResult;
 import com.eleven.upms.domain.action.UserCreateAction;
@@ -35,6 +34,7 @@ public class UserService {
 
     /**
      * 读取指定 ID 的用户
+     *
      * @param id 用户 ID
      * @return 用户
      */
@@ -65,10 +65,10 @@ public class UserService {
     public QueryResult<User> queryUser(UserFilter filter, Pagination pagination) {
         var criteria = Criteria.empty();
         if (StringUtils.isNotBlank(filter.getState())) {
-            criteria = criteria.and(Criteria.where("state_").is(filter.getState()));
+            criteria = criteria.and(Criteria.where("state").is(filter.getState()));
         }
         if (StringUtils.isNotBlank(filter.getLogin())) {
-            criteria = criteria.and(Criteria.where("login_").like("%" + filter.getLogin()));
+            criteria = criteria.and(Criteria.where("login").like(filter.getLogin() + "%"));
         }
         var query = Query.query(criteria);
         var pageable = Pageable.ofSize(pagination.getSize()).withPage(pagination.getPage());
@@ -83,8 +83,8 @@ public class UserService {
     public User createUser(UserCreateAction action) {
         var id = identityGenerator.next();
         var user = new User(id, action);
-        user.setPassword(passwordEncoder.encode(upmsProperties.getDefaultPassword()));
         validate(user);
+        user.setPassword(passwordEncoder.encode(upmsProperties.getDefaultPassword()));
         return userRepository.save(user);
     }
 
@@ -113,7 +113,7 @@ public class UserService {
     private void validate(User user) throws UserException {
         // 验证，用户名不能重复
         var existUser = userRepository.findByLogin(user.getLogin())
-            .filter(check -> !StringUtils.equals(check.getId(), user.getId()));
+                .filter(check -> !StringUtils.equals(check.getId(), user.getId()));
         if (existUser.isPresent()) {
             throw UserError.USER_NAME_REPEAT.exception();
         }

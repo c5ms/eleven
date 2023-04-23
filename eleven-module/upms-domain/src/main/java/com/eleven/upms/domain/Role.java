@@ -16,14 +16,14 @@ import org.springframework.data.relational.core.mapping.Table;
 public class Role {
 
     @Id
-    @Column("id_")
+    @Column("id")
     private String id;
 
-    @Column("login_")
+    @Column("login")
     private String name;
 
     @Version
-    @Column("_version")
+    @Column("version")
     private String version;
 
     /**

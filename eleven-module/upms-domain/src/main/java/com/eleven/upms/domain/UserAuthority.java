@@ -17,20 +17,20 @@ import org.springframework.data.relational.core.mapping.Table;
 public class UserAuthority extends AbstractDomain<UserAuthority> {
 
     @Id
-    @Column("id_")
+    @Column("id")
     private String id;
 
-    @Column("user_id_")
+    @Column("user_id")
     private String userId;
 
-    @Column("name_")
+    @Column("name")
     private String name;
 
-    @Column("type_")
+    @Column("type")
     private String type;
 
     @Version
-    @Column("_version")
+    @Column("version")
     private Integer version;
 
     public UserAuthority(String id, User user, Authority authority) {

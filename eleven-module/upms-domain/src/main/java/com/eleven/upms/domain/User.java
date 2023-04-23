@@ -25,36 +25,30 @@ public class User extends AbstractDomain<User> {
 
     public static final String TYPE_INNER_USER = "user";
 
-    @Column("login_")
+    @Column("login")
     private final String login;
 
     @Id
-    @Column("id_")
+    @Column("id")
     private String id;
 
     @Version
-    @Column("_version")
+    @Column("version")
     private Integer version;
-
-    /**
-     * 如果用户类型不是 system，表示上一个外部系统用户，则会有对应的外部系统用户 ID
-     */
-    @Column("from_id_")
-    private String fromId;
 
     /**
      * 用户类型，用于标记用户是什么系统的用户
      */
-    @Column("type_")
+    @Column("type")
     private String type;
 
-    @Column("password_")
+    @Column("password")
     private String password;
 
-    @Column("nickname_")
+    @Column("nickname")
     private String nickname;
 
-    @Column("state_")
+    @Column("state")
     private UserState state = UserState.NORMAL;
 
     @Embedded.Nullable

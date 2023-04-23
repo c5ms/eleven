@@ -13,9 +13,9 @@ public interface UserAuthorityRepository extends CrudRepository<UserAuthority, S
     @Modifying
     @Query("""
             delete from upms_user_authority
-            where user_id_=:user
-              and type_=:type
-              and name_=:name
+            where user_id=:user
+              and type=:type
+              and name=:name
             """)
     void deleteByUserAndAuthority(@Param("user") String user,
                                   @Param("type") String type,
@@ -23,7 +23,7 @@ public interface UserAuthorityRepository extends CrudRepository<UserAuthority, S
 
     @Query("""
             select * from upms_user_authority
-            where user_id_=:user
+            where user_id=:user
             """)
     Collection<UserAuthority> findByUserId(@Param("user") String user);
 

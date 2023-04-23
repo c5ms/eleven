@@ -22,16 +22,16 @@ import java.time.LocalDateTime;
 public class AccessToken extends AbstractDomain<AccessToken> {
 
     @Id
-    @Column("token_")
+    @Column("token")
     private String token;
 
     @Column("issuer")
     private String issuer;
 
-    @Column("create_at_")
+    @Column("create_at")
     private LocalDateTime createAt;
 
-    @Column("expire_at_")
+    @Column("expire_at")
     private LocalDateTime expireAt;
 
     @Column("principal_name")
@@ -40,7 +40,7 @@ public class AccessToken extends AbstractDomain<AccessToken> {
     @Column("principal_type")
     private String principalType;
 
-    @Column("client_ip_")
+    @Column("client_ip")
     private String clientIp;
 
     public AccessToken(Token token) {

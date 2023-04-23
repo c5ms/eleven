@@ -14,19 +14,19 @@ import java.time.Instant;
 public class AuditMetadata {
 
     @CreatedBy
-    @Column("_create_by")
+    @Column("create_by")
     private String createBy;
 
     @LastModifiedBy
-    @Column("_update_by")
+    @Column("update_by")
     private String updateBy;
 
     @CreatedDate
-    @Column("_create_date")
+    @Column("create_date")
     private Instant createDate;
 
     @LastModifiedDate
-    @Column("_update_date")
+    @Column("update_date")
     private Instant updateDate;
 
 }
