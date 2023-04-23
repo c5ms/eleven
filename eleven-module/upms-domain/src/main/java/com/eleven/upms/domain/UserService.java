@@ -1,11 +1,12 @@
 package com.eleven.upms.domain;
 
 import com.eleven.core.generate.IdentityGenerator;
-import com.eleven.core.message.MessageSender;
+import com.eleven.core.message.MessageManager;
 import com.eleven.core.query.Pagination;
 import com.eleven.core.query.QueryResult;
 import com.eleven.upms.domain.action.UserCreateAction;
 import com.eleven.upms.domain.action.UserUpdateAction;
+import com.eleven.upms.domain.configure.UpmsProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -24,35 +25,21 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
 
+    private final UserRepository userRepository;
+    private final UserAuthorityRepository userAuthorityRepository;
+
+    private final UpmsProperties upmsProperties;
     private final PasswordEncoder passwordEncoder;
     private final IdentityGenerator identityGenerator;
     private final JdbcAggregateTemplate jdbcAggregateTemplate;
 
-    private final UserValidator userValidator;
-    private final UserRepository userRepository;
-    private final UserAuthorityRepository userAuthorityRepository;
-
-    public User createUser(UserCreateAction action) {
-        var id = identityGenerator.next();
-        var user = new User(id, action);
-        user.setPassword(passwordEncoder.encode("123456"));
-        userValidator.validate(user);
-        return userRepository.save(user);
-    }
-
-
+    /**
+     * 读取指定 ID 的用户
+     * @param id 用户 ID
+     * @return 用户
+     */
     public Optional<User> getUser(String id) {
         return userRepository.findById(id);
-    }
-
-    public Optional<User> readUser(String login) {
-        return userRepository.findByLogin(login);
-    }
-
-    public void updateUser(User user, UserUpdateAction action) {
-        user.update(action);
-        userValidator.validate(user);
-        userRepository.save(user);
     }
 
     /**
@@ -63,7 +50,7 @@ public class UserService {
      * @return 如果可以找到指定登入账号的用户，并且密码相符，则返回该用户，否则返回空。
      */
     public Optional<User> readUser(String login, String password) {
-        var userOptional = readUser(login);
+        var userOptional = userRepository.findByLogin(login);
         if (userOptional.isEmpty()) {
             return userOptional;
         }
@@ -73,10 +60,6 @@ public class UserService {
             return userOptional;
         }
         return Optional.empty();
-    }
-
-    public void deleteUser(User user) {
-        userRepository.delete(user);
     }
 
     public QueryResult<User> queryUser(UserFilter filter, Pagination pagination) {
@@ -97,11 +80,43 @@ public class UserService {
         return userAuthorityRepository.findByUserId(user.getId());
     }
 
+    public User createUser(UserCreateAction action) {
+        var id = identityGenerator.next();
+        var user = new User(id, action);
+        user.setPassword(passwordEncoder.encode(upmsProperties.getDefaultPassword()));
+        validate(user);
+        return userRepository.save(user);
+    }
+
+    public void updateUser(User user, UserUpdateAction action) {
+        user.update(action);
+        validate(user);
+        userRepository.save(user);
+    }
+
+    public void deleteUser(User user) {
+        userRepository.delete(user);
+    }
+
     public void grant(User user, Authority authority) {
         userAuthorityRepository.deleteByUserAndAuthority(user.getId(), authority.type(), authority.name());
         var id = identityGenerator.next();
         var userAuthority = new UserAuthority(id, user, authority);
         userAuthorityRepository.save(userAuthority);
+    }
+
+    /**
+     * 验证用户信息
+     *
+     * @param user 用户
+     */
+    private void validate(User user) throws UserException {
+        // 验证，用户名不能重复
+        var existUser = userRepository.findByLogin(user.getLogin())
+            .filter(check -> !StringUtils.equals(check.getId(), user.getId()));
+        if (existUser.isPresent()) {
+            throw UserError.USER_NAME_REPEAT.exception();
+        }
     }
 
 }

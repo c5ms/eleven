@@ -1,8 +1,6 @@
 package com.eleven.core.app.rest;
 
-import com.eleven.core.exception.ProcessRejectedException;
-import com.eleven.core.app.errors.CoreError;
-import com.eleven.core.app.rest.exception.ClientErrorException;
+import com.eleven.core.exception.ElevenRuntimeException;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
@@ -33,8 +31,8 @@ import java.util.stream.Collectors;
 public class ElevenExceptionAdvice {
 
     @ResponseBody
-    @ExceptionHandler(ClientErrorException.class)
-    public ProblemDetail on(ClientErrorException e) {
+    @ExceptionHandler(com.eleven.core.app.rest.exception.ClientErrorException.class)
+    public ProblemDetail on(com.eleven.core.app.rest.exception.ClientErrorException e) {
         return ProblemDetail.forStatus(e.getStatus());
     }
 
@@ -52,24 +50,22 @@ public class ElevenExceptionAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BindException.class)
-    public RestFailure onMethodArgumentNotValidException(BindException e) {
+    public RestResponse.Failure onMethodArgumentNotValidException(BindException e) {
         var msg = e.getAllErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .filter(StringUtils::isNotBlank)
                 .sorted(Comparator.naturalOrder())
                 .collect(Collectors.joining(";"));
-        return RestFailure.of(CoreError.VALIDATE_FAILURE).setMessage(msg);
+        return RestResponse.Failure.of(RestErrors.VALIDATE_FAILURE).setMessage(msg);
     }
 
     // 处理拒绝 - 422
     @ResponseBody
     @ExceptionHandler
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public RestFailure onProcessFailureException(ProcessRejectedException e) {
-        return RestFailure.of(e.getError(), e.getMessage());
+    public RestResponse.Failure onProcessFailureException(ElevenRuntimeException e) {
+        return RestResponse.Failure.of(e.getError());
     }
-
-
 
     // 服务器错误 - 500
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

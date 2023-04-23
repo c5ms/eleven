@@ -8,17 +8,13 @@ import java.io.Serializable;
 
 @Slf4j
 @Component
-public class MessageSender {
+public class MessageManager {
 
-    public void send(String channel, String topic, Serializable event) {
-        String message;
-        if (event instanceof String) {
-            message = (String) event;
-        } else {
-            message = JSONUtil.toJsonStr(event);
+    public void send(String channel, String topic, Serializable message) {
+        if (!(message instanceof String)) {
+            message = JSONUtil.toJsonStr(message);
         }
         log.info("send message to [{}] channel with [{}] topic, message is:{}", channel, topic,message);
     }
-
 
 }

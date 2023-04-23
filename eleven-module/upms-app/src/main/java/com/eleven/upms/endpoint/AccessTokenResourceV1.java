@@ -47,12 +47,12 @@ public class AccessTokenResourceV1 {
         if (StringUtils.equals(UpmsConstants.PRINCIPAL_TYPE_LOCAL_USER, principal.getType())) {
             var userOptional = userService.readUser(principal.getName(), credential);
             if (userOptional.isEmpty()) {
-                throw UpmsError.LOGIN_PASSWORD_ERROR.makeRejectException();
+                throw UpmsError.LOGIN_PASSWORD_ERROR.exception();
             }
         }
         // 其他身份不支持
         else {
-            throw UpmsError.UNSUPPORTED_IDENTITY.makeRejectException();
+            throw UpmsError.UNSUPPORTED_IDENTITY.exception();
         }
 
         var clientIp = JakartaServletUtil.getClientIP(servletRequest);

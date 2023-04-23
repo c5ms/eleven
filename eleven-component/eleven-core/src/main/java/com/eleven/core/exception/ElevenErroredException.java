@@ -3,13 +3,13 @@ package com.eleven.core.exception;
 /**
  * 请求处理失败，通常是由于服务器错误，跟客户端关系不大
  */
-public class ProcessErroredException extends ElevenRuntimeException {
+public class ElevenErroredException extends RuntimeException {
 
-    public ProcessErroredException(Throwable cause) {
+    public ElevenErroredException(Throwable cause) {
         super(cause);
     }
 
-    private ProcessErroredException(String message, Exception cause) {
+    private ElevenErroredException(String message, Exception cause) {
         super(message, cause);
     }
 
@@ -20,8 +20,8 @@ public class ProcessErroredException extends ElevenRuntimeException {
      * @param cause   外部异常
      */
 
-    public static ProcessErroredException of(String message, Exception cause) {
-        return new ProcessErroredException(message, cause);
+    public static ElevenErroredException of(String message, Exception cause) {
+        return new ElevenErroredException(message, cause);
     }
 
     /**
@@ -31,8 +31,8 @@ public class ProcessErroredException extends ElevenRuntimeException {
      * @param cause   错误
      * @return 异常实例
      */
-    public static ProcessErroredException of(Exception cause, String message) {
-        return new ProcessErroredException(message, cause);
+    public static ElevenErroredException of(Exception cause, String message) {
+        return new ElevenErroredException(message, cause);
     }
 
 
@@ -42,8 +42,8 @@ public class ProcessErroredException extends ElevenRuntimeException {
      * @param cause 外部异常
      */
 
-    public static ProcessErroredException of(Exception cause) {
-        return new ProcessErroredException(cause);
+    public static ElevenErroredException of(Exception cause) {
+        return new ElevenErroredException(cause);
     }
 
     /**
@@ -51,8 +51,8 @@ public class ProcessErroredException extends ElevenRuntimeException {
      *
      * @param cause 外部异常
      */
-    public static ProcessErroredException of(String cause) {
-        return new ProcessErroredException(cause, null);
+    public static ElevenErroredException of(String cause) {
+        return new ElevenErroredException(cause, null);
     }
 
 }

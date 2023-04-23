@@ -1,6 +1,6 @@
 package com.eleven.upms;
 
-import com.eleven.core.message.MessageSender;
+import com.eleven.core.message.MessageManager;
 import com.eleven.upms.domain.event.UserCreatedEvent;
 import com.eleven.upms.domain.event.UserGrantedEvent;
 import com.eleven.upms.domain.event.UserUpdatedEvent;
@@ -13,13 +13,13 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class UserListener {
-    private final MessageSender messageSender;
+    private final MessageManager messageManager;
     private final UserConverter userConverter;
 
     @EventListener(UserCreatedEvent.class)
     public void onCreate(UserCreatedEvent event) {
         var msg = userConverter.toDto(event);
-        messageSender.send("events", "user_created", msg);
+        messageManager.send("events", "user_created", msg);
     }
 
     @EventListener(UserUpdatedEvent.class)

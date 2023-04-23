@@ -9,6 +9,5 @@ import java.util.Map;
 @Value
 public class Message implements Serializable {
     String topic;
-    Map<String, String> header = new HashMap<>();
     String body;
 }

@@ -52,7 +52,7 @@ public class UserResourceV1 {
 
   @Operation(summary = "用户创建")
   @PostMapping
-  public UserDto createUser(@RequestBody @Validated UserCreateRequest request) {
+  public UserDto createUser(@RequestBody @Validated UserCreateRequest request)  {
     var action = userConverter.toAction(request);
     var user = userService.createUser(action);
     return userConverter.toDto(user);
@@ -60,7 +60,7 @@ public class UserResourceV1 {
 
   @Operation(summary = "用户更新")
   @PostMapping("/{id}")
-  public UserDto updateUser(@PathVariable("id") String id, @RequestBody UserUpdateRequest request) {
+  public UserDto updateUser(@PathVariable("id") String id, @RequestBody UserUpdateRequest request)  {
     var action = userConverter.toAction(request);
     var user = requireUser(id);
     userService.updateUser(user, action);
