@@ -3,31 +3,29 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>eleven-application</artifactId>
+        <artifactId>eleven-component</artifactId>
         <groupId>com.demacia</groupId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>eleven-deploy</artifactId>
+    <artifactId>core</artifactId>
     <packaging>pom</packaging>
 
-
-    <properties>
-        <dist.outputpath>${project.basedir}/../target</dist.outputpath>
-        <docker.expose>9000</docker.expose>
-    </properties>
+    <modules>
+        <module>eleven-core</module>
+        <module>eleven-service</module>
+        <module>eleven-domain</module>
+    </modules>
 
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
+                <artifactId>maven-source-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
-
 
 </project>

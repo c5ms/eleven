@@ -31,6 +31,8 @@
         <option value="$PROJECT_DIR$/eleven-module/eleven-cms-core/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-module/eleven-cms-service/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-module/eleven-upms-client/pom.xml" />
+        <option value="$PROJECT_DIR$/eleven-module/security/pom.xml" />
+        <option value="$PROJECT_DIR$/eleven-module/upms/upms-domain/pom.xml" />
       </set>
     </option>
   </component>

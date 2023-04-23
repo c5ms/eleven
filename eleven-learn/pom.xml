@@ -13,7 +13,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>eleven-learn-algorithm</module>
+        <module>algorithm</module>
     </modules>
 
 
