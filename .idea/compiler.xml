@@ -8,13 +8,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="upms-api" />
-        <module name="eleven-upms" />
         <module name="upms-service" />
-        <module name="eleven-api" />
         <module name="eleven-domain" />
         <module name="eleven-core" />
         <module name="eleven-service" />
         <module name="upms-client" />
+        <module name="eleven-app-upms" />
+        <module name="eleven-app-api" />
         <module name="upms-security" />
         <module name="algorithm" />
       </profile>
@@ -35,16 +35,16 @@
       <module name="application" options="" />
       <module name="component" options="" />
       <module name="eleven" options="" />
-      <module name="eleven-api" options="-parameters" />
+      <module name="eleven-app-api" options="-parameters" />
+      <module name="eleven-app-deploy" options="" />
+      <module name="eleven-app-upms" options="-parameters" />
       <module name="eleven-component" options="" />
       <module name="eleven-core" options="-parameters" />
       <module name="eleven-core (1)" options="-parameters" />
       <module name="eleven-core (2)" options="-parameters" />
       <module name="eleven-core-message" options="-parameters" />
-      <module name="eleven-deploy" options="" />
       <module name="eleven-domain" options="-parameters" />
       <module name="eleven-service" options="-parameters" />
-      <module name="eleven-upms" options="-parameters" />
       <module name="security" options="" />
       <module name="upms" options="" />
       <module name="upms-api" options="-parameters" />

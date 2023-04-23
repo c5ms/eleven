@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="运行-upms" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-    <module name="eleven-upms" />
-    <option name="SPRING_BOOT_MAIN_CLASS" value="com.eleven.UpmsServiceApplication" />
+    <module name="eleven-app-upms" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.eleven.UpmsApplication" />
     <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-    <option name="VM_PARAMETERS" value="--add-opens java.base/java.lang=ALL-UNNAMED  " />
+    <option name="VM_PARAMETERS" value="--add-opens java.base/java.lang=ALL-UNNAMED" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="com.demcia.eleven.*" />

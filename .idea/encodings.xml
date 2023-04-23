@@ -11,18 +11,16 @@
     <file url="file://$PROJECT_DIR$/core/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-app/eleven-app-api/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-app/eleven-app-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eleven-app/eleven-app-deploy/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eleven-app/eleven-app-deploy/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-app/eleven-app-upms-client/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-app/eleven-app-upms-client/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-application/eleven-api/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-application/eleven-api/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-application/eleven-deploy/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-application/eleven-deploy/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-application/eleven-luncher-api/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-application/eleven-luncher-api/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-application/eleven-upms/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-application/eleven-upms/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-application/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-application/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eleven-app/eleven-app-upms/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eleven-app/eleven-app-upms/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eleven-app/eleven-luncher-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eleven-app/eleven-luncher-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eleven-app/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eleven-app/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-component/core/eleven-api/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-component/core/eleven-api/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-component/core/eleven-common-rest/src/main/resources" charset="UTF-8" />

@@ -11,7 +11,7 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <modules>
-        <module>eleven-application</module>
+        <module>eleven-app</module>
         <module>eleven-component</module>
         <module>eleven-learn</module>
     </modules>
@@ -397,10 +397,10 @@
                                     <maxMemorySize>128M</maxMemorySize>
                                     <extraArguments>
                                         <extraArgument>-server</extraArgument>
-                                        <extraArgument>-Xloggc:logs/${appName}_gc.log</extraArgument>
+                                        <extraArgument>-Xlog:gc:logs/java_gc.log</extraArgument>
                                         <extraArgument>-XX:+HeapDumpOnOutOfMemoryError</extraArgument>
                                         <extraArgument>-XX:HeapDumpPath=logs/java_heapdump.hprof</extraArgument>
-                                        <extraArgument>--illegal-access=warn</extraArgument>
+                                        <extraArgument>--add-opens=java.base/java.lang=ALL-UNNAMED</extraArgument>
                                     </extraArguments>
                                 </jvmSettings>
                             </daemon>
@@ -415,10 +415,10 @@
                                 <jvmSettings>
                                     <extraArguments>
                                         <extraArgument>-server</extraArgument>
-                                        <extraArgument>-Xloggc:logs/${appName}_gc.log</extraArgument>
+                                        <extraArgument>-Xlog:gc:logs/java_gc.log</extraArgument>
                                         <extraArgument>-XX:+HeapDumpOnOutOfMemoryError</extraArgument>
                                         <extraArgument>-XX:HeapDumpPath=logs/java_heapdump.hprof</extraArgument>
-                                        <extraArgument>--illegal-access=warn</extraArgument>
+                                        <extraArgument>--add-opens=java.base/java.lang=ALL-UNNAMED</extraArgument>
                                     </extraArguments>
                                 </jvmSettings>
                             </program>

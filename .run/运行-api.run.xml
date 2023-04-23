@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="运行-api" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-    <module name="eleven-api" />
+    <module name="eleven-app-api" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.eleven.ElevenApiApplication" />
     <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateClassesAndResources" />
     <option name="VM_PARAMETERS" value="--add-opens java.base/java.lang=ALL-UNNAMED  " />

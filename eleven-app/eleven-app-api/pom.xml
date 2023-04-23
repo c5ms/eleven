@@ -3,25 +3,45 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>eleven-application</artifactId>
+        <artifactId>eleven-app</artifactId>
         <groupId>com.demacia</groupId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>eleven-deploy</artifactId>
-    <packaging>pom</packaging>
-
+    <artifactId>eleven-app-api</artifactId>
+    <packaging>jar</packaging>
 
     <properties>
+        <appMainClass>com.eleven.ElevenApiApplication</appMainClass>
         <dist.outputpath>${project.basedir}/../target</dist.outputpath>
-        <docker.expose>9000</docker.expose>
     </properties>
+
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.demacia</groupId>
+            <artifactId>upms-client</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.demacia</groupId>
+            <artifactId>upms-security</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
 
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>appassembler-maven-plugin</artifactId>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
