@@ -9,4 +9,8 @@
     <artifactId>algorithm</artifactId>
     <name>Archetype - eleven-learning</name>
     <url>http://maven.apache.org</url>
+
+    <dependencies>
+
+    </dependencies>
 </project>

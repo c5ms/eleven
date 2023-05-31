@@ -73,7 +73,7 @@ public class UserManager {
         var query = Query.query(criteria);
         var pageable = Pageable.ofSize(pagination.getSize()).withPage(pagination.getPage());
         var users = jdbcAggregateTemplate.findAll(query, User.class, pageable);
-        return QueryResult.of(users.getContent(), users.getTotalElements()).withPagination(pagination);
+        return QueryResult.of(users.getContent(), users.getTotalElements());
     }
 
     public Collection<UserAuthority> getAuthorities(User user) {

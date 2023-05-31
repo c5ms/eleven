@@ -1,5 +1,6 @@
 package com.eleven.core.app.rest;
 
+import com.eleven.core.query.QueryResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.Order;
@@ -35,6 +36,13 @@ public class ElevenResponseAdvice implements ResponseBodyAdvice<Object> {
         if (null == body && request.getMethod() == HttpMethod.GET) {
             response.setStatusCode(HttpStatus.NOT_FOUND);
         }
+
+        // 分页查询返回逻辑
+//        if (body instanceof QueryResult<?>) {
+//            var total = ((QueryResult<?>) body).getTotal();
+//            response.getHeaders().set("X-Query-Total", String.valueOf(total));
+//            return ((QueryResult<?>) body).getItems();
+//        }
 
 
         return body;

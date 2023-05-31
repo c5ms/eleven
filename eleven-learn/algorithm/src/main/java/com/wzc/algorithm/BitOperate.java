@@ -1,4 +1,4 @@
-package com.wzc.learning;
+package com.wzc.algorithm;
 
 public class BitOperate {
 
@@ -22,7 +22,6 @@ public class BitOperate {
         int x = -101221;
         printBinary(x);
         printBinary((1 << 30));
-        System.out.println((x & (1 << 30))>0);
     }
 
 }
