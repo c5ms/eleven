@@ -18,12 +18,18 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/eleven-app/eleven-app-deploy/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-app/eleven-app-upms-core/pom.xml" />
+        <option value="$PROJECT_DIR$/eleven-app/eleven-learn/pom.xml" />
+        <option value="$PROJECT_DIR$/eleven-component/core/eleven-service/pom.xml" />
+        <option value="$PROJECT_DIR$/eleven-component/core/pom.xml" />
+        <option value="$PROJECT_DIR$/eleven-component/education/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-component/eleven-core-api/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-component/eleven-core-common/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-component/eleven-core-message/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-component/eleven-core-rest/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-component/eleven-core-security/pom.xml" />
+        <option value="$PROJECT_DIR$/eleven-component/upms/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-domain/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-learn/eleven-learn-vertx/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-module/eleven-app-admin/pom.xml" />

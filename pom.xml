@@ -11,9 +11,9 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <modules>
-        <module>eleven-app</module>
+        <module>eleven-core</module>
         <module>eleven-component</module>
-        <module>eleven-learn</module>
+        <module>eleven-app</module>
     </modules>
 
 

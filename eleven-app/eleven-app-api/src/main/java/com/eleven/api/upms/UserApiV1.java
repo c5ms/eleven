@@ -1,7 +1,7 @@
 package com.eleven.api.upms;
 
 import com.eleven.core.query.QueryResult;
-import com.eleven.core.app.rest.annonation.RestResource;
+import com.eleven.core.rest.annonation.RestResource;
 import com.eleven.upms.dto.UserDto;
 import com.eleven.upms.request.UserCreateRequest;
 import com.eleven.upms.request.UserQueryRequest;

@@ -3,7 +3,7 @@
 #### 前言
 首先请你清楚的了解什么是 DDD，我不打算说明白什么是 DDD， 但是我首先要告诉你 DDD 并没有要求你做的事情。
 1. DDD 并不要求你一定要有 infrastructure domain application service 。。。这些个包名
-2. DDD 并不要求你一定要用 CQRS，而且 Command 不一定就要命名为 XxxCommand，这种结论很奇怪，尤其是在我们中国。 
+2. DDD 并不要求你一定要用 CQRS，而且 Command 不一定就要命名为 XxxCommand，这种结论很奇怪，尤其是在我们中国。
 3. 用模仿现实的拟人化分层，好过生冷的 infrastructure domain application service...因为首先是部门，然后是职责，最后是手段。
 4. Domain-driven design 听上去其实很奇怪，难道还有不受领域驱动的设计么？其实有，只是不应该有，比如面向数据库设计，和面向数据库编程。
 
@@ -36,7 +36,7 @@
 
 #### 请求链路
 
-![请求链路](./doc/微服务请求链路.png "请求链路")
+![请求链路](src/main/doc/微服务请求链路.png "请求链路")
 
 #### 技术选型
 

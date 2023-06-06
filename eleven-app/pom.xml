@@ -13,7 +13,6 @@
     <modules>
         <module>eleven-app-api</module>
         <module>eleven-app-upms</module>
-        <module>eleven-app-deploy</module>
     </modules>
 
 </project>
