@@ -44,7 +44,7 @@ import java.util.stream.Collectors;
 @Configuration(proxyBeanMethods = false)
 @RequiredArgsConstructor
 @EnableConfigurationProperties(ElevenRestProperties.class)
-@PropertySource("classpath:/config/application-rest.properties")
+@PropertySource("classpath:/config/application-core.properties")
 public class ElevenRestAutoconfigure implements WebMvcConfigurer {
 
     private static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";

@@ -62,7 +62,6 @@ public class ElevenExceptionAdvice {
         return RestResponse.Failure.of(RestErrors.VALIDATE_FAILURE);
     }
 
-
     // 处理拒绝 - 422
     @ResponseBody
     @ExceptionHandler

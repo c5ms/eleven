@@ -9,7 +9,7 @@
   "properties": [
     {
       "name": "eleven.security.auth-mode",
-      "type": "com.eleven.security.autoconfigure.SecurityProperties$AuthMode",
+      "type": "com.eleven.security.autoconfigure.AuthMode",
       "description": "认证模式",
       "sourceType": "com.eleven.security.autoconfigure.SecurityProperties"
     }

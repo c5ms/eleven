@@ -27,12 +27,12 @@ import java.util.Optional;
 @Configuration
 @RequiredArgsConstructor
 @EnableConfigurationProperties(SecurityProperties.class)
-@Import({SecurityConfigure.None.class,SecurityConfigure.Remote.class, SecurityConfigure.Local.class})
+@Import({SecurityConfigure.None.class, SecurityConfigure.Remote.class, SecurityConfigure.Local.class})
 public class SecurityConfigure {
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
-        return  new BCryptPasswordEncoder();
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 
@@ -78,7 +78,7 @@ public class SecurityConfigure {
 
         @Bean
         @ConditionalOnMissingBean(TokenReader.class)
-          TokenReader unSupportTokenReader() {
+        TokenReader unSupportTokenReader() {
             return token -> Optional.empty();
         }
 

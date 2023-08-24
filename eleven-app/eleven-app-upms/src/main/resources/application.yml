@@ -1,6 +1,7 @@
 server:
   port: 9000
 
+
 spring:
   application:
     name: eleven-upms
