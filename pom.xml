@@ -11,7 +11,7 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <modules>
-        <module>eleven-core</module>
+        <module>eleven-starter</module>
         <module>eleven-component</module>
         <module>eleven-app</module>
     </modules>
@@ -32,12 +32,12 @@
         <dist.outputpath>${project.basedir}/target</dist.outputpath>
 
         <!--  spring 家族 -->
-        <version.spring-boot>3.1.0</version.spring-boot>
-        <version.spring-cloud>2022.0.3</version.spring-cloud>
+        <version.spring-boot>3.1.2</version.spring-boot>
+        <version.spring-cloud>2022.0.4</version.spring-cloud>
         <version.spring-cloud-alibaba>2021.0.4.0</version.spring-cloud-alibaba>
 
         <!--开源通用工具包-->
-        <version.hutool>5.8.16</version.hutool>
+        <version.hutool>5.8.21</version.hutool>
         <version.commons-io>2.11.0</version.commons-io>
         <version.commons-lang3>3.12.0</version.commons-lang3>
         <version.commons-collections>4.4</version.commons-collections>
@@ -63,7 +63,7 @@
         <!-- 数据访问层 -->
         <version.jpa-spec>3.2.5</version.jpa-spec>
         <version.dynamic-datasource>3.6.0</version.dynamic-datasource>
-        <version.datasourceproxy>1.8</version.datasourceproxy>
+        <version.datasource-micrometer-spring-boot>1.0.2</version.datasource-micrometer-spring-boot>
         <version.mybatis>3.0.1</version.mybatis>
 
         <!-- logging & tracing -->
@@ -103,6 +103,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
 
 
             <!-- hutool util工具组件 -->
@@ -168,6 +169,11 @@
                 <groupId>net.ttddyy</groupId>
                 <artifactId>datasource-proxy</artifactId>
                 <version>${version.datasourceproxy}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.ttddyy.observation</groupId>
+                <artifactId>datasource-micrometer-spring-boot</artifactId>
+                <version>${version.datasource-micrometer-spring-boot}</version>
             </dependency>
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
@@ -267,15 +273,15 @@
     <build>
         <pluginManagement>
             <plugins>
-               <plugin>
-                   <groupId>org.apache.maven.plugins</groupId>
-                   <artifactId>maven-compiler-plugin</artifactId>
-                   <configuration>
-                       <compilerArgs>
-                           <arg>-parameters</arg>
-                       </compilerArgs>
-                   </configuration>
-               </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <compilerArgs>
+                            <arg>-parameters</arg>
+                        </compilerArgs>
+                    </configuration>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>

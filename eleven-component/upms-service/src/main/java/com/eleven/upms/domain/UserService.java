@@ -1,22 +1,25 @@
 package com.eleven.upms.domain;
 
+import com.eleven.core.domain.AbstractAuditableDomain;
+import com.eleven.core.domain.support.QueryTemplate;
 import com.eleven.core.generate.IdentityGenerator;
-import com.eleven.core.query.Pagination;
-import com.eleven.core.query.QueryResult;
-import com.eleven.upms.domain.action.UserCreateAction;
-import com.eleven.upms.domain.action.UserUpdateAction;
+import com.eleven.core.model.PaginationResult;
 import com.eleven.upms.domain.configure.UpmsProperties;
+import com.eleven.upms.dto.UserCreateAction;
+import com.eleven.upms.dto.UserGrantAction;
+import com.eleven.upms.dto.UserQuery;
+import com.eleven.upms.dto.UserUpdateAction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jdbc.core.JdbcAggregateTemplate;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.data.relational.core.query.Query;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -30,27 +33,14 @@ public class UserService {
     private final UpmsProperties upmsProperties;
     private final PasswordEncoder passwordEncoder;
     private final IdentityGenerator identityGenerator;
-    private final JdbcAggregateTemplate jdbcAggregateTemplate;
+    private final QueryTemplate queryTemplate;
 
-    /**
-     * 读取指定 ID 的用户
-     *
-     * @param id 用户 ID
-     * @return 用户
-     */
     public Optional<User> getUser(String id) {
         return userRepository.findById(id);
     }
 
-    /**
-     * 验证用户
-     *
-     * @param login    登入账号
-     * @param password 验证口令
-     * @return 如果可以找到指定登入账号的用户，并且密码相符，则返回该用户，否则返回空。
-     */
     public Optional<User> readUser(String login, String password) {
-        var userOptional = userRepository.findByLogin(login);
+        var userOptional = userRepository.findByUsername(login);
         if (userOptional.isEmpty()) {
             return userOptional;
         }
@@ -62,18 +52,24 @@ public class UserService {
         return Optional.empty();
     }
 
-    public QueryResult<User> queryUser(UserFilter filter, Pagination pagination) {
+    public PaginationResult<User> queryUserPage(UserQuery filter) {
         var criteria = Criteria.empty();
-        if (StringUtils.isNotBlank(filter.getState())) {
-            criteria = criteria.and(Criteria.where("state").is(filter.getState()));
+        if (null != filter.getState()) {
+            criteria = Criteria.where(User.Fields.state).is(filter.getState());
         }
-        if (StringUtils.isNotBlank(filter.getLogin())) {
-            criteria = criteria.and(Criteria.where("login").like(filter.getLogin() + "%"));
+        if (StringUtils.isNotBlank(filter.getType())) {
+            criteria = Criteria.where(User.Fields.type).is(filter.getType());
         }
-        var query = Query.query(criteria);
-        var pageable = Pageable.ofSize(pagination.getSize()).withPage(pagination.getPage());
-        var users = jdbcAggregateTemplate.findAll(query, User.class, pageable);
-        return QueryResult.of(users.getContent(), users.getTotalElements());
+        if (StringUtils.isNotBlank(filter.getUsername())) {
+            criteria = Criteria.where(User.Fields.username).like(filter.getUsername() + "%");
+        }
+        if (Objects.nonNull(filter.getIsLocked())) {
+            criteria = Criteria.where(User.Fields.isLocked).is(filter.getIsLocked());
+        }
+        var query = Query
+                .query(criteria)
+                .sort(Sort.by(AbstractAuditableDomain.Fields.createAt).descending());
+        return queryTemplate.findPage(query, User.class, filter);
     }
 
     public Collection<UserAuthority> getAuthorities(User user) {
@@ -94,11 +90,22 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void lockUser(User user) {
+        user.lock();
+        userRepository.save(user);
+    }
+
+    public void unlockUser(User user) {
+        user.unlock();
+        userRepository.save(user);
+    }
+
     public void deleteUser(User user) {
         userRepository.delete(user);
     }
 
-    public void grant(User user, Authority authority) {
+    public void grant(User user, UserGrantAction action) {
+        var authority = Authority.of(action.getType(), action.getName());
         userAuthorityRepository.deleteByUserAndAuthority(user.getId(), authority.type(), authority.name());
         var id = identityGenerator.next();
         var userAuthority = new UserAuthority(id, user, authority);
@@ -112,11 +119,12 @@ public class UserService {
      */
     private void validate(User user) throws UserException {
         // 验证，用户名不能重复
-        var existUser = userRepository.findByLogin(user.getLogin())
+        var existUser = userRepository.findByUsername(user.getUsername())
                 .filter(check -> !StringUtils.equals(check.getId(), user.getId()));
         if (existUser.isPresent()) {
             throw UserError.USER_NAME_REPEAT.exception();
         }
     }
+
 
 }

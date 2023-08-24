@@ -13,8 +13,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>upms-api</module>
-        <module>upms-client</module>
+        <module>upms-core</module>
         <module>upms-security</module>
         <module>upms-service</module>
         <module>education-service</module>

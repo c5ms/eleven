@@ -45,7 +45,7 @@ public class WordsLibrary {
     }
 
     /**
-     * check whether the word exist or not from word library
+     * check whether the word exist in the library or not
      *
      * @param word is the check target
      * @return true means the word exists in the library
@@ -53,7 +53,6 @@ public class WordsLibrary {
     public boolean isWord(String word) {
         return loadAllWords().contains(word);
     }
-
 
     public Set<String> removeKnownWords(Set<String> words) {
         var result = new HashSet<String>();
@@ -72,7 +71,6 @@ public class WordsLibrary {
         return removeKnownWords(words);
     }
 
-
     /**
      * extract word from article
      *
@@ -82,7 +80,7 @@ public class WordsLibrary {
     public Set<String> extractWords(String article) {
         var words = new LinkedHashSet<String>();
         for (String word : article.split(" |\\\\.|\"")) {
-            word= StringUtils.trim(word);
+            word = StringUtils.trim(word);
             if (word.length() > 2 && isWord(word)) {
                 words.add(word);
             }
@@ -100,11 +98,9 @@ public class WordsLibrary {
         var file = new File("./library/known_words.lib");
         var libWords = FileUtil.readLines(file, StandardCharsets.UTF_8);
         words.removeIf(s -> s.length() <= 1);
-//        words.removeIf(s -> !isWord(s));
         words.removeIf(libWords::contains);
         FileUtil.appendLines(words, file, StandardCharsets.UTF_8);
     }
-
 
 
     public void createBook(String bookName, Set<String> words) {

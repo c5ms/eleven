@@ -1,12 +1,12 @@
 package com.eleven.api.upms;
 
-import com.eleven.core.query.QueryResult;
+import com.eleven.core.model.PaginationResult;
 import com.eleven.core.rest.annonation.RestResource;
-import com.eleven.upms.dto.UserDto;
-import com.eleven.upms.request.UserCreateRequest;
-import com.eleven.upms.request.UserQueryRequest;
-import com.eleven.upms.request.UserUpdateRequest;
 import com.eleven.upms.client.UserClient;
+import com.eleven.upms.dto.UserCreateAction;
+import com.eleven.upms.dto.UserDto;
+import com.eleven.upms.dto.UserQuery;
+import com.eleven.upms.dto.UserUpdateAction;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class UserApiV1 {
 
     @PostMapping
     @Operation(summary = "用户创建")
-    public UserDto createUser(@RequestBody @Validated UserCreateRequest action) {
+    public UserDto createUser(@RequestBody @Validated UserCreateAction action) {
         return userClient.createUser(action);
     }
 
@@ -39,7 +39,7 @@ public class UserApiV1 {
 
     @Operation(summary = "用户更新")
     @PostMapping("/{id}")
-    public UserDto updateUser(@PathVariable("id") String id, @RequestBody UserUpdateRequest updateAction) {
+    public UserDto updateUser(@PathVariable("id") String id, @RequestBody UserUpdateAction updateAction) {
         return userClient.updateUser(id, updateAction);
     }
 
@@ -51,7 +51,7 @@ public class UserApiV1 {
 
     @GetMapping
     @Operation(summary = "用户查询")
-    public QueryResult<UserDto> queryUser(@ParameterObject UserQueryRequest request) {
+    public PaginationResult<UserDto> queryUser(@ParameterObject UserQuery request) {
         return userClient.queryUser(request);
     }
 

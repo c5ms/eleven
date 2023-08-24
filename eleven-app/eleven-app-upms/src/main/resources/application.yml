@@ -4,7 +4,6 @@ server:
 spring:
   application:
     name: eleven-upms
-
   datasource:
     dynamic:
       primary: master
@@ -17,6 +16,13 @@ spring:
           hikari:
             max-lifetime: ${db.upms.maxLifetime:30000}
             max-pool-size: ${db.upms.maxSize:5}
+  data:
+    mongodb:
+      host: 192.168.2.250
+      username: eleven
+      password: eleven
+      port: 27017
+      database: eleven
 
 eleven:
   upms:
@@ -38,6 +44,6 @@ eleven:
 
 logging:
   level:
-    sql: info
-    web: info
-    root: info
+    jdbc: debug
+
+

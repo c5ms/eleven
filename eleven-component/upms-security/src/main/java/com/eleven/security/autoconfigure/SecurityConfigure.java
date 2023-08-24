@@ -17,7 +17,6 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.jdbc.repository.config.EnableJdbcAuditing;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -25,7 +24,6 @@ import java.util.Optional;
 
 
 @EnableCaching
-@EnableJdbcAuditing
 @Configuration
 @RequiredArgsConstructor
 @EnableConfigurationProperties(SecurityProperties.class)

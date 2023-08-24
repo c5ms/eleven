@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Set;
 
 @Slf4j
-@Tag(name = "单词")
+@Tag(name = "文章")
 @RequestMapping("/edu/paragraphs")
 @RestResource
 @RequiredArgsConstructor

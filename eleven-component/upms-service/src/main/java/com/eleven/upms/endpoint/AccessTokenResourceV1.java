@@ -10,7 +10,7 @@ import com.eleven.core.rest.annonation.RestResource;
 import com.eleven.core.time.TimeContext;
 import com.eleven.upms.core.UpmsConstants;
 import com.eleven.upms.core.UpmsError;
-import com.eleven.upms.request.AccessTokenCreateRequest;
+import com.eleven.upms.dto.AccessTokenCreateRequest;
 import com.eleven.upms.domain.AccessToken;
 import com.eleven.upms.domain.AccessTokenService;
 import com.eleven.upms.domain.UserService;
@@ -23,7 +23,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 @Slf4j
@@ -61,7 +60,7 @@ public class AccessTokenResourceV1 {
         // 用户的令牌可用 10 天,但是目前还没有超时的处理
         var token = new Token()
                 .setIssuer(SpringUtil.getApplicationName())
-                .setExpireAt(TimeContext.localDateTime().plus(10, ChronoUnit.DAYS))
+                .setExpireAt(TimeContext.localDateTime().plusDays(10))
                 .setPrincipal(principal)
                 .setDetail(detail)
                 .setValue(value);

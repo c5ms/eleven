@@ -17,14 +17,22 @@
 
         <dependency>
             <groupId>com.demacia</groupId>
-            <artifactId>upms-api</artifactId>
+            <artifactId>upms-core</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.demacia</groupId>
+            <artifactId>eleven-starter-service</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
 
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
         </dependency>
+
 
     </dependencies>
 

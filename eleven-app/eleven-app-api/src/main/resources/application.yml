@@ -22,9 +22,7 @@ eleven:
     license:
       name: Apache 2.0
       url: https://www.demcia.com/
-  domain:
-    identity:
-      id-type: snowflake
+
 
 logging:
   level:
