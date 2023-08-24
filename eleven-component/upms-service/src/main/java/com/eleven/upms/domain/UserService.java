@@ -6,8 +6,8 @@ import com.eleven.core.generate.IdentityGenerator;
 import com.eleven.core.model.PaginationResult;
 import com.eleven.upms.domain.configure.UpmsProperties;
 import com.eleven.upms.dto.UserCreateAction;
+import com.eleven.upms.dto.UserFilter;
 import com.eleven.upms.dto.UserGrantAction;
-import com.eleven.upms.dto.UserQuery;
 import com.eleven.upms.dto.UserUpdateAction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,10 +30,10 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserAuthorityRepository userAuthorityRepository;
 
+    private final QueryTemplate queryTemplate;
     private final UpmsProperties upmsProperties;
     private final PasswordEncoder passwordEncoder;
     private final IdentityGenerator identityGenerator;
-    private final QueryTemplate queryTemplate;
 
     public Optional<User> getUser(String id) {
         return userRepository.findById(id);
@@ -52,7 +52,7 @@ public class UserService {
         return Optional.empty();
     }
 
-    public PaginationResult<User> queryUserPage(UserQuery filter) {
+    public PaginationResult<User> queryUserPage(UserFilter filter) {
         var criteria = Criteria.empty();
         if (null != filter.getState()) {
             criteria = Criteria.where(User.Fields.state).is(filter.getState());
@@ -112,11 +112,6 @@ public class UserService {
         userAuthorityRepository.save(userAuthority);
     }
 
-    /**
-     * 验证用户信息
-     *
-     * @param user 用户
-     */
     private void validate(User user) throws UserException {
         // 验证，用户名不能重复
         var existUser = userRepository.findByUsername(user.getUsername())
@@ -125,6 +120,4 @@ public class UserService {
             throw UserError.USER_NAME_REPEAT.exception();
         }
     }
-
-
 }

@@ -1,0 +1,18 @@
+{
+  "groups": [
+    {
+      "name": "eleven.upms",
+      "type": "com.eleven.upms.domain.configure.UpmsProperties",
+      "sourceType": "com.eleven.upms.domain.configure.UpmsProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "eleven.upms.default-password",
+      "type": "java.lang.String",
+      "sourceType": "com.eleven.upms.domain.configure.UpmsProperties",
+      "defaultValue": "123456"
+    }
+  ],
+  "hints": []
+}

@@ -5,7 +5,7 @@ import com.eleven.core.rest.annonation.RestResource;
 import com.eleven.upms.client.UserClient;
 import com.eleven.upms.dto.UserCreateAction;
 import com.eleven.upms.dto.UserDto;
-import com.eleven.upms.dto.UserQuery;
+import com.eleven.upms.dto.UserFilter;
 import com.eleven.upms.dto.UserUpdateAction;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -51,7 +51,7 @@ public class UserApiV1 {
 
     @GetMapping
     @Operation(summary = "用户查询")
-    public PaginationResult<UserDto> queryUser(@ParameterObject UserQuery request) {
+    public PaginationResult<UserDto> queryUser(@ParameterObject UserFilter request) {
         return userClient.queryUser(request);
     }
 

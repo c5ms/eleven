@@ -44,7 +44,7 @@ public class HttpSecurityAutoconfigure {
             .and()
             .anonymous().principal(Subject.ANONYMOUS_INSTANCE)
             .and()
-            . authorizeHttpRequests().anyRequest().permitAll()
+            .authorizeHttpRequests().anyRequest().permitAll()
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER)
             .and()

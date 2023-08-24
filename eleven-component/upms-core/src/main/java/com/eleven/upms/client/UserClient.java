@@ -21,7 +21,7 @@ public interface UserClient {
 
     @Operation(summary = "用户查询")
     @GetMapping
-    PaginationResult<UserDto> queryUser(@SpringQueryMap UserQuery request);
+    PaginationResult<UserDto> queryUser(@SpringQueryMap UserFilter request);
 
     @Operation(summary = "用户读取")
     @GetMapping("/{id}")

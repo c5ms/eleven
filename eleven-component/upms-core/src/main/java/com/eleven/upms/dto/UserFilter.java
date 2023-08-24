@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserQuery extends Pagination {
+public class UserFilter extends Pagination {
 
     @Schema(description = "账号")
     String username;

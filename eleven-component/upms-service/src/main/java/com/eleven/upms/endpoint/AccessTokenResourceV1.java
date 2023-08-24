@@ -3,17 +3,17 @@ package com.eleven.upms.endpoint;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.extra.servlet.JakartaServletUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import com.eleven.core.rest.annonation.RestResource;
 import com.eleven.core.security.Principal;
 import com.eleven.core.security.Token;
 import com.eleven.core.security.TokenDetail;
-import com.eleven.core.rest.annonation.RestResource;
 import com.eleven.core.time.TimeContext;
 import com.eleven.upms.core.UpmsConstants;
 import com.eleven.upms.core.UpmsError;
-import com.eleven.upms.dto.AccessTokenCreateRequest;
 import com.eleven.upms.domain.AccessToken;
 import com.eleven.upms.domain.AccessTokenService;
 import com.eleven.upms.domain.UserService;
+import com.eleven.upms.dto.AccessTokenCreateRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -74,7 +74,6 @@ public class AccessTokenResourceV1 {
     public Optional<Token> readToken(@PathVariable("token") String token) {
         return accessTokenService.readToken(token).map(AccessToken::toToken);
     }
-
 
 
 }

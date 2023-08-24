@@ -166,11 +166,6 @@
                 <version>${version.jpa-spec}</version>
             </dependency>
             <dependency>
-                <groupId>net.ttddyy</groupId>
-                <artifactId>datasource-proxy</artifactId>
-                <version>${version.datasourceproxy}</version>
-            </dependency>
-            <dependency>
                 <groupId>net.ttddyy.observation</groupId>
                 <artifactId>datasource-micrometer-spring-boot</artifactId>
                 <version>${version.datasource-micrometer-spring-boot}</version>
@@ -180,8 +175,6 @@
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${version.mybatis}</version>
             </dependency>
-
-            <!-- 多数据源支持 -->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
@@ -276,6 +269,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.11.0</version>
                     <configuration>
                         <compilerArgs>
                             <arg>-parameters</arg>
@@ -326,11 +320,11 @@
                         <configurationSourceDirectory>src/main/resources</configurationSourceDirectory>
                         <includeConfigurationDirectoryInClasspath>true</includeConfigurationDirectoryInClasspath>
                         <generateRepository>false</generateRepository>
+                        <encoding>UTF-8</encoding>
+                        <logsDirectory>logs</logsDirectory>
                         <repositoryName>lib</repositoryName>
                         <repositoryLayout>flat</repositoryLayout>
                         <useWildcardClassPath>true</useWildcardClassPath>
-                        <encoding>UTF-8</encoding>
-                        <logsDirectory>logs</logsDirectory>
                         <!--						<tempDirectory>tmp</tempDirectory>-->
                         <projectArtifactFirstInClassPath>true</projectArtifactFirstInClassPath>
                         <target>${project.build.directory}</target>
@@ -438,7 +432,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>3.1.0</version>
+                    <version>3.6.0</version>
                     <configuration>
                         <appendAssemblyId>false</appendAssemblyId>
                         <attach>true</attach>

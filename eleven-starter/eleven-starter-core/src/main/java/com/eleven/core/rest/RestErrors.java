@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum RestErrors implements ElevenError {
-    VALIDATE_FAILURE("common:validate_failure", "校验失败");;
+    VALIDATE_FAILURE("common:validate_failure", "请求无效或检验错误");;
 
     final String error;
     final String message;
