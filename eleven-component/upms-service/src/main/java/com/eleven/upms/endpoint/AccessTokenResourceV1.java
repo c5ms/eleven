@@ -13,7 +13,7 @@ import com.eleven.upms.core.UpmsError;
 import com.eleven.upms.domain.AccessToken;
 import com.eleven.upms.domain.AccessTokenService;
 import com.eleven.upms.domain.UserService;
-import com.eleven.upms.dto.AccessTokenCreateRequest;
+import com.eleven.upms.model.AccessTokenCreateAction;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,14 +37,14 @@ public class AccessTokenResourceV1 {
 
     @Operation(summary = "创建令牌")
     @PostMapping
-    public Token createToken(@RequestBody @Validated AccessTokenCreateRequest request, HttpServletRequest servletRequest) {
+    public Token createToken(@RequestBody @Validated AccessTokenCreateAction request, HttpServletRequest servletRequest) {
         var identity = request.getIdentity();
         var principal = new Principal(identity);
         var credential = request.getCredential();
 
         // 系统内置用户
         if (StringUtils.equals(UpmsConstants.PRINCIPAL_TYPE_LOCAL_USER, principal.getType())) {
-            var userOptional = userService.readUser(principal.getName(), credential);
+            var userOptional = userService.loginUser(principal.getName(), credential);
             if (userOptional.isEmpty()) {
                 throw UpmsError.LOGIN_PASSWORD_ERROR.exception();
             }

@@ -1,10 +1,10 @@
 package com.eleven.upms.domain;
 
-import org.springframework.data.repository.CrudRepository;
+import com.eleven.core.domain.DomainRepository;
 
 import java.util.Optional;
 
-public interface UserRepository extends CrudRepository<User, String> {
+public interface UserRepository extends DomainRepository<User, String> {
 
     Optional<User> findByUsername(String username);
 

@@ -2,7 +2,7 @@ package com.eleven.upms.client;
 
 import com.eleven.core.model.PaginationResult;
 import com.eleven.upms.core.UpmsConstants;
-import com.eleven.upms.dto.*;
+import com.eleven.upms.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
@@ -41,7 +41,7 @@ public interface UserClient {
 
     @Operation(summary = "用户权限列表")
     @GetMapping("/{id}/authorities")
-    Set<UserAuthorityDto> getUserAuthorities(@PathVariable("id") String id);
+    Set<PowerDto> getUserAuthorities(@PathVariable("id") String id);
 
     @Operation(summary = "用户锁定")
     @PostMapping("/{id}/_lock")

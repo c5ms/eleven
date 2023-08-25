@@ -1,7 +1,6 @@
-package com.eleven.core.domain.support;
+package com.eleven.core.domain;
 
 import com.eleven.core.security.context.SecurityContext;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;

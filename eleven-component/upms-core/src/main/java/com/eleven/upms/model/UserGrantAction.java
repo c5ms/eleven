@@ -1,4 +1,4 @@
-package com.eleven.upms.dto;
+package com.eleven.upms.model;
 
 import lombok.Getter;
 import lombok.Setter;

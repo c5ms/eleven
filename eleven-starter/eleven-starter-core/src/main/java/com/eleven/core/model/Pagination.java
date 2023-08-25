@@ -21,7 +21,7 @@ public class Pagination implements Serializable {
     @NotNull(message = "页码不能为空")
     @Min(value = 0, message = "页码不能为负")
     @Parameter(description = "页码")
-    private int page = 0;
+    private int page = 1;
 
     @NotNull(message = "每页条数不能为空")
     @Min(value = 1, message = "每页条数至少为1条")

@@ -1,24 +1,26 @@
 package com.eleven.upms.domain;
 
 import com.eleven.core.domain.AbstractAuditableDomain;
-import com.eleven.core.domain.support.QueryTemplate;
-import com.eleven.core.generate.IdentityGenerator;
+import com.eleven.core.domain.DomainSupport;
+import com.eleven.core.exception.ElevenRuntimeException;
 import com.eleven.core.model.PaginationResult;
-import com.eleven.upms.domain.configure.UpmsProperties;
-import com.eleven.upms.dto.UserCreateAction;
-import com.eleven.upms.dto.UserFilter;
-import com.eleven.upms.dto.UserGrantAction;
-import com.eleven.upms.dto.UserUpdateAction;
+import com.eleven.upms.configure.UpmsProperties;
+import com.eleven.upms.core.UpmsError;
+import com.eleven.upms.model.UserCreateAction;
+import com.eleven.upms.model.UserFilter;
+import com.eleven.upms.model.UserUpdateAction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.data.relational.core.query.Query;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -28,66 +30,80 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final UserAuthorityRepository userAuthorityRepository;
-
-    private final QueryTemplate queryTemplate;
+    private final AuthorityManager authorityManager;
+    private final DomainSupport domainSupport;
     private final UpmsProperties upmsProperties;
     private final PasswordEncoder passwordEncoder;
-    private final IdentityGenerator identityGenerator;
 
     public Optional<User> getUser(String id) {
         return userRepository.findById(id);
     }
 
-    public Optional<User> readUser(String login, String password) {
+    public Optional<User> loginUser(String login, String password) {
         var userOptional = userRepository.findByUsername(login);
         if (userOptional.isEmpty()) {
             return userOptional;
         }
         var user = userOptional.get();
         var pass = passwordEncoder.matches(password, user.getPassword());
-        if (pass) {
-            return userOptional;
+        if (!pass) {
+            return Optional.empty();
         }
-        return Optional.empty();
+        user.login();
+        userRepository.save(user);
+        return userOptional;
     }
 
     public PaginationResult<User> queryUserPage(UserFilter filter) {
         var criteria = Criteria.empty();
-        if (null != filter.getState()) {
-            criteria = Criteria.where(User.Fields.state).is(filter.getState());
+        if (Objects.nonNull(filter.getState())) {
+            criteria = criteria.and(Criteria.where(User.Fields.state).is(filter.getState()));
         }
         if (StringUtils.isNotBlank(filter.getType())) {
-            criteria = Criteria.where(User.Fields.type).is(filter.getType());
+            criteria = criteria.and(Criteria.where(User.Fields.type).is(StringUtils.trim(filter.getType())));
         }
         if (StringUtils.isNotBlank(filter.getUsername())) {
-            criteria = Criteria.where(User.Fields.username).like(filter.getUsername() + "%");
+            criteria = criteria.and(Criteria.where(User.Fields.username).like(StringUtils.trim(filter.getUsername()) + "%"));
         }
-        if (Objects.nonNull(filter.getIsLocked())) {
-            criteria = Criteria.where(User.Fields.isLocked).is(filter.getIsLocked());
+        if (BooleanUtils.isTrue(filter.getIsLocked())) {
+            criteria = criteria.and(Criteria.where(User.Fields.isLocked).is(true));
         }
+
+        if (Objects.nonNull(filter.getRanges())) {
+            var ranges = Criteria.empty();
+            for (UserFilter.Range range : filter.getRanges()) {
+                switch (range) {
+                    case locked -> ranges = ranges.or(Criteria.where(User.Fields.isLocked).is(true));
+                    case unlocked -> ranges = ranges.or(Criteria.where(User.Fields.isLocked).is(false));
+                }
+            }
+            criteria = criteria.and(ranges);
+        }
+
         var query = Query
                 .query(criteria)
                 .sort(Sort.by(AbstractAuditableDomain.Fields.createAt).descending());
-        return queryTemplate.findPage(query, User.class, filter);
+        return domainSupport.queryForPage(query, User.class, filter.getPage(), filter.getSize());
     }
 
-    public Collection<UserAuthority> getAuthorities(User user) {
-        return userAuthorityRepository.findByUserId(user.getId());
-    }
 
+    @Transactional(rollbackFor = Exception.class)
     public User createUser(UserCreateAction action) {
-        var id = identityGenerator.next();
+        var id = domainSupport.nextId();
         var user = new User(id, action);
         validate(user);
         user.setPassword(passwordEncoder.encode(upmsProperties.getDefaultPassword()));
-        return userRepository.save(user);
+        userRepository.save(user);
+        grantRoles(user, action.getRoles());
+        return user;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void updateUser(User user, UserUpdateAction action) {
         user.update(action);
         validate(user);
         userRepository.save(user);
+        grantRoles(user, action.getRoles());
     }
 
     public void lockUser(User user) {
@@ -101,23 +117,24 @@ public class UserService {
     }
 
     public void deleteUser(User user) {
+        user.delete();
         userRepository.delete(user);
     }
 
-    public void grant(User user, UserGrantAction action) {
-        var authority = Authority.of(action.getType(), action.getName());
-        userAuthorityRepository.deleteByUserAndAuthority(user.getId(), authority.type(), authority.name());
-        var id = identityGenerator.next();
-        var userAuthority = new UserAuthority(id, user, authority);
-        userAuthorityRepository.save(userAuthority);
-    }
-
-    private void validate(User user) throws UserException {
+    private void validate(User user) throws ElevenRuntimeException {
         // 验证，用户名不能重复
         var existUser = userRepository.findByUsername(user.getUsername())
                 .filter(check -> !StringUtils.equals(check.getId(), user.getId()));
         if (existUser.isPresent()) {
-            throw UserError.USER_NAME_REPEAT.exception();
+            throw UpmsError.USER_NAME_REPEAT.exception();
         }
+    }
+
+    private void grantRoles(User user, List<String> roles) {
+        var owner = Authority.ownerOfUser(user.getId());
+        var powers = roles.stream().map(Authority::powerOfRole).toList();
+
+        authorityManager.revoke(owner, Authority.POWER_ROLE);
+        authorityManager.grant(owner, powers);
     }
 }

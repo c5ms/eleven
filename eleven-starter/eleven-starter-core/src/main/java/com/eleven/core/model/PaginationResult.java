@@ -1,6 +1,7 @@
 package com.eleven.core.model;
 
 import lombok.Data;
+import lombok.With;
 import lombok.experimental.Accessors;
 
 import java.util.List;
@@ -31,7 +32,8 @@ public class PaginationResult<T> {
     public <R> PaginationResult<R> map(Function<T, R> mapper) {
         return new PaginationResult<R>()
                 .setItems(this.getItems().stream().map(mapper).collect(Collectors.toList()))
-                .setTotal(this.total);
+                .setTotal(this.total)
+                ;
     }
 
 

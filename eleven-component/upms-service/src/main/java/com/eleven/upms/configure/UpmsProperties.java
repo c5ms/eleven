@@ -1,4 +1,4 @@
-package com.eleven.upms.domain.configure;
+package com.eleven.upms.configure;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,5 +1,6 @@
 package com.eleven.core.rest;
 
+import com.eleven.core.model.PaginationResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.Order;
@@ -37,11 +38,11 @@ public class ElevenResponseAdvice implements ResponseBodyAdvice<Object> {
         }
 
         // 分页查询返回逻辑
-//        if (body instanceof QueryResult<?>) {
-//            var total = ((QueryResult<?>) body).getTotal();
+        if (body instanceof PaginationResult<?>) {
+//            var total = ((PaginationResult<?>) body).getTotal();
 //            response.getHeaders().set("X-Query-Total", String.valueOf(total));
-//            return ((QueryResult<?>) body).getItems();
-//        }
+//            return ((PaginationResult<?>) body).getItems();
+        }
 
 
         return body;

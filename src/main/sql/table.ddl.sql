@@ -1,4 +1,3 @@
-
 -- 访问令牌
 create table upms_access_token
 (
@@ -14,9 +13,13 @@ create table upms_access_token
 -- 角色
 create table upms_role
 (
-    id      varchar(100) not null primary key,
-    name    varchar(100) not null unique,
-    version int          not null
+    id        varchar(100) not null primary key,
+    code      varchar(100) not null unique,
+    label     varchar(100) not null unique,
+    create_at datetime(3)  not null comment '创建时间',
+    create_by varchar(100) not null comment '创建人',
+    update_at datetime(3)  null comment '更新时间',
+    update_by varchar(100) null comment '更新人',
 );
 
 -- 用户

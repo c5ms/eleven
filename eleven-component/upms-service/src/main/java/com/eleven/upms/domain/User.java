@@ -1,16 +1,13 @@
 package com.eleven.upms.domain;
 
 import com.eleven.core.domain.AbstractAuditableDomain;
-import com.eleven.upms.domain.event.UserCreatedEvent;
-import com.eleven.upms.domain.event.UserLockedEvent;
-import com.eleven.upms.domain.event.UserUnLockedEvent;
-import com.eleven.upms.domain.event.UserUpdatedEvent;
-import com.eleven.upms.dto.UserCreateAction;
-import com.eleven.upms.dto.UserUpdateAction;
+import com.eleven.core.time.TimeContext;
 import com.eleven.upms.enums.UserState;
+import com.eleven.upms.model.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceCreator;
@@ -50,7 +47,7 @@ public class User extends AbstractAuditableDomain<User> {
     private String password;
 
     @Column("state")
-    private UserState state = UserState.NORMAL;
+    private UserState state;
 
     @Column("is_locked")
     private Boolean isLocked;
@@ -58,6 +55,8 @@ public class User extends AbstractAuditableDomain<User> {
     @Column("register_at")
     private LocalDateTime registerAt;
 
+    @Column("login_at")
+    private LocalDateTime loginAt;
 
     /**
      * 创建新用户
@@ -70,9 +69,10 @@ public class User extends AbstractAuditableDomain<User> {
         this.nickname = action.getNickname();
         this.type = TYPE_INNER_USER;
         this.isLocked = false;
+        this.state = ObjectUtils.defaultIfNull(action.getState(), UserState.NORMAL);
+        this.registerAt = TimeContext.localDateTime();
         super.andEvent(new UserCreatedEvent(id));
         super.markNew();
-
     }
 
     /**
@@ -83,6 +83,9 @@ public class User extends AbstractAuditableDomain<User> {
     public void update(UserUpdateAction action) {
         if (Objects.nonNull(action.getNickname())) {
             this.nickname = StringUtils.trim(action.getNickname());
+        }
+        if (Objects.nonNull(action.getState())) {
+            this.state = action.getState();
         }
         super.andEvent(new UserUpdatedEvent(id));
     }
@@ -112,5 +115,18 @@ public class User extends AbstractAuditableDomain<User> {
         super.andEvent(new UserUnLockedEvent(id));
     }
 
+    /**
+     * 删除
+     */
+    public void delete() {
+        super.andEvent(new UserDeletedEvent(id));
+    }
 
+    /**
+     * 登入
+     */
+    public void login() {
+        super.andEvent(new userLoginEvent(id));
+        this.loginAt=TimeContext.localDateTime();
+    }
 }

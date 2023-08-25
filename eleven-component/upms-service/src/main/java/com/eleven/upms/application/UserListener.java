@@ -1,9 +1,9 @@
 package com.eleven.upms.application;
 
+import com.eleven.core.event.ElevenEvent;
 import com.eleven.core.message.MessageTemplate;
-import com.eleven.upms.domain.event.UserCreatedEvent;
-import com.eleven.upms.domain.event.UserGrantedEvent;
-import com.eleven.upms.domain.event.UserUpdatedEvent;
+import com.eleven.upms.model.UserCreatedEvent;
+import com.eleven.upms.model.UserUpdatedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -25,9 +25,9 @@ public class UserListener {
         System.out.println("用户更新" + event.userId());
     }
 
-    @EventListener(UserGrantedEvent.class)
-    public void onUserGrantedEvent(UserGrantedEvent event) {
-        System.out.println("用户被授权" + event.userId());
+    @EventListener(ElevenEvent.class)
+    public void on(ElevenEvent event) {
+        System.out.println("event happened ---> " + event);
     }
 
 }

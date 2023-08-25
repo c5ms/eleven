@@ -18,19 +18,19 @@ import java.time.LocalDateTime;
 public abstract class AbstractAuditableDomain<T extends AbstractAuditableDomain<T>> extends AbstractDomain<T> {
 
     @CreatedBy
-    @Column("create_by")
+    @Column(AuditMetadata.col_create_by)
     private String createBy;
 
     @LastModifiedBy
-    @Column("update_by")
+    @Column(AuditMetadata.col_update_by)
     private String updateBy;
 
     @CreatedDate
-    @Column("create_at")
+    @Column(AuditMetadata.col_create_at)
     private LocalDateTime createAt;
 
     @LastModifiedDate
-    @Column("update_at")
+    @Column(AuditMetadata.col_update_at)
     private LocalDateTime updateAt;
 
 

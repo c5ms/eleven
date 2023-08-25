@@ -1,6 +1,9 @@
 package com.eleven.upms.core;
 
 public interface UpmsConstants {
+
+    String MODULE_NAME = "upms";
+
     String PRINCIPAL_TYPE_LOCAL_USER = "user";
 
     String SERVICE_NAME = "${service.upms.name:upms}";

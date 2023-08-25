@@ -4,6 +4,7 @@ import com.eleven.core.domain.AbstractDomain;
 import com.eleven.core.security.Principal;
 import com.eleven.core.security.Token;
 import com.eleven.core.security.TokenDetail;
+import com.eleven.upms.model.AccessTokenCreatedEvent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.With;
@@ -52,6 +53,7 @@ public class AccessToken extends AbstractDomain<AccessToken> {
         this.expireAt = token.getExpireAt();
         this.createAt = token.getCreateAt();
         super.markNew();
+        super.andEvent(new AccessTokenCreatedEvent(token.getValue()));
     }
 
 

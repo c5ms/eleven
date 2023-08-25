@@ -2,7 +2,7 @@ package com.eleven.upms.client;
 
 import com.eleven.core.security.Token;
 import com.eleven.upms.core.UpmsConstants;
-import com.eleven.upms.dto.AccessTokenCreateRequest;
+import com.eleven.upms.model.AccessTokenCreateAction;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.validation.annotation.Validated;
@@ -21,7 +21,7 @@ public interface AccessTokenClient {
 
     @Operation(summary = "创建令牌")
     @PostMapping
-    Token createToken(@RequestBody @Validated AccessTokenCreateRequest request);
+    Token createToken(@RequestBody @Validated AccessTokenCreateAction request);
 
     @Operation(summary = "读取令牌")
     @GetMapping("/{token}")

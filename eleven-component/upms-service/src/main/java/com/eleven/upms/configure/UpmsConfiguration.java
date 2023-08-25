@@ -1,4 +1,4 @@
-package com.eleven.upms.domain.configure;
+package com.eleven.upms.configure;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

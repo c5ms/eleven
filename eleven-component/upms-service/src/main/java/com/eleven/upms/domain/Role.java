@@ -1,39 +1,39 @@
 package com.eleven.upms.domain;
 
+import com.eleven.core.domain.AbstractAuditableDomain;
+import com.eleven.upms.model.RoleCreateAction;
+import com.eleven.upms.model.RoleUpdateAction;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.With;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceCreator;
-import org.springframework.data.annotation.Version;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table("upms_user")
+@Table("upms_role")
 @With
 @Getter
 @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
-public class Role {
+public class Role extends AbstractAuditableDomain<User> {
 
     @Id
     @Column("id")
     private String id;
 
-    @Column("login")
+    @Column("code")
+    private String code;
+
+    @Column("name")
     private String name;
 
-    @Version
-    @Column("version")
-    private String version;
-
-    /**
-     * 创建新角色
-     *
-     * @param id   角色 ID
-     * @param name 角色名
-     */
-    public Role(String id, String name) {
+    public Role(String id, RoleCreateAction action) {
         this.id = id;
-        this.name = name;
+        this.code = action.getCode();
+        this.name = action.getName();
+    }
+
+    public void update(RoleUpdateAction action) {
+        this.name = action.getName();
     }
 }

@@ -58,8 +58,8 @@ public class ElevenExceptionAdvice {
                 .sorted(Comparator.naturalOrder())
                 .collect(Collectors.joining(";"));
 
-//        return RestResponse.Failure.of(RestErrors.VALIDATE_FAILURE).setMessage(msg);
-        return RestResponse.Failure.of(RestErrors.VALIDATE_FAILURE);
+        return RestResponse.Failure.of(RestErrors.VALIDATE_FAILURE).setMessage(msg);
+//        return RestResponse.Failure.of(RestErrors.VALIDATE_FAILURE);
     }
 
     // 处理拒绝 - 422

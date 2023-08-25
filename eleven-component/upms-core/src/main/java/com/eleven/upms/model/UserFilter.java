@@ -1,10 +1,12 @@
-package com.eleven.upms.dto;
+package com.eleven.upms.model;
 
 import com.eleven.core.model.Pagination;
 import com.eleven.upms.enums.UserState;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 
 @Getter
@@ -22,5 +24,13 @@ public class UserFilter extends Pagination {
 
     @Schema(description = "锁定")
     Boolean isLocked;
+
+    @Schema(description = "查询范围")
+    List<Range> ranges;
+
+    public enum Range {
+        locked,
+        unlocked
+    }
 
 }
