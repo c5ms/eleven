@@ -1,4 +1,4 @@
-package com.eleven.upms.application;
+package com.eleven.upms.domain;
 
 import com.eleven.core.event.ElevenEvent;
 import com.eleven.core.message.MessageTemplate;

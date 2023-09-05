@@ -47,7 +47,6 @@
         <version.commons-vfs2>2.9.0</version.commons-vfs2>
 
         <!-- 应用开发辅助组件 -->
-        <version.orika>1.5.4</version.orika>
         <version.javassist>3.29.2-GA</version.javassist>
         <version.redisson>3.20.1</version.redisson>
         <version.jetcache>2.7.3</version.jetcache>
@@ -201,19 +200,6 @@
                 <artifactId>jetcache-starter-redis-lettuce</artifactId>
                 <version>${version.jetcache}</version>
             </dependency>
-
-            <!-- 对象拷贝技术 -->
-            <dependency>
-                <groupId>ma.glasnost.orika</groupId>
-                <artifactId>orika-core</artifactId>
-                <version>${version.orika}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.javassist</groupId>
-                <artifactId>javassist</artifactId>
-                <version>${version.javassist}</version>
-            </dependency>
-
 
             <!-- doc -->
             <dependency>

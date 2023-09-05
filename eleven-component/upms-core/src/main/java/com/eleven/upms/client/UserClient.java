@@ -9,8 +9,8 @@ import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 
 @FeignClient(contextId = "UserClient",
@@ -21,11 +21,11 @@ public interface UserClient {
 
     @Operation(summary = "用户查询")
     @GetMapping
-    PaginationResult<UserDto> queryUser(@SpringQueryMap UserFilter request);
+    PaginationResult<UserDto> queryUserPage(@SpringQueryMap UserFilter request);
 
     @Operation(summary = "用户读取")
     @GetMapping("/{id}")
-    Optional<UserDto> getUser(@PathVariable("id") String id);
+    Optional<UserDetail> getUser(@PathVariable("id") String id);
 
     @Operation(summary = "用户创建")
     @PostMapping
@@ -39,10 +39,6 @@ public interface UserClient {
     @DeleteMapping("/{id}")
     void deleteUser(@PathVariable("id") String id);
 
-    @Operation(summary = "用户权限列表")
-    @GetMapping("/{id}/authorities")
-    Set<PowerDto> getUserAuthorities(@PathVariable("id") String id);
-
     @Operation(summary = "用户锁定")
     @PostMapping("/{id}/_lock")
     UserDto lockUser(@PathVariable("id") String id);
@@ -51,10 +47,8 @@ public interface UserClient {
     @PostMapping("/{id}/_unlock")
     UserDto unlockUser(@PathVariable("id") String id);
 
-
-    @Operation(summary = "用户授权")
-    @PostMapping("/{id}/authorities")
-    void grantUser(@PathVariable("id") String id, @RequestBody @Validated UserGrantAction request);
-
+    @Operation(summary = "用户权限列表")
+    @GetMapping("/{id}/authorities")
+    List<PowerDto> listUserAuthorities(@PathVariable("id") String id);
 
 }

@@ -21,42 +21,14 @@ public class Authority extends AbstractDomain<Authority> {
     public static String POWER_PERMISSION = "permission";
 
     public static String OWNER_USER = "user";
-
-
+    @Embedded.Nullable
+    private final Owner owner;
+    @Embedded.Nullable
+    private final Power power;
     @Id
     @Column("id")
     private String id;
 
-    @Embedded.Nullable
-    private Owner owner;
-
-    @Embedded.Nullable
-    private Power power;
-
-
-    /**
-     * 检查当前权限是否属于某个类型
-     * @param type 类型
-     * @return true 表示 是
-     */
-    public boolean isStuffTypeBy(String type){
-        if (this.power ==null){
-            return false;
-        }
-        return StringUtils.equals(this.power.type,type);
-    }
-
-    /**
-     * 检查当前拥有者是否属于某个类型
-     * @param type 类型
-     * @return true 表示 是
-     */
-    public boolean isOwnerTypeBy(String type){
-        if (this.owner==null){
-            return false;
-        }
-        return StringUtils.equals(this.owner.type,type);
-    }
 
     @PersistenceCreator
     public Authority(String id, Owner owner, Power power) {
@@ -81,8 +53,34 @@ public class Authority extends AbstractDomain<Authority> {
         return new Owner(type, name);
     }
 
-    public static Owner ownerOfUser( String name) {
+    public static Owner ownerOfUser(String name) {
         return new Owner(OWNER_USER, name);
+    }
+
+    /**
+     * 检查当前权限是否属于某个类型
+     *
+     * @param type 类型
+     * @return true 表示 是
+     */
+    public boolean isStuffTypeBy(String type) {
+        if (this.power == null) {
+            return false;
+        }
+        return StringUtils.equals(this.power.type, type);
+    }
+
+    /**
+     * 检查当前拥有者是否属于某个类型
+     *
+     * @param type 类型
+     * @return true 表示 是
+     */
+    public boolean isOwnerTypeBy(String type) {
+        if (this.owner == null) {
+            return false;
+        }
+        return StringUtils.equals(this.owner.type, type);
     }
 
     @Getter

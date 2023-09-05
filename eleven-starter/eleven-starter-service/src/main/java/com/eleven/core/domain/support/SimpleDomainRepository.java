@@ -1,5 +1,6 @@
-package com.eleven.core.domain;
+package com.eleven.core.domain.support;
 
+import com.eleven.core.domain.DomainRepository;
 import jakarta.annotation.Nonnull;
 import org.springframework.data.jdbc.core.JdbcAggregateOperations;
 import org.springframework.data.jdbc.core.convert.JdbcConverter;

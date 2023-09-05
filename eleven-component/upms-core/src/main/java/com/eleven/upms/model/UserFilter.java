@@ -1,7 +1,6 @@
 package com.eleven.upms.model;
 
 import com.eleven.core.model.Pagination;
-import com.eleven.upms.enums.UserState;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;

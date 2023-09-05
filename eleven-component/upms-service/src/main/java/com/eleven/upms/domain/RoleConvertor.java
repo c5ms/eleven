@@ -1,14 +1,18 @@
 package com.eleven.upms.domain;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.eleven.upms.model.RoleDto;
 import lombok.RequiredArgsConstructor;
-import ma.glasnost.orika.MapperFacade;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class RoleConverter {
-    private final MapperFacade mapperFacade;
+public class RoleConvertor {
+
+
+    public RoleDto toDto(Role role) {
+        return BeanUtil.toBean(role, RoleDto.class);
+    }
 
 
 }

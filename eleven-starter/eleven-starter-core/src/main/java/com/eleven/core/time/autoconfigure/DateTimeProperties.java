@@ -7,7 +7,7 @@ import java.time.Duration;
 import java.time.ZoneId;
 
 @Data
-@ConfigurationProperties(prefix = "eleven.domain.datetime")
+@ConfigurationProperties(prefix = "eleven.time")
 public class DateTimeProperties {
 
     /**

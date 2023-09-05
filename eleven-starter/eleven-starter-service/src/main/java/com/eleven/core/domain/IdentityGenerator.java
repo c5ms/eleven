@@ -1,8 +1,9 @@
-package com.eleven.core.generate;
+package com.eleven.core.domain;
 
 public interface IdentityGenerator {
 
     String next();
+
 
 
 }

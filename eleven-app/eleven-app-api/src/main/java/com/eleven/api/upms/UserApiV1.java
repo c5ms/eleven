@@ -3,10 +3,7 @@ package com.eleven.api.upms;
 import com.eleven.core.model.PaginationResult;
 import com.eleven.core.rest.annonation.RestResource;
 import com.eleven.upms.client.UserClient;
-import com.eleven.upms.model.UserCreateAction;
-import com.eleven.upms.model.UserDto;
-import com.eleven.upms.model.UserFilter;
-import com.eleven.upms.model.UserUpdateAction;
+import com.eleven.upms.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -45,14 +42,14 @@ public class UserApiV1 {
 
     @GetMapping("/{id}")
     @Operation(summary = "用户读取")
-    public Optional<UserDto> getUser(@PathVariable("id") String id) {
+    public Optional<UserDetail> getUser(@PathVariable("id") String id) {
         return userClient.getUser(id);
     }
 
     @GetMapping
     @Operation(summary = "用户查询")
     public PaginationResult<UserDto> queryUser(@ParameterObject UserFilter request) {
-        return userClient.queryUser(request);
+        return userClient.queryUserPage(request);
     }
 
 }

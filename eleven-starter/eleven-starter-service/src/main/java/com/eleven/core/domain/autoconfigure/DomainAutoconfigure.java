@@ -1,8 +1,14 @@
 package com.eleven.core.domain.autoconfigure;
 
+import cn.hutool.core.lang.Snowflake;
+import com.eleven.core.domain.IdentityGenerator;
+import com.eleven.core.domain.SnowflakeIdentityGenerator;
+import com.eleven.core.domain.support.NanoIdGenerator;
+import com.eleven.core.domain.support.ObjectIdGenerator;
+import com.eleven.core.domain.support.RaindropGenerator;
+import com.eleven.core.domain.support.UuidGenerator;
 import lombok.RequiredArgsConstructor;
-import ma.glasnost.orika.MapperFacade;
-import ma.glasnost.orika.impl.DefaultMapperFactory;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -15,22 +21,23 @@ import org.springframework.data.jdbc.repository.config.EnableJdbcAuditing;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @Configuration(proxyBeanMethods = false)
 @RequiredArgsConstructor
+@EnableConfigurationProperties(DomainProperties.class)
 @PropertySource("classpath:/config/application-domain.properties")
 public class DomainAutoconfigure {
 
-    @Bean
-    public DefaultMapperFactory mapperFactory() {
-        return new DefaultMapperFactory.Builder()
-                .useBuiltinConverters(true)
-                .useAutoMapping(true)
-                .mapNulls(true)
-                .build()
-                ;
-    }
+    private final DomainProperties domainProperties;
+
 
     @Bean
-    public MapperFacade mapperFacade(DefaultMapperFactory mapperFactory) {
-        return mapperFactory.getMapperFacade();
+    public IdentityGenerator idGenerator() {
+        return switch (domainProperties.getIdType()) {
+            case SNOWFLAKE -> new SnowflakeIdentityGenerator(new Snowflake());
+            case NANOID -> new NanoIdGenerator();
+            case OBJECT -> new ObjectIdGenerator();
+            case RAINDROP -> new RaindropGenerator();
+            default -> new UuidGenerator();
+        };
     }
+
 
 }

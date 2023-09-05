@@ -1,4 +1,4 @@
-package com.eleven.core.generate;
+package com.eleven.core.domain;
 
 
 /**

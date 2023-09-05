@@ -2,7 +2,6 @@ package com.eleven.upms.domain;
 
 import com.eleven.core.domain.AbstractAuditableDomain;
 import com.eleven.core.time.TimeContext;
-import com.eleven.upms.enums.UserState;
 import com.eleven.upms.model.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -127,6 +126,6 @@ public class User extends AbstractAuditableDomain<User> {
      */
     public void login() {
         super.andEvent(new userLoginEvent(id));
-        this.loginAt=TimeContext.localDateTime();
+        this.loginAt = TimeContext.localDateTime();
     }
 }

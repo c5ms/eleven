@@ -1,6 +1,5 @@
 package com.eleven.core.domain;
 
-import com.eleven.core.generate.IdentityGenerator;
 import com.eleven.core.model.PaginationResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

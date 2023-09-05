@@ -1,6 +1,5 @@
 package com.eleven.upms.model;
 
-import com.eleven.upms.enums.UserState;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,11 +9,12 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 
-@Schema(description = "用户", name = "user")
 @Getter
 @Setter
 @Accessors(chain = true)
+@Schema(description = "用户", name = "user")
 public class UserDto implements Serializable {
+
     @Schema(description = "ID")
     private String id;
 
@@ -38,4 +38,5 @@ public class UserDto implements Serializable {
 
     @Schema(description = "状态")
     private UserState state;
+
 }

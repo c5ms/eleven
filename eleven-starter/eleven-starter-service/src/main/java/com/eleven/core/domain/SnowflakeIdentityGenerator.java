@@ -1,8 +1,8 @@
-package com.eleven.core.generate.support;
+package com.eleven.core.domain;
 
 
 import cn.hutool.core.lang.Snowflake;
-import com.eleven.core.generate.IdentityGenerator;
+import com.eleven.core.domain.IdentityGenerator;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

@@ -27,6 +27,8 @@
     - eleven-upms-domain 用户权限管理模块-核心领域业务
 
 #### 编码约定
+- manager 通常用于表示较底层的支撑，通常会被多个 service 依赖来提供能力，但是不直接被终端层直接调用。
+- service 通常用于表示业务主体逻辑，被 endpoint 层直接调用，提供直接的业务能力。
 
 1. xxxHelper 为特定业务场景下的工具类，提供静态方法,比如：PageableQueryHelper 将系统的分页模型->
    技术手段分页模型，AuthenticationHelper

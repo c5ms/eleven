@@ -15,6 +15,6 @@ import java.util.List;
 @Accessors(chain = true)
 public class UserDetail extends UserDto {
 
-    private List<String> roles=new ArrayList<>();
+    private List<String> roles = new ArrayList<>();
 
 }

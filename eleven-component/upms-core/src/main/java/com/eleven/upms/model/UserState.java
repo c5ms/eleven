@@ -1,4 +1,4 @@
-package com.eleven.upms.enums;
+package com.eleven.upms.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

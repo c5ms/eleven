@@ -31,7 +31,7 @@ public class AuthorityManager {
     }
 
     /**
-     * 撤销某持有者所有此权利
+     * 撤销某持有者所有此授权
      *
      * @param owner 持有者
      * @param power 权利
@@ -50,7 +50,7 @@ public class AuthorityManager {
     }
 
     /**
-     * 读取某持有者所有权利
+     * 读取某持有者所有授权
      *
      * @param owner 持有着
      * @return 所有权限

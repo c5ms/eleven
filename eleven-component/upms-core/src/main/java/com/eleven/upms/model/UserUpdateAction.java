@@ -1,6 +1,5 @@
 package com.eleven.upms.model;
 
-import com.eleven.upms.enums.UserState;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -27,7 +26,7 @@ public class UserUpdateAction {
     private String nickname;
 
     @Schema(description = "拥有角色")
-    @Size(min = 2, max = 50, message = "用户最多拥有 50 个角色")
+    @Size(min = 0, max = 50, message = "用户最多拥有 50 个角色")
     private List<String> roles = new ArrayList<>();
 
 }

@@ -4,11 +4,11 @@ import com.eleven.core.domain.AbstractAuditableDomain;
 import com.eleven.core.domain.DomainSupport;
 import com.eleven.core.exception.ElevenRuntimeException;
 import com.eleven.core.model.PaginationResult;
-import com.eleven.upms.configure.UpmsProperties;
-import com.eleven.upms.core.UpmsError;
 import com.eleven.upms.model.UserCreateAction;
 import com.eleven.upms.model.UserFilter;
 import com.eleven.upms.model.UserUpdateAction;
+import com.eleven.upms.configure.UpmsProperties;
+import com.eleven.upms.core.UpmsError;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
@@ -136,5 +136,10 @@ public class UserService {
 
         authorityManager.revoke(owner, Authority.POWER_ROLE);
         authorityManager.grant(owner, powers);
+    }
+
+    public List<Authority.Power> listPower(User user) {
+        var owner = Authority.ownerOfUser(user.getId());
+        return authorityManager.powerOf(owner);
     }
 }

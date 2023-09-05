@@ -1,4 +1,4 @@
-package com.eleven.core.generate.autoconfigure;
+package com.eleven.core.domain.autoconfigure;
 
 
 import lombok.Getter;
@@ -7,8 +7,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "eleven.domain.identity")
-public class IdentityProperties {
+@ConfigurationProperties(prefix = "eleven.domain")
+public class DomainProperties {
 
     private IdGeneratorType idType = IdGeneratorType.RAINDROP;
 

@@ -3,8 +3,8 @@ package com.eleven.upms.endpoint;
 import com.eleven.core.rest.annonation.RestResource;
 import com.eleven.core.rest.exception.NotFoundException;
 import com.eleven.upms.domain.Role;
+import com.eleven.upms.domain.RoleConvertor;
 import com.eleven.upms.domain.RoleService;
-import com.eleven.upms.domain.UpmsConvertor;
 import com.eleven.upms.model.RoleCreateAction;
 import com.eleven.upms.model.RoleDto;
 import com.eleven.upms.model.RoleUpdateAction;
@@ -26,20 +26,20 @@ import java.util.stream.Collectors;
 public class RoleResourceV1 {
 
     private final RoleService roleService;
-    private final UpmsConvertor upmsConvertor;
+    private final RoleConvertor roleConvertor;
 
     @Operation(summary = "角色读取")
     @GetMapping("/{id}")
     public RoleDto getRole(@PathVariable("id") String id) {
         var role = requireRole(id);
-        return upmsConvertor.toDto(role);
+        return roleConvertor.toDto(role);
     }
 
     @Operation(summary = "角色创建")
     @PostMapping
     public RoleDto createRole(@RequestBody @Validated RoleCreateAction action) {
         var role = roleService.createRole(action);
-        return upmsConvertor.toDto(role);
+        return roleConvertor.toDto(role);
     }
 
     @Operation(summary = "角色更新")
@@ -47,7 +47,7 @@ public class RoleResourceV1 {
     public RoleDto updateRole(@PathVariable("id") String id, @RequestBody RoleUpdateAction action) {
         var user = requireRole(id);
         roleService.updateRole(user, action);
-        return upmsConvertor.toDto(user);
+        return roleConvertor.toDto(user);
     }
 
     @Operation(summary = "角色列表")
@@ -55,7 +55,7 @@ public class RoleResourceV1 {
     public List<RoleDto> queryUserPage() {
         return roleService.listRoles()
                 .stream()
-                .map(upmsConvertor::toDto)
+                .map(roleConvertor::toDto)
                 .collect(Collectors.toList());
     }
 

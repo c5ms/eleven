@@ -2,9 +2,13 @@ package com.eleven.upms.domain;
 
 import com.eleven.core.domain.DomainSupport;
 import com.eleven.core.exception.ElevenRuntimeException;
-import com.eleven.upms.core.UpmsError;
+import com.eleven.upms.domain.Authority;
+import com.eleven.upms.domain.AuthorityManager;
+import com.eleven.upms.domain.Role;
+import com.eleven.upms.domain.RoleRepository;
 import com.eleven.upms.model.RoleCreateAction;
 import com.eleven.upms.model.RoleUpdateAction;
+import com.eleven.upms.core.UpmsError;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

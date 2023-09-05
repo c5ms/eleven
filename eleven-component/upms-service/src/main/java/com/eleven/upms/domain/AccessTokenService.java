@@ -1,5 +1,7 @@
 package com.eleven.upms.domain;
 
+import com.eleven.upms.domain.AccessToken;
+import com.eleven.upms.domain.AccessTokenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
