@@ -13,5 +13,4 @@ public class SecurityProperties {
      * 认证模式
      */
     private AuthMode authMode;
-
 }

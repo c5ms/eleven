@@ -1,9 +1,9 @@
 package com.eleven.core.security.support;
 
-import cn.hutool.extra.spring.SpringUtil;
 import com.eleven.core.security.Token;
 import com.eleven.core.security.TokenStore;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheConfig;
@@ -11,9 +11,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@RequiredArgsConstructor
+
 @Component
 @CacheConfig(cacheNames = CacheTokenStore.CACHE_NAME)
+@RequiredArgsConstructor
 public class CacheTokenStore implements TokenStore {
 
     public final static String CACHE_NAME = "AuthorizedToken";
@@ -21,7 +22,7 @@ public class CacheTokenStore implements TokenStore {
     private final CacheManager cacheManager;
 
     private static String toKey(String token) {
-        return token + "@" + SpringUtil.getApplicationName();
+        return token;
     }
 
     @Override

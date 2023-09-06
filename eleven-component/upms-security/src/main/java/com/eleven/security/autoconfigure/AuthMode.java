@@ -1,5 +1,8 @@
 package com.eleven.security.autoconfigure;
 
+/**
+ * 认证模式
+ */
 public enum AuthMode {
     /**
      * 无需权限认证

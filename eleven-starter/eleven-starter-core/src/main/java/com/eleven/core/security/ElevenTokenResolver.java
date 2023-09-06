@@ -1,4 +1,4 @@
-package com.eleven.security.support;
+package com.eleven.core.security;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenResolver;
 
-public class AccessTokenResolver implements BearerTokenResolver {
+public class ElevenTokenResolver implements BearerTokenResolver {
     public static final String HEADER_TOKEN_NAME = "X-access_token";
     public static final String QUERY_TOKEN_NAME = "access_token";
     public static final String COOKIE_TOKEN_NAME = "access_token";

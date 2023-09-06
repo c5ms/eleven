@@ -18,21 +18,21 @@ public class SubjectManager {
         var subject = subjectStore.retrieval(principal);
 
         if (subject.isPresent()) {
-            log.debug("found subject from cache for principal : {}", principal);
+            log.debug("found subject from local store for {}", principal);
         }
 
         return subject.orElseGet(() -> createSubject(principal));
     }
 
     public Subject refreshSubject(Principal principal) {
-        log.debug("refresh subject for principal : {}", principal);
+        log.debug("refresh subject for {}", principal);
         return createSubject(principal);
     }
 
     private Subject createSubject(Principal principal) {
         Subject subject = subjectReader.readSubject(principal);
         subjectStore.save(principal, subject);
-        log.debug("create subject for principal : {}", principal);
+        log.debug("create subject for {}", principal);
         return subject;
     }
 

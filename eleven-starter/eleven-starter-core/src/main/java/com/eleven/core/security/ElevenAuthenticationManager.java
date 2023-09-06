@@ -1,6 +1,5 @@
 package com.eleven.core.security;
 
-import com.eleven.core.time.TimeContext;
 import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,19 +10,18 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.server.resource.authentication.BearerTokenAuthenticationToken;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class ElevenAuthenticationManager implements AuthenticationManager {
 
-    private final TokenReader tokenReader;
-    private final TokenStore tokenStore;
 
+    private final TokenManager tokenManager;
     private final SubjectManager subjectManager;
 
     @Nonnull
@@ -35,50 +33,32 @@ public class ElevenAuthenticationManager implements AuthenticationManager {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         try {
             var authToken = (BearerTokenAuthenticationToken) authentication;
+
             if (StringUtils.isBlank(authToken.getToken())) {
                 return createAnonymous(authentication);
             }
 
-            // 本地缓存
-            var existToken = tokenStore.retrieval(authToken.getToken());
+            var token = tokenManager.verifyOpaqueToken(authToken.getToken()).orElse(null);
 
-            // 本地缓存过期
-            if (existToken.isPresent() && existToken.get().getExpireAt().isBefore(TimeContext.localDateTime())) {
-                existToken = tokenReader.read(authToken.getToken());
-                existToken.ifPresent(tokenStore::save);
-            }
-
-            // 本地没有缓存
-            if (existToken.isEmpty()) {
-                existToken = tokenReader.read(authToken.getToken());
-                existToken.ifPresent(tokenStore::save);
-            }
-
-            // 无有效 token
-            if (existToken.isEmpty()) {
+            if (null == token) {
                 return createAnonymous(authentication);
             }
 
-            // 过期 -> 匿名
-            if (existToken.get().getExpireAt().isBefore(TimeContext.localDateTime())) {
-                return createAnonymous(authentication);
+            var principal = token.getPrincipal();
+            var subject = subjectManager.readSubject(principal);
+
+            // if token is created after subject, refresh subject for new token,
+            // it's almost like the user re-login.
+            if (token.getCreateAt().isAfter(subject.getCreateAt())) {
+                subject = subjectManager.refreshSubject(principal);
             }
 
-            return createAuthentication(existToken.get());
+            return new ElevenAuthentication(subject, principal, token);
+
         } catch (Exception e) {
             log.warn("认证错误", e);
             return createAnonymous(authentication);
         }
-    }
-
-    @Nonnull
-    public ElevenAuthentication createAuthentication(Token token) {
-        var principal = token.getPrincipal();
-        var subject = subjectManager.readSubject(principal);
-        if (token.getCreateAt().isAfter(subject.getCreateAt())) {
-            subject = subjectManager.refreshSubject(principal);
-        }
-        return new ElevenAuthentication(subject, principal, token);
     }
 
 

@@ -14,7 +14,6 @@ import com.eleven.upms.model.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
 
@@ -29,22 +28,20 @@ public class UpmsInnerApi_v1 implements UpmsClient {
 
     private final SubjectManager subjectManager;
 
-    @GetMapping("/readToken")
-    public Optional<Token> readToken( String token) {
-        log.atDebug().addKeyValue("group","feign").log("readToken api has been invoked");
+    public Optional<Token> readToken(String token) {
+        log.debug("readToken api has been invoked for {}", token);
         return accessTokenService.readToken(token).map(AccessToken::toToken);
     }
 
     @Override
-//    @GetMapping("/readUser")
-    public Optional<UserDto> readUser( String id) {
-        log.atDebug().addKeyValue("group","feign").log("readUser api has been invoked");
+    public Optional<UserDto> readUser(String id) {
+        log.debug("readUser api has been invoked for {}", id);
         return userService.getUser(id).map(userConvertor::toDto);
     }
 
     @Override
     public Subject readSubject(String type, String name) {
-        log.atDebug().addKeyValue("group","feign").log("readSubject api has been invoked");
+        log.debug("readSubject api has been invoked for {}#{}", type, name);
         var principal = new Principal(type, name);
         return subjectManager.readSubject(principal);
     }
