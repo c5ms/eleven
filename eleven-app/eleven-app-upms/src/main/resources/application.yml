@@ -17,13 +17,12 @@ spring:
           hikari:
             max-lifetime: ${db.upms.maxLifetime:30000}
             max-pool-size: ${db.upms.maxSize:5}
-  data:
-    mongodb:
-      host: 192.168.2.250
-      username: eleven
-      password: eleven
-      port: 27017
-      database: eleven
+  cloud:
+    openfeign:
+      client:
+        config:
+          upms:
+            url: http://localhost:1024/9000
 
 eleven:
   upms:
@@ -46,5 +45,6 @@ eleven:
 logging:
   level:
     jdbc: debug
+    'com.eleven': debug
 
 

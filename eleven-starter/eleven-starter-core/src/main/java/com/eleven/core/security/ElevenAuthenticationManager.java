@@ -14,6 +14,7 @@ import org.springframework.security.oauth2.server.resource.authentication.Bearer
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -22,6 +23,7 @@ public class ElevenAuthenticationManager implements AuthenticationManager {
 
     private final TokenReader tokenReader;
     private final TokenStore tokenStore;
+
     private final SubjectManager subjectManager;
 
     @Nonnull
@@ -72,7 +74,7 @@ public class ElevenAuthenticationManager implements AuthenticationManager {
     @Nonnull
     public ElevenAuthentication createAuthentication(Token token) {
         var principal = token.getPrincipal();
-        var subject = subjectManager.fetchSubject(principal);
+        var subject = subjectManager.readSubject(principal);
         if (token.getCreateAt().isAfter(subject.getCreateAt())) {
             subject = subjectManager.refreshSubject(principal);
         }

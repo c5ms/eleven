@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="运行-用户权限" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="eleven-app-upms" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.eleven.UpmsApplication" />
+    <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.demcia.eleven.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

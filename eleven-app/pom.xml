@@ -11,8 +11,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>eleven-app-api</module>
         <module>eleven-app-upms</module>
+        <module>eleven-app-demo</module>
     </modules>
 
 </project>

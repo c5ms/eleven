@@ -1,0 +1,7 @@
+com/eleven/configure/OpenapiConfiguration.class
+com/eleven/endpoint/Record.class
+com/eleven/UpmsApplication.class
+com/eleven/endpoint/RecordRepository.class
+com/eleven/learning/BitOperate.class
+com/eleven/learning/Main.class
+com/eleven/endpoint/TryoutEndpoint.class

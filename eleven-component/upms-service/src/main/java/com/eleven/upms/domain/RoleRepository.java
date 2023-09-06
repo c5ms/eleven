@@ -1,10 +1,10 @@
 package com.eleven.upms.domain;
 
-import com.eleven.core.domain.DomainRepository;
+import org.springframework.data.repository.ListCrudRepository;
 
 import java.util.Optional;
 
- interface RoleRepository extends DomainRepository<Role, String> {
+interface RoleRepository extends ListCrudRepository<Role, String> {
     Optional<Role> findByCode(String code);
 
 }

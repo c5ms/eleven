@@ -8,7 +8,6 @@ import lombok.Value;
  */
 @Value
 @Builder
-@Deprecated
 public class RestRequest {
     String ip;
 }

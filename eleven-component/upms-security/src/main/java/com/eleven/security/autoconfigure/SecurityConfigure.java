@@ -1,29 +1,27 @@
 package com.eleven.security.autoconfigure;
 
+import com.eleven.core.security.PrincipalAuthenticator;
+import com.eleven.core.security.PrincipalAuthorizer;
+import com.eleven.core.security.SubjectReader;
 import com.eleven.core.security.TokenReader;
-import com.eleven.security.support.LocalTokenReader;
-import com.eleven.security.support.LocalUserPrincipalAuthenticatorProvider;
-import com.eleven.security.support.RemoteTokenReader;
-import com.eleven.security.support.RemoteUserPrincipalAuthenticatorProvider;
-import com.eleven.upms.client.AccessTokenClient;
-import com.eleven.upms.client.UserClient;
+import com.eleven.security.support.*;
+import com.eleven.upms.client.UpmsClient;
 import com.eleven.upms.domain.AccessTokenService;
 import com.eleven.upms.domain.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
 
-@EnableCaching
 @Configuration
 @RequiredArgsConstructor
 @EnableConfigurationProperties(SecurityProperties.class)
@@ -35,21 +33,24 @@ public class SecurityConfigure {
         return new BCryptPasswordEncoder();
     }
 
-
     @RequiredArgsConstructor
     @ConditionalOnUseRemoteAuthenticate
     public static class Remote {
-        private final UserClient userClient;
-        private final AccessTokenClient accessTokenClient;
+        private final UpmsClient upmsClient;
+
+        @Bean
+        SubjectReader subjectReader(UpmsClient upmsClient) {
+            return new RemoteSubjectReader(upmsClient);
+        }
 
         @Bean
         RemoteTokenReader tokenReader() {
-            return new RemoteTokenReader(accessTokenClient);
+            return new RemoteTokenReader(upmsClient);
         }
 
         @Bean
         RemoteUserPrincipalAuthenticatorProvider userPrincipalAuthenticatorProvider() {
-            return new RemoteUserPrincipalAuthenticatorProvider(userClient);
+            return new RemoteUserPrincipalAuthenticatorProvider(upmsClient);
         }
 
     }
@@ -59,17 +60,26 @@ public class SecurityConfigure {
     public static class Local {
 
         @Bean
+        @Primary
+        @ConditionalOnBean({PrincipalAuthorizer.class, PrincipalAuthenticator.class})
+        SubjectReader subjectReader(PrincipalAuthorizer principalAuthorizer,
+                                    PrincipalAuthenticator principalAuthenticator) {
+            return new LocalSubjectReader(principalAuthorizer, principalAuthenticator);
+        }
+
+        @Bean
+        @Primary
         @ConditionalOnBean(AccessTokenService.class)
         LocalTokenReader tokenReader(AccessTokenService accessTokenService) {
             return new LocalTokenReader(accessTokenService);
         }
 
         @Bean
+        @Primary
         @ConditionalOnBean(UserService.class)
         LocalUserPrincipalAuthenticatorProvider userPrincipalAuthenticatorProvider(UserService userService) {
             return new LocalUserPrincipalAuthenticatorProvider(userService);
         }
-
 
     }
 

@@ -2,23 +2,23 @@
   "groups": [
     {
       "name": "eleven.open-api",
-      "type": "com.eleven.core.rest.autoconfigure.ElevenOpenapiProperties",
-      "sourceType": "com.eleven.core.rest.autoconfigure.ElevenOpenapiProperties"
+      "type": "com.eleven.core.configure.ElevenOpenapiProperties",
+      "sourceType": "com.eleven.core.configure.ElevenOpenapiProperties"
     },
     {
       "name": "eleven.open-api.contact",
-      "type": "com.eleven.core.rest.autoconfigure.ElevenOpenapiProperties$Contact",
-      "sourceType": "com.eleven.core.rest.autoconfigure.ElevenOpenapiProperties"
+      "type": "com.eleven.core.configure.ElevenOpenapiProperties$Contact",
+      "sourceType": "com.eleven.core.configure.ElevenOpenapiProperties"
     },
     {
       "name": "eleven.open-api.license",
-      "type": "com.eleven.core.rest.autoconfigure.ElevenOpenapiProperties$License",
-      "sourceType": "com.eleven.core.rest.autoconfigure.ElevenOpenapiProperties"
+      "type": "com.eleven.core.configure.ElevenOpenapiProperties$License",
+      "sourceType": "com.eleven.core.configure.ElevenOpenapiProperties"
     },
     {
-      "name": "eleven.restful",
-      "type": "com.eleven.core.rest.autoconfigure.ElevenRestProperties",
-      "sourceType": "com.eleven.core.rest.autoconfigure.ElevenRestProperties"
+      "name": "eleven.rest",
+      "type": "com.eleven.core.configure.ElevenRestProperties",
+      "sourceType": "com.eleven.core.configure.ElevenRestProperties"
     },
     {
       "name": "eleven.time",
@@ -30,65 +30,47 @@
     {
       "name": "eleven.open-api.contact.email",
       "type": "java.lang.String",
-      "sourceType": "com.eleven.core.rest.autoconfigure.ElevenOpenapiProperties$Contact"
+      "sourceType": "com.eleven.core.configure.ElevenOpenapiProperties$Contact"
     },
     {
       "name": "eleven.open-api.contact.name",
       "type": "java.lang.String",
-      "sourceType": "com.eleven.core.rest.autoconfigure.ElevenOpenapiProperties$Contact"
+      "sourceType": "com.eleven.core.configure.ElevenOpenapiProperties$Contact"
     },
     {
       "name": "eleven.open-api.contact.url",
       "type": "java.lang.String",
-      "sourceType": "com.eleven.core.rest.autoconfigure.ElevenOpenapiProperties$Contact"
+      "sourceType": "com.eleven.core.configure.ElevenOpenapiProperties$Contact"
     },
     {
       "name": "eleven.open-api.description",
       "type": "java.lang.String",
-      "sourceType": "com.eleven.core.rest.autoconfigure.ElevenOpenapiProperties"
+      "sourceType": "com.eleven.core.configure.ElevenOpenapiProperties"
     },
     {
       "name": "eleven.open-api.license.name",
       "type": "java.lang.String",
-      "sourceType": "com.eleven.core.rest.autoconfigure.ElevenOpenapiProperties$License"
+      "sourceType": "com.eleven.core.configure.ElevenOpenapiProperties$License"
     },
     {
       "name": "eleven.open-api.license.url",
       "type": "java.lang.String",
-      "sourceType": "com.eleven.core.rest.autoconfigure.ElevenOpenapiProperties$License"
+      "sourceType": "com.eleven.core.configure.ElevenOpenapiProperties$License"
     },
     {
       "name": "eleven.open-api.terms-of-service",
       "type": "java.lang.String",
-      "sourceType": "com.eleven.core.rest.autoconfigure.ElevenOpenapiProperties"
+      "sourceType": "com.eleven.core.configure.ElevenOpenapiProperties"
     },
     {
       "name": "eleven.open-api.title",
       "type": "java.lang.String",
-      "sourceType": "com.eleven.core.rest.autoconfigure.ElevenOpenapiProperties"
+      "sourceType": "com.eleven.core.configure.ElevenOpenapiProperties"
     },
     {
       "name": "eleven.open-api.version",
       "type": "java.lang.String",
-      "sourceType": "com.eleven.core.rest.autoconfigure.ElevenOpenapiProperties"
-    },
-    {
-      "name": "eleven.restful.annotations",
-      "type": "java.util.List<java.lang.Class<? extends java.lang.annotation.Annotation>>",
-      "description": "指定包含哪些注解的接口修改路径",
-      "sourceType": "com.eleven.core.rest.autoconfigure.ElevenRestProperties"
-    },
-    {
-      "name": "eleven.restful.packages",
-      "type": "java.util.List<java.lang.String>",
-      "description": "指定这些包下的接口修改路径",
-      "sourceType": "com.eleven.core.rest.autoconfigure.ElevenRestProperties"
-    },
-    {
-      "name": "eleven.restful.prefix",
-      "type": "java.lang.String",
-      "description": "统一 API 路径，通常我们可以直接全局指定 context-path ，但是那样会造成静态文件、动态 HTML 都归属到这个路径下，如果只希望 rest 接口全局修改一个路径，则使用这个配置会很有效， 比如你在 cms 系统中，首页肯定是要部署到根路径（“\/ ”）的，但是后台接口可能需要部署到 \/api 路径下。 还有比如在本地开发的时候，这个可能很有效，你需要将前后台的接口地址统一，然后快速调用测试。",
-      "sourceType": "com.eleven.core.rest.autoconfigure.ElevenRestProperties"
+      "sourceType": "com.eleven.core.configure.ElevenOpenapiProperties"
     },
     {
       "name": "eleven.time.clock-expiration",

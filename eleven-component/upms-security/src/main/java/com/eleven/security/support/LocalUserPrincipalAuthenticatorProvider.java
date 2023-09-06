@@ -16,7 +16,7 @@ public class LocalUserPrincipalAuthenticatorProvider implements PrincipalAuthent
 
     @Override
     public boolean support(Principal principal) {
-        return UpmsConstants.PRINCIPAL_TYPE_LOCAL_USER.equals(principal.getType());
+        return UpmsConstants.PRINCIPAL_TYPE_USER.equals(principal.getType());
     }
 
     @Override

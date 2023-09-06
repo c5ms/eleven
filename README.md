@@ -99,6 +99,46 @@ status 200
   /art/{16}/publish）此接口可返回资源处理结果，比如文章发布的流水记录；拒绝的时候响应失败原因，带有 4xx 状态
 - DELETE /XXX 响应为 200 OK 表示资源被删除，成功的时候不响应任何结果，拒绝的时候响应失败原因，带有 4xx 状态
 
+
+##### 微服务调用交互
+内部定义了一个 @InnerApi [InnerApi.java](eleven-starter%2Feleven-starter-core%2Fsrc%2Fmain%2Fjava%2Fcom%2Feleven%2Fcore%2Frest%2Fannonation%2FInnerApi.java) 用于标记一个 endpoint 为内部 API ，这类 API 通常用于提供给内部其他服务调用。
+在框架启动阶段会自动找到该标记的 API 进行预处理，包括： 授权机制，路径修缮，日志等处理，并且对该类型的终端,也就是内部服务的终端，我们有如下约定：
+
+1. 内部 API 会被自动添加 /_inner (@see com.eleven.core.rest.ElevenRestConstants.INNER_API_PREFIX) 前缀.
+2. 在大部分情况下，一个服务职能有一个内部 API 终端，并且只能有一个调用客户端。
+3. 内部 API 不可以使用 @RequestMapping 注解来标记类.
+4. 客户端不可以在 @feignClient 注解中标记 path 属性.
+
+按照上述约定,我们会在每一个服务中有且只有一个内部接口,并且该接口以 /_inner 开头，feignClient会在初始化的时候为每一个请求方法增加 /_inner 属性，例如：
+
+```java
+// 服务提供
+@InnerApi
+@RequiredArgsConstructor
+public class UpmsApiV1 implements UpmsClient {
+
+    private final AccessTokenService accessTokenService;
+
+    // 这个请求将会被暴露为 /_inner/readToken?token={token}
+    @GetMapping("/readToken")
+    public Optional<Token> readToken(@RequestParam("token") String token) {
+        return accessTokenService.readToken(token).map(AccessToken::toToken);
+    }
+}
+
+// 服务客户端
+@FeignClient(value = UpmsConstants.SERVICE_NAME)
+public interface UpmsClient {
+
+    // 这个请求将会请求 /_inner/readToken?token={token}
+    @Operation(summary = "读取令牌")
+    @GetMapping("/readToken")
+    Optional<Token> readToken(@RequestParam("token") String token);
+}
+
+```
+
+
 ##### 常见问题
 
 1. 为什么不全部响应 200，然后在自定义结果中给出错误提示？

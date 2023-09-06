@@ -4,11 +4,11 @@ import com.eleven.core.domain.AbstractAuditableDomain;
 import com.eleven.core.domain.DomainSupport;
 import com.eleven.core.exception.ElevenRuntimeException;
 import com.eleven.core.model.PaginationResult;
+import com.eleven.upms.core.UpmsConstants;
 import com.eleven.upms.model.UserCreateAction;
 import com.eleven.upms.model.UserFilter;
 import com.eleven.upms.model.UserUpdateAction;
 import com.eleven.upms.configure.UpmsProperties;
-import com.eleven.upms.core.UpmsError;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
@@ -126,7 +126,7 @@ public class UserService {
         var existUser = userRepository.findByUsername(user.getUsername())
                 .filter(check -> !StringUtils.equals(check.getId(), user.getId()));
         if (existUser.isPresent()) {
-            throw UpmsError.USER_NAME_REPEAT.exception();
+            throw UpmsConstants.ERROR_USER_NAME_REPEAT.exception();
         }
     }
 

@@ -2,13 +2,9 @@ package com.eleven.upms.domain;
 
 import com.eleven.core.domain.DomainSupport;
 import com.eleven.core.exception.ElevenRuntimeException;
-import com.eleven.upms.domain.Authority;
-import com.eleven.upms.domain.AuthorityManager;
-import com.eleven.upms.domain.Role;
-import com.eleven.upms.domain.RoleRepository;
+import com.eleven.upms.core.UpmsConstants;
 import com.eleven.upms.model.RoleCreateAction;
 import com.eleven.upms.model.RoleUpdateAction;
-import com.eleven.upms.core.UpmsError;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -48,7 +44,7 @@ public class RoleService {
         var exist = roleRepository.findByCode(role.getCode())
                 .filter(check -> !StringUtils.equals(check.getId(), role.getId()));
         if (exist.isPresent()) {
-            throw UpmsError.ROLE_CODE_REPEAT.exception();
+            throw UpmsConstants.ERROR_ROLE_CODE_REPEAT.exception();
         }
     }
 

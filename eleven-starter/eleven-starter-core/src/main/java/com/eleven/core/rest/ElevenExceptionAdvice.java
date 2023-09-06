@@ -58,7 +58,7 @@ public class ElevenExceptionAdvice {
                 .sorted(Comparator.naturalOrder())
                 .collect(Collectors.joining(";"));
 
-        return RestResponse.Failure.of(RestErrors.VALIDATE_FAILURE).setMessage(msg);
+        return RestResponse.Failure.of(RestConstants.ERROR_VALIDATE_FAILURE).setMessage(msg);
 //        return RestResponse.Failure.of(RestErrors.VALIDATE_FAILURE);
     }
 

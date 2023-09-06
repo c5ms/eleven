@@ -1,6 +1,6 @@
 package com.eleven.core.domain;
 
-import com.eleven.core.security.context.SecurityContext;
+import com.eleven.core.security.SecurityContext;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;

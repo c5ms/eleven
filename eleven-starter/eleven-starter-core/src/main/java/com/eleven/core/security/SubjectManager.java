@@ -1,32 +1,38 @@
 package com.eleven.core.security;
 
-import com.eleven.core.time.TimeContext;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.TreeSet;
+import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SubjectManager {
-    private final SubjectStore subjectStore;
-    private final PrincipalAuthorizer principalAuthorizer;
-    private final PrincipalAuthenticator principalAuthenticator;
 
-    public Subject fetchSubject(Principal principal) {
-        return subjectStore.retrieval(principal)
-                .orElseGet(() -> createSubject(principal));
+    private final SubjectStore subjectStore;
+    private final SubjectReader subjectReader;
+
+    public Subject readSubject(Principal principal) {
+        var subject = subjectStore.retrieval(principal);
+
+        if (subject.isPresent()) {
+            log.debug("found subject from cache for principal : {}", principal);
+        }
+
+        return subject.orElseGet(() -> createSubject(principal));
     }
 
     public Subject refreshSubject(Principal principal) {
+        log.debug("refresh subject for principal : {}", principal);
         return createSubject(principal);
     }
 
     private Subject createSubject(Principal principal) {
-        Subject subject = principalAuthenticator.authenticate(principal);
-        subject.grant(new TreeSet<>(principalAuthorizer.authorize(principal)));
-        subject.setCreateAt(TimeContext.localDateTime());
+        Subject subject = subjectReader.readSubject(principal);
         subjectStore.save(principal, subject);
+        log.debug("create subject for principal : {}", principal);
         return subject;
     }
 

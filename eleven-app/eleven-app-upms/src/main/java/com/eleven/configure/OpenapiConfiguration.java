@@ -1,8 +1,7 @@
 package com.eleven.configure;
 
-import com.eleven.eng.endpoint.ParagraphResourceV1;
-import com.eleven.endpoint.TryoutEndpoint;
-import com.eleven.upms.endpoint.UserResourceV1;
+import com.eleven.eng.endpoint.rest.ParagraphRestApi_v1;
+import com.eleven.upms.endpoint.rest.UserRestApi_v1;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.models.GroupedOpenApi;
@@ -19,27 +18,16 @@ public class OpenapiConfiguration {
         return GroupedOpenApi.builder()
                 .group("upms")
                 .displayName("用户权限")
-                .packagesToScan(UserResourceV1.class.getPackageName())
+                .packagesToScan(UserRestApi_v1.class.getPackageName())
                 .build();
     }
-
 
     @Bean
     public GroupedOpenApi eduApi() {
         return GroupedOpenApi.builder()
                 .group("edu")
                 .displayName("学习工具")
-                .packagesToScan(ParagraphResourceV1.class.getPackageName())
-                .build();
-    }
-
-
-    @Bean
-    public GroupedOpenApi tryoutApi() {
-        return GroupedOpenApi.builder()
-                .group("tryout")
-                .displayName("开发测试")
-                .packagesToScan(TryoutEndpoint.class.getPackageName())
+                .packagesToScan(ParagraphRestApi_v1.class.getPackageName())
                 .build();
     }
 

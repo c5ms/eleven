@@ -8,10 +8,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="eleven-starter-service" />
+        <module name="eleven-app-demo" />
         <module name="upms-service" />
         <module name="education-service" />
         <module name="eleven-app-upms" />
-        <module name="eleven-app-api" />
         <module name="upms-core" />
         <module name="eleven-starter-core" />
         <module name="upms-security" />
@@ -23,6 +23,7 @@
       <module name="component" target="17" />
       <module name="core" target="17" />
       <module name="education" target="17" />
+      <module name="eleven-app-api" target="17" />
       <module name="eleven-app-deploy" target="17" />
       <module name="eleven-component (1)" target="17" />
       <module name="eleven-component (2)" target="17" />
@@ -46,6 +47,7 @@
       <module name="education-service" options="-parameters" />
       <module name="eleven" options="" />
       <module name="eleven-app-api" options="-parameters" />
+      <module name="eleven-app-demo" options="-parameters" />
       <module name="eleven-app-deploy" options="" />
       <module name="eleven-app-upms" options="-parameters" />
       <module name="eleven-component" options="" />
