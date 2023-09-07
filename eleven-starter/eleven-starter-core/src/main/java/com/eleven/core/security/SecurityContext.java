@@ -1,10 +1,8 @@
 package com.eleven.core.security;
 
-import com.eleven.core.security.ElevenAuthentication;
-import com.eleven.core.security.Principal;
-import com.eleven.core.security.Subject;
-import com.eleven.core.security.Token;
+import com.eleven.core.security.support.ElevenAuthentication;
 import jakarta.annotation.Nonnull;
+import lombok.experimental.UtilityClass;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,11 +10,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.Optional;
 import java.util.Set;
 
+@UtilityClass
 public class SecurityContext {
-    public static final String ROLE_PREFIX = "ROLE_";
-    public static final String ADMIN_ROLE_NAME = "admin";
-    public static final String ADMIN_ROLE = ROLE_PREFIX + ADMIN_ROLE_NAME;
-    public static final String EXCEPTION_MESSAGE = "权限不足";
+
+    private static final String ROLE_PREFIX = "ROLE_";
+    private static final String ADMIN_ROLE_NAME = "admin";
+    private static final String ADMIN_ROLE = ROLE_PREFIX + ADMIN_ROLE_NAME;
+    private static final String EXCEPTION_MESSAGE = "权限不足";
+
 
     /**
      * 是否是匿名用户
@@ -82,7 +83,7 @@ public class SecurityContext {
      * @param role 角色
      * @return true 表示拥有
      */
-    public static boolean hasRole(String role) {
+    public static boolean checkHasRole(String role) {
         return getCurrentSubject().getAuthorities().contains(ROLE_PREFIX + role);
     }
 
@@ -93,7 +94,7 @@ public class SecurityContext {
      * @param auth 权限
      * @return true 表示拥有
      */
-    public static boolean hasAuthorities(String auth) {
+    public static boolean checkHasAuthorities(String auth) {
         return getCurrentSubject().getAuthorities().contains(auth);
     }
 
@@ -103,7 +104,7 @@ public class SecurityContext {
      * @return true 表示是
      */
     public static boolean isAdmin() {
-        return hasAuthorities(ADMIN_ROLE);
+        return checkHasAuthorities(ADMIN_ROLE);
     }
 
     /**
@@ -151,5 +152,6 @@ public class SecurityContext {
     public static void setAuthentication(org.springframework.security.core.Authentication authentication) {
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
+
 
 }

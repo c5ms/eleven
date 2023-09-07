@@ -1,6 +1,8 @@
 package com.eleven.upms.domain;
 
 import com.eleven.core.domain.AbstractDomain;
+import com.eleven.core.security.Principal;
+import com.eleven.core.security.ToPrincipal;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
@@ -20,11 +22,12 @@ public class Authority extends AbstractDomain<Authority> {
     public static String POWER_RESOURCE = "resource";
     public static String POWER_PERMISSION = "permission";
 
-    public static String OWNER_USER = "user";
     @Embedded.Nullable
     private final Owner owner;
+
     @Embedded.Nullable
     private final Power power;
+
     @Id
     @Column("id")
     private String id;
@@ -49,12 +52,27 @@ public class Authority extends AbstractDomain<Authority> {
         return new Power(POWER_RESOURCE, name);
     }
 
-    public static Owner powerOf(String type, String name) {
+    public static Power powerOf(String type, String name) {
+        return new Power(type, name);
+    }
+
+    public static Owner ownerOf(String type, String name) {
         return new Owner(type, name);
     }
 
-    public static Owner ownerOfUser(String name) {
-        return new Owner(OWNER_USER, name);
+    public static Owner ownerOf(Principal principal) {
+        return new Owner(principal.getType(), principal.getName());
+    }
+
+    /**
+     * @param toPrincipal an object which can convert to a principal
+     * @return -
+     * @deprecated not really deprecated, but not recommend to use, we need more thought about whether should create ina imply way
+     */
+    @Deprecated
+    public static Owner ownerOf(ToPrincipal toPrincipal) {
+        var principal = toPrincipal.toPrincipal();
+        return new Owner(principal.getType(), principal.getName());
     }
 
     /**

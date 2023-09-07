@@ -16,6 +16,7 @@ import java.util.Optional;
 @FeignClient(value = UpmsConstants.SERVICE_NAME)
 public interface UpmsClient {
 
+    // unused
     @Operation(summary = "读取令牌")
     @GetMapping("/readToken")
     Optional<Token> readToken(@RequestParam("token") String token);
@@ -24,7 +25,7 @@ public interface UpmsClient {
     @GetMapping("/readUser")
     Optional<UserDto> readUser(@RequestParam("id") String id);
 
-    @Operation(summary = "读取权限")
-    @GetMapping("/readSubject")
-    Subject readSubject(@RequestParam("type") String type, @RequestParam("name") String name);
+    @Operation(summary = "创建权限")
+    @GetMapping("/createSubject")
+    Subject createSubject(@RequestParam("type") String type, @RequestParam("name") String name);
 }

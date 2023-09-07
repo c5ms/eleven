@@ -17,12 +17,6 @@ spring:
           hikari:
             max-lifetime: ${db.upms.maxLifetime:30000}
             max-pool-size: ${db.upms.maxSize:5}
-  cloud:
-    openfeign:
-      client:
-        config:
-          upms:
-            url: http://localhost:1024/9000
 
 eleven:
   upms:
@@ -41,10 +35,5 @@ eleven:
     license:
       name: Apache 2.0
       url: https://www.demcia.com/
-
-logging:
-  level:
-    jdbc: debug
-    'com.eleven': debug
 
 

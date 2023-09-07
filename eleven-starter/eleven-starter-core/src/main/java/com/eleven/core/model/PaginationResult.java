@@ -1,7 +1,6 @@
 package com.eleven.core.model;
 
 import lombok.Data;
-import lombok.With;
 import lombok.experimental.Accessors;
 
 import java.util.List;

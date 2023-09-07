@@ -42,7 +42,7 @@ public class FeignInnerContract extends SpringMvcContract {
 
             var url = data.template().url();
 
-            if(!url.startsWith(RestConstants.INNER_API_PREFIX)){
+            if (!url.startsWith(RestConstants.INNER_API_PREFIX)) {
                 data.template().uri(Paths.get(url, RestConstants.INNER_API_PREFIX).toString());
                 data.template().decodeSlash(true);
             }

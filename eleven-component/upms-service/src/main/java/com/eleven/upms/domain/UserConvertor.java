@@ -19,7 +19,7 @@ public class UserConvertor {
 
     public UserDetail toDetail(User user) {
         var detail = BeanUtil.toBean(user, UserDetail.class);
-        var owner = Authority.ownerOfUser(user.getId());
+        var owner = Authority.ownerOf(user.toPrincipal());
         var authorities = authorityRepository.findByOwner(owner);
 
         var roles = authorities.stream()

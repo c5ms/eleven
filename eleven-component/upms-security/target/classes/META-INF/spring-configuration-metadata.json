@@ -2,17 +2,10 @@
   "groups": [
     {
       "name": "eleven.security",
-      "type": "com.eleven.security.autoconfigure.SecurityProperties",
-      "sourceType": "com.eleven.security.autoconfigure.SecurityProperties"
+      "type": "com.eleven.security.configure.UpmsSecurityProperties",
+      "sourceType": "com.eleven.security.configure.UpmsSecurityProperties"
     }
   ],
-  "properties": [
-    {
-      "name": "eleven.security.auth-mode",
-      "type": "com.eleven.security.autoconfigure.AuthMode",
-      "description": "认证模式",
-      "sourceType": "com.eleven.security.autoconfigure.SecurityProperties"
-    }
-  ],
+  "properties": [],
   "hints": []
 }

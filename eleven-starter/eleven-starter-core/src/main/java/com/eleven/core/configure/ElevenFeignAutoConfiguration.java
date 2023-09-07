@@ -27,7 +27,10 @@ package com.eleven.core.configure;
 
 import com.eleven.core.rest.FeignInnerContract;
 import com.eleven.core.rest.FeignRequestInterceptor;
-import feign.*;
+import feign.Contract;
+import feign.Request;
+import feign.RequestInterceptor;
+import feign.Retryer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -101,7 +104,6 @@ public class ElevenFeignAutoConfiguration {
         return new Request
                 .Options(10, TimeUnit.SECONDS, 60, TimeUnit.SECONDS, true);
     }
-     
 
 
     @Bean

@@ -1,7 +1,6 @@
 package com.eleven.core.configure;
 
 import com.eleven.core.rest.RestConstants;
-import com.eleven.core.rest.RestRequestArgumentResolver;
 import com.eleven.core.rest.annonation.AsInnerApi;
 import com.eleven.core.rest.annonation.AsRestApi;
 import com.fasterxml.jackson.core.JsonParser;
@@ -29,7 +28,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -50,9 +48,6 @@ import java.util.stream.Collectors;
 @PropertySource("classpath:/config/application-core.properties")
 public class ElevenRestAutoconfigure implements WebMvcConfigurer {
 
-
-    private final ElevenRestProperties restProperties;
-    private final RestRequestArgumentResolver restRequestArgumentResolver;
 
     @Value("${epeius.rest.date-format:yyyy-MM-dd}")
     private String dateFormat = RestConstants.DEFAULT_DATE_FORMAT;
@@ -77,10 +72,6 @@ public class ElevenRestAutoconfigure implements WebMvcConfigurer {
         configurer.addPathPrefix(RestConstants.FRONT_API_PREFIX, new RestfulPredicate(List.of(AsRestApi.class)));
     }
 
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(restRequestArgumentResolver);
-    }
 
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {

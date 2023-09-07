@@ -1,5 +1,6 @@
 package com.eleven.upms.model;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -8,6 +9,9 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 public class AccessTokenCreateAction {
+    @NotBlank
     private String identity;
+
+    @NotBlank
     private String credential;
 }

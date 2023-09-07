@@ -1,17 +1,9 @@
 server:
   port: 9001
 
-
 spring:
   application:
     name: eleven-upms
-
-  cloud:
-    openfeign:
-      client:
-        config:
-          upms:
-            url: http://localhost:9000/
 
 eleven:
   open-api:
@@ -27,12 +19,5 @@ eleven:
       name: Apache 2.0
       url: https://www.demcia.com/
 
-  security:
-    auth-mode: remote
-
-logging:
-  level:
-    jdbc: debug
-    'com.eleven': debug
 
 

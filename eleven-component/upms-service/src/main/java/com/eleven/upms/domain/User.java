@@ -1,7 +1,10 @@
 package com.eleven.upms.domain;
 
 import com.eleven.core.domain.AbstractAuditableDomain;
+import com.eleven.core.security.Principal;
+import com.eleven.core.security.ToPrincipal;
 import com.eleven.core.time.TimeContext;
+import com.eleven.upms.core.UpmsConstants;
 import com.eleven.upms.model.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +24,7 @@ import java.util.Objects;
 @Getter
 @FieldNameConstants
 @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
-public class User extends AbstractAuditableDomain<User> {
+public class User extends AbstractAuditableDomain<User> implements ToPrincipal {
 
     public static final String TYPE_INNER_USER = "user";
 
@@ -56,6 +59,8 @@ public class User extends AbstractAuditableDomain<User> {
 
     @Column("login_at")
     private LocalDateTime loginAt;
+
+
 
     /**
      * 创建新用户
@@ -127,5 +132,10 @@ public class User extends AbstractAuditableDomain<User> {
     public void login() {
         super.andEvent(new userLoginEvent(id));
         this.loginAt = TimeContext.localDateTime();
+    }
+
+    @Override
+    public Principal toPrincipal() {
+        return new Principal(UpmsConstants.PRINCIPAL_TYPE_USER,this.getId());
     }
 }
