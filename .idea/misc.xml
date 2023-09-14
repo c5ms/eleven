@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="EntryPointsManager">
     <writeAnnotations>
@@ -25,6 +24,7 @@
         <option value="$PROJECT_DIR$/eleven-app/eleven-learn/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-component/core/eleven-service/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-component/core/pom.xml" />
+        <option value="$PROJECT_DIR$/eleven-component/education-service/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-component/education/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-component/eleven-core-api/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-component/eleven-core-common/pom.xml" />
@@ -33,6 +33,7 @@
         <option value="$PROJECT_DIR$/eleven-component/eleven-core-security/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-component/upms-client/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-component/upms/pom.xml" />
+        <option value="$PROJECT_DIR$/eleven-dependencies/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-domain/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-learn/eleven-learn-vertx/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-module/eleven-app-admin/pom.xml" />

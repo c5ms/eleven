@@ -25,8 +25,8 @@
 
 package com.eleven.core.configure;
 
-import com.eleven.core.rest.FeignInnerContract;
-import com.eleven.core.rest.FeignRequestInterceptor;
+import com.eleven.core.rest.feign.ElevenContract;
+import com.eleven.core.rest.feign.ElevenRequestInterceptor;
 import feign.Contract;
 import feign.Request;
 import feign.RequestInterceptor;
@@ -50,14 +50,14 @@ public class ElevenFeignAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public Contract contract() {
-        return new FeignInnerContract();
+        return new ElevenContract();
     }
 
 
     @Bean
-    @ConditionalOnMissingBean(FeignRequestInterceptor.class)
+    @ConditionalOnMissingBean(ElevenRequestInterceptor.class)
     public RequestInterceptor feignRequestInterceptor() {
-        return new FeignRequestInterceptor();
+        return new ElevenRequestInterceptor();
     }
 
     /**

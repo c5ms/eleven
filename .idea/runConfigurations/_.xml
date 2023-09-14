@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="运行-用户权限" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+  <configuration default="false" name="运行-用户权限" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" singleton="false">
     <module name="eleven-app-upms" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.eleven.UpmsApplication" />
     <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateClassesAndResources" />

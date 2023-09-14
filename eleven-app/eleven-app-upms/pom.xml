@@ -26,23 +26,13 @@
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
+
+
         <dependency>
             <groupId>com.demacia</groupId>
-            <artifactId>education-service</artifactId>
+            <artifactId>eleven-starter-cloud-alibaba</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
-
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
-        </dependency>
-
 
     </dependencies>
 

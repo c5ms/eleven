@@ -15,6 +15,8 @@
     <modules>
         <module>eleven-starter-core</module>
         <module>eleven-starter-service</module>
+        <module>eleven-starter-cloud-alibaba</module>
+        <module>eleven-starter-cloud-tencent</module>
     </modules>
 
 

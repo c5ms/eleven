@@ -1,6 +1,5 @@
 package com.eleven.core.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
@@ -9,11 +8,6 @@ import lombok.Getter;
 @Getter
 public class ElevenRuntimeException extends RuntimeException {
     private final ElevenError error;
-
-    private ElevenRuntimeException(String error, String message) {
-        super(message);
-        this.error = new DefaultElevenError(error, message);
-    }
 
     public ElevenRuntimeException(ElevenError error) {
         super(error.getMessage());
@@ -36,12 +30,5 @@ public class ElevenRuntimeException extends RuntimeException {
     @Override
     public synchronized Throwable fillInStackTrace() {
         return this;
-    }
-
-    @Getter
-    @AllArgsConstructor
-    public static class DefaultElevenError implements ElevenError {
-        private String error;
-        private String message;
     }
 }

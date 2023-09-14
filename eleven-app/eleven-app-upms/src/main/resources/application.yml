@@ -4,7 +4,7 @@ server:
 
 spring:
   application:
-    name: eleven-upms
+    name: upms
   datasource:
     dynamic:
       primary: master
@@ -21,8 +21,6 @@ spring:
 eleven:
   upms:
     default-password: 123456
-  security:
-    auth-mode: local
   open-api:
     title: 用户授权管理
     description: 这是一个伟大而又了不起的工程！

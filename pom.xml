@@ -34,7 +34,8 @@
         <!--  spring 家族 -->
         <version.spring-boot>3.1.2</version.spring-boot>
         <version.spring-cloud>2022.0.4</version.spring-cloud>
-        <version.spring-cloud-alibaba>2021.0.4.0</version.spring-cloud-alibaba>
+        <version.spring-cloud-alibaba>2022.0.0.0</version.spring-cloud-alibaba>
+        <version.spring-cloud-tencent>1.12.1-2022.0.4</version.spring-cloud-tencent>
 
         <!--开源通用工具包-->
         <version.hutool>5.8.21</version.hutool>
@@ -96,13 +97,20 @@
             </dependency>
 
             <dependency>
+                <groupId>com.tencent.cloud</groupId>
+                <artifactId>spring-cloud-tencent-dependencies</artifactId>
+                <version>${version.spring-cloud-tencent}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
                 <version>${version.spring-cloud-alibaba}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
 
 
             <!-- hutool util工具组件 -->

@@ -16,7 +16,6 @@
         <module>upms-core</module>
         <module>upms-security</module>
         <module>upms-service</module>
-        <module>education-service</module>
     </modules>
 
 

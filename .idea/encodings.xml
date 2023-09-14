@@ -97,12 +97,18 @@
     <file url="file://$PROJECT_DIR$/eleven-component/upms/upms-security/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-component/upms/upms-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-component/upms/upms-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eleven-dependencies/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eleven-dependencies/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-domain/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-domain/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-learn/algorithm/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-learn/algorithm/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-module/upms/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-module/upms/upms-domain/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eleven-starter/eleven-starter-cloud-alibaba/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eleven-starter/eleven-starter-cloud-alibaba/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eleven-starter/eleven-starter-cloud-tencent/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eleven-starter/eleven-starter-cloud-tencent/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-starter/eleven-starter-service/src/main/java" charset="UTF-8" />

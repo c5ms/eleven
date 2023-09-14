@@ -1,6 +1,7 @@
 package com.eleven.demo.endpoint.rest;
 
-import com.eleven.core.rest.annonation.AsRestApi;
+import com.eleven.core.rest.annonation.AsAdminApi;
+import com.eleven.core.rest.annonation.AsClientApi;
 import com.eleven.core.security.SecurityContext;
 import com.eleven.core.security.Subject;
 import com.eleven.upms.client.UpmsClient;
@@ -15,7 +16,7 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/demo")
-@AsRestApi
+@AsAdminApi
 public class DemoApi {
     private final UpmsClient upmsClient;
 

@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: eleven-upms
+    name: demo
 
 eleven:
   open-api:

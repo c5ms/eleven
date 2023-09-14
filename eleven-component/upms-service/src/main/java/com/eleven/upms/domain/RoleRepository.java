@@ -4,7 +4,7 @@ import org.springframework.data.repository.ListCrudRepository;
 
 import java.util.Optional;
 
-interface RoleRepository extends ListCrudRepository<Role, String> {
+public interface RoleRepository extends ListCrudRepository<Role, String> {
     Optional<Role> findByCode(String code);
 
 }

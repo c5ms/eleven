@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import com.eleven.upms.model.UserDetail;
 import com.eleven.upms.model.UserDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.convert.ValueConverter;
 import org.springframework.stereotype.Component;
 
 @Component

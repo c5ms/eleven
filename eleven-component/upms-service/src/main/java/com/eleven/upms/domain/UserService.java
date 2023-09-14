@@ -30,10 +30,10 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final AuthorityManager authorityManager;
     private final DomainSupport domainSupport;
     private final UpmsProperties upmsProperties;
     private final PasswordEncoder passwordEncoder;
+    private final AuthorityManager authorityManager;
 
     public Optional<User> getUser(String id) {
         return userRepository.findById(id);
@@ -80,12 +80,9 @@ public class UserService {
             criteria = criteria.and(ranges);
         }
 
-        var query = Query
-                .query(criteria)
-                .sort(Sort.by(AbstractAuditableDomain.Fields.createAt).descending());
+        var query = Query.query(criteria).sort(Sort.by(AbstractAuditableDomain.Fields.createAt).descending());
         return domainSupport.queryForPage(query, User.class, filter.getPage(), filter.getSize());
     }
-
 
     @Transactional(rollbackFor = Exception.class)
     public User createUser(UserCreateAction action) {
@@ -93,8 +90,8 @@ public class UserService {
         var user = new User(id, action);
         validate(user);
         user.setPassword(passwordEncoder.encode(upmsProperties.getDefaultPassword()));
-        userRepository.save(user);
         grantRoles(user, action.getRoles());
+        userRepository.save(user);
         return user;
     }
 
@@ -102,8 +99,8 @@ public class UserService {
     public void updateUser(User user, UserUpdateAction action) {
         user.update(action);
         validate(user);
-        userRepository.save(user);
         grantRoles(user, action.getRoles());
+        userRepository.save(user);
     }
 
     public void lockUser(User user) {
@@ -123,8 +120,7 @@ public class UserService {
 
     private void validate(User user) throws ElevenRuntimeException {
         // 验证，用户名不能重复
-        var existUser = userRepository.findByUsername(user.getUsername())
-                .filter(check -> !StringUtils.equals(check.getId(), user.getId()));
+        var existUser = userRepository.findByUsername(user.getUsername()).filter(check -> !StringUtils.equals(check.getId(), user.getId()));
         if (existUser.isPresent()) {
             throw UpmsConstants.ERROR_USER_NAME_REPEAT.exception();
         }

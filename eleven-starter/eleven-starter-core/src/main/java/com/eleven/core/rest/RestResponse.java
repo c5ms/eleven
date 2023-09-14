@@ -33,7 +33,6 @@ public class RestResponse {
                     .setData(data);
         }
 
-
     }
 
     @Data
@@ -54,7 +53,7 @@ public class RestResponse {
         }
 
         public static Failure of(ElevenError error) {
-            return new Failure(error.getError(), error.getMessage());
+            return new Failure(error.getDomain() + ":" + error.getError(), error.getMessage());
         }
     }
 }

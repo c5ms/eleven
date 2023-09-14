@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <excludeFromCompile>
+      <directory url="file://$PROJECT_DIR$/eleven-dependencies/src/main/resources/archetype-resources" includeSubdirectories="true" />
+    </excludeFromCompile>
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
@@ -9,8 +12,9 @@
         <outputRelativeToContentRoot value="true" />
         <module name="eleven-starter-service" />
         <module name="eleven-app-demo" />
+        <module name="eleven-starter-cloud-alibaba" />
         <module name="upms-service" />
-        <module name="education-service" />
+        <module name="eleven-starter-cloud-tencent" />
         <module name="eleven-app-upms" />
         <module name="upms-core" />
         <module name="eleven-starter-core" />
@@ -23,6 +27,7 @@
       <module name="component" target="17" />
       <module name="core" target="17" />
       <module name="education" target="17" />
+      <module name="education-service" target="17" />
       <module name="eleven-app-api" target="17" />
       <module name="eleven-app-deploy" target="17" />
       <module name="eleven-component (1)" target="17" />
@@ -30,9 +35,13 @@
       <module name="eleven-core (1)" target="17" />
       <module name="eleven-core (2)" target="17" />
       <module name="eleven-core-message" target="17" />
+      <module name="eleven-dependencies" target="17" />
       <module name="eleven-kt" target="11" />
       <module name="eleven-learn" target="17" />
       <module name="eleven-service" target="17" />
+      <module name="eleven-starter-cloud-alibaba (1)" target="17" />
+      <module name="eleven-starter-cloud-alibaba (2)" target="17" />
+      <module name="eleven-starter-microservice" target="17" />
       <module name="security" target="17" />
       <module name="upms" target="17" />
       <module name="upms-client" target="17" />
@@ -54,8 +63,14 @@
       <module name="eleven-core (1)" options="-parameters" />
       <module name="eleven-core (2)" options="-parameters" />
       <module name="eleven-core-message" options="-parameters" />
+      <module name="eleven-dependencies" options="-parameters" />
       <module name="eleven-service" options="-parameters" />
+      <module name="eleven-starter-cloud-alibaba" options="-parameters" />
+      <module name="eleven-starter-cloud-alibaba (1)" options="-parameters" />
+      <module name="eleven-starter-cloud-alibaba (2)" options="-parameters" />
+      <module name="eleven-starter-cloud-tencent" options="-parameters" />
       <module name="eleven-starter-core" options="-parameters" />
+      <module name="eleven-starter-microservice" options="-parameters" />
       <module name="eleven-starter-service" options="-parameters" />
       <module name="security" options="" />
       <module name="upms" options="" />

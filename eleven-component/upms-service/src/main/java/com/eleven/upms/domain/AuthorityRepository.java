@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Collection;
 
- interface AuthorityRepository extends CrudRepository<Authority, String> {
+public interface AuthorityRepository extends CrudRepository<Authority, String> {
 
     @Modifying
     @Query("delete from upms_authority where owner_type=:ownerType and owner_name=:ownerName and power_type=:powerType")

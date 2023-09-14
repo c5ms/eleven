@@ -1,8 +1,10 @@
 package com.eleven.core.configure;
 
 import com.eleven.core.rest.RestConstants;
-import com.eleven.core.rest.annonation.AsInnerApi;
-import com.eleven.core.rest.annonation.AsRestApi;
+import com.eleven.core.rest.annonation.AsAdminApi;
+import com.eleven.core.rest.annonation.AsClientApi;
+import com.eleven.core.rest.annonation.AsOpenApi;
+import com.eleven.core.rest.annonation.AsServiceApi;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -67,11 +69,14 @@ public class ElevenRestAutoconfigure implements WebMvcConfigurer {
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
         // 内部 API
-        configurer.addPathPrefix(RestConstants.INNER_API_PREFIX, new RestfulPredicate(List.of(AsInnerApi.class)));
-        // 外部 API
-        configurer.addPathPrefix(RestConstants.FRONT_API_PREFIX, new RestfulPredicate(List.of(AsRestApi.class)));
+        configurer.addPathPrefix(RestConstants.SERVICE_API_PREFIX, new RestfulPredicate(List.of(AsServiceApi.class)));
+        // 用户 API
+        configurer.addPathPrefix(RestConstants.CLIENT_API_PREFIX, new RestfulPredicate(List.of(AsClientApi.class)));
+        // 管理 API
+        configurer.addPathPrefix(RestConstants.ADMIN_API_PREFIX, new RestfulPredicate(List.of(AsAdminApi.class)));
+        // 开放 API
+        configurer.addPathPrefix(RestConstants.OPEN_API_PREFIX, new RestfulPredicate(List.of(AsOpenApi.class)));
     }
-
 
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {

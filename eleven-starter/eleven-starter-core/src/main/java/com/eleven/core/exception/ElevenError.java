@@ -4,6 +4,11 @@ package com.eleven.core.exception;
 public interface ElevenError {
 
     /**
+     * 获取业务领域
+     * @return 领域
+     */
+    String getDomain();
+    /**
      * 获取编码
      *
      * @return 编码
