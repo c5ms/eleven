@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="EntryPointsManager">
     <writeAnnotations>
@@ -43,6 +44,8 @@
         <option value="$PROJECT_DIR$/eleven-module/eleven-upms-client/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-module/security/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-module/upms/upms-domain/pom.xml" />
+        <option value="$PROJECT_DIR$/eleven-starter/eleven-starter-cloud-alibaba/pom.xml" />
+        <option value="$PROJECT_DIR$/eleven-starter/eleven-starter-cloud-tencent/pom.xml" />
       </set>
     </option>
   </component>

@@ -2,12 +2,12 @@ spring:
   cloud:
     nacos:
       config:
-        enabled: true
+        enabled: false
         group: eve
         namespace: eleven
-        server-addr: 192.168.2.250:8848,192.168.2.250:8849,192.168.2.250:8850
+        server-addr: 127.0.0.1:8848
       discovery:
-        enabled: true
+        enabled: false
         group: eve
         namespace: eleven
-        server-addr: 192.168.2.250:8848,192.168.2.250:8849,192.168.2.250:8850
+        server-addr: 127.0.0.1:8848

@@ -6,6 +6,7 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+    <version>1.0.0</version>
 
     <artifactId>eleven-app</artifactId>
     <packaging>pom</packaging>
@@ -14,5 +15,16 @@
         <module>eleven-app-upms</module>
         <module>eleven-app-demo</module>
     </modules>
+
+    <properties>
+        <!-- use -Ddocker.host to instead of  -->
+        <dist.outputpath>${project.basedir}/../target</dist.outputpath>
+        <docker.expose>9000</docker.expose>
+        <docker.baseImage>openjdk:17</docker.baseImage>
+        <docker.host>http://192.168.2.250:2375</docker.host>
+        <docker.registry>192.168.2.30:5000</docker.registry>
+        <docker.username>admin</docker.username>
+        <docker.password>111111</docker.password>
+    </properties>
 
 </project>

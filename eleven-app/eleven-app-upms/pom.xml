@@ -5,7 +5,7 @@
     <parent>
         <artifactId>eleven-app</artifactId>
         <groupId>com.demacia</groupId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -14,26 +14,15 @@
 
     <properties>
         <appMainClass>com.eleven.UpmsApplication</appMainClass>
-        <dist.outputpath>${project.basedir}/../target</dist.outputpath>
-        <docker.expose>9000</docker.expose>
     </properties>
 
 
     <dependencies>
         <dependency>
             <groupId>com.demacia</groupId>
-            <artifactId>upms-service</artifactId>
+            <artifactId>eleven-upms-service</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
-
-
-
-        <dependency>
-            <groupId>com.demacia</groupId>
-            <artifactId>eleven-starter-cloud-alibaba</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-
     </dependencies>
 
     <build>
@@ -42,14 +31,16 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>appassembler-maven-plugin</artifactId>
             </plugin>
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
+            </plugin>-->
+            <plugin>
+                <inherited>true</inherited>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
-
-
-
 
 </project>

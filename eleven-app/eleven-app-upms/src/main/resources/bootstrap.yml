@@ -1,0 +1,13 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        enabled: true
+        group: ${NACOS_GROUP}
+        namespace: ${NACOS_NS}
+        server-addr: ${NACOS_HOST}
+      discovery:
+        enabled: true
+        group: ${NACOS_GROUP}
+        namespace: ${NACOS_NS}
+        server-addr: ${NACOS_HOST}

@@ -26,6 +26,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+        <!-- docker -->
+        <docker.expose>9000</docker.expose>
+        <docker.baseImage>azul/zulu-openjdk:11-jre</docker.baseImage>
+
+
         <!--  打包预设 -->
         <appName>${project.artifactId}</appName>
         <appMainClass/>
@@ -290,7 +295,7 @@
                     <executions>
                         <execution>
                             <id>spring-boot-repackage</id>
-                            <phase>none</phase>
+                            <phase>package</phase>
                             <goals>
                                 <goal>repackage</goal>
                             </goals>
@@ -319,7 +324,6 @@
                         <repositoryName>lib</repositoryName>
                         <repositoryLayout>flat</repositoryLayout>
                         <useWildcardClassPath>true</useWildcardClassPath>
-                        <!--						<tempDirectory>tmp</tempDirectory>-->
                         <projectArtifactFirstInClassPath>true</projectArtifactFirstInClassPath>
                         <target>${project.build.directory}</target>
                         <assembleDirectory>${project.build.directory}/assembly</assembleDirectory>
@@ -444,6 +448,63 @@
                             <phase>package</phase>
                             <goals>
                                 <goal>single</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <!-- @see https://dmp.fabric8.io/#build-configuration -->
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>0.40.2</version>
+                    <configuration>
+                        <buildArchiveOnly>false</buildArchiveOnly>
+                        <outputDirectory>${dist.outputpath}/docker</outputDirectory>
+                        <images>
+                            <image>
+                                <name>%g/${project.artifactId}:%v</name>
+                                <build>
+                                    <from>${docker.baseImage}</from>
+                                    <tags>
+                                        <tag>${project.version}</tag>
+                                        <tag>latest</tag>
+                                    </tags>
+                                    <ports>
+                                        <port>${docker.expose}</port>
+                                    </ports>
+                                    <entryPoint>
+                                        <exec>
+                                            <arg>/app/bin/run</arg>
+                                            <arg>--server.port=${docker.expose}</arg>
+                                        </exec>
+                                    </entryPoint>
+                                    <workdir>/app</workdir>
+                                    <buildOptions>
+                                        <forcerm>1</forcerm>
+                                    </buildOptions>
+                                    <healthCheck>
+                                        <interval>10s</interval>
+                                        <timeout>3s</timeout>
+                                        <retries>3</retries>
+                                        <cmd>curl http://localhost:9000/actuator/health || exit 1</cmd>
+                                    </healthCheck>
+                                    <assembly>
+                                        <mode>dir</mode>
+                                        <name>${project.build.finalName}</name>
+                                        <targetDir>/app</targetDir>
+                                        <descriptor>${project.basedir}/src/main/assembly/bin.xml</descriptor>
+                                        <exportTargetDir>/target</exportTargetDir>
+                                    </assembly>
+                                </build>
+                            </image>
+                        </images>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>build</goal>
+                                <goal>push</goal>
                             </goals>
                         </execution>
                     </executions>

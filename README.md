@@ -144,3 +144,9 @@ public interface UpmsClient {
 1. 为什么不全部响应 200，然后在自定义结果中给出错误提示？
 
 > 业务逻辑的处理前提 api 文档中会说的很清楚，为什么没有运行成功调用接口的客户端应该非常清楚才对。如果是由于其他用户没有执行某种操作导致业务无法继续执行，并不是统一接口设计的问题，而是具体业务场景的问题。
+
+
+```shell
+mvn versions:set -DnewVersion="$APP_VERSION" -DgenerateBackupPoms=false
+mvn -N versions:update-child-modules -DgenerateBackupPoms=false
+```

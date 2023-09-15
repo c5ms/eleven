@@ -8,13 +8,6 @@
     <id>bin</id>
 
 
-    <files>
-        <file>
-            <source>${basedir}/src/main/assembly/Dockerfile</source>
-            <destName>Dockerfile</destName>
-            <fileMode>0755</fileMode>
-        </file>
-    </files>
 
     <fileSets>
 
