@@ -1,10 +1,12 @@
 package com.eleven.upms.domain;
 
-import com.eleven.core.domain.AbstractDomain;
+import com.eleven.core.domain.AbstractAuditableDomain;
+import com.eleven.core.domain.Identifiable;
 import com.eleven.core.security.Principal;
 import com.eleven.core.security.ToPrincipal;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceCreator;
@@ -16,7 +18,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table("upms_authority")
 @Getter
 //@AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
-public class Authority extends AbstractDomain<Authority> {
+public class Authority extends AbstractAuditableDomain {
 
     public static String POWER_ROLE = "role";
     public static String POWER_RESOURCE = "resource";
@@ -81,7 +83,7 @@ public class Authority extends AbstractDomain<Authority> {
      * @param type 类型
      * @return true 表示 是
      */
-    public boolean isStuffTypeBy(String type) {
+    public boolean isPowerTypeBy(String type) {
         if (this.power == null) {
             return false;
         }
@@ -103,7 +105,8 @@ public class Authority extends AbstractDomain<Authority> {
 
     @Getter
     @AllArgsConstructor
-    public static class Power {
+    @NoArgsConstructor
+    public static class Power  implements Identifiable {
 
         @Column("power_type")
         private String type;
@@ -111,12 +114,16 @@ public class Authority extends AbstractDomain<Authority> {
         @Column("power_name")
         private String name;
 
+        @Override
+        public String identity() {
+            return String.format("%s#%s", type, name);
+        }
     }
 
     @Getter
     @AllArgsConstructor
-    public static class Owner {
-
+    @NoArgsConstructor
+    public static class Owner implements Identifiable {
 
         @Column("owner_type")
         private String type;
@@ -124,5 +131,9 @@ public class Authority extends AbstractDomain<Authority> {
         @Column("owner_name")
         private String name;
 
+        @Override
+        public String identity() {
+            return String.format("%s#%s", type, name);
+        }
     }
 }

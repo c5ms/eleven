@@ -10,24 +10,24 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class AbstractDomainListener extends AbstractRelationalEventListener<AbstractDomain<?>> {
+public class AbstractDomainListener extends AbstractRelationalEventListener<AbstractDomain> {
 
     @Override
-    protected void onAfterConvert(AfterConvertEvent<AbstractDomain<?>> event) {
+    protected void onAfterConvert(AfterConvertEvent<AbstractDomain> event) {
         if (null != event.getEntity()) {
             event.getEntity().markOld();
         }
     }
 
     @Override
-    protected void onBeforeSave(BeforeSaveEvent<AbstractDomain<?>> event) {
+    protected void onBeforeSave(BeforeSaveEvent<AbstractDomain> event) {
         if (null != event.getEntity()) {
 
         }
     }
 
     @Override
-    protected void onAfterSave(AfterSaveEvent<AbstractDomain<?>> event) {
+    protected void onAfterSave(AfterSaveEvent<AbstractDomain> event) {
         if (null != event.getEntity()) {
             event.getEntity().markOld();
         }

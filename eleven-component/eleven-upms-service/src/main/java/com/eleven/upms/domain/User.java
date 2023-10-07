@@ -4,8 +4,10 @@ import com.eleven.core.domain.AbstractAuditableDomain;
 import com.eleven.core.security.Principal;
 import com.eleven.core.security.ToPrincipal;
 import com.eleven.core.time.TimeContext;
+import com.eleven.upms.action.UserCreateAction;
+import com.eleven.upms.action.UserUpdateAction;
 import com.eleven.upms.core.UpmsConstants;
-import com.eleven.upms.model.*;
+import com.eleven.upms.dto.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
@@ -17,6 +19,7 @@ import org.springframework.data.annotation.Version;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -24,13 +27,13 @@ import java.util.Objects;
 @Getter
 @FieldNameConstants
 @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
-public class User extends AbstractAuditableDomain<User> implements ToPrincipal {
+public class User extends AbstractAuditableDomain implements ToPrincipal, Serializable {
 
     public static final String TYPE_INNER_USER = "user";
 
     @Id
     @Column("id")
-    private String id;
+    private final String id;
 
     @Version
     @Column("version")
@@ -60,8 +63,6 @@ public class User extends AbstractAuditableDomain<User> implements ToPrincipal {
     @Column("login_at")
     private LocalDateTime loginAt;
 
-
-
     /**
      * 创建新用户
      *
@@ -75,7 +76,6 @@ public class User extends AbstractAuditableDomain<User> implements ToPrincipal {
         this.isLocked = false;
         this.state = ObjectUtils.defaultIfNull(action.getState(), UserState.NORMAL);
         this.registerAt = TimeContext.localDateTime();
-        super.andEvent(new UserCreatedEvent(id));
         super.markNew();
     }
 
@@ -91,7 +91,6 @@ public class User extends AbstractAuditableDomain<User> implements ToPrincipal {
         if (Objects.nonNull(action.getState())) {
             this.state = action.getState();
         }
-        super.andEvent(new UserUpdatedEvent(id));
     }
 
     /**
@@ -108,7 +107,6 @@ public class User extends AbstractAuditableDomain<User> implements ToPrincipal {
      */
     public void lock() {
         this.isLocked = true;
-        super.andEvent(new UserLockedEvent(id));
     }
 
     /**
@@ -116,26 +114,18 @@ public class User extends AbstractAuditableDomain<User> implements ToPrincipal {
      */
     public void unlock() {
         this.isLocked = false;
-        super.andEvent(new UserUnLockedEvent(id));
     }
 
-    /**
-     * 删除
-     */
-    public void delete() {
-        super.andEvent(new UserDeletedEvent(id));
-    }
 
     /**
      * 登入
      */
     public void login() {
-        super.andEvent(new userLoginEvent(id));
         this.loginAt = TimeContext.localDateTime();
     }
 
     @Override
     public Principal toPrincipal() {
-        return new Principal(UpmsConstants.PRINCIPAL_TYPE_USER,this.getId());
+        return new Principal(UpmsConstants.PRINCIPAL_TYPE_USER, this.getId());
     }
 }

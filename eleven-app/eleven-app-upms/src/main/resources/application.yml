@@ -16,8 +16,10 @@ spring:
           hikari:
             max-lifetime: ${db.upms.maxLifetime:30000}
             max-pool-size: ${db.upms.maxSize:5}
-
 eleven:
+  cache:
+    duration: PT8H
+    serializer: jackson
   upms:
     default-password: 123456
   open-api:

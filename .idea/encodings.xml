@@ -1,114 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/core/eleven-core/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/core/eleven-core/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/core/eleven-domain/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/core/eleven-domain/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/core/eleven-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/core/eleven-service/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/core/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/core/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-app/eleven-app-api/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-app/eleven-app-api/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-app/eleven-app-demo/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-app/eleven-app-demo/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-app/eleven-app-deploy/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-app/eleven-app-deploy/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-app/eleven-app-upms-client/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-app/eleven-app-upms-client/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-app/eleven-app-upms/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-app/eleven-app-upms/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-app/eleven-learn/algorithm/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-app/eleven-learn/algorithm/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-app/eleven-learn/eleven-learn-vertx/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-app/eleven-learn/eleven-learn-vertx/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-app/eleven-learn/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-app/eleven-learn/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-app/eleven-luncher-api/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-app/eleven-luncher-api/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-app/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-app/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/core/eleven-api/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/core/eleven-api/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/core/eleven-common-rest/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/core/eleven-core-api/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/core/eleven-core-api/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/core/eleven-core-common/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/core/eleven-core-common/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/core/eleven-core-message/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/core/eleven-core-message/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/core/eleven-core-rest/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/core/eleven-core-rest/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/core/eleven-core-security/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/core/eleven-core-security/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/core/eleven-core/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/core/eleven-core/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/core/eleven-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/core/eleven-service/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/core/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/core/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/education-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/education-service/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/education/education-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/education/education-service/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/education/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/education/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/eleven-app-admin/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/eleven-app-admin/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/eleven-app-gateway/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/eleven-app-gateway/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/eleven-app-upms-core/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/eleven-app-upms-core/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/eleven-cms-core/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/eleven-cms-core/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/eleven-cms-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/eleven-cms-service/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/eleven-upms-client/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/eleven-upms-client/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-component/eleven-upms-core/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-component/eleven-upms-core/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-component/eleven-upms-security/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-component/eleven-upms-security/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-component/eleven-upms-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-component/eleven-upms-service/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/eleven-upms-service/upms-client/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/eleven-upms-service/upms-client/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/eleven-upms-service/upms-core/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/eleven-upms-service/upms-core/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/eleven-upms-service/upms-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/eleven-upms-service/upms-service/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/security/security-upms/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/security/security-upms/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/security/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/security/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-component/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-component/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/upms-client/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/upms-client/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/upms/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/upms/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/upms/upms-api/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/upms/upms-api/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/upms/upms-client/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/upms/upms-client/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/upms/upms-domain/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/upms/upms-security/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/upms/upms-security/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/upms/upms-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-component/upms/upms-service/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-dependencies/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-dependencies/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-domain/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-domain/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-learn/algorithm/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-learn/algorithm/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-module/upms/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-module/upms/upms-domain/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-starter/eleven-starter-cloud-alibaba/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-starter/eleven-starter-cloud-alibaba/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-starter/eleven-starter-cloud-tencent/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eleven-starter/eleven-starter-cloud-tencent/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eleven-starter/eleven-starter-service/src/main/java" charset="UTF-8" />

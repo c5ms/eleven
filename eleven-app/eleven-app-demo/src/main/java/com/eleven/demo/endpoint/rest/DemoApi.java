@@ -1,11 +1,10 @@
 package com.eleven.demo.endpoint.rest;
 
-import com.eleven.core.rest.annonation.AsAdminApi;
-import com.eleven.core.rest.annonation.AsClientApi;
+import com.eleven.core.web.annonation.AsRestApi;
 import com.eleven.core.security.SecurityContext;
 import com.eleven.core.security.Subject;
 import com.eleven.upms.client.UpmsClient;
-import com.eleven.upms.model.UserDto;
+import com.eleven.upms.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +15,7 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/demo")
-@AsAdminApi
+@AsRestApi
 public class DemoApi {
     private final UpmsClient upmsClient;
 

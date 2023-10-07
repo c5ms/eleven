@@ -10,6 +10,26 @@
 
     <version>1.0.0-SNAPSHOT</version>
 
+    <name>eleven</name>
+    <description>Eleven development stack</description>
+
+    <url>http://github.com/fabric8io/docker-maven-plugin</url>
+
+    <organization>
+        <name>demacia</name>
+        <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>Apache 2</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+
+
     <modules>
         <module>eleven-starter</module>
         <module>eleven-component</module>
@@ -51,38 +71,33 @@
         <version.commons-text>1.9</version.commons-text>
         <version.commons-net>3.8.0</version.commons-net>
         <version.commons-vfs2>2.9.0</version.commons-vfs2>
-
-        <!-- 应用开发辅助组件 -->
-        <version.javassist>3.29.2-GA</version.javassist>
-        <version.redisson>3.20.1</version.redisson>
-        <version.jetcache>2.7.3</version.jetcache>
-
-        <!-- 文档生成 -->
-        <version.springdoc>2.1.0</version.springdoc>
-        <version.knife4j>4.1.0</version.knife4j>
-
-        <!-- 办公文档处理 -->
+        <version.modelmapper>3.0.0</version.modelmapper>
         <version.easyPoi>4.4.0</version.easyPoi>
         <version.easyexcel>3.1.1</version.easyexcel>
+        <version.javassist>3.29.2-GA</version.javassist>
+        <version.redisson>3.20.1</version.redisson>
+        <version.jetcache>2.7.4</version.jetcache>
 
         <!-- 数据访问层 -->
         <version.jpa-spec>3.2.5</version.jpa-spec>
         <version.dynamic-datasource>3.6.0</version.dynamic-datasource>
         <version.datasource-micrometer-spring-boot>1.0.2</version.datasource-micrometer-spring-boot>
         <version.mybatis>3.0.1</version.mybatis>
-
-        <!-- logging & tracing -->
-        <version.logstash.starter>1.2.2.RELEASE</version.logstash.starter>
+        <version.kryo5>5.5.0</version.kryo5>
 
         <!-- 开发&运行&监控 -->
+        <version.springdoc>2.1.0</version.springdoc>
+        <version.knife4j>4.3.0</version.knife4j>
         <version.findbugs>3.0.2</version.findbugs>
-        <version.mapstruct>1.4.0.Final</version.mapstruct>
+        <version.mapstruct>1.5.5.Final</version.mapstruct>
+        <version.lombok-mapstruct>0.2.0</version.lombok-mapstruct>
         <version.jmockdata>4.3.0</version.jmockdata>
 
     </properties>
 
     <dependencyManagement>
         <dependencies>
+
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -210,8 +225,27 @@
             <!-- 缓存 -->
             <dependency>
                 <groupId>com.alicp.jetcache</groupId>
-                <artifactId>jetcache-starter-redis-lettuce</artifactId>
+                <artifactId>jetcache-starter-redis</artifactId>
                 <version>${version.jetcache}</version>
+            </dependency>
+
+            <!-- 序列化 -->
+            <dependency>
+                <groupId>com.esotericsoftware.kryo</groupId>
+                <artifactId>kryo5</artifactId>
+                <version>${version.kryo5}</version>
+            </dependency>
+
+            <!-- 对象拷贝 -->
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${version.mapstruct}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.modelmapper</groupId>
+                <artifactId>modelmapper</artifactId>
+                <version>${version.modelmapper}</version>
             </dependency>
 
             <!-- doc -->
@@ -236,30 +270,56 @@
                 <version>${version.knife4j}</version>
             </dependency>
 
-            <!-- logs -->
+            <!-- dev -->
             <dependency>
-                <groupId>com.github.piomin</groupId>
-                <artifactId>logstash-logging-spring-boot-starter</artifactId>
-                <version>${version.logstash.starter}</version>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${version.mapstruct}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${version.mapstruct}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok-mapstruct-binding</artifactId>
+                <version>${version.lombok-mapstruct}</version>
             </dependency>
 
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
+
         <!-- dev -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-            <scope>compile</scope>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok-mapstruct-binding</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+
     </dependencies>
 
     <build>
@@ -472,6 +532,11 @@
                                     <ports>
                                         <port>${docker.expose}</port>
                                     </ports>
+                                    <labels>
+                                        <version>${project.version}</version>
+                                        <app>${project.build.finalName}</app>
+                                    </labels>
+                                    <maintainer>${project.organization.name}</maintainer>
                                     <entryPoint>
                                         <exec>
                                             <arg>/app/bin/run</arg>

@@ -15,23 +15,27 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @FieldNameConstants
-public abstract class AbstractAuditableDomain<T extends AbstractAuditableDomain<T>> extends AbstractDomain<T> {
+public abstract class AbstractAuditableDomain extends AbstractDomain {
+
+    public static final String col_create_by = "create_by";
+    public static final String col_update_by = "update_by";
+    public static final String col_create_at = "create_at";
+    public static final String col_update_at = "update_at";
 
     @CreatedBy
-    @Column(AuditMetadata.col_create_by)
+    @Column(col_create_by)
     private String createBy;
 
     @LastModifiedBy
-    @Column(AuditMetadata.col_update_by)
+    @Column(col_update_by)
     private String updateBy;
 
     @CreatedDate
-    @Column(AuditMetadata.col_create_at)
+    @Column(col_create_at)
     private LocalDateTime createAt;
 
     @LastModifiedDate
-    @Column(AuditMetadata.col_update_at)
+    @Column(col_update_at)
     private LocalDateTime updateAt;
-
 
 }

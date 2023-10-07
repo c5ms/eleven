@@ -1,6 +1,7 @@
 package com.eleven.configure;
 
-import com.eleven.upms.endpoint.admin.UserResourceV1;
+import com.eleven.UpmsApplication;
+import com.eleven.core.web.RestConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.models.GroupedOpenApi;
@@ -13,12 +14,35 @@ import org.springframework.context.annotation.Configuration;
 public class OpenapiConfiguration {
 
     @Bean
-    public GroupedOpenApi upmsApi() {
+    public GroupedOpenApi adminApi() {
         return GroupedOpenApi.builder()
-                .group("upms")
-                .displayName("用户权限")
-                .packagesToScan(UserResourceV1.class.getPackageName())
+                .group("open")
+                .displayName("开放 API")
+                .pathsToMatch(RestConstants.OPEN_API_PREFIX + "/**")
+                .packagesToScan(UpmsApplication.class.getPackageName())
                 .build();
     }
+
+    @Bean
+    public GroupedOpenApi frontApi() {
+        return GroupedOpenApi.builder()
+                .group("front")
+                .displayName("前端 API")
+                .pathsToMatch(RestConstants.FRONT_API_PREFIX + "/**")
+                .packagesToScan(UpmsApplication.class.getPackageName())
+                .build();
+    }
+
+
+    @Bean
+    public GroupedOpenApi innerApi() {
+        return GroupedOpenApi.builder()
+                .group("inner")
+                .displayName("内部 API")
+                .pathsToMatch(RestConstants.INNER_API_PREFIX + "/**")
+                .packagesToScan(UpmsApplication.class.getPackageName())
+                .build();
+    }
+
 
 }

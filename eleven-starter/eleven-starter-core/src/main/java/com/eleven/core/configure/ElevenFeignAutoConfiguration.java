@@ -25,8 +25,8 @@
 
 package com.eleven.core.configure;
 
-import com.eleven.core.rest.feign.ElevenContract;
-import com.eleven.core.rest.feign.ElevenRequestInterceptor;
+import com.eleven.core.web.feign.ElevenContract;
+import com.eleven.core.web.feign.ElevenRequestInterceptor;
 import feign.Contract;
 import feign.Request;
 import feign.RequestInterceptor;

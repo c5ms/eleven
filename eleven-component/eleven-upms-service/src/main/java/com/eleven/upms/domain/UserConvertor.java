@@ -1,34 +1,32 @@
 package com.eleven.upms.domain;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.eleven.upms.model.UserDetail;
-import com.eleven.upms.model.UserDto;
+import com.eleven.upms.dto.UserDto;
+import com.eleven.upms.dto.UserSummary;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.convert.ValueConverter;
+import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class UserConvertor {
+    private final ModelMapper modelMapper;
+    private final AuthorityManager authorityManager;
 
-    private final AuthorityRepository authorityRepository;
+
 
     public UserDto toDto(User user) {
-        var userRecord = BeanUtil.toBean(user, UserDto.class);
-        return userRecord;
-    }
-
-    public UserDetail toDetail(User user) {
-        var detail = BeanUtil.toBean(user, UserDetail.class);
+        var detail = modelMapper.map(user, UserDto.class);
         var owner = Authority.ownerOf(user.toPrincipal());
-        var authorities = authorityRepository.findByOwner(owner);
 
-        var roles = authorities.stream()
-                .filter(authority -> authority.isStuffTypeBy(Authority.POWER_ROLE))
+        // 所有角色
+        authorityManager.authoritiesOf(owner, Authority.POWER_ROLE,Authority.POWER_PERMISSION)
+                .stream()
                 .map(Authority::getPower)
                 .map(Authority.Power::getName)
-                .toList();
-        detail.setRoles(roles);
+                .forEach(detail.getRoles()::add);
 
         return detail;
     }

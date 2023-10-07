@@ -1,5 +1,6 @@
 package com.eleven.core.security;
 
+import com.eleven.core.domain.Identifiable;
 import lombok.Data;
 
 import java.io.Serial;
@@ -10,7 +11,7 @@ import java.util.Objects;
  * 一个访问主体
  */
 @Data
-public class Principal implements Serializable {
+public class Principal implements Serializable, Identifiable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -58,7 +59,7 @@ public class Principal implements Serializable {
      *
      * @return 主体标识
      */
-    public String identify() {
+    public String identity() {
         if (this.type.equals("unknown")) {
             return this.name;
         }
@@ -77,4 +78,6 @@ public class Principal implements Serializable {
     public int hashCode() {
         return Objects.hash(getName(), getType());
     }
+
+
 }

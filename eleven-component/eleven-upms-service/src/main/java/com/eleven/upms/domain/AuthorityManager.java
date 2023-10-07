@@ -5,7 +5,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Component
@@ -21,12 +24,10 @@ public class AuthorityManager {
      * @param powers 权利
      */
     public void grant(Authority.Owner owner, List<Authority.Power> powers) {
-        var authorities = powers.stream()
-                .map(power -> {
-                    var id = domainSupport.nextId();
-                    return new Authority(id, owner, power);
-                })
-                .toList();
+        var authorities = powers.stream().map(power -> {
+            var id = domainSupport.nextId();
+            return new Authority(id, owner, power);
+        }).toList();
         authorityRepository.saveAll(authorities);
     }
 
@@ -52,13 +53,22 @@ public class AuthorityManager {
     /**
      * 读取某持有者所有授权
      *
-     * @param owner 持有着
-     * @return 所有权限
+     * @param owner 持有者
+     * @return 所有授权
      */
-    public List<Authority.Power> powerOf(Authority.Owner owner) {
-        return authorityRepository.findByOwner(owner).stream()
-                .map(Authority::getPower)
-                .toList();
+    public List<Authority> authoritiesOf(Authority.Owner owner) {
+        return authorityRepository.findByOwner(owner).stream().toList();
+    }
+
+    /**
+     * 读取某持有者所有指定类型的权限
+     *
+     * @param owner 持有者
+     * @param power 权限类型
+     * @return 权限表
+     */
+    public List<Authority> authoritiesOf(Authority.Owner owner, String... power) {
+        return authorityRepository.findByOwner(owner.getType(), owner.getName(), Set.of(power)).stream().toList();
     }
 
 }

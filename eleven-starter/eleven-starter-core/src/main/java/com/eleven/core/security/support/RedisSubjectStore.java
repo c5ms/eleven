@@ -22,7 +22,7 @@ public class RedisSubjectStore implements SubjectStore {
     private final RedisTemplate<String, String> redisTemplate;
 
     private String toKey(Principal principal) {
-        return String.format("%s:%s", KEY_PREFIX, principal.identify());
+        return String.format("%s:%s", KEY_PREFIX, principal.identity());
     }
 
     @Override

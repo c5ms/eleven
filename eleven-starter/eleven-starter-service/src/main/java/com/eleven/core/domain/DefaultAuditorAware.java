@@ -20,7 +20,7 @@ public class DefaultAuditorAware implements AuditorAware<String> {
         }
         return Optional.of(SecurityContext.getCurrentSubject())
                 .map(Subject::getPrincipal)
-                .map(Principal::identify);
+                .map(Principal::identity);
     }
 
 }

@@ -2,12 +2,12 @@ spring:
   cloud:
     nacos:
       config:
-        enabled: true
+        enabled: ${ENABLE_NACOS}
         group: ${NACOS_GROUP}
         namespace: ${NACOS_NS}
         server-addr: ${NACOS_HOST}
       discovery:
-        enabled: true
+        enabled: ${ENABLE_NACOS}
         group: ${NACOS_GROUP}
         namespace: ${NACOS_NS}
         server-addr: ${NACOS_HOST}

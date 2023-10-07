@@ -20,7 +20,7 @@ public class SecurityService {
 
     public Subject readSubject(Principal principal) {
         var subject = subjectStore.retrieval(principal);
-        subject.ifPresent(hit -> log.debug("hit existing Subject for {}, {}", hit.getPrincipal().identify(), hit.getNickName()));
+        subject.ifPresent(hit -> log.debug("hit existing Subject for {}, {}", hit.getPrincipal().identity(), hit.getNickName()));
         return subject.orElseGet(() -> {
             var newSubject = createSubject(principal);
             subjectStore.save(principal, newSubject);
@@ -30,14 +30,14 @@ public class SecurityService {
 
     public Subject createSubject(Principal principal) {
         var subject = subjectCreator.createSubject(principal);
-        log.debug("create new subject for {}", principal.identify());
+        log.debug("create new subject for {}", principal.identity());
         return subject;
     }
 
     public Token createToken(Principal principal, TokenDetail detail) {
         var tokenCreator = tokenCreatorOptional.orElseThrow(() -> new RuntimeException("unsupported create Token, no bean TokenCreator can be found"));
         var token = tokenCreator.create(principal, detail);
-        log.debug("create new Token for {}", principal.identify());
+        log.debug("create new Token for {}", principal.identity());
         tokenStore.save(token);
         return token;
     }
@@ -50,7 +50,8 @@ public class SecurityService {
      */
     public Optional<Token> verifyToken(String value) {
         var token = tokenStore.retrieval(value);
-        token.ifPresent(hit -> log.debug("hit existing Token for {}", hit.getPrincipal().identify()));
+        token.ifPresent(hit -> log.debug("hit existing Token for {}", hit.getPrincipal().identity()));
+
 
         return token.filter(exist -> exist.getExpireAt().isAfter(TimeContext.localDateTime()));
     }

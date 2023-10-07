@@ -6,20 +6,34 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface AuthorityRepository extends CrudRepository<Authority, String> {
 
+    Collection<Authority> findByOwner(Authority.Owner owner);
+
     @Modifying
-    @Query("delete from upms_authority where owner_type=:ownerType and owner_name=:ownerName and power_type=:powerType")
+    @Query("delete from upms_authority " +
+            "where owner_type=:ownerType " +
+            "and owner_name=:ownerName " +
+            "and power_type=:powerType")
     void deleteByOwnerAndPowerType(@Param("ownerType") String ownerType,
                                    @Param("ownerName") String ownerName,
                                    @Param("powerType") String powerType);
 
     @Modifying
-    @Query("delete from upms_authority where power_name=:powerName and power_type=:powerType")
+    @Query("delete from upms_authority " +
+            "where power_name=:powerName " +
+            "and power_type=:powerType")
     void deleteByPower(@Param("powerType") String powerType,
                        @Param("powerName") String powerName);
 
-    Collection<Authority> findByOwner(Authority.Owner owner);
+    @Query("select * from upms_authority " +
+            "where owner_type=:ownerType " +
+            "and owner_name=:ownerName " +
+            "and power_type in (:powerType)")
+    Collection<Authority> findByOwner(@Param("ownerType") String ownerType,
+                                      @Param("ownerName") String ownerName,
+                                      @Param("powerType") Collection<String> powerType);
 
 }
