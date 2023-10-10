@@ -1,7 +1,6 @@
 package com.eleven.upms.domain;
 
-import cn.hutool.core.bean.BeanUtil;
-import com.eleven.upms.dto.PowerDto;
+import com.eleven.upms.model.PowerDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;

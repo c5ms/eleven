@@ -2,11 +2,11 @@ package com.eleven.upms.endpoint.front;
 
 import com.eleven.core.domain.PaginationResult;
 import com.eleven.core.web.annonation.AsRestApi;
-import com.eleven.upms.action.UserCreateAction;
-import com.eleven.upms.action.UserUpdateAction;
 import com.eleven.upms.domain.UserService;
-import com.eleven.upms.dto.*;
-import com.eleven.upms.query.UserQuery;
+import com.eleven.upms.model.UserCreateAction;
+import com.eleven.upms.model.UserDto;
+import com.eleven.upms.model.UserQuery;
+import com.eleven.upms.model.UserUpdateAction;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

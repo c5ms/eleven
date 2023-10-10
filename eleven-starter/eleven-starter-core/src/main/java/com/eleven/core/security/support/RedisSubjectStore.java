@@ -33,6 +33,12 @@ public class RedisSubjectStore implements SubjectStore {
     }
 
     @Override
+    public void remove(Principal principal) {
+        var key = toKey(principal);
+        redisTemplate.delete(key);
+    }
+
+    @Override
     public Optional<Subject> retrieval(Principal principal) {
         var key = toKey(principal);
         var valueStr = redisTemplate.opsForValue().get(key);

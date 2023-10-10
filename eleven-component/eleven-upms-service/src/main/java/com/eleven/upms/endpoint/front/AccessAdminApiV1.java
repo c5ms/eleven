@@ -1,12 +1,12 @@
 package com.eleven.upms.endpoint.front;
 
 import cn.hutool.extra.servlet.JakartaServletUtil;
-import com.eleven.core.web.annonation.AsRestApi;
 import com.eleven.core.security.*;
+import com.eleven.core.web.annonation.AsRestApi;
 import com.eleven.upms.core.UpmsConstants;
 import com.eleven.upms.domain.AccessTokenService;
 import com.eleven.upms.domain.UserService;
-import com.eleven.upms.action.AccessTokenCreateAction;
+import com.eleven.upms.model.AccessTokenCreateAction;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;

@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="eleven-upms-client" />
         <module name="eleven-app-demo" />
         <module name="eleven-upms-core" />
         <module name="eleven-upms-service" />
@@ -26,6 +27,7 @@
       <module name="eleven-starter" options="" />
       <module name="eleven-starter-core" options="-parameters" />
       <module name="eleven-starter-service" options="-parameters" />
+      <module name="eleven-upms-client" options="-parameters" />
       <module name="eleven-upms-core" options="-parameters" />
       <module name="eleven-upms-security" options="-parameters" />
       <module name="eleven-upms-service" options="-parameters" />

@@ -1,11 +1,11 @@
 package com.eleven.doney.endpoint.front;
 
-import com.eleven.core.exception.RequireDataNotFoundException;
+import com.eleven.core.exception.DataNotFoundException;
 import com.eleven.core.domain.PaginationResult;
 import com.eleven.core.web.annonation.AsRestApi;
 import com.eleven.doney.domain.MemberService;
 import com.eleven.doney.domain.ProjectService;
-import com.eleven.doney.dto.*;
+import com.eleven.doney.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +36,7 @@ public class ProjectRestApi {
     @Operation(summary = "项目读取")
     @GetMapping("/{id}")
     public ProjectDto getProject(@PathVariable("id") String id) {
-        return projectService.getProject(id).orElseThrow(RequireDataNotFoundException::new);
+        return projectService.getProject(id).orElseThrow(DataNotFoundException::new);
     }
 
     @Operation(summary = "项目创建")

@@ -51,9 +51,16 @@ public class SecurityService {
     public Optional<Token> verifyToken(String value) {
         var token = tokenStore.retrieval(value);
         token.ifPresent(hit -> log.debug("hit existing Token for {}", hit.getPrincipal().identity()));
-
-
         return token.filter(exist -> exist.getExpireAt().isAfter(TimeContext.localDateTime()));
+    }
+
+
+    /**
+     * invalid a token
+     * @param value token value
+     */
+    public void invalidToken(String value) {
+        tokenStore.remove(value);
     }
 
 }

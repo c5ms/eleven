@@ -1,10 +1,10 @@
 package com.eleven.doney.endpoint.front;
 
-import com.eleven.core.exception.RequireDataNotFoundException;
+import com.eleven.core.exception.DataNotFoundException;
 import com.eleven.core.web.annonation.AsRestApi;
 import com.eleven.doney.domain.MemberService;
-import com.eleven.doney.dto.MemberDto;
-import com.eleven.doney.dto.MemberSaveAction;
+import com.eleven.doney.model.MemberDto;
+import com.eleven.doney.model.MemberSaveAction;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class MemberRestApi {
     @Operation(summary = "项目成员读取")
     @GetMapping("/{id}")
     public MemberDto getMembership(@PathVariable("id") String id) {
-        return memberService.getMember(id).orElseThrow(RequireDataNotFoundException::new);
+        return memberService.getMember(id).orElseThrow(DataNotFoundException::new);
     }
 
     @Operation(summary = "项目成员更新")

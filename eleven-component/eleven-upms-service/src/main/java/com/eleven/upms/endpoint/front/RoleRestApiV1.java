@@ -1,11 +1,11 @@
 package com.eleven.upms.endpoint.front;
 
-import com.eleven.core.exception.RequireDataNotFoundException;
+import com.eleven.core.exception.DataNotFoundException;
 import com.eleven.core.web.annonation.AsRestApi;
-import com.eleven.upms.action.RoleCreateAction;
-import com.eleven.upms.action.RoleUpdateAction;
 import com.eleven.upms.domain.RoleService;
-import com.eleven.upms.dto.RoleDto;
+import com.eleven.upms.model.RoleCreateAction;
+import com.eleven.upms.model.RoleDto;
+import com.eleven.upms.model.RoleUpdateAction;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class RoleRestApiV1 {
     @Operation(summary = "角色读取")
     @GetMapping("/{id}")
     public RoleDto getRole(@PathVariable("id") String id) {
-        return roleService.getRole(id).orElseThrow(RequireDataNotFoundException::new);
+        return roleService.getRole(id).orElseThrow(DataNotFoundException::new);
     }
 
     @Operation(summary = "角色创建")

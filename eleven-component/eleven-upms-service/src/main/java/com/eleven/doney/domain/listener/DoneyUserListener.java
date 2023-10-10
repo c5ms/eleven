@@ -2,7 +2,7 @@ package com.eleven.doney.domain.listener;
 
 import com.eleven.doney.domain.MemberRepository;
 import com.eleven.doney.domain.MemberRoleRepository;
-import com.eleven.upms.event.UserDeletedEvent;
+import com.eleven.upms.model.UserDeletedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;

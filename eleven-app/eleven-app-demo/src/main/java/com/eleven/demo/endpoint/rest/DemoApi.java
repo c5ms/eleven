@@ -4,7 +4,7 @@ import com.eleven.core.web.annonation.AsRestApi;
 import com.eleven.core.security.SecurityContext;
 import com.eleven.core.security.Subject;
 import com.eleven.upms.client.UpmsClient;
-import com.eleven.upms.dto.UserDto;
+import com.eleven.upms.model.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +28,7 @@ public class DemoApi {
 //    @RolesAllowed("user")
     @GetMapping("/02")
     public Optional<UserDto> _02() {
-        return upmsClient.readUser("655620230829173521000001");
+        return upmsClient.readUser("654820230908134516000001");
     }
 
 }

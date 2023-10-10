@@ -24,6 +24,7 @@ public interface UpmsConstants {
     ProcessError ERROR_LOGIN_PASSWORD = SimpleProcessError.of(SERVICE_NAME, "login_password_error", "用户名/密码错误");
     ProcessError ERROR_UNSUPPORTED_IDENTITY = SimpleProcessError.of(SERVICE_NAME, "unsupported_identity", "认证方式不支持");
     ProcessError ERROR_USER_NAME_REPEAT = SimpleProcessError.of(SERVICE_NAME, "user_name_repeat", "用户名重复");
+    ProcessError ERROR_USER_ALREADY_DELETED = SimpleProcessError.of(SERVICE_NAME, "user_alreay_deleted", "用户已被删除");
     ProcessError ERROR_ROLE_CODE_REPEAT = SimpleProcessError.of(SERVICE_NAME, "role_code_repeat", "角色代码重复");
 
 }

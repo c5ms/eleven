@@ -1,8 +1,7 @@
 package com.eleven.upms.domain;
 
 import com.eleven.core.domain.DomainRepository;
-import com.eleven.doney.dto.ProjectSummary;
-import com.eleven.upms.dto.UserSummary;
+import com.eleven.upms.model.UserSummary;
 
 import java.util.Optional;
 

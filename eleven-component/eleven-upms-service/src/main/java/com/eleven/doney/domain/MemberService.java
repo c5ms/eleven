@@ -1,10 +1,10 @@
 package com.eleven.doney.domain;
 
-import com.eleven.core.domain.AbstractAuditableDomain;
+import com.eleven.core.domain.AbstractAuditDomain;
 import com.eleven.core.domain.DomainSupport;
 import com.eleven.doney.core.DoneyConstants;
-import com.eleven.doney.dto.MemberDto;
-import com.eleven.doney.dto.MemberSaveAction;
+import com.eleven.doney.model.MemberDto;
+import com.eleven.doney.model.MemberSaveAction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
@@ -36,13 +36,13 @@ public class MemberService {
     }
 
     public void deleteMember(String id) {
-        var membership = memberRepository.requireById(id);
-        memberRepository.delete(membership);
+        var member = memberRepository.requireById(id);
+        memberRepository.delete(member);
     }
 
     public Optional<List<MemberDto>> listMembersOfProject(String pid) {
         return projectRepository.findById(pid).map(project -> {
-            var sort = Sort.by(AbstractAuditableDomain.Fields.createAt).descending();
+            var sort = Sort.by(AbstractAuditDomain.Fields.createAt).descending();
             return memberRepository.findByProjectId(pid, sort)
                     .stream()
                     .map(memberConvertor::toDto)
@@ -55,10 +55,10 @@ public class MemberService {
             throw DoneyConstants.ERROR_MEMBER_EXIST.exception();
         }
         return projectRepository.findById(pid).map(project -> {
-            var memberId = domainSupport.nextId();
-            var membership = new Member(memberId, pid, action);
-            memberRepository.save(membership);
-            return memberConvertor.toDto(membership);
+            var id = domainSupport.getNextId();
+            var member = new Member(id, pid, action);
+            memberRepository.save(member);
+            return memberConvertor.toDto(member);
         });
     }
 

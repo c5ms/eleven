@@ -1,9 +1,9 @@
 package com.eleven.doney.domain;
 
-import com.eleven.core.domain.AbstractAuditableDomain;
+import com.eleven.core.domain.AbstractAuditDomain;
 import com.eleven.core.domain.Deletable;
 import com.eleven.core.time.TimeContext;
-import com.eleven.doney.dto.ProjectSaveAction;
+import com.eleven.doney.model.ProjectSaveAction;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 @FieldNameConstants
 @RequiredArgsConstructor
 @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
-public class Project extends AbstractAuditableDomain implements Serializable, Deletable {
+public class Project extends AbstractAuditDomain implements Serializable, Deletable {
 
     @Id
     @Column("id")

@@ -1,7 +1,7 @@
 package com.eleven.doney.domain;
 
 import cn.hutool.core.util.RandomUtil;
-import com.eleven.doney.dto.IssueDto;
+import com.eleven.doney.model.IssueDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;

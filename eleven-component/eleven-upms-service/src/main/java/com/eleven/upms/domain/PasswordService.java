@@ -13,11 +13,11 @@ public class PasswordService {
     private final UpmsProperties upmsProperties;
     private final PasswordEncoder passwordEncoder;
 
-    public String defaultPassword(){
+    public String defaultPassword() {
         return passwordEncoder.encode(upmsProperties.getDefaultPassword());
     }
 
     public boolean valid(String raw, String encode) {
-       return passwordEncoder.matches(raw, encode);
+        return passwordEncoder.matches(raw, encode);
     }
 }

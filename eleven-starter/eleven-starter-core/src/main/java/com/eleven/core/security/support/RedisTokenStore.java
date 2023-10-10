@@ -34,6 +34,12 @@ public class RedisTokenStore implements TokenStore {
     }
 
     @Override
+    public void remove(String tokenValue) {
+        var key = toKey(tokenValue);
+        redisTemplate.delete(key);
+    }
+
+    @Override
     public Optional<Token> retrieval(String tokenValue) {
         var key = toKey(tokenValue);
         var valueStr = redisTemplate.opsForValue().get(key);

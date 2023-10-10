@@ -38,21 +38,27 @@ public class ElevenAuthenticationManager implements AuthenticationManager {
             }
 
             var token = securityService.verifyToken(authToken.getToken()).orElse(null);
-
             if (null == token) {
                 return createAnonymous(authentication);
             }
 
-            var principal = token.getPrincipal();
-            var subject = securityService.readSubject(principal);
+            // token is existing, but can not read subject for this token
+            try {
+                var principal = token.getPrincipal();
+                var subject = securityService.readSubject(principal);
 
-            // if token is created after subject, refresh subject for new token,
-            // it's almost like the user re-login.
-            if (token.getCreateAt().isAfter(subject.getCreateAt())) {
-                subject = securityService.createSubject(principal);
+                // if token is created after subject, refresh subject for new token,
+                // it's almost like the user re-login.
+                if (token.getCreateAt().isAfter(subject.getCreateAt())) {
+                    subject = securityService.createSubject(principal);
+                }
+
+                return new ElevenAuthentication(subject, principal, token);
+            } catch (Exception e) {
+                securityService.invalidToken(token.getValue());
+                log.warn("token 无效", e);
+                return createAnonymous(authentication);
             }
-
-            return new ElevenAuthentication(subject, principal, token);
 
         } catch (Exception e) {
             log.warn("认证错误", e);

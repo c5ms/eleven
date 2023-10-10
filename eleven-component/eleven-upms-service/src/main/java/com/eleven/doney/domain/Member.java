@@ -1,14 +1,13 @@
 package com.eleven.doney.domain;
 
-import com.eleven.core.domain.AbstractAuditableDomain;
-import com.eleven.doney.dto.MemberSaveAction;
+import com.eleven.core.domain.AbstractAuditDomain;
+import com.eleven.doney.model.MemberSaveAction;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.InsertOnlyProperty;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -20,7 +19,7 @@ import java.util.List;
 @Getter
 @FieldNameConstants
 @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
-public class Member extends AbstractAuditableDomain implements Serializable {
+public class Member extends AbstractAuditDomain implements Serializable {
 
     @Id
     @Column("id")

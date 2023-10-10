@@ -21,7 +21,10 @@
         <dependency>
             <groupId>com.demacia</groupId>
             <artifactId>eleven-upms-service</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.demacia</groupId>
+            <artifactId>eleven-upms-security</artifactId>
         </dependency>
     </dependencies>
 

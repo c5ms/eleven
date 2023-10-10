@@ -1,13 +1,13 @@
 package com.eleven.upms.domain;
 
-import com.eleven.core.domain.AbstractAuditableDomain;
+import com.eleven.core.domain.AbstractDeletableDomain;
 import com.eleven.core.security.Principal;
 import com.eleven.core.security.ToPrincipal;
 import com.eleven.core.time.TimeContext;
-import com.eleven.upms.action.UserCreateAction;
-import com.eleven.upms.action.UserUpdateAction;
 import com.eleven.upms.core.UpmsConstants;
-import com.eleven.upms.dto.*;
+import com.eleven.upms.model.UserCreateAction;
+import com.eleven.upms.model.UserState;
+import com.eleven.upms.model.UserUpdateAction;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
@@ -27,7 +27,7 @@ import java.util.Objects;
 @Getter
 @FieldNameConstants
 @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
-public class User extends AbstractAuditableDomain implements ToPrincipal, Serializable {
+public class User extends AbstractDeletableDomain implements ToPrincipal, Serializable {
 
     public static final String TYPE_INNER_USER = "user";
 
@@ -62,6 +62,7 @@ public class User extends AbstractAuditableDomain implements ToPrincipal, Serial
 
     @Column("login_at")
     private LocalDateTime loginAt;
+
 
     /**
      * 创建新用户
@@ -116,6 +117,9 @@ public class User extends AbstractAuditableDomain implements ToPrincipal, Serial
         this.isLocked = false;
     }
 
+    public boolean hasEverLoggedIn() {
+        return Objects.nonNull(loginAt);
+    }
 
     /**
      * 登入

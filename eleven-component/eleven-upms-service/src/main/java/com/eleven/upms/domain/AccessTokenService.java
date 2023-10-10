@@ -2,7 +2,7 @@ package com.eleven.upms.domain;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.eleven.core.security.Token;
-import com.eleven.upms.event.AccessTokenCreatedEvent;
+import com.eleven.upms.model.AccessTokenCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,4 +26,7 @@ public class AccessTokenService {
     }
 
 
+    public void deleteToken(String token) {
+        accessTokenRepository.deleteById(token);
+    }
 }

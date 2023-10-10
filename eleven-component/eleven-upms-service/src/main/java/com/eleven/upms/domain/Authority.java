@@ -1,6 +1,6 @@
 package com.eleven.upms.domain;
 
-import com.eleven.core.domain.AbstractAuditableDomain;
+import com.eleven.core.domain.AbstractAuditDomain;
 import com.eleven.core.domain.Identifiable;
 import com.eleven.core.security.Principal;
 import com.eleven.core.security.ToPrincipal;
@@ -18,7 +18,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table("upms_authority")
 @Getter
 //@AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
-public class Authority extends AbstractAuditableDomain {
+public class Authority extends AbstractAuditDomain {
 
     public static String POWER_ROLE = "role";
     public static String POWER_RESOURCE = "resource";
@@ -106,7 +106,7 @@ public class Authority extends AbstractAuditableDomain {
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class Power  implements Identifiable {
+    public static class Power implements Identifiable {
 
         @Column("power_type")
         private String type;

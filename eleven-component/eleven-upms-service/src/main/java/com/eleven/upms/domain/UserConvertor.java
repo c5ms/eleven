@@ -1,8 +1,6 @@
 package com.eleven.upms.domain;
 
-import cn.hutool.core.bean.BeanUtil;
-import com.eleven.upms.dto.UserDto;
-import com.eleven.upms.dto.UserSummary;
+import com.eleven.upms.model.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -16,13 +14,12 @@ public class UserConvertor {
     private final AuthorityManager authorityManager;
 
 
-
     public UserDto toDto(User user) {
         var detail = modelMapper.map(user, UserDto.class);
         var owner = Authority.ownerOf(user.toPrincipal());
 
         // 所有角色
-        authorityManager.authoritiesOf(owner, Authority.POWER_ROLE,Authority.POWER_PERMISSION)
+        authorityManager.authoritiesOf(owner, Authority.POWER_ROLE, Authority.POWER_PERMISSION)
                 .stream()
                 .map(Authority::getPower)
                 .map(Authority.Power::getName)

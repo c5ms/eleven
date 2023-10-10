@@ -1,10 +1,10 @@
 package com.eleven.doney.domain;
 
-import com.eleven.core.domain.AbstractAuditableDomain;
+import com.eleven.core.domain.AbstractAuditDomain;
 import com.eleven.core.domain.DomainSupport;
 import com.eleven.core.domain.PaginationResult;
 import com.eleven.doney.core.DoneyConstants;
-import com.eleven.doney.dto.*;
+import com.eleven.doney.model.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -24,8 +24,6 @@ import java.util.stream.Collectors;
 public class ProjectService {
     private final ProjectConvertor projectConvertor;
     private final ProjectRepository projectRepository;
-    private final MemberRepository memberRepository;
-    private final MemberConvertor memberConvertor;
     private final DomainSupport domainSupport;
 
     public Optional<ProjectDto> getProject(String id) {
@@ -37,7 +35,7 @@ public class ProjectService {
         if (projectRepository.existsByCode(action.getCode())) {
             throw DoneyConstants.ERROR_PROJECT_CODE_EXIST.exception();
         }
-        var id = domainSupport.nextId();
+        var id = domainSupport.getNextId();
         var project = new Project(id);
         project.initial(action);
         projectRepository.save(project);
@@ -55,8 +53,6 @@ public class ProjectService {
     public void deleteProject(String id) {
         var project = projectRepository.requireById(id);
         project.delete();
-        // TODO do we need delete member and role related to this project?
-        // no,we delete project by soft flag and reserved all it's properties.
         projectRepository.save(project);
     }
 
@@ -70,17 +66,24 @@ public class ProjectService {
             criteria = criteria.and(Criteria.where(Project.Fields.title).like(StringUtils.trim(filter.getTitle()) + "%"));
         }
 
-        var sort = Sort.by(AbstractAuditableDomain.Fields.createAt).descending();
+        var sort = Sort.by(AbstractAuditDomain.Fields.createAt).descending();
         var query = Query.query(criteria).sort(sort);
         var page = domainSupport.queryPage(query, Project.class, filter.getPage(), filter.getSize());
         return page.map(projectConvertor::toDto);
     }
 
-    public List<ProjectDto> listProjects() {
-        var sort = Sort.by(AbstractAuditableDomain.Fields.createAt).descending();
-        var query = Query.query(Criteria.empty()).sort(sort);
 
+    public List<ProjectDto> listAllProjects(){
+        var sort = Sort.by(AbstractAuditDomain.Fields.createAt).descending();
+        var criteria = Criteria.empty().and(Criteria.where(Project.Fields.deleteAt).isNull());
+        var query = Query.query(criteria).sort(sort);
         return domainSupport.query(query, Project.class)
+                .stream()
+                .map(projectConvertor::toDto)
+                .collect(Collectors.toList());
+    }
+    public List<ProjectDto> listProjectsOfMember(String userId) {
+        return  projectRepository.findAllByMember(userId)
                 .stream()
                 .map(projectConvertor::toDto)
                 .collect(Collectors.toList());

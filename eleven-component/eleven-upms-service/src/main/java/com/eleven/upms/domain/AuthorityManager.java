@@ -5,8 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -14,8 +12,8 @@ import java.util.Set;
 @Component
 @RequiredArgsConstructor
 public class AuthorityManager {
-    private final DomainSupport domainSupport;
     private final AuthorityRepository authorityRepository;
+    private final DomainSupport domainSupport;
 
     /**
      * 授权
@@ -25,7 +23,7 @@ public class AuthorityManager {
      */
     public void grant(Authority.Owner owner, List<Authority.Power> powers) {
         var authorities = powers.stream().map(power -> {
-            var id = domainSupport.nextId();
+            var id = domainSupport.getNextId();
             return new Authority(id, owner, power);
         }).toList();
         authorityRepository.saveAll(authorities);
@@ -42,6 +40,15 @@ public class AuthorityManager {
     }
 
     /**
+     * 撤销某持有者所有授权
+     *
+     * @param owner 持有者
+     */
+    public void revoke(Authority.Owner owner) {
+        authorityRepository.deleteByOwner(owner.getType(), owner.getName());
+    }
+
+    /**
      * 撤销某个权限所有授权
      *
      * @param power 权限
@@ -49,6 +56,7 @@ public class AuthorityManager {
     public void revoke(Authority.Power power) {
         authorityRepository.deleteByPower(power.getType(), power.getName());
     }
+
 
     /**
      * 读取某持有者所有授权

@@ -32,14 +32,6 @@ public interface ProcessError {
         return ProcessRuntimeException.of(this);
     }
 
-    /**
-     * 使用指定消息生产一个异常
-     *
-     * @param message 消息
-     * @return 异常
-     */
-    default ProcessRuntimeException exception(String message) {
-        return ProcessRuntimeException.of(this, message);
-    }
+
 
 }

@@ -1,6 +1,7 @@
 package com.eleven.doney.domain;
 
 import com.eleven.core.domain.DomainRepository;
+import com.eleven.doney.domain.Issue;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;

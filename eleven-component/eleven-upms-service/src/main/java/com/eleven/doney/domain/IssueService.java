@@ -1,11 +1,11 @@
 package com.eleven.doney.domain;
 
-import com.eleven.core.domain.AbstractAuditableDomain;
+import com.eleven.core.domain.AbstractAuditDomain;
 import com.eleven.core.domain.DomainSupport;
 import com.eleven.core.domain.PaginationResult;
-import com.eleven.doney.dto.IssueDto;
-import com.eleven.doney.dto.IssueQuery;
-import com.eleven.doney.dto.IssueSaveAction;
+import com.eleven.doney.model.IssueDto;
+import com.eleven.doney.model.IssueQuery;
+import com.eleven.doney.model.IssueSaveAction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -30,7 +30,7 @@ public class IssueService {
     }
 
     public IssueDto createIssue(IssueSaveAction action) {
-        var id = domainSupport.nextId();
+        var id = domainSupport.getNextId();
         var issue = new Issue(id,action);
         issueRepository.save(issue);
         return issueConvertor.toDto(issue);
@@ -58,7 +58,7 @@ public class IssueService {
             criteria = criteria.and(Criteria.where(Issue.Fields.projectId).is(filter.getProjectId()));
         }
 
-        var sort = Sort.by(AbstractAuditableDomain.Fields.createAt).descending();
+        var sort = Sort.by(AbstractAuditDomain.Fields.createAt).descending();
         var query = Query.query(criteria).sort(sort);
         var page = domainSupport.queryPage(query, Issue.class, filter.getPage(), filter.getSize());
         return page.map(issueConvertor::toDto);

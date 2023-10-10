@@ -1,5 +1,6 @@
 package com.eleven.core.domain;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jdbc.core.JdbcAggregateTemplate;
@@ -9,10 +10,10 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 @Component
 @RequiredArgsConstructor
 public class DomainSupport {
-
     private final JdbcAggregateTemplate jdbcAggregateTemplate;
     private final IdentityGenerator identityGenerator;
 
@@ -41,9 +42,9 @@ public class DomainSupport {
      * @return 查询结果
      */
     public <T> List<T> query(Query query, Class<T> domain) {
-        List<T> list= new ArrayList<>();
+        List<T> list = new ArrayList<>();
         jdbcAggregateTemplate.findAll(query, domain).forEach(list::add);
-        return  list;
+        return list;
     }
 
 
@@ -52,7 +53,7 @@ public class DomainSupport {
      *
      * @return ID
      */
-    public String nextId() {
+    public String getNextId() {
         return identityGenerator.next();
     }
 

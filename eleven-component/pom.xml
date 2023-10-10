@@ -16,7 +16,28 @@
         <module>eleven-upms-core</module>
         <module>eleven-upms-security</module>
         <module>eleven-upms-service</module>
+        <module>eleven-upms-client</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.demacia</groupId>
+                <artifactId>eleven-upms-client</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.demacia</groupId>
+                <artifactId>eleven-upms-service</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.demacia</groupId>
+                <artifactId>eleven-upms-security</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 
 </project>

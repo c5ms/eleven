@@ -22,11 +22,6 @@ public class ProcessRuntimeException extends RuntimeException {
     public static ProcessRuntimeException of(ProcessError error) {
         return new ProcessRuntimeException(error);
     }
-
-    public static ProcessRuntimeException of(ProcessError error, String message) {
-        return new ProcessRuntimeException(error, message);
-    }
-
     @Override
     public synchronized Throwable fillInStackTrace() {
         return this;

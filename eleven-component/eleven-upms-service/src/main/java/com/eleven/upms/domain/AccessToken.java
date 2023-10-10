@@ -2,14 +2,17 @@ package com.eleven.upms.domain;
 
 import com.eleven.core.domain.AbstractDomain;
 import com.eleven.core.security.Principal;
+import com.eleven.core.security.ToPrincipal;
 import com.eleven.core.security.Token;
 import com.eleven.core.security.TokenDetail;
+import com.eleven.core.time.TimeContext;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.With;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Embedded;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
@@ -34,19 +37,16 @@ public class AccessToken extends AbstractDomain {
     @Column("expire_at")
     private LocalDateTime expireAt;
 
-    @Column("principal_name")
-    private String principalName;
-
-    @Column("principal_type")
-    private String principalType;
+    @Embedded.Nullable
+    private Owner owner;
 
     @Column("client_ip")
     private String clientIp;
 
+
     public AccessToken(Token token) {
         this.token = token.getValue();
-        this.principalName = token.getPrincipal().getName();
-        this.principalType = token.getPrincipal().getType();
+        this.owner = new Owner(token.getPrincipal());
         this.clientIp = token.getDetail().getClientIp();
         this.issuer = token.getIssuer();
         this.expireAt = token.getExpireAt();
@@ -54,7 +54,6 @@ public class AccessToken extends AbstractDomain {
         super.markNew();
 
     }
-
 
     /**
      * 将令牌转换为服务器内部令牌对象
@@ -68,13 +67,37 @@ public class AccessToken extends AbstractDomain {
                 .setValue(accessToken.getToken())
                 .setExpireAt(accessToken.getExpireAt())
                 .setCreateAt(accessToken.getCreateAt())
-                .setPrincipal(new Principal(accessToken.getPrincipalType(), accessToken.getPrincipalName()))
+                .setPrincipal(accessToken.getOwner().toPrincipal())
                 .setDetail(new TokenDetail().setClientIp(accessToken.getClientIp()));
     }
 
+    public void expire() {
+        this.expireAt = TimeContext.localDateTime();
+    }
 
     @Override
     public String getId() {
         return this.token;
+    }
+
+    @Getter
+    @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
+    public static class Owner implements ToPrincipal {
+
+        @Column("principal_name")
+        private String name;
+
+        @Column("principal_type")
+        private String type;
+
+        public Owner(Principal principal) {
+            this.name = principal.getName();
+            this.type = principal.getType();
+        }
+
+        @Override
+        public Principal toPrincipal() {
+            return new Principal(this.type, this.name);
+        }
     }
 }

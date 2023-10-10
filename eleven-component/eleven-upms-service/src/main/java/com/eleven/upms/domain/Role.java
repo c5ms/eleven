@@ -1,8 +1,8 @@
 package com.eleven.upms.domain;
 
-import com.eleven.core.domain.AbstractAuditableDomain;
-import com.eleven.upms.action.RoleCreateAction;
-import com.eleven.upms.action.RoleUpdateAction;
+import com.eleven.core.domain.AbstractAuditDomain;
+import com.eleven.upms.model.RoleCreateAction;
+import com.eleven.upms.model.RoleUpdateAction;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.With;
@@ -15,7 +15,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @With
 @Getter
 @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
-public class Role extends AbstractAuditableDomain {
+public class Role extends AbstractAuditDomain {
 
     @Id
     @Column("id")

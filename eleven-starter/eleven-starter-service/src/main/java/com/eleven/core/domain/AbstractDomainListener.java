@@ -22,7 +22,6 @@ public class AbstractDomainListener extends AbstractRelationalEventListener<Abst
     @Override
     protected void onBeforeSave(BeforeSaveEvent<AbstractDomain> event) {
         if (null != event.getEntity()) {
-
         }
     }
 

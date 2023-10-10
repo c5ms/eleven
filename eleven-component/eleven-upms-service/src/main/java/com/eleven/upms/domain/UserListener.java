@@ -1,8 +1,7 @@
 package com.eleven.upms.domain;
 
-import com.eleven.core.event.ElevenEvent;
-import com.eleven.upms.event.UserCreatedEvent;
-import com.eleven.upms.event.UserUpdatedEvent;
+import com.eleven.upms.model.UserCreatedEvent;
+import com.eleven.upms.model.UserUpdatedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -26,9 +25,5 @@ public class UserListener {
         log.debug("用户更新:{}", event.userId());
     }
 
-    @EventListener(ElevenEvent.class)
-    public void on(ElevenEvent event) {
-        log.debug("事件发生:{}", event);
-    }
 
 }

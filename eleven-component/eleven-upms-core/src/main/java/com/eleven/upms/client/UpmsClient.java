@@ -3,7 +3,7 @@ package com.eleven.upms.client;
 import com.eleven.core.security.Subject;
 import com.eleven.core.security.Token;
 import com.eleven.upms.core.UpmsConstants;
-import com.eleven.upms.dto.UserDto;
+import com.eleven.upms.model.UserDto;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Primary;
@@ -17,9 +17,9 @@ import java.util.Optional;
 public interface UpmsClient {
 
     // unused
-    @Operation(summary = "读取令牌")
-    @GetMapping("/readToken")
-    Optional<Token> readToken(@RequestParam("token") String token);
+//    @Operation(summary = "读取令牌")
+//    @GetMapping("/readToken")
+//    Optional<Token> readToken(@RequestParam("token") String token);
 
     @Operation(summary = "读取用户")
     @GetMapping("/readUser")

@@ -3,9 +3,9 @@ package com.eleven.upms.domain;
 import com.eleven.core.domain.DomainSupport;
 import com.eleven.core.exception.ProcessRuntimeException;
 import com.eleven.upms.core.UpmsConstants;
-import com.eleven.upms.action.RoleCreateAction;
-import com.eleven.upms.dto.RoleDto;
-import com.eleven.upms.action.RoleUpdateAction;
+import com.eleven.upms.model.RoleCreateAction;
+import com.eleven.upms.model.RoleDto;
+import com.eleven.upms.model.RoleUpdateAction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -35,7 +35,7 @@ public class RoleService {
     }
 
     public RoleDto createRole(RoleCreateAction action) {
-        var id = domainSupport.nextId();
+        var id = domainSupport.getNextId();
         var role = new Role(id, action);
         validate(role);
         roleRepository.save(role);

@@ -1,6 +1,7 @@
 package com.eleven.core.web;
 
-import com.eleven.core.exception.RequireDataNotFoundException;
+import com.eleven.core.constants.ElevenConstants;
+import com.eleven.core.exception.DataNotFoundException;
 import com.eleven.core.exception.ProcessRuntimeException;
 import com.eleven.core.web.exception.ClientErrorException;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -11,7 +12,6 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -41,7 +41,7 @@ public class ElevenExceptionAdvice {
     @ExceptionHandler({
             NoHandlerFoundException.class,
             HttpRequestMethodNotSupportedException.class,
-            RequireDataNotFoundException.class
+            DataNotFoundException.class
     })
     public void notfound() {
 
@@ -66,14 +66,14 @@ public class ElevenExceptionAdvice {
                 .sorted(Comparator.naturalOrder())
                 .collect(Collectors.joining(";"));
 
-        return RestResponse.Failure.of(RestConstants.ERROR_VALIDATE_FAILURE).setMessage(msg);
+        return RestResponse.Failure.of(ElevenConstants.ERROR_VALIDATE_FAILURE).setMessage(msg);
     }
 
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({ HttpMessageConversionException.class})
     public RestResponse.Failure on(HttpMessageConversionException e) {
-        return RestResponse.Failure.of(RestConstants.ERROR_VALIDATE_FAILURE);
+        return RestResponse.Failure.of(ElevenConstants.ERROR_VALIDATE_FAILURE);
     }
 
     // 处理拒绝 - 422

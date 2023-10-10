@@ -6,7 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Collection;
-import java.util.List;
 
 public interface AuthorityRepository extends CrudRepository<Authority, String> {
 
@@ -20,6 +19,7 @@ public interface AuthorityRepository extends CrudRepository<Authority, String> {
     void deleteByOwnerAndPowerType(@Param("ownerType") String ownerType,
                                    @Param("ownerName") String ownerName,
                                    @Param("powerType") String powerType);
+
 
     @Modifying
     @Query("delete from upms_authority " +
@@ -35,5 +35,13 @@ public interface AuthorityRepository extends CrudRepository<Authority, String> {
     Collection<Authority> findByOwner(@Param("ownerType") String ownerType,
                                       @Param("ownerName") String ownerName,
                                       @Param("powerType") Collection<String> powerType);
+
+
+    @Modifying
+    @Query("delete from upms_authority " +
+            "where owner_type=:ownerType " +
+            "and owner_name=:ownerName ")
+    void deleteByOwner(@Param("ownerType") String ownerType,
+                       @Param("ownerName") String ownerName);
 
 }

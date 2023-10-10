@@ -1,20 +1,14 @@
 package com.eleven.upms.domain;
 
 import cn.hutool.extra.spring.SpringUtil;
-import com.eleven.core.domain.AbstractAuditableDomain;
+import com.eleven.core.domain.AbstractAuditDomain;
+import com.eleven.core.domain.AbstractDeletableDomain;
 import com.eleven.core.domain.DomainSupport;
-import com.eleven.core.exception.ProcessRuntimeException;
 import com.eleven.core.domain.PaginationResult;
+import com.eleven.core.exception.ProcessRuntimeException;
 import com.eleven.core.security.Principal;
-import com.eleven.upms.action.UserCreateAction;
-import com.eleven.upms.action.UserUpdateAction;
-import com.eleven.upms.event.UserCreatedEvent;
-import com.eleven.upms.event.UserDeletedEvent;
-import com.eleven.upms.event.UserUpdatedEvent;
-import com.eleven.upms.event.userLoginEvent;
 import com.eleven.upms.core.UpmsConstants;
-import com.eleven.upms.dto.*;
-import com.eleven.upms.query.UserQuery;
+import com.eleven.upms.model.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
@@ -35,10 +29,10 @@ import java.util.Optional;
 public class UserService {
 
     private final UserConvertor userConvertor;
-    private final DomainSupport domainSupport;
     private final PasswordService passwordService;
     private final UserRepository userRepository;
     private final AuthorityManager authorityManager;
+    private final DomainSupport domainSupport;
 
     @Transactional(readOnly = true)
     public PaginationResult<UserDto> queryUserPage(UserQuery filter) {
@@ -55,6 +49,10 @@ public class UserService {
         if (BooleanUtils.isTrue(filter.getIsLocked())) {
             criteria = criteria.and(Criteria.where(User.Fields.isLocked).is(true));
         }
+
+        // not deleted yet
+        criteria = criteria.and(Criteria.where(AbstractDeletableDomain.Fields.deleteAt).isNull());
+
         if (Objects.nonNull(filter.getRanges())) {
             var ranges = Criteria.empty();
             for (UserQuery.Range range : filter.getRanges()) {
@@ -65,7 +63,7 @@ public class UserService {
             }
             criteria = criteria.and(ranges);
         }
-        var query = Query.query(criteria).sort(Sort.by(AbstractAuditableDomain.Fields.createAt).descending());
+        var query = Query.query(criteria).sort(Sort.by(AbstractAuditDomain.Fields.createAt).descending());
         var page = domainSupport.queryPage(query, User.class, filter.getPage(), filter.getSize());
         return page.map(userConvertor::toDto);
     }
@@ -78,7 +76,7 @@ public class UserService {
 
     @Transactional(rollbackFor = Exception.class)
     public UserDto createUser(UserCreateAction action) {
-        var id = domainSupport.nextId();
+        var id = domainSupport.getNextId();
         var user = new User(id, action);
         validate(user);
         user.setPassword(passwordService.defaultPassword());
@@ -103,7 +101,8 @@ public class UserService {
     public void deleteUser(String uid) {
         var user = userRepository.requireById(uid);
         SpringUtil.publishEvent(new UserDeletedEvent(uid));
-        userRepository.delete(user);
+        user.delete();
+        userRepository.save(user);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -116,6 +115,9 @@ public class UserService {
         var pass = passwordService.valid(password, user.getPassword());
         if (!pass) {
             throw UpmsConstants.ERROR_LOGIN_PASSWORD.exception();
+        }
+        if (user.isDeleted()) {
+            throw UpmsConstants.ERROR_USER_ALREADY_DELETED.exception();
         }
         user.login();
         userRepository.save(user);

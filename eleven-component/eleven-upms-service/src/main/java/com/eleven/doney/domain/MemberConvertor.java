@@ -1,7 +1,7 @@
 package com.eleven.doney.domain;
 
 import com.eleven.core.domain.BeanConvertor;
-import com.eleven.doney.dto.MemberDto;
+import com.eleven.doney.model.MemberDto;
 import com.eleven.upms.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
