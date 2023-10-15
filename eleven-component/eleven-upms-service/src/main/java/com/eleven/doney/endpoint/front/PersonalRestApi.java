@@ -28,9 +28,11 @@ public class PersonalRestApi {
     public List<ProjectDto> listMyProjects() {
         var subject = SecurityContext.getCurrentSubject();
         if (subject.isAnonymous()){
+            log.info("load project list for anonymous");
 //            return new ArrayList<>();
             projectService.listAllProjects();
         }
+        log.info("load project list for {}",subject.getNickName());
         return projectService.listProjectsOfMember(subject.getUserId());
     }
 

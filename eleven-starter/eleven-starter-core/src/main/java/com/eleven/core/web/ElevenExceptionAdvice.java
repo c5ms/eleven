@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -36,24 +37,6 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class ElevenExceptionAdvice {
 
-    // 资源不存在 404
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler({
-            NoHandlerFoundException.class,
-            HttpRequestMethodNotSupportedException.class,
-            DataNotFoundException.class
-    })
-    public void notfound() {
-
-    }
-
-    // 权限不足 - 403
-    @ResponseBody
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ExceptionHandler(AccessDeniedException.class)
-    public void on() {
-
-    }
 
     // 校验失败 - 400
     @ResponseBody
@@ -65,16 +48,9 @@ public class ElevenExceptionAdvice {
                 .filter(StringUtils::isNotBlank)
                 .sorted(Comparator.naturalOrder())
                 .collect(Collectors.joining(";"));
-
         return RestResponse.Failure.of(ElevenConstants.ERROR_VALIDATE_FAILURE).setMessage(msg);
     }
 
-    @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({ HttpMessageConversionException.class})
-    public RestResponse.Failure on(HttpMessageConversionException e) {
-        return RestResponse.Failure.of(ElevenConstants.ERROR_VALIDATE_FAILURE);
-    }
 
     // 处理拒绝 - 422
     @ResponseBody
@@ -85,19 +61,44 @@ public class ElevenExceptionAdvice {
     }
 
 
-    // customs client error
+    // others
     @ResponseBody
-    @ExceptionHandler(ClientErrorException.class)
-    public ResponseEntity<?> on(ClientErrorException e) {
-        return ResponseEntity.status(e.getStatus()).build();
+    @ExceptionHandler({Exception.class,})
+    public ResponseEntity<?> onNotSupport(Exception e) {
+        HttpStatus status;
+
+        // 403
+        if (e instanceof AccessDeniedException) {
+            status = HttpStatus.FORBIDDEN;
+        }
+        //404
+        else if (e instanceof NoHandlerFoundException) {
+            status = HttpStatus.NOT_FOUND;
+        } else if (e instanceof DataNotFoundException) {
+            status = HttpStatus.NOT_FOUND;
+        }
+
+        //400
+        else if (e instanceof HttpMediaTypeNotSupportedException) {
+            status = HttpStatus.BAD_REQUEST;
+        } else if (e instanceof HttpRequestMethodNotSupportedException) {
+            status = HttpStatus.BAD_REQUEST;
+        } else if (e instanceof HttpMessageConversionException) {
+            status = HttpStatus.BAD_REQUEST;
+        }
+
+        // customs client error
+        else if (e instanceof ClientErrorException) {
+            return ResponseEntity.status(((ClientErrorException) e).getStatus()).build();
+        }
+        // 500
+        else {
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            log.error("内部错误", e);
+        }
+
+        return ResponseEntity.status(status).build();
     }
 
-
-    // 服务器错误 - 500
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler
-    public void on(Exception e) {
-        log.error("内部错误", e);
-    }
 
 }

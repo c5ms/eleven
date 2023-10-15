@@ -23,8 +23,8 @@ public class TokenListener {
     private final TokenStore tokenStore;
     private final SubjectStore subjectStore;
 
-    @Async
-    @EventListener(ApplicationStartedEvent.class)
+//    @Async
+//    @EventListener(ApplicationStartedEvent.class)
     public void on(ApplicationStartedEvent e) {
         var now = TimeContext.localDateTime();
         var tokens = accessTokenRepository.findValidToken(now);
