@@ -2,6 +2,7 @@
   <configuration default="false" name="run-upms" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <module name="eleven-app-upms" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.eleven.UpmsApplication" />
+    <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateClassesAndResources" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="com.eleven.*" />

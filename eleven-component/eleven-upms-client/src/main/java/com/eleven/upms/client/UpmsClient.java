@@ -17,9 +17,9 @@ import java.util.Optional;
 public interface UpmsClient {
 
     // unused
-    @Operation(summary = "读取令牌")
-    @GetMapping("/readToken")
-    Optional<Token> readToken(@RequestParam("token") String token);
+//    @Operation(summary = "读取令牌")
+//    @GetMapping("/readToken")
+//    Optional<Token> readToken(@RequestParam("token") String token);
 
     @Operation(summary = "读取用户")
     @GetMapping("/readUser")

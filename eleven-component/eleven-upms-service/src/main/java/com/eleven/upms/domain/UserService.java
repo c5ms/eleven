@@ -36,6 +36,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public PaginationResult<UserDto> queryUserPage(UserQuery filter) {
+
         var criteria = Criteria.empty();
         if (Objects.nonNull(filter.getState())) {
             criteria = criteria.and(Criteria.where(User.Fields.state).is(filter.getState()));

@@ -45,18 +45,19 @@ public class ElevenResponseAdvice implements ResponseBodyAdvice<Object> {
             return null;
         }
 
-//        if(!(body instanceof RestResponse)){
-//            body= RestResponse.Success.of(body);
-//        }
 
 
         // 分页查询返回逻辑
-        if (body instanceof PaginationResult<?>) {
+//        if (body instanceof PaginationResult<?>) {
 //            var total = ((PaginationResult<?>) body).getTotal();
-//            response.getHeaders().set("X-Query-Total", String.valueOf(total));
+//            response.getHeaders().set(RestConstants.HEADER_QUERY_TOTAL, String.valueOf(total));
 //            return ((PaginationResult<?>) body).getItems();
-        }
+//        }
 
+        // 普通返回逻辑
+//        if(!(body instanceof RestResponse)){
+//            body= RestResponse.Success.of(body);
+//        }
 
         return body;
     }
