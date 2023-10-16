@@ -33,7 +33,9 @@ import java.util.stream.Collectors;
 @ApiResponses({
         @ApiResponse(description = "处理失败", responseCode = "400"),
         @ApiResponse(description = "权限不足", responseCode = "403"),
-        @ApiResponse(description = "无此资源", responseCode = "404"),
+        @ApiResponse(description = "地址错误", responseCode = "404"),
+        @ApiResponse(description = "格式错误", responseCode = "415"),
+        @ApiResponse(description = "方法错误", responseCode = "405"),
         @ApiResponse(description = "内部错误", responseCode = "500")
 })
 @ControllerAdvice
@@ -69,10 +71,13 @@ public class ElevenExceptionAdvice {
             status = HttpStatus.NOT_FOUND;
         } else if (e instanceof DataNotFoundException) {
             status = HttpStatus.NOT_FOUND;
-        } else if (e instanceof HttpMediaTypeNotSupportedException) {
-            status = HttpStatus.NOT_FOUND;
+        }
+
+        // 415 405
+        else if (e instanceof HttpMediaTypeNotSupportedException) {
+            status = HttpStatus.UNSUPPORTED_MEDIA_TYPE;
         } else if (e instanceof HttpRequestMethodNotSupportedException) {
-            status = HttpStatus.NOT_FOUND;
+            status = HttpStatus.METHOD_NOT_ALLOWED;
         }
 
         // 500
@@ -81,7 +86,9 @@ public class ElevenExceptionAdvice {
             log.error("内部错误", e);
         }
 
-        return ResponseEntity.status(status).build();
+        ProblemDetail problemDetail = ProblemDetail.forStatus(status);
+        problemDetail.setTitle( status.getReasonPhrase());
+        return ResponseEntity.status(status).body(problemDetail);
     }
 
     private ResponseEntity<ProblemDetail> renderBindException(BindException ex) {

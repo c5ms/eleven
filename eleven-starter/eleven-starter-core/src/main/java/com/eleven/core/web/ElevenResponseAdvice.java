@@ -34,6 +34,10 @@ public class ElevenResponseAdvice implements ResponseBodyAdvice<Object> {
                                   @NonNull ServerHttpRequest request,
                                   @NonNull ServerHttpResponse response) {
 
+        if(selectedContentType.isCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON)){
+            return body;
+        }
+
         boolean isReturnNUll = null == body;
         if (body instanceof Optional<?>) {
             isReturnNUll = ((Optional<?>) body).isEmpty();
@@ -44,6 +48,7 @@ public class ElevenResponseAdvice implements ResponseBodyAdvice<Object> {
             response.setStatusCode(HttpStatus.NOT_FOUND);
             return null;
         }
+
 
 
 
