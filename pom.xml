@@ -57,7 +57,7 @@
         <dist.outputpath>${project.basedir}/target</dist.outputpath>
 
         <!--  spring 家族 -->
-        <version.spring-boot>3.1.2</version.spring-boot>
+        <version.spring-boot>3.1.5</version.spring-boot>
         <version.spring-cloud>2022.0.4</version.spring-cloud>
         <version.spring-cloud-alibaba>2022.0.0.0</version.spring-cloud-alibaba>
         <version.spring-cloud-tencent>1.12.1-2022.0.4</version.spring-cloud-tencent>
@@ -287,6 +287,8 @@
                 <version>${version.lombok-mapstruct}</version>
             </dependency>
 
+
+
         </dependencies>
     </dependencyManagement>
 
@@ -319,6 +321,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 

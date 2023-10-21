@@ -9,10 +9,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@Tag(name = "项目成员")
+@Tag(name = "project_member")
 @RequestMapping("/members")
 @AsRestApi
 @RequiredArgsConstructor
@@ -20,19 +21,19 @@ public class MemberRestApi {
 
     private final MemberService memberService;
 
-    @Operation(summary = "项目成员读取")
+    @Operation(summary = "detail")
     @GetMapping("/{id}")
     public MemberDto getMembership(@PathVariable("id") String id) {
         return memberService.getMember(id).orElseThrow(DataNotFoundException::new);
     }
 
-    @Operation(summary = "项目成员更新")
+    @Operation(summary = "update")
     @PutMapping("/{id}")
-    public MemberDto updateMembership(@PathVariable("id") String id, @RequestBody MemberSaveAction action) {
+    public MemberDto updateMembership(@PathVariable("id") String id, @RequestBody @Validated MemberSaveAction action) {
         return memberService.updateMember(id, action);
     }
 
-    @Operation(summary = "项目成员删除")
+    @Operation(summary = "delete")
     @DeleteMapping("/{id}")
     public void deleteMembership(@PathVariable("id") String id) {
         memberService.deleteMember(id);

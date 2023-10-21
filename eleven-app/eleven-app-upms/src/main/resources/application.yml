@@ -13,9 +13,6 @@ spring:
           url: ${db.upms.url}
           username: ${db.upms.username}
           password: ${db.upms.password}
-          hikari:
-            max-lifetime: ${db.upms.maxLifetime:30000}
-            max-pool-size: ${db.upms.maxSize:5}
 eleven:
   cache:
     duration: PT8H

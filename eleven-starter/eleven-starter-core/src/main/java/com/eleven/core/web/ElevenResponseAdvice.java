@@ -1,6 +1,8 @@
 package com.eleven.core.web;
 
-import com.eleven.core.domain.PaginationResult;
+import com.eleven.core.web.annonation.AsInnerApi;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.Order;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import java.util.Optional;
+
 
 @Order(1)
 @ControllerAdvice
@@ -34,7 +37,14 @@ public class ElevenResponseAdvice implements ResponseBodyAdvice<Object> {
                                   @NonNull ServerHttpRequest request,
                                   @NonNull ServerHttpResponse response) {
 
-        if(selectedContentType.isCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON)){
+        if (selectedContentType.isCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON)) {
+            return body;
+        }
+
+        // inner api return origin value as well
+        // avoid not found error
+        var innerApi = returnType.getDeclaringClass().getAnnotation(AsInnerApi.class);
+        if (null != innerApi) {
             return body;
         }
 
@@ -43,26 +53,10 @@ public class ElevenResponseAdvice implements ResponseBodyAdvice<Object> {
             isReturnNUll = ((Optional<?>) body).isEmpty();
         }
 
-        // 返回是 null，并且是 get 请求，则响应 404
         if (isReturnNUll && request.getMethod() == HttpMethod.GET) {
-            response.setStatusCode(HttpStatus.NOT_FOUND);
+            response.setStatusCode(HttpStatus.NO_CONTENT);
             return null;
         }
-
-
-
-
-        // 分页查询返回逻辑
-//        if (body instanceof PaginationResult<?>) {
-//            var total = ((PaginationResult<?>) body).getTotal();
-//            response.getHeaders().set(RestConstants.HEADER_QUERY_TOTAL, String.valueOf(total));
-//            return ((PaginationResult<?>) body).getItems();
-//        }
-
-        // 普通返回逻辑
-//        if(!(body instanceof RestResponse)){
-//            body= RestResponse.Success.of(body);
-//        }
 
         return body;
     }

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @Slf4j
-@Tag(name = "用户")
+@Tag(name = "user")
 @RequestMapping("/users")
 @AsRestApi
 @RequiredArgsConstructor
@@ -46,7 +46,7 @@ public class UserRestApiV1 {
 
     @Operation(summary = "用户更新")
     @PutMapping("/{id}")
-    public UserDto updateUser(@PathVariable("id") String id, @RequestBody UserUpdateAction action) {
+    public UserDto updateUser(@PathVariable("id") String id, @RequestBody @Validated UserUpdateAction action) {
         return userService.updateUser(id, action);
     }
 
@@ -55,6 +55,4 @@ public class UserRestApiV1 {
     public void deleteUser(@PathVariable("id") String id) {
         userService.deleteUser(id);
     }
-
-
 }

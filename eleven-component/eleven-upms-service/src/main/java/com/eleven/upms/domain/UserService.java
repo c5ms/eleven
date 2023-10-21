@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.data.relational.core.query.Query;
@@ -72,9 +74,18 @@ public class UserService {
     @Transactional(readOnly = true)
     public Optional<UserDto> getUser(String uid) {
         var user = userRepository.findById(uid);
-        return user.map(userConvertor::toDto);
+        // 1.  only return effective ( not deleted ) user
+        return user.filter(AbstractDeletableDomain::isEffective)
+                .map(userConvertor::toDto);
     }
 
+    @Cacheable(cacheNames = UpmsConstants.CACHE_NAME_USER, key = "#uid+'.summary'")
+    @Transactional(readOnly = true)
+    public Optional<UserSummary> getUserSummary(String uid) {
+        return userRepository.findSummaryById(uid);
+    }
+
+    @CacheEvict(cacheNames = UpmsConstants.CACHE_NAME_USER, key = "#result.id+'.summary'")
     @Transactional(rollbackFor = Exception.class)
     public UserDto createUser(UserCreateAction action) {
         var id = domainSupport.getNextId();
@@ -87,6 +98,7 @@ public class UserService {
         return userConvertor.toDto(user);
     }
 
+    @CacheEvict(cacheNames = UpmsConstants.CACHE_NAME_USER, key = "#uid+'.summary'")
     @Transactional(rollbackFor = Exception.class)
     public UserDto updateUser(String uid, UserUpdateAction action) {
         var user = userRepository.requireById(uid);

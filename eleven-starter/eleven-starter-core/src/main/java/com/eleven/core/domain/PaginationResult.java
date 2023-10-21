@@ -1,17 +1,20 @@
 package com.eleven.core.domain;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.annotation.Nonnull;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Data
 @Accessors(chain = true)
 @Schema(description = "用户", name = "Page")
-public class PaginationResult<T> {
+public class PaginationResult<T> implements Iterable<T> {
 
     private long total;
     private List<T> items;
@@ -37,5 +40,13 @@ public class PaginationResult<T> {
                 ;
     }
 
+    public Stream<T> stream() {
+        return this.items.stream();
+    }
 
+    @Override
+    @Nonnull
+    public Iterator<T> iterator() {
+        return this.items.iterator();
+    }
 }

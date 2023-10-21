@@ -19,4 +19,8 @@ public class MemberDto {
     private UserSummary user;
 
     private List<MemberRoleDto> roles = new ArrayList<>();
+
+    private static class User{
+
+    }
 }

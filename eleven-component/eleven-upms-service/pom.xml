@@ -24,15 +24,19 @@
         <dependency>
             <groupId>com.demacia</groupId>
             <artifactId>eleven-starter-service</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
-
+        <!-- test -->
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
+            <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 

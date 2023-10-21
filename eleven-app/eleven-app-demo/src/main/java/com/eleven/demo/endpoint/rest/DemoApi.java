@@ -5,6 +5,7 @@ import com.eleven.core.security.SecurityContext;
 import com.eleven.core.security.Subject;
 import com.eleven.upms.client.UpmsClient;
 import com.eleven.upms.model.UserDto;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Optional;
 
 @Slf4j
+@Hidden
 @RequiredArgsConstructor
 @RequestMapping("/demo")
 @AsRestApi

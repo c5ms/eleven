@@ -2,6 +2,7 @@ package com.eleven.upms.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +17,7 @@ import java.util.List;
 public class UserSaveAction {
 
     @Schema(description = "用户状态")
+    @NotNull(message = "用户状态不可为空")
     UserState state = UserState.NORMAL;
 
     @Schema(description = "用户昵称")

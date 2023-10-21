@@ -18,14 +18,12 @@
         <dependency>
             <groupId>com.demacia</groupId>
             <artifactId>eleven-upms-client</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
             <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>com.demacia</groupId>
             <artifactId>eleven-upms-service</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
             <optional>true</optional>
         </dependency>
 

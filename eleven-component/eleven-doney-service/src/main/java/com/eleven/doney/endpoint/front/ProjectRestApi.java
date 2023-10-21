@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-@Tag(name = "项目")
+@Tag(name = "project")
 @RequestMapping("/projects")
 @AsRestApi
 @RequiredArgsConstructor
@@ -27,42 +27,42 @@ public class ProjectRestApi {
     private final MemberService memberService;
     private final ProjectService projectService;
 
-    @Operation(summary = "项目查询")
+    @Operation(summary = "query")
     @GetMapping
     public PaginationResult<ProjectDto> queryProjects(@ParameterObject ProjectQuery queryAction) {
         return projectService.queryProjectPage(queryAction);
     }
 
-    @Operation(summary = "项目读取")
+    @Operation(summary = "detail")
     @GetMapping("/{id}")
     public ProjectDto getProject(@PathVariable("id") String id) {
         return projectService.getProject(id).orElseThrow(DataNotFoundException::new);
     }
 
-    @Operation(summary = "项目创建")
+    @Operation(summary = "create")
     @PostMapping
     public ProjectDto createProject(@RequestBody @Validated ProjectSaveAction action) {
         return projectService.createProject(action);
     }
 
-    @Operation(summary = "项目更新")
+    @Operation(summary = "update")
     @PutMapping("/{id}")
     public ProjectDto updateProject(@PathVariable("id") String id, @RequestBody ProjectSaveAction action) {
         return projectService.updateProject(id, action);
     }
 
-    @Operation(summary = "项目删除")
+    @Operation(summary = "delete")
     @DeleteMapping("/{id}")
     public void deleteProject(@PathVariable("id") String id) {
         projectService.deleteProject(id);
     }
 
-    @Operation(summary = "项目成员列表")
+    @Operation(summary = "list members")
     @GetMapping("/{id}/members")
     public Optional<List<MemberDto>> listMembers(@PathVariable("id") String id) {
         return memberService.listMembersOfProject(id);
     }
-    @Operation(summary = "项目成员添加")
+    @Operation(summary = "add member")
     @PostMapping("/{id}/members")
     public Optional<MemberDto> addMember(@PathVariable("id") String id, @RequestBody MemberSaveAction action) {
         return memberService.addMemberToProject(id,action);

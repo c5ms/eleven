@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @Slf4j
-@Tag(name = "令牌")
-@RequestMapping("/access_tokens")
+@Tag(name = "token")
+@RequestMapping("/tokens")
 @AsRestApi
 @RequiredArgsConstructor
-public class AccessAdminApiV1 {
+public class TokenRestApiV1 {
 
     private final UserService userService;
     private final SecurityService securityService;

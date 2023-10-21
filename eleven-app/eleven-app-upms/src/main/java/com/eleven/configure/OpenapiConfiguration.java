@@ -17,7 +17,7 @@ public class OpenapiConfiguration {
     public GroupedOpenApi adminApi() {
         return GroupedOpenApi.builder()
                 .group("open")
-                .displayName("开放 API")
+                .displayName("open API")
                 .pathsToMatch(RestConstants.OPEN_API_PREFIX + "/**")
                 .packagesToScan(UpmsApplication.class.getPackageName())
                 .build();
@@ -27,7 +27,7 @@ public class OpenapiConfiguration {
     public GroupedOpenApi frontApi() {
         return GroupedOpenApi.builder()
                 .group("front")
-                .displayName("前端 API")
+                .displayName("rest API")
                 .pathsToMatch(RestConstants.FRONT_API_PREFIX + "/**")
                 .packagesToScan(UpmsApplication.class.getPackageName())
                 .build();
@@ -38,7 +38,7 @@ public class OpenapiConfiguration {
     public GroupedOpenApi innerApi() {
         return GroupedOpenApi.builder()
                 .group("inner")
-                .displayName("内部 API")
+                .displayName("inner API")
                 .pathsToMatch(RestConstants.INNER_API_PREFIX + "/**")
                 .packagesToScan(UpmsApplication.class.getPackageName())
                 .build();

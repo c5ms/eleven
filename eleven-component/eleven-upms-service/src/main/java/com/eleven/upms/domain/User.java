@@ -117,6 +117,11 @@ public class User extends AbstractDeletableDomain implements ToPrincipal, Serial
         this.isLocked = false;
     }
 
+    /**
+     * check  has user ever logged in
+     *
+     * @return true means user has ever logged in at lest one times.
+     */
     public boolean hasEverLoggedIn() {
         return Objects.nonNull(loginAt);
     }

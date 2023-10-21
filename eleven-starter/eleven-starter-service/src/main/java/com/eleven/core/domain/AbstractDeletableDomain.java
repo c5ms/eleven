@@ -25,4 +25,8 @@ public abstract class AbstractDeletableDomain extends AbstractAuditDomain implem
     public boolean isDeleted() {
         return Objects.nonNull(this.deleteAt);
     }
+
+    public boolean isEffective() {
+        return Objects.isNull(this.deleteAt);
+    }
 }

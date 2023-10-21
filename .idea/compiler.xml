@@ -12,7 +12,9 @@
         <module name="eleven-upms-service" />
         <module name="eleven-starter-service" />
         <module name="eleven-upms-security" />
+        <module name="eleven-doney-service" />
         <module name="eleven-app-upms" />
+        <module name="eleven-doney-core" />
         <module name="eleven-starter-core" />
       </profile>
     </annotationProcessing>
@@ -24,6 +26,8 @@
       <module name="eleven-app-demo" options="-parameters" />
       <module name="eleven-app-upms" options="-parameters" />
       <module name="eleven-component" options="" />
+      <module name="eleven-doney-core" options="-parameters" />
+      <module name="eleven-doney-service" options="-parameters" />
       <module name="eleven-starter" options="" />
       <module name="eleven-starter-core" options="-parameters" />
       <module name="eleven-starter-service" options="-parameters" />

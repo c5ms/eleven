@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Slf4j
-@Tag(name = "角色")
+@Tag(name = "role")
 @RequestMapping("/roles")
 @AsRestApi
 @RequiredArgsConstructor

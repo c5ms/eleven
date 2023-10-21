@@ -8,6 +8,7 @@ import com.eleven.upms.client.UpmsClient;
 import com.eleven.upms.domain.AccessTokenService;
 import com.eleven.upms.domain.UserService;
 import com.eleven.upms.model.UserDto;
+import com.eleven.upms.model.UserSummary;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +17,7 @@ import java.util.Optional;
 
 @Slf4j
 @AsInnerApi
-@Tag(name = "用户权限管理接口")
+@Tag(name = "upms")
 @RequiredArgsConstructor
 public class UpmsInnerApiV1 implements UpmsClient {
 
@@ -31,22 +32,24 @@ public class UpmsInnerApiV1 implements UpmsClient {
 //    }
 
     public void deleteToken(String token) {
-        log.debug("deleteToken api invoked for {}", token);
         securityService.invalidToken(token);
         accessTokenService.deleteToken(token);
     }
 
     @Override
     public Subject createSubject(String type, String name) {
-        log.debug("readSubject api invoked for {}#{}", type, name);
         var principal = new Principal(type, name);
         return securityService.createSubject(principal);
     }
 
     @Override
     public Optional<UserDto> readUser(String id) {
-        log.debug("readUser api invoked for {}", id);
         return userService.getUser(id);
+    }
+
+    @Override
+    public Optional<UserSummary> readUserSummary(String id) {
+        return userService.getUserSummary(id);
     }
 
 

@@ -26,6 +26,9 @@ public class UserDto  implements Serializable {
     @Schema(description = "注册时间")
     private LocalDateTime registerAt;
 
+    @Schema(description = "删除时间")
+    private LocalDateTime deleteAt;
+
     @Schema(description = "登入时间")
     private LocalDateTime loginAt;
 
@@ -40,9 +43,6 @@ public class UserDto  implements Serializable {
 
     @Schema(description = "状态")
     private UserState state;
-
-    @Schema(description = "删除时间")
-    private LocalDateTime deleteAt;
 
     private List<String> roles = new ArrayList<>();
 

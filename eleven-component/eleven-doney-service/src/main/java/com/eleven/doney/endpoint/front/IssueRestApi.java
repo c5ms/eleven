@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @Slf4j
-@Tag(name = "任务")
+@Tag(name = "issue")
 @RequestMapping("/issues")
 @AsRestApi
 @RequiredArgsConstructor

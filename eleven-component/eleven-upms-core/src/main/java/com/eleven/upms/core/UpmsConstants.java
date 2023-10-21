@@ -16,6 +16,11 @@ public interface UpmsConstants {
     String CACHE_NAME_AUTHORITY = "authority";
 
     /**
+     * 缓存 - 用户
+     */
+    String CACHE_NAME_USER = "user";
+
+    /**
      * 表示用户的主题类型代码，为 user
      */
     String PRINCIPAL_TYPE_USER = "user";

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-@Tag(name = "个人")
+@Tag(name = "personal")
 @RequestMapping("/personal")
 @AsRestApi
 @RequiredArgsConstructor
