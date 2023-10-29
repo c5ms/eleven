@@ -1,12 +1,10 @@
 package com.eleven.upms.domain;
 
 import cn.hutool.core.util.RandomUtil;
-import cn.hutool.json.JSONUtil;
 import com.eleven.core.exception.ProcessRuntimeException;
+import com.eleven.core.security.Principal;
 import com.eleven.upms.configure.UpmsProperties;
 import com.eleven.upms.core.UpmsConstants;
-import com.eleven.upms.domain.User;
-import com.eleven.upms.domain.UserService;
 import com.eleven.upms.model.UserCreateAction;
 import com.eleven.upms.model.UserQuery;
 import com.eleven.upms.model.UserState;
@@ -96,7 +94,7 @@ class UserServiceTest {
 
         // login successful
         var principal = userService.loginUser(userDto.getUsername(), upmsProperties.getDefaultPassword());
-        Assertions.assertEquals(User.TYPE_INNER_USER + "#" + userDto.getId(), principal.identity());
+        Assertions.assertEquals(new Principal(User.TYPE_INNER_USER , userDto.getId()), principal);
 
         // no existing user
         var error = Assertions.assertThrows(ProcessRuntimeException.class, () -> userService.loginUser(UUID.randomUUID().toString(), "error_password"));

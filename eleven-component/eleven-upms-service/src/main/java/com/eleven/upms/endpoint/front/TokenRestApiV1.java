@@ -29,7 +29,7 @@ public class TokenRestApiV1 {
     private final SecurityService securityService;
     private final AccessTokenService accessTokenService;
 
-    @Operation(summary = "创建令牌")
+    @Operation(summary = "create token")
     @PostMapping
     public Token createToken(@RequestBody @Validated AccessTokenCreateAction request, HttpServletRequest servletRequest) {
         var identity = request.getIdentity();
@@ -42,7 +42,7 @@ public class TokenRestApiV1 {
         return token;
     }
 
-    @Operation(summary = "读取令牌内容")
+    @Operation(summary = "get token subject")
     @GetMapping("/{token}/subject")
     public Optional<Subject> getSubjectFor(@PathVariable("token") String value) {
         if (SecurityContext.isAnonymous()) {
@@ -58,7 +58,7 @@ public class TokenRestApiV1 {
                 .map(securityService::readSubject);
     }
 
-    public Principal login(Principal principal, String credential) {
+    private Principal login(Principal principal, String credential) {
         if (principal.getType().equals(UpmsConstants.PRINCIPAL_TYPE_USER)) {
             return userService.loginUser(principal.getName(), credential);
         }

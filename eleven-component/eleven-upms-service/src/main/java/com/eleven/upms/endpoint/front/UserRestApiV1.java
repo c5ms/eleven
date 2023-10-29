@@ -1,12 +1,10 @@
 package com.eleven.upms.endpoint.front;
 
+import cn.hutool.core.thread.ThreadUtil;
 import com.eleven.core.domain.PaginationResult;
 import com.eleven.core.web.annonation.AsRestApi;
 import com.eleven.upms.domain.UserService;
-import com.eleven.upms.model.UserCreateAction;
-import com.eleven.upms.model.UserDto;
-import com.eleven.upms.model.UserQuery;
-import com.eleven.upms.model.UserUpdateAction;
+import com.eleven.upms.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -26,31 +24,38 @@ public class UserRestApiV1 {
 
     private final UserService userService;
 
-    @Operation(summary = "用户查询")
+    @Operation(summary = "query users")
     @GetMapping
     public PaginationResult<UserDto> queryUserPage(@ParameterObject UserQuery filter) {
         return userService.queryUserPage(filter);
     }
 
-    @Operation(summary = "用户详情")
+    @Operation(summary = "get user")
     @GetMapping("/{id}")
     public Optional<UserDto> getUser(@PathVariable("id") String id) {
         return userService.getUser(id);
     }
 
-    @Operation(summary = "用户创建")
+
+    @Operation(summary = "get user summary")
+    @GetMapping("/{id}/summary")
+    public Optional<UserSummary> getUserSummary(@PathVariable("id") String id) {
+        return userService.getUserSummary(id);
+    }
+
+    @Operation(summary = "create user")
     @PostMapping
     public UserDto createUser(@RequestBody @Validated UserCreateAction action) {
         return userService.createUser(action);
     }
 
-    @Operation(summary = "用户更新")
+    @Operation(summary = "update user")
     @PutMapping("/{id}")
     public UserDto updateUser(@PathVariable("id") String id, @RequestBody @Validated UserUpdateAction action) {
         return userService.updateUser(id, action);
     }
 
-    @Operation(summary = "用户删除")
+    @Operation(summary = "delete user")
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable("id") String id) {
         userService.deleteUser(id);

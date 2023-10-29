@@ -24,31 +24,31 @@ public class RoleRestApiV1 {
 
     private final RoleService roleService;
 
-    @Operation(summary = "角色读取")
+    @Operation(summary = "get role")
     @GetMapping("/{id}")
     public RoleDto getRole(@PathVariable("id") String id) {
         return roleService.getRole(id).orElseThrow(DataNotFoundException::new);
     }
 
-    @Operation(summary = "角色创建")
+    @Operation(summary = "create role")
     @PostMapping
     public RoleDto createRole(@RequestBody @Validated RoleCreateAction action) {
         return roleService.createRole(action);
     }
 
-    @Operation(summary = "角色更新")
+    @Operation(summary = "update role")
     @PutMapping("/{id}")
     public RoleDto updateRole(@PathVariable("id") String id, @RequestBody RoleUpdateAction action) {
         return roleService.updateRole(id, action);
     }
 
-    @Operation(summary = "角色列表")
+    @Operation(summary = "list roles")
     @GetMapping
-    public List<RoleDto> queryUserPage() {
+    public List<RoleDto> listRoles() {
         return roleService.listRoles();
     }
 
-    @Operation(summary = "角色删除")
+    @Operation(summary = "delete role")
     @DeleteMapping("/{id}")
     public void deleteRole(@PathVariable("id") String id) {
         roleService.deleteRole(id);

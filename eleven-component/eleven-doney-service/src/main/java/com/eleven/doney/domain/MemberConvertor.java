@@ -18,6 +18,12 @@ public class MemberConvertor {
     public MemberDto toDto(Member member) {
         MemberDto dto = beanConvertor.to(member, MemberDto.class);
 
+        // 1. bulk api
+        // 2. sync data to agge -> make materialize view cqrs  -> crud | query
+        // 3. fetch every time for one record
+        // 4. frontend translate
+        // 5. store as cache
+
         upmsClient.readUserSummary(member.getUserId())
                 .ifPresent(dto::setUser);
 

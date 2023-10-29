@@ -57,12 +57,12 @@ public class ProjectRestApi {
         projectService.deleteProject(id);
     }
 
-    @Operation(summary = "list members")
+    @Operation(summary = "list project members")
     @GetMapping("/{id}/members")
     public Optional<List<MemberDto>> listMembers(@PathVariable("id") String id) {
         return memberService.listMembersOfProject(id);
     }
-    @Operation(summary = "add member")
+    @Operation(summary = "add project member")
     @PostMapping("/{id}/members")
     public Optional<MemberDto> addMember(@PathVariable("id") String id, @RequestBody MemberSaveAction action) {
         return memberService.addMemberToProject(id,action);

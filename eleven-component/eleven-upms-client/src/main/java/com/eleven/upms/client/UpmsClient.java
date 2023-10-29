@@ -23,15 +23,15 @@ public interface UpmsClient {
 //    @GetMapping("/readToken")
 //    Optional<Token> readToken(@RequestParam("token") String token);
 
-    @Operation(summary = "read user detail")
+    @Operation(summary = "get user")
     @GetMapping("/readUser")
     Optional<UserDto> readUser(@RequestParam("id") String id);
 
-    @Operation(summary = "read user summary")
+    @Operation(summary = "get user summary")
     @GetMapping("/readUserSummary")
     Optional<UserSummary> readUserSummary(@RequestParam("id") String id);
 
-    @Operation(summary = "创建权限")
+    @Operation(summary = "create subject")
     @GetMapping("/createSubject")
     Subject createSubject(@RequestParam("type") String type, @RequestParam("name") String name);
 }

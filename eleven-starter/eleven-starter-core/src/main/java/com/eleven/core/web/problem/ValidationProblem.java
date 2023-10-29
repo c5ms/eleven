@@ -1,6 +1,7 @@
 package com.eleven.core.web.problem;
 
 import com.eleven.core.constants.ElevenConstants;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.Getter;
 import lombok.Value;
 import lombok.experimental.Accessors;
@@ -36,6 +37,7 @@ public class ValidationProblem extends Problem {
     }
 
     @Value
+    @Hidden
     public static class Field {
           String field;
           String error;

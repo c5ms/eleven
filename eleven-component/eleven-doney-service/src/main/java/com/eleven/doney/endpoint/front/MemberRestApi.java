@@ -13,7 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@Tag(name = "project_member")
+@Tag(name = "member")
 @RequestMapping("/members")
 @AsRestApi
 @RequiredArgsConstructor
