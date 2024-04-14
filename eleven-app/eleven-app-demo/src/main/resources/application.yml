@@ -3,21 +3,13 @@ server:
 
 spring:
   application:
-    name: doney
+    name: demo
   datasource:
-    dynamic:
-      primary: master
-      strict: false
-      datasource:
-        master:
-          url: ${db.upms.url}
-          username: ${db.upms.username}
-          password: ${db.upms.password}
+    url: ${db.upms.url}
+    username: ${db.upms.username}
+    password: ${db.upms.password}
 
 eleven:
-  cache:
-    duration: PT8H
-    serializer: jackson
 
   open-api:
     title: 项目管理

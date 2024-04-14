@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -23,16 +22,16 @@ public class TokenListener {
     private final TokenStore tokenStore;
     private final SubjectStore subjectStore;
 
-//    @Async
+    //    @Async
 //    @EventListener(ApplicationStartedEvent.class)
     public void on(ApplicationStartedEvent e) {
         var now = TimeContext.localDateTime();
         var tokens = accessTokenRepository.findValidToken(now);
         tokens.stream()
-                .parallel()
-                .map(AccessToken::toToken)
-                .peek(token -> log.info("restore token {}", token))
-                .forEach(tokenStore::save);
+            .parallel()
+            .map(AccessToken::toToken)
+            .peek(token -> log.info("restore token {}", token))
+            .forEach(tokenStore::save);
     }
 
     @EventListener(UserDeletedEvent.class)

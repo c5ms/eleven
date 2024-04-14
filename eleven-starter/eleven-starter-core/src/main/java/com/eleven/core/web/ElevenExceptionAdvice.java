@@ -1,13 +1,12 @@
 package com.eleven.core.web;
 
-import com.eleven.core.constants.ElevenConstants;
-import com.eleven.core.exception.DataNotFoundException;
-import com.eleven.core.exception.ProcessError;
-import com.eleven.core.exception.ProcessRuntimeException;
+import com.eleven.core.domain.DomainConstants;
+import com.eleven.core.domain.DomainError;
+import com.eleven.core.domain.DomainRuntimeException;
+import com.eleven.core.domain.NoDataFoundException;
 import com.eleven.core.web.problem.Problem;
 import com.eleven.core.web.problem.ValidationProblem;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +21,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 
 @Slf4j
@@ -45,24 +45,25 @@ public class ElevenExceptionAdvice {
     }
 
     @ResponseBody
-    @ApiResponse(description = "Bad Request", responseCode = "400")
+	@ApiResponse(description = "Bad Request", responseCode = "400")
+	@ApiResponse(description = "Not Found", responseCode = "404")
+	@ApiResponse(description = "Method Not Allowed", responseCode = "405")
+	@ApiResponse(description = "Unsupported Media Type", responseCode = "415")
+	@ApiResponse(description = "Internal Server Error", responseCode = "500")
     @ExceptionHandler({Exception.class,})
     public ResponseEntity<Problem> on(Exception e) {
         HttpStatus status;
 
         //400 - payload
         if (e instanceof HttpMessageConversionException) {
-            var problem = Problem.of(ElevenConstants.ERROR_JSON_PARSING);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(problem);
+            var problem = Problem.of(DomainConstants.ERROR_JSON_PARSING);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
         }
 
         // 400 -  process
-        else if (e instanceof ProcessRuntimeException) {
-            var problem = Problem.of((ProcessError) e);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(problem);
-
+        else if (e instanceof DomainRuntimeException) {
+            var problem = Problem.of((DomainError) e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
         }
 
         // 403
@@ -73,9 +74,11 @@ public class ElevenExceptionAdvice {
         //404
         else if (e instanceof NoHandlerFoundException) {
             status = HttpStatus.NOT_FOUND;
-        } else if (e instanceof DataNotFoundException) {
+        } else if (e instanceof NoDataFoundException) {
             status = HttpStatus.NOT_FOUND;
-        }
+        }else  if (e instanceof NoResourceFoundException){
+			status = HttpStatus.NOT_FOUND;
+		}
 
         // 415 405
         else if (e instanceof HttpMediaTypeNotSupportedException) {
@@ -87,7 +90,7 @@ public class ElevenExceptionAdvice {
         // 500
         else {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
-            log.error("内部错误", e);
+            log.error("internal server error", e);
         }
 
         return ResponseEntity.status(status).build();

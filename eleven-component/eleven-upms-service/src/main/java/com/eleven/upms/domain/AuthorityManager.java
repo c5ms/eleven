@@ -1,6 +1,6 @@
 package com.eleven.upms.domain;
 
-import com.eleven.core.domain.DomainSupport;
+import com.eleven.core.data.DomainSupport;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

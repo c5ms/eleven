@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 @Data
 @Accessors(chain = true)
-@Schema(description = "用户", name = "Page")
+@Schema(description = "page data model", name = "Page")
 public class PaginationResult<T> implements Iterable<T> {
 
     private long total;

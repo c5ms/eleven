@@ -13,17 +13,11 @@
     <artifactId>eleven-app-demo</artifactId>
 
     <properties>
-        <appMainClass>com.eleven.DemoApplication</appMainClass>
+        <app.main>com.eleven.DemoApplication</app.main>
     </properties>
 
 
     <dependencies>
-
-        <dependency>
-            <groupId>com.demacia</groupId>
-            <artifactId>eleven-doney-service</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>com.demacia</groupId>
             <artifactId>eleven-upms-security</artifactId>
@@ -34,10 +28,6 @@
             <artifactId>eleven-upms-client</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-        </dependency>
 
     </dependencies>
 
@@ -47,21 +37,13 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>appassembler-maven-plugin</artifactId>
             </plugin>
-            <!--<plugin>
+          <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
             </plugin>-->
             <plugin>
-                <inherited>true</inherited>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <!--skip deploy (this is just a test module) -->
-                <artifactId>maven-deploy-plugin</artifactId>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
             </plugin>
         </plugins>
     </build>

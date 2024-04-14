@@ -1,6 +1,5 @@
 package com.eleven.core.security;
 
-import com.eleven.core.domain.Identifiable;
 import lombok.Data;
 
 import java.io.Serial;
@@ -59,6 +58,7 @@ public class Principal implements Serializable, Identifiable {
      *
      * @return 主体标识
      */
+    @Override
     public String identity() {
         if (this.type.equals("unknown")) {
             return this.name;

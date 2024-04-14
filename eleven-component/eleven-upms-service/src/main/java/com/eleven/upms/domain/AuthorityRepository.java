@@ -13,9 +13,9 @@ public interface AuthorityRepository extends CrudRepository<Authority, String> {
 
     @Modifying
     @Query("delete from upms_authority " +
-            "where owner_type=:ownerType " +
-            "and owner_name=:ownerName " +
-            "and power_type=:powerType")
+           "where owner_type=:ownerType " +
+           "and owner_name=:ownerName " +
+           "and power_type=:powerType")
     void deleteByOwnerAndPowerType(@Param("ownerType") String ownerType,
                                    @Param("ownerName") String ownerName,
                                    @Param("powerType") String powerType);
@@ -23,15 +23,15 @@ public interface AuthorityRepository extends CrudRepository<Authority, String> {
 
     @Modifying
     @Query("delete from upms_authority " +
-            "where power_name=:powerName " +
-            "and power_type=:powerType")
+           "where power_name=:powerName " +
+           "and power_type=:powerType")
     void deleteByPower(@Param("powerType") String powerType,
                        @Param("powerName") String powerName);
 
     @Query("select * from upms_authority " +
-            "where owner_type=:ownerType " +
-            "and owner_name=:ownerName " +
-            "and power_type in (:powerType)")
+           "where owner_type=:ownerType " +
+           "and owner_name=:ownerName " +
+           "and power_type in (:powerType)")
     Collection<Authority> findByOwner(@Param("ownerType") String ownerType,
                                       @Param("ownerName") String ownerName,
                                       @Param("powerType") Collection<String> powerType);
@@ -39,8 +39,8 @@ public interface AuthorityRepository extends CrudRepository<Authority, String> {
 
     @Modifying
     @Query("delete from upms_authority " +
-            "where owner_type=:ownerType " +
-            "and owner_name=:ownerName ")
+           "where owner_type=:ownerType " +
+           "and owner_name=:ownerName ")
     void deleteByOwner(@Param("ownerType") String ownerType,
                        @Param("ownerName") String ownerName);
 

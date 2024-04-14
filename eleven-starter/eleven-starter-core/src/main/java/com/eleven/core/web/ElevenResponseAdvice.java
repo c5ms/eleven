@@ -1,8 +1,6 @@
 package com.eleven.core.web;
 
 import com.eleven.core.web.annonation.AsInnerApi;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.Order;
@@ -12,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
@@ -23,6 +22,7 @@ import java.util.Optional;
 @ControllerAdvice
 @RequiredArgsConstructor
 public class ElevenResponseAdvice implements ResponseBodyAdvice<Object> {
+
     @Override
     public boolean supports(@NonNull MethodParameter returnType,
                             @NonNull Class<? extends HttpMessageConverter<?>> converterType) {
@@ -37,9 +37,10 @@ public class ElevenResponseAdvice implements ResponseBodyAdvice<Object> {
                                   @NonNull ServerHttpRequest request,
                                   @NonNull ServerHttpResponse response) {
 
-        if (selectedContentType.isCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON)) {
-            return body;
-        }
+		// decide to response 404 or 204
+		if(((ServletServerHttpResponse) response).getServletResponse().getStatus()==404){
+			return  body;
+		}
 
         // inner api return origin value as well
         // avoid not found error

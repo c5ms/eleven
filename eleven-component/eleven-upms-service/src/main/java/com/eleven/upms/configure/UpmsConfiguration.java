@@ -17,7 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @CacheConfig(cacheNames = {
-        UpmsConstants.CACHE_NAME_AUTHORITY
+    UpmsConstants.CACHE_NAME_AUTHORITY
 })
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(UpmsProperties.class)

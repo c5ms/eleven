@@ -1,6 +1,6 @@
 package com.eleven.upms.domain;
 
-import com.eleven.core.domain.DomainSupport;
+import com.eleven.core.data.DomainSupport;
 import com.eleven.core.exception.ProcessRuntimeException;
 import com.eleven.upms.core.UpmsConstants;
 import com.eleven.upms.model.RoleCreateAction;

@@ -1,6 +1,6 @@
 package com.eleven.upms.domain;
 
-import com.eleven.core.domain.DomainRepository;
+import com.eleven.core.data.DomainRepository;
 
 import java.util.Optional;
 

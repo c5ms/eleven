@@ -5,13 +5,11 @@ import com.eleven.core.security.Principal;
 import com.eleven.core.security.Subject;
 import com.eleven.upms.core.UpmsConstants;
 import com.eleven.upms.domain.UserRepository;
-import com.eleven.upms.domain.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
-import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -26,8 +24,8 @@ public class UserAuthenticator implements Authenticator {
     @Override
     public Subject authenticate(Principal principal) throws AccessDeniedException {
         var user = userRepository.findById(principal.getName())
-                .filter(find->!find.isDeleted())
-                .orElseThrow(() -> new AccessDeniedException("用户不存在"));
+            .filter(find -> !find.isDeleted())
+            .orElseThrow(() -> new AccessDeniedException("用户不存在"));
         return new Subject(user.getId(), user.getNickname(), principal, new HashSet<>());
     }
 

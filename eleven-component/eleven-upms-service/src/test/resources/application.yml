@@ -5,14 +5,9 @@ spring:
   application:
     name: upms
   datasource:
-    dynamic:
-      primary: master
-      strict: false
-      datasource:
-        master:
-          url: jdbc:mysql://127.0.0.1:3306/eleven_upms?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
-          username: root
-          password: daohaosima2A
+    url: jdbc:mysql://127.0.0.1:3306/eleven_upms?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: daohaosima2A
   data:
     redis:
       host: 127.0.0.1

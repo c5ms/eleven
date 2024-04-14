@@ -1,9 +1,9 @@
 package com.eleven.upms.domain;
 
 import cn.hutool.extra.spring.SpringUtil;
-import com.eleven.core.domain.AbstractAuditDomain;
-import com.eleven.core.domain.AbstractDeletableDomain;
-import com.eleven.core.domain.DomainSupport;
+import com.eleven.core.data.AbstractAuditEntity;
+import com.eleven.core.data.AbstractDeletableEntity;
+import com.eleven.core.data.DomainSupport;
 import com.eleven.core.domain.PaginationResult;
 import com.eleven.core.exception.ProcessRuntimeException;
 import com.eleven.core.security.Principal;
@@ -54,7 +54,7 @@ public class UserService {
         }
 
         // not deleted yet
-        criteria = criteria.and(Criteria.where(AbstractDeletableDomain.Fields.deleteAt).isNull());
+        criteria = criteria.and(Criteria.where(AbstractDeletableEntity.Fields.deleteAt).isNull());
 
         if (Objects.nonNull(filter.getRanges())) {
             var ranges = Criteria.empty();
@@ -66,7 +66,7 @@ public class UserService {
             }
             criteria = criteria.and(ranges);
         }
-        var query = Query.query(criteria).sort(Sort.by(AbstractAuditDomain.Fields.createAt).descending());
+        var query = Query.query(criteria).sort(Sort.by(AbstractAuditEntity.Fields.createAt).descending());
         var page = domainSupport.queryPage(query, User.class, filter.getPage(), filter.getSize());
         return page.map(userConvertor::toDto);
     }
@@ -75,8 +75,8 @@ public class UserService {
     public Optional<UserDto> getUser(String uid) {
         var user = userRepository.findById(uid);
         // 1.  only return effective ( not deleted ) user
-        return user.filter(AbstractDeletableDomain::isEffective)
-                .map(userConvertor::toDto);
+        return user.filter(AbstractDeletableEntity::isEffective)
+            .map(userConvertor::toDto);
     }
 
     @Cacheable(cacheNames = UpmsConstants.CACHE_NAME_USER, key = "#uid+'.summary'")

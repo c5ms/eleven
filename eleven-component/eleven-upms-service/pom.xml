@@ -23,7 +23,7 @@
 
         <dependency>
             <groupId>com.demacia</groupId>
-            <artifactId>eleven-starter-service</artifactId>
+            <artifactId>eleven-starter-data</artifactId>
         </dependency>
 
         <!-- test -->

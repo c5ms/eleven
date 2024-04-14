@@ -30,10 +30,10 @@ public class LocalSubjectCreator implements SubjectCreator {
     private Subject authenticate(Principal principal) throws AccessDeniedException {
         try {
             return authenticators.stream()
-                    .filter(authenticator -> authenticator.support(principal))
-                    .findFirst()
-                    .map(authenticator -> authenticator.authenticate(principal))
-                    .orElseThrow(() -> new AccessDeniedException("主体认证类型不支持:" + principal.getType()));
+                .filter(authenticator -> authenticator.support(principal))
+                .findFirst()
+                .map(authenticator -> authenticator.authenticate(principal))
+                .orElseThrow(() -> new AccessDeniedException("主体认证类型不支持:" + principal.getType()));
         } catch (Exception e) {
             if (e instanceof AccessDeniedException) {
                 throw e;
@@ -45,8 +45,8 @@ public class LocalSubjectCreator implements SubjectCreator {
     private Collection<String> authorize(Principal principal) {
         try {
             return authorizers.stream()
-                    .flatMap(authorizer -> authorizer.authorize(principal).stream())
-                    .collect(Collectors.toUnmodifiableSet());
+                .flatMap(authorizer -> authorizer.authorize(principal).stream())
+                .collect(Collectors.toUnmodifiableSet());
         } catch (Exception e) {
             if (e instanceof AccessDeniedException) {
                 throw e;

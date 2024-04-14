@@ -27,10 +27,10 @@ public class OpaqueTokenCreator implements TokenCreator {
         var value = IdUtil.fastSimpleUUID();
         // 用户的令牌可用 10 天,但是目前还没有超时的处理
         return new Token()
-                .setIssuer(getIssuer())
-                .setExpireAt(getExpireAt())
-                .setPrincipal(principal)
-                .setDetail(detail)
-                .setValue(value);
+            .setIssuer(getIssuer())
+            .setExpireAt(getExpireAt())
+            .setPrincipal(principal)
+            .setDetail(detail)
+            .setValue(value);
     }
 }

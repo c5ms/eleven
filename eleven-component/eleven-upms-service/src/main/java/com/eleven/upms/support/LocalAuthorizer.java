@@ -23,9 +23,9 @@ public class LocalAuthorizer implements Authorizer {
         var owner = Authority.ownerOf(principal);
         var powers = authorityManager.authoritiesOf(owner);
         return powers.stream()
-                .map(Authority::getPower)
-                .map(power -> String.format("%s_%s", StringUtils.toRootUpperCase(power.getType()), power.getName()))
-                .collect(Collectors.toList());
+            .map(Authority::getPower)
+            .map(power -> String.format("%s_%s", StringUtils.toRootUpperCase(power.getType()), power.getName()))
+            .collect(Collectors.toList());
     }
 
 

@@ -1,6 +1,6 @@
 package com.eleven.upms.domain;
 
-import com.eleven.core.domain.AbstractDeletableDomain;
+import com.eleven.core.data.AbstractDeletableEntity;
 import com.eleven.core.security.Principal;
 import com.eleven.core.security.ToPrincipal;
 import com.eleven.core.time.TimeContext;
@@ -27,7 +27,7 @@ import java.util.Objects;
 @Getter
 @FieldNameConstants
 @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
-public class User extends AbstractDeletableDomain implements ToPrincipal, Serializable {
+public class User extends AbstractDeletableEntity implements ToPrincipal, Serializable {
 
     public static final String TYPE_INNER_USER = "user";
 

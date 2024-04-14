@@ -1,6 +1,6 @@
 package com.eleven.upms.domain;
 
-import com.eleven.core.domain.AbstractDomain;
+import com.eleven.core.data.AbstractEntity;
 import com.eleven.core.security.Principal;
 import com.eleven.core.security.ToPrincipal;
 import com.eleven.core.security.Token;
@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @With
 @Getter
 @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
-public class AccessToken extends AbstractDomain {
+public class AccessToken extends AbstractEntity {
 
     @Id
     @Column("token")
@@ -63,12 +63,12 @@ public class AccessToken extends AbstractDomain {
     public Token toToken() {
         var accessToken = this;
         return new Token()
-                .setIssuer(accessToken.getIssuer())
-                .setValue(accessToken.getToken())
-                .setExpireAt(accessToken.getExpireAt())
-                .setCreateAt(accessToken.getCreateAt())
-                .setPrincipal(accessToken.getOwner().toPrincipal())
-                .setDetail(new TokenDetail().setClientIp(accessToken.getClientIp()));
+            .setIssuer(accessToken.getIssuer())
+            .setValue(accessToken.getToken())
+            .setExpireAt(accessToken.getExpireAt())
+            .setCreateAt(accessToken.getCreateAt())
+            .setPrincipal(accessToken.getOwner().toPrincipal())
+            .setDetail(new TokenDetail().setClientIp(accessToken.getClientIp()));
     }
 
     public void expire() {

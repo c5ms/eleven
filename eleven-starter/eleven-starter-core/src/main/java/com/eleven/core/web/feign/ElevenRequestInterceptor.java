@@ -25,7 +25,6 @@
 
 package com.eleven.core.web.feign;
 
-import com.eleven.core.security.support.ElevenTokenResolver;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import lombok.extern.slf4j.Slf4j;
@@ -33,9 +32,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ElevenRequestInterceptor implements RequestInterceptor {
 
-    @Override
-    public void apply(RequestTemplate template) {
-        template.header(ElevenTokenResolver.HEADER_TOKEN_NAME, "298c4b65a7434ee3aca5823a6f20b96a");
-    }
+	@Override
+	public void apply(RequestTemplate template) {
+	}
 
 }

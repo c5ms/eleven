@@ -1,6 +1,6 @@
 package com.eleven.core.web.problem;
 
-import com.eleven.core.exception.ProcessError;
+import com.eleven.core.domain.DomainError;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -17,10 +17,10 @@ public class Problem {
         this.message = message;
     }
 
-    public static Problem of(ProcessError error) {
+    public static Problem of(DomainError error) {
         return new Problem(
-                String.format("%s:%s", error.getDomain(), error.getError()),
-                error.getMessage()
+            String.format("%s:%s", error.getDomain(), error.getError()),
+            error.getMessage()
         );
     }
 

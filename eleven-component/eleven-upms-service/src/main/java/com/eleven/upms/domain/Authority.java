@@ -1,7 +1,7 @@
 package com.eleven.upms.domain;
 
-import com.eleven.core.domain.AbstractAuditDomain;
-import com.eleven.core.domain.Identifiable;
+import com.eleven.core.data.AbstractAuditEntity;
+import com.eleven.core.security.Identifiable;
 import com.eleven.core.security.Principal;
 import com.eleven.core.security.ToPrincipal;
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table("upms_authority")
 @Getter
 //@AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
-public class Authority extends AbstractAuditDomain {
+public class Authority extends AbstractAuditEntity {
 
     public static String POWER_ROLE = "role";
     public static String POWER_RESOURCE = "resource";

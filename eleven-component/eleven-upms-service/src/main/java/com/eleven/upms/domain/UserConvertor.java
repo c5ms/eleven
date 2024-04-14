@@ -20,10 +20,10 @@ public class UserConvertor {
 
         // 所有角色
         authorityManager.authoritiesOf(owner, Authority.POWER_ROLE, Authority.POWER_PERMISSION)
-                .stream()
-                .map(Authority::getPower)
-                .map(Authority.Power::getName)
-                .forEach(detail.getRoles()::add);
+            .stream()
+            .map(Authority::getPower)
+            .map(Authority.Power::getName)
+            .forEach(detail.getRoles()::add);
 
         return detail;
     }

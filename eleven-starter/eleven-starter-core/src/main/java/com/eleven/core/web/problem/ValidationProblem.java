@@ -1,6 +1,6 @@
 package com.eleven.core.web.problem;
 
-import com.eleven.core.constants.ElevenConstants;
+import com.eleven.core.domain.DomainConstants;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.Getter;
 import lombok.Value;
@@ -17,8 +17,8 @@ public class ValidationProblem extends Problem {
 
     public ValidationProblem() {
         super(
-                String.format("%s:%s", ElevenConstants.ERROR_VALIDATE_FAILED.getDomain(), ElevenConstants.ERROR_VALIDATE_FAILED.getError()),
-                ElevenConstants.ERROR_VALIDATE_FAILED.getMessage()
+            String.format("%s:%s", DomainConstants.ERROR_VALIDATE_FAILED.getDomain(), DomainConstants.ERROR_VALIDATE_FAILED.getError()),
+            DomainConstants.ERROR_VALIDATE_FAILED.getMessage()
         );
     }
 
@@ -26,12 +26,12 @@ public class ValidationProblem extends Problem {
         return new ValidationProblem();
     }
 
-    public ValidationProblem addField(String field, String error, String message){
-        this.fields.add(new Field(field,error,message));
+    public ValidationProblem addField(String field, String error, String message) {
+        this.fields.add(new Field(field, error, message));
         return this;
     }
 
-    public ValidationProblem addField(Field field){
+    public ValidationProblem addField(Field field) {
         this.fields.add(field);
         return this;
     }
@@ -39,8 +39,8 @@ public class ValidationProblem extends Problem {
     @Value
     @Hidden
     public static class Field {
-          String field;
-          String error;
-          String message;
+        String field;
+        String error;
+        String message;
     }
 }
