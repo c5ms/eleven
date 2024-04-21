@@ -37,8 +37,8 @@ public class GatewayStack {
      */
     public boolean match(ServerWebExchange exchange) {
         return getPredicates()
-                .stream()
-                .allMatch(routePredicate -> routePredicate.test(exchange));
+            .stream()
+            .allMatch(routePredicate -> routePredicate.test(exchange));
     }
 
     /**
@@ -49,8 +49,8 @@ public class GatewayStack {
      */
     public Optional<GatewayRoute> matchRoute(ServerWebExchange exchange) {
         return this.getRoutes().stream()
-                .filter(gatewayRoute -> gatewayRoute.match(exchange))
-                .findFirst();
+            .filter(gatewayRoute -> gatewayRoute.match(exchange))
+            .findFirst();
     }
 
 }

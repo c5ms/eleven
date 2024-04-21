@@ -32,8 +32,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ElevenRequestInterceptor implements RequestInterceptor {
 
-	@Override
-	public void apply(RequestTemplate template) {
-	}
+    @Override
+    public void apply(RequestTemplate template) {
+    }
 
 }

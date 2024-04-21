@@ -33,36 +33,36 @@ public class ElevenSecurityConfigure {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf(AbstractHttpConfigurer::disable)
-                .csrf(AbstractHttpConfigurer::disable)
-                .cors(AbstractHttpConfigurer::disable)
-                .logout(AbstractHttpConfigurer::disable)
-                .formLogin(AbstractHttpConfigurer::disable)
-                .httpBasic(AbstractHttpConfigurer::disable)
-                .rememberMe(AbstractHttpConfigurer::disable)
-                .oauth2Login(AbstractHttpConfigurer::disable)
-                .headers(c -> c.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
-                .anonymous(c -> c.principal(Subject.ANONYMOUS_INSTANCE))
+            .csrf(AbstractHttpConfigurer::disable)
+            .cors(AbstractHttpConfigurer::disable)
+            .logout(AbstractHttpConfigurer::disable)
+            .formLogin(AbstractHttpConfigurer::disable)
+            .httpBasic(AbstractHttpConfigurer::disable)
+            .rememberMe(AbstractHttpConfigurer::disable)
+            .oauth2Login(AbstractHttpConfigurer::disable)
+            .headers(c -> c.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
+            .anonymous(c -> c.principal(Subject.ANONYMOUS_INSTANCE))
 
-                //non-trust  or ful-trust ?
+            //non-trust  or ful-trust ?
 
 //                .authorizeHttpRequests(c -> c.requestMatchers(RestConstants.ADMIN_API_PREFIX +"/**" ).permitAll())
 //                .authorizeHttpRequests(c -> c.requestMatchers(RestConstants.CLIENT_API_PREFIX +"/**" ).permitAll())
 //                .authorizeHttpRequests(c -> c.requestMatchers(RestConstants.SERVICE_API_PREFIX+"/**" ).authenticated())
 //                .authorizeHttpRequests(c -> c.requestMatchers(RestConstants.OPEN_API_PREFIX+"/**" ).authenticated())
-                .authorizeHttpRequests(c -> c.anyRequest().permitAll())
+            .authorizeHttpRequests(c -> c.anyRequest().permitAll())
 
-                .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.NEVER))
+            .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.NEVER))
 
-                .oauth2ResourceServer(oauth2 -> {
-                    oauth2.bearerTokenResolver(new ElevenTokenResolver())
-                            .opaqueToken(c -> c.authenticationManager(authenticationManager));
+            .oauth2ResourceServer(oauth2 -> {
+                oauth2.bearerTokenResolver(new ElevenTokenResolver())
+                    .opaqueToken(c -> c.authenticationManager(authenticationManager));
 
-                })
+            })
 
-                .exceptionHandling((exceptions) -> exceptions
-                        .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
-                        .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
-                )
+            .exceptionHandling((exceptions) -> exceptions
+                .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
+                .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
+            )
         ;
 
         return http.build();

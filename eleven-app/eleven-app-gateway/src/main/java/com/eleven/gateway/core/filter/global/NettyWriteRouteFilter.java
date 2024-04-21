@@ -26,11 +26,11 @@ import java.util.List;
 public class NettyWriteRouteFilter implements RouteGlobalFilter {
 
     private final List<MediaType> streamingMediaTypes = Arrays.asList(
-            MediaType.TEXT_EVENT_STREAM,
-            MediaType.APPLICATION_JSON,
-            new MediaType("application", "grpc"),
-            new MediaType("application", "grpc+protobuf"),
-            new MediaType("application", "grpc+json"));
+        MediaType.TEXT_EVENT_STREAM,
+        MediaType.APPLICATION_JSON,
+        new MediaType("application", "grpc"),
+        new MediaType("application", "grpc+protobuf"),
+        new MediaType("application", "grpc+json"));
 
 
     @Override

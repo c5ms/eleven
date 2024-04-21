@@ -17,7 +17,6 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Table("upms_authority")
 @Getter
-//@AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
 public class Authority extends AbstractAuditEntity {
 
     public static String POWER_ROLE = "role";

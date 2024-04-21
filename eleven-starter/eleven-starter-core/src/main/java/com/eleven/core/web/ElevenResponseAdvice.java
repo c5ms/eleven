@@ -37,10 +37,10 @@ public class ElevenResponseAdvice implements ResponseBodyAdvice<Object> {
                                   @NonNull ServerHttpRequest request,
                                   @NonNull ServerHttpResponse response) {
 
-		// decide to response 404 or 204
-		if(((ServletServerHttpResponse) response).getServletResponse().getStatus()==404){
-			return  body;
-		}
+        // decide to response 404 or 204
+        if (((ServletServerHttpResponse) response).getServletResponse().getStatus() == 404) {
+            return body;
+        }
 
         // inner api return origin value as well
         // avoid not found error
@@ -54,7 +54,7 @@ public class ElevenResponseAdvice implements ResponseBodyAdvice<Object> {
             isReturnNUll = ((Optional<?>) body).isEmpty();
         }
 
-        if (isReturnNUll && request.getMethod() == HttpMethod.GET) {
+        if (isReturnNUll && request.getMethod() == HttpMethod.GET && ((ServletServerHttpResponse) response).getServletResponse().getStatus() < 300) {
             response.setStatusCode(HttpStatus.NO_CONTENT);
             return null;
         }

@@ -1,9 +1,9 @@
 package com.eleven.core.web;
 
-import com.eleven.core.domain.DomainConstants;
-import com.eleven.core.domain.DomainError;
-import com.eleven.core.domain.DomainRuntimeException;
-import com.eleven.core.domain.NoDataFoundException;
+import com.eleven.core.exception.DomainError;
+import com.eleven.core.exception.DomainErrors;
+import com.eleven.core.exception.NoRequiredDataException;
+import com.eleven.core.exception.ProcessFailureException;
 import com.eleven.core.web.problem.Problem;
 import com.eleven.core.web.problem.ValidationProblem;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -35,34 +35,33 @@ public class ElevenExceptionAdvice {
     public ResponseEntity<ValidationProblem> on(BindException ex) {
         var problem = ValidationProblem.empty();
         ex.getAllErrors()
-                .stream()
-                .filter(objectError -> objectError instanceof FieldError)
-                .map(objectError -> (FieldError) objectError)
-                .map(fieldError -> new ValidationProblem.Field(fieldError.getField(), fieldError.getCode(), fieldError.getDefaultMessage()))
-                .forEach(problem::addField);
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
-                .body(problem);
+            .stream()
+            .filter(objectError -> objectError instanceof FieldError)
+            .map(objectError -> (FieldError) objectError)
+            .map(fieldError -> new ValidationProblem.Field(fieldError.getField(), fieldError.getCode(), fieldError.getDefaultMessage()))
+            .forEach(problem::addField);
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(problem);
     }
 
     @ResponseBody
-	@ApiResponse(description = "Bad Request", responseCode = "400")
-	@ApiResponse(description = "Not Found", responseCode = "404")
-	@ApiResponse(description = "Method Not Allowed", responseCode = "405")
-	@ApiResponse(description = "Unsupported Media Type", responseCode = "415")
-	@ApiResponse(description = "Internal Server Error", responseCode = "500")
+    @ApiResponse(description = "Bad Request", responseCode = "400")
+    @ApiResponse(description = "Not Found", responseCode = "404")
+    @ApiResponse(description = "Method Not Allowed", responseCode = "405")
+    @ApiResponse(description = "Unsupported Media Type", responseCode = "415")
+    @ApiResponse(description = "Internal Server Error", responseCode = "500")
     @ExceptionHandler({Exception.class,})
     public ResponseEntity<Problem> on(Exception e) {
         HttpStatus status;
 
         //400 - payload
         if (e instanceof HttpMessageConversionException) {
-            var problem = Problem.of(DomainConstants.ERROR_JSON_PARSING);
+            var problem = Problem.of(DomainErrors.ERROR_REQUEST_BODY_FAILED, e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
         }
 
         // 400 -  process
-        else if (e instanceof DomainRuntimeException) {
-            var problem = Problem.of((DomainError) e);
+        else if (e instanceof ProcessFailureException) {
+            var problem = Problem.of((DomainError) e, e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
         }
 
@@ -74,11 +73,11 @@ public class ElevenExceptionAdvice {
         //404
         else if (e instanceof NoHandlerFoundException) {
             status = HttpStatus.NOT_FOUND;
-        } else if (e instanceof NoDataFoundException) {
+        } else if (e instanceof NoRequiredDataException) {
             status = HttpStatus.NOT_FOUND;
-        }else  if (e instanceof NoResourceFoundException){
-			status = HttpStatus.NOT_FOUND;
-		}
+        } else if (e instanceof NoResourceFoundException) {
+            status = HttpStatus.NOT_FOUND;
+        }
 
         // 415 405
         else if (e instanceof HttpMediaTypeNotSupportedException) {

@@ -1,6 +1,6 @@
 package com.eleven.core.web.config;
 
-import com.eleven.core.web.RestConstants;
+import com.eleven.core.web.WebConstants;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
@@ -24,7 +24,7 @@ public class ElevenOpenapiConfiguration {
         return GroupedOpenApi.builder()
             .group("front-api")
             .displayName("front")
-            .pathsToMatch(RestConstants.FRONT_API_PREFIX + "/**")
+            .pathsToMatch(WebConstants.FRONT_API_PREFIX + "/**")
             .build();
     }
 
@@ -33,7 +33,7 @@ public class ElevenOpenapiConfiguration {
         return GroupedOpenApi.builder()
             .group("admin-api")
             .displayName("admin")
-            .pathsToMatch(RestConstants.ADMIN_API_PREFIX + "/**")
+            .pathsToMatch(WebConstants.ADMIN_API_PREFIX + "/**")
             .build();
     }
 
@@ -43,35 +43,35 @@ public class ElevenOpenapiConfiguration {
         return GroupedOpenApi.builder()
             .group("open-api")
             .displayName("open")
-            .pathsToMatch(RestConstants.ADMIN_API_PREFIX + "/**")
+            .pathsToMatch(WebConstants.ADMIN_API_PREFIX + "/**")
             .build();
     }
 
     @Bean
-	public GroupedOpenApi innerApi() {
-		return GroupedOpenApi.builder()
-			.group("inner-api")
-			.displayName("inner")
-			.pathsToMatch(RestConstants.INNER_API_PREFIX+"/**")
-			.build();
-	}
+    public GroupedOpenApi innerApi() {
+        return GroupedOpenApi.builder()
+            .group("inner-api")
+            .displayName("inner")
+            .pathsToMatch(WebConstants.INNER_API_PREFIX + "/**")
+            .build();
+    }
 
     @Bean
     public OpenAPI openAPI(ElevenOpenapiProperties properties) {
         return new OpenAPI()
-                .info(new Info()
-                        .version(properties.getVersion())
-                        .title(properties.getTitle())
-                        .description(properties.getDescription())
-                        .termsOfService(properties.getTermsOfService())
-                        .contact(new Contact()
-                                .name(properties.getContact().getName())
-                                .url(properties.getContact().getUrl())
-                                .email(properties.getContact().getEmail()))
-                        .license(new License()
-                                .name(properties.getLicense().getName())
-                                .url(properties.getLicense().getUrl()))
-                );
+            .info(new Info()
+                .version(properties.getVersion())
+                .title(properties.getTitle())
+                .description(properties.getDescription())
+                .termsOfService(properties.getTermsOfService())
+                .contact(new Contact()
+                    .name(properties.getContact().getName())
+                    .url(properties.getContact().getUrl())
+                    .email(properties.getContact().getEmail()))
+                .license(new License()
+                    .name(properties.getLicense().getName())
+                    .url(properties.getLicense().getUrl()))
+            );
     }
 
 }

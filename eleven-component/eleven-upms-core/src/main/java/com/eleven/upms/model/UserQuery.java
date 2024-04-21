@@ -1,7 +1,6 @@
 package com.eleven.upms.model;
 
-import com.eleven.core.domain.Pagination;
-import com.eleven.upms.model.UserState;
+import com.eleven.core.domain.PaginationQuery;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class UserQuery extends Pagination {
+public class UserQuery extends PaginationQuery {
 
     @Schema(description = "账号")
     String username;

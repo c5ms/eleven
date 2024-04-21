@@ -76,7 +76,7 @@ public class WebsocketRoutingFilter implements RouteGlobalFilter {
         WebSocketService webSocketService = exchange.getRequiredAttribute(GatewayConstants.GATEWAY_WEB_SOCKET_SERVICE);
 
         return webSocketService.handleRequest(exchange,
-                new ProxyWebSocketHandler(requestUrl, webSocketClient, headers, protocols));
+            new ProxyWebSocketHandler(requestUrl, webSocketClient, headers, protocols));
     }
 
     /* for testing */ List<String> getProtocols(HttpHeaders headers) {
@@ -124,15 +124,15 @@ public class WebsocketRoutingFilter implements RouteGlobalFilter {
                 @Override
                 public Mono<Void> handle(WebSocketSession proxySession) {
                     Mono<Void> serverClose = proxySession.closeStatus().filter(__ -> session.isOpen())
-                            .flatMap(session::close);
+                        .flatMap(session::close);
                     Mono<Void> proxyClose = session.closeStatus().filter(__ -> proxySession.isOpen())
-                            .flatMap(proxySession::close);
+                        .flatMap(proxySession::close);
                     // Use retain() for Reactor Netty
                     Mono<Void> proxySessionSend = proxySession
-                            .send(session.receive().doOnNext(WebSocketMessage::retain));
+                        .send(session.receive().doOnNext(WebSocketMessage::retain));
                     // .log("proxySessionSend", Level.FINE);
                     Mono<Void> serverSessionSend = session
-                            .send(proxySession.receive().doOnNext(WebSocketMessage::retain));
+                        .send(proxySession.receive().doOnNext(WebSocketMessage::retain));
                     // .log("sessionSend", Level.FINE);
                     // Ensure closeStatus from one propagates to the other
                     Mono.when(serverClose, proxyClose).subscribe();

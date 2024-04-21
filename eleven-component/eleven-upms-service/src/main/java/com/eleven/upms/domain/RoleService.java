@@ -1,7 +1,7 @@
 package com.eleven.upms.domain;
 
 import com.eleven.core.data.DomainSupport;
-import com.eleven.core.exception.ProcessRuntimeException;
+import com.eleven.core.exception.ProcessFailureException;
 import com.eleven.upms.core.UpmsConstants;
 import com.eleven.upms.model.RoleCreateAction;
 import com.eleven.upms.model.RoleDto;
@@ -23,7 +23,6 @@ public class RoleService {
     private final RoleRepository roleRepository;
     private final AuthorityManager authorityManager;
     private final DomainSupport domainSupport;
-
 
     public Optional<RoleDto> getRole(String id) {
         var role = roleRepository.findById(id);
@@ -56,9 +55,10 @@ public class RoleService {
     }
 
 
-    private void validate(Role role) throws ProcessRuntimeException {
+    private void validate(Role role) throws ProcessFailureException {
         // 验证，用户名不能重复
-        var exist = roleRepository.findByCode(role.getCode()).filter(check -> !StringUtils.equals(check.getId(), role.getId()));
+        var exist = roleRepository.findByCode(role.getCode())
+            .filter(check -> !StringUtils.equals(check.getId(), role.getId()));
         if (exist.isPresent()) {
             throw UpmsConstants.ERROR_ROLE_CODE_REPEAT.exception();
         }

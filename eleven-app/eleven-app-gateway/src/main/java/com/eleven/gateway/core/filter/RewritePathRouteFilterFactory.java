@@ -79,9 +79,9 @@ public class RewritePathRouteFilterFactory implements RouteFilterFactory {
         @Override
         public String toString() {
             return "{" +
-                    "regexp='" + regexp + '\'' +
-                    ", replacement='" + replacement + '\'' +
-                    '}';
+                   "regexp='" + regexp + '\'' +
+                   ", replacement='" + replacement + '\'' +
+                   '}';
         }
     }
 

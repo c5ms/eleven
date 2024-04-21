@@ -10,7 +10,7 @@ import org.hibernate.validator.constraints.Length;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class UserCreateAction extends UserSaveAction {
+public class UserCreateAction extends AbstractUserSaveAction {
 
     @Schema(description = "登入账号")
     @NotBlank(message = "账号不能为空")

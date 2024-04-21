@@ -1,6 +1,6 @@
 package com.eleven.core.web.problem;
 
-import com.eleven.core.domain.DomainError;
+import com.eleven.core.exception.DomainError;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -21,6 +21,13 @@ public class Problem {
         return new Problem(
             String.format("%s:%s", error.getDomain(), error.getError()),
             error.getMessage()
+        );
+    }
+
+    public static Problem of(DomainError error, String message) {
+        return new Problem(
+            String.format("%s:%s", error.getDomain(), error.getError()),
+            message
         );
     }
 

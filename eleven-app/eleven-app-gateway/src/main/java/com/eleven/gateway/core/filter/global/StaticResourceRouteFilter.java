@@ -24,14 +24,14 @@ public class StaticResourceRouteFilter implements RouteGlobalFilter {
         }
 
         return gatewayRoute.matchResource(exchange)
-                .map(content -> {
-                    GatewayServerUtil.setAlreadyRouted(exchange);
-                    exchange.getResponse().getHeaders().set(HttpHeaders.CONTENT_ENCODING, content.getEncoding());
-                    exchange.getResponse().getHeaders().setContentType(content.getMediaType());
-                    exchange.getResponse().getHeaders().setCacheControl(content.getCacheControl());
-                    return exchange.getResponse().writeWith(GatewayNettyDataBufferUtils.read(content.getBody()));
-                })
-                .orElseGet(() -> chain.filter(exchange));
+            .map(content -> {
+                GatewayServerUtil.setAlreadyRouted(exchange);
+                exchange.getResponse().getHeaders().set(HttpHeaders.CONTENT_ENCODING, content.getEncoding());
+                exchange.getResponse().getHeaders().setContentType(content.getMediaType());
+                exchange.getResponse().getHeaders().setCacheControl(content.getCacheControl());
+                return exchange.getResponse().writeWith(GatewayNettyDataBufferUtils.read(content.getBody()));
+            })
+            .orElseGet(() -> chain.filter(exchange));
     }
 
 

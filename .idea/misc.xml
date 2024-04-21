@@ -19,14 +19,14 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/eleven-app/eleven-app-gateway/eleven-gateway-core/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-app/eleven-config-server/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-component/eleven-doney-core/pom.xml" />
         <option value="$PROJECT_DIR$/eleven-component/eleven-doney-service/pom.xml" />
       </set>
     </option>
-    <option name="workspaceImportForciblyTurnedOn" value="true" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="azul-17" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="azul-17" project-jdk-type="JavaSDK" />
   <component name="ProjectType">
     <option name="id" value="jpab" />
   </component>

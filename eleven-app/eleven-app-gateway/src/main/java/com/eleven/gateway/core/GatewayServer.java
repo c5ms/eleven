@@ -14,26 +14,41 @@ import org.springframework.web.server.adapter.HttpWebHandlerAdapter;
 @RequiredArgsConstructor
 public class GatewayServer extends AbstractLifecycle {
 
-//    private final GatewayServerWebHandler handler;
-//    private final GatewayConfigProvider configService;
+    private final GatewayServerWebHandler handler;
+    //    private final GatewayConfigProvider configService;
     private volatile WebServer webServer;
 
     @Override
     protected void doStart() {
 //        GatewayConfig config = configService.getConfig();
-//        handler.start(config);
-//        HttpWebHandlerAdapter webHandlerAdapter = new HttpWebHandlerAdapter(handler);
-//        NettyReactiveWebServerFactory nettyReactiveWebServerFactory = new NettyReactiveWebServerFactory(config.getServer().getPort());
+        GatewayConfig config = GatewayConfig.builder()
+            .server(
+                GatewayConfig.Server.builder()
+                    .port(80)
+                    .name("ga")
+                    .running(true)
+                    .build()
+            )
+            .httpClient(
+                GatewayConfig.HttpClient.builder()
+                    .maxConnections(24)
+                    .build()
+            )
+            .build();
+
+        handler.start(config);
+        HttpWebHandlerAdapter webHandlerAdapter = new HttpWebHandlerAdapter(handler);
+        NettyReactiveWebServerFactory nettyReactiveWebServerFactory = new NettyReactiveWebServerFactory(config.getServer().getPort());
 //			Ssl ssl=new Ssl();
 //			ssl.setKeyStore("classpath:scg-keystore.p12");
 //			ssl.setKeyStorePassword("111111");
 //			ssl.setKeyStoreType("PKCS12");
 //			ssl.setKeyAlias("gateway");
 //        nettyReactiveWebServerFactory.setSsl(ssl);
-//        String serverName = config.getServer().getName();
-//        nettyReactiveWebServerFactory.setServerHeader(serverName);
+        String serverName = config.getServer().getName();
+        nettyReactiveWebServerFactory.setServerHeader(serverName);
         try {
-//            webServer = nettyReactiveWebServerFactory.getWebServer(webHandlerAdapter);
+            webServer = nettyReactiveWebServerFactory.getWebServer(webHandlerAdapter);
             webServer.start();
             Bootstrap.log(String.format("应用网关服务启动，监听端口:%s", webServer.getPort()));
         } catch (Exception e) {

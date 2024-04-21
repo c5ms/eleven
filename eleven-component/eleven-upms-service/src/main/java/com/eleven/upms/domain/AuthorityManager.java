@@ -12,6 +12,7 @@ import java.util.Set;
 @Component
 @RequiredArgsConstructor
 public class AuthorityManager {
+
     private final AuthorityRepository authorityRepository;
     private final DomainSupport domainSupport;
 

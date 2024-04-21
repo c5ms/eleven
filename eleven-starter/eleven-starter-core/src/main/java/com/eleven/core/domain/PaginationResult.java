@@ -21,23 +21,23 @@ public class PaginationResult<T> implements Iterable<T> {
 
     public static <T> PaginationResult<T> of(List<T> items, long total) {
         return new PaginationResult<T>()
-                .setItems(items)
-                .setTotal(total)
-                ;
+            .setItems(items)
+            .setTotal(total)
+            ;
     }
 
     public static <T> PaginationResult<T> of(List<T> items) {
         return new PaginationResult<T>()
-                .setItems(items)
-                .setTotal(items.size())
-                ;
+            .setItems(items)
+            .setTotal(items.size())
+            ;
     }
 
     public <R> PaginationResult<R> map(Function<T, R> mapper) {
         return new PaginationResult<R>()
-                .setItems(this.getItems().stream().map(mapper).collect(Collectors.toList()))
-                .setTotal(this.total)
-                ;
+            .setItems(this.getItems().stream().map(mapper).collect(Collectors.toList()))
+            .setTotal(this.total)
+            ;
     }
 
     public Stream<T> stream() {

@@ -8,7 +8,6 @@ import com.eleven.upms.client.UpmsClient;
 import com.eleven.upms.domain.AccessTokenService;
 import com.eleven.upms.domain.UserService;
 import com.eleven.upms.model.UserDto;
-import com.eleven.upms.model.UserSummary;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,11 +44,6 @@ public class UpmsInnerApiV1 implements UpmsClient {
     @Override
     public Optional<UserDto> readUser(String id) {
         return userService.getUser(id);
-    }
-
-    @Override
-    public Optional<UserSummary> readUserSummary(String id) {
-        return userService.getUserSummary(id);
     }
 
 

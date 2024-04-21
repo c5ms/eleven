@@ -1,7 +1,7 @@
 package com.eleven.upms.domain;
 
 import cn.hutool.core.util.RandomUtil;
-import com.eleven.core.exception.ProcessRuntimeException;
+import com.eleven.core.exception.ProcessFailureException;
 import com.eleven.core.security.Principal;
 import com.eleven.upms.configure.UpmsProperties;
 import com.eleven.upms.core.UpmsConstants;
@@ -68,14 +68,6 @@ class UserServiceTest {
         Assertions.assertEquals(updateAction.getNickname(), userDto.getNickname());
         Assertions.assertEquals(updateAction.getState(), userDto.getState());
 
-
-        // summary
-        var summary = userService.getUserSummary(userDto.getId());
-        Assertions.assertNotNull(summary.orElse(null));
-        Assertions.assertEquals(userDto.getId(), summary.get().getId());
-        Assertions.assertEquals(userDto.getNickname(), summary.get().getNickname());
-        Assertions.assertEquals(userDto.getUsername(), summary.get().getUsername());
-
         // delete
         userService.deleteUser(userDto.getId());
 
@@ -97,16 +89,16 @@ class UserServiceTest {
         Assertions.assertEquals(new Principal(User.TYPE_INNER_USER , userDto.getId()), principal);
 
         // no existing user
-        var error = Assertions.assertThrows(ProcessRuntimeException.class, () -> userService.loginUser(UUID.randomUUID().toString(), "error_password"));
+        var error = Assertions.assertThrows(ProcessFailureException.class, () -> userService.loginUser(UUID.randomUUID().toString(), "error_password"));
         Assertions.assertEquals(UpmsConstants.ERROR_LOGIN_PASSWORD.getError(), error.getError());
 
         // wrong password
-        error = Assertions.assertThrows(ProcessRuntimeException.class, () -> userService.loginUser(userDto.getUsername(), "error_password"));
+        error = Assertions.assertThrows(ProcessFailureException.class, () -> userService.loginUser(userDto.getUsername(), "error_password"));
         Assertions.assertEquals(UpmsConstants.ERROR_LOGIN_PASSWORD.getError(), error.getError());
 
         // already deleted
         userService.deleteUser(userDto.getId());
-        error = Assertions.assertThrows(ProcessRuntimeException.class, () -> userService.loginUser(userDto.getUsername(), upmsProperties.getDefaultPassword()));
+        error = Assertions.assertThrows(ProcessFailureException.class, () -> userService.loginUser(userDto.getUsername(), upmsProperties.getDefaultPassword()));
         Assertions.assertEquals(UpmsConstants.ERROR_USER_ALREADY_DELETED.getError(), error.getError());
     }
 
@@ -117,7 +109,7 @@ class UserServiceTest {
         var query = (UserQuery) new UserQuery()
                 .setType(User.TYPE_INNER_USER)
                 .setIsLocked(false);
-        userService.queryUserPage(query);
+        userService.queryPage(query);
     }
 
 }

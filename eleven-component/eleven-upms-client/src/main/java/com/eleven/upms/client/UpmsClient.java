@@ -1,11 +1,8 @@
 package com.eleven.upms.client;
 
 import com.eleven.core.security.Subject;
-import com.eleven.core.security.Token;
 import com.eleven.upms.core.UpmsConstants;
 import com.eleven.upms.model.UserDto;
-import com.eleven.upms.model.UserState;
-import com.eleven.upms.model.UserSummary;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Primary;
@@ -26,10 +23,6 @@ public interface UpmsClient {
     @Operation(summary = "get user")
     @GetMapping("/readUser")
     Optional<UserDto> readUser(@RequestParam("id") String id);
-
-    @Operation(summary = "get user summary")
-    @GetMapping("/readUserSummary")
-    Optional<UserSummary> readUserSummary(@RequestParam("id") String id);
 
     @Operation(summary = "create subject")
     @GetMapping("/createSubject")

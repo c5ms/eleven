@@ -52,9 +52,9 @@ public class SetRequestHeaderRouteFilterFactory implements RouteFilterFactory {
                     headers.add(entry.getKey(), value);
                 }
                 ServerHttpRequest request = exchange.getRequest()
-                        .mutate()
-                        .headers(httpHeaders -> httpHeaders.putAll(headers))
-                        .build();
+                    .mutate()
+                    .headers(httpHeaders -> httpHeaders.putAll(headers))
+                    .build();
                 return chain.filter(exchange.mutate().request(request).build());
             }
 

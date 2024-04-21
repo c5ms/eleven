@@ -4,8 +4,8 @@ import cn.hutool.extra.spring.SpringUtil;
 import com.eleven.core.data.AbstractAuditEntity;
 import com.eleven.core.data.AbstractDeletableEntity;
 import com.eleven.core.data.DomainSupport;
+import com.eleven.core.exception.ProcessFailureException;
 import com.eleven.core.domain.PaginationResult;
-import com.eleven.core.exception.ProcessRuntimeException;
 import com.eleven.core.security.Principal;
 import com.eleven.upms.core.UpmsConstants;
 import com.eleven.upms.model.*;
@@ -28,16 +28,16 @@ import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class UserService {
 
     private final UserConvertor userConvertor;
-    private final PasswordService passwordService;
+    private final PasswordManager passwordManager;
     private final UserRepository userRepository;
     private final AuthorityManager authorityManager;
     private final DomainSupport domainSupport;
 
-    @Transactional(readOnly = true)
-    public PaginationResult<UserDto> queryUserPage(UserQuery filter) {
+    public PaginationResult<UserDto> queryPage(UserQuery filter) {
 
         var criteria = Criteria.empty();
         if (Objects.nonNull(filter.getState())) {
@@ -66,23 +66,18 @@ public class UserService {
             }
             criteria = criteria.and(ranges);
         }
+
         var query = Query.query(criteria).sort(Sort.by(AbstractAuditEntity.Fields.createAt).descending());
-        var page = domainSupport.queryPage(query, User.class, filter.getPage(), filter.getSize());
+        var page= domainSupport.queryPage(query, User.class, filter.getPage(), filter.getSize());
         return page.map(userConvertor::toDto);
     }
 
-    @Transactional(readOnly = true)
+    @Cacheable(cacheNames = UpmsConstants.CACHE_NAME_USER, key = "#uid+'.summary'")
     public Optional<UserDto> getUser(String uid) {
         var user = userRepository.findById(uid);
         // 1.  only return effective ( not deleted ) user
         return user.filter(AbstractDeletableEntity::isEffective)
             .map(userConvertor::toDto);
-    }
-
-    @Cacheable(cacheNames = UpmsConstants.CACHE_NAME_USER, key = "#uid+'.summary'")
-    @Transactional(readOnly = true)
-    public Optional<UserSummary> getUserSummary(String uid) {
-        return userRepository.findSummaryById(uid);
     }
 
     @CacheEvict(cacheNames = UpmsConstants.CACHE_NAME_USER, key = "#result.id+'.summary'")
@@ -91,14 +86,14 @@ public class UserService {
         var id = domainSupport.getNextId();
         var user = new User(id, action);
         validate(user);
-        user.setPassword(passwordService.defaultPassword());
+        user.setPassword(passwordManager.defaultPassword());
         grant(user, action.getRoles());
         userRepository.save(user);
         SpringUtil.publishEvent(new UserCreatedEvent(id));
         return userConvertor.toDto(user);
     }
 
-    @CacheEvict(cacheNames = UpmsConstants.CACHE_NAME_USER, key = "#uid+'.summary'")
+    @CacheEvict(cacheNames = UpmsConstants.CACHE_NAME_USER, key = "#result.id+'.summary'")
     @Transactional(rollbackFor = Exception.class)
     public UserDto updateUser(String uid, UserUpdateAction action) {
         var user = userRepository.requireById(uid);
@@ -125,7 +120,7 @@ public class UserService {
             throw UpmsConstants.ERROR_LOGIN_PASSWORD.exception();
         }
         var user = userOptional.get();
-        var pass = passwordService.valid(password, user.getPassword());
+        var pass = passwordManager.valid(password, user.getPassword());
         if (!pass) {
             throw UpmsConstants.ERROR_LOGIN_PASSWORD.exception();
         }
@@ -138,7 +133,7 @@ public class UserService {
         return userOptional.get().toPrincipal();
     }
 
-    private void validate(User user) throws ProcessRuntimeException {
+    private void validate(User user) throws ProcessFailureException {
         // 验证，用户名不能重复
         var existUser = userRepository.findByUsername(user.getUsername()).filter(check -> !StringUtils.equals(check.getId(), user.getId()));
         if (existUser.isPresent()) {

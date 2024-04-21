@@ -102,7 +102,7 @@ public class ElevenFeignConfiguration {
     @Bean
     public Request.Options options() {
         return new Request
-                .Options(10, TimeUnit.SECONDS, 60, TimeUnit.SECONDS, true);
+            .Options(10, TimeUnit.SECONDS, 60, TimeUnit.SECONDS, true);
     }
 
 

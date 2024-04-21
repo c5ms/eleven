@@ -24,8 +24,8 @@ public class HeaderRoutePredicateFactory implements RoutePredicateFactory {
     public RoutePredicate apply(String configString) {
         ConfigMap config = JSONUtil.toBean(configString, ConfigMap.class);
         var pattens = config.entrySet().stream()
-                .map(stringStringEntry -> new Config(stringStringEntry.getKey(), stringStringEntry.getValue()))
-                .collect(Collectors.toList());
+            .map(stringStringEntry -> new Config(stringStringEntry.getKey(), stringStringEntry.getValue()))
+            .collect(Collectors.toList());
         return new RoutePredicate() {
             @Override
             public boolean test(ServerWebExchange exchange) {

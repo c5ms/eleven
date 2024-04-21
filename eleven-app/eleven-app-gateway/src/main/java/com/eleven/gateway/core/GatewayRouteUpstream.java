@@ -1,12 +1,15 @@
 package com.eleven.gateway.core;
 
 import lombok.Builder;
+import lombok.Getter;
 
 import java.util.List;
 import java.util.concurrent.atomic.LongAdder;
 
 public class GatewayRouteUpstream {
     LongAdder hits = new LongAdder();
+
+    @Getter
     List<String> uris;
 
     @Builder
@@ -24,7 +27,4 @@ public class GatewayRouteUpstream {
         return getUris().get(seed);
     }
 
-    public List<String> getUris() {
-        return uris;
-    }
 }

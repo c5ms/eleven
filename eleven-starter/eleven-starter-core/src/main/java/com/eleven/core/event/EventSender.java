@@ -7,6 +7,6 @@ import java.io.Serializable;
  */
 public interface EventSender {
 
-	void send(Serializable event, String topic) throws Exception;
+    void send(Serializable event, String topic) throws Exception;
 
 }

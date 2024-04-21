@@ -1,6 +1,6 @@
 package com.eleven.core.web.config;
 
-import com.eleven.core.web.RestConstants;
+import com.eleven.core.web.WebConstants;
 import com.eleven.core.web.annonation.AsAdminApi;
 import com.eleven.core.web.annonation.AsFrontApi;
 import com.eleven.core.web.annonation.AsInnerApi;
@@ -17,15 +17,6 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
-
-import java.lang.annotation.Annotation;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -39,77 +30,86 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.lang.annotation.Annotation;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
 @Configuration(proxyBeanMethods = false)
 @RequiredArgsConstructor
 @EnableConfigurationProperties(ElevenWebProperties.class)
 @PropertySource("classpath:/config/application-core.properties")
 public class ElevenWebConfiguration implements WebMvcConfigurer {
 
-	private final ElevenWebProperties properties;
+    private final ElevenWebProperties properties;
 
-	@Bean
-	@ConditionalOnMissingBean
-	public HttpMessageConverters messageConverters(ObjectProvider<HttpMessageConverter<?>> converters) {
-		return new HttpMessageConverters(converters.orderedStream().collect(Collectors.toList()));
-	}
+    @Bean
+    @ConditionalOnMissingBean
+    public HttpMessageConverters messageConverters(ObjectProvider<HttpMessageConverter<?>> converters) {
+        return new HttpMessageConverters(converters.orderedStream().collect(Collectors.toList()));
+    }
 
-	@Override
-	public void configurePathMatch(PathMatchConfigurer configurer) {
+    @Override
+    public void configurePathMatch(PathMatchConfigurer configurer) {
         // 内部 API
-        configurer.addPathPrefix(RestConstants.INNER_API_PREFIX, new RestfulPredicate(List.of(AsInnerApi.class)));
-		// 前端 API
-		configurer.addPathPrefix(RestConstants.FRONT_API_PREFIX, new RestfulPredicate(List.of(AsFrontApi.class)));
+        configurer.addPathPrefix(WebConstants.INNER_API_PREFIX, new RestfulPredicate(List.of(AsInnerApi.class)));
+        // 前端 API
+        configurer.addPathPrefix(WebConstants.FRONT_API_PREFIX, new RestfulPredicate(List.of(AsFrontApi.class)));
         // 开放 API
-        configurer.addPathPrefix(RestConstants.OPEN_API_PREFIX, new RestfulPredicate(List.of(AsOpenApi.class)));
+        configurer.addPathPrefix(WebConstants.OPEN_API_PREFIX, new RestfulPredicate(List.of(AsOpenApi.class)));
         // 管理 API
-        configurer.addPathPrefix(RestConstants.ADMIN_API_PREFIX, new RestfulPredicate(List.of(AsAdminApi.class)));
-	}
+        configurer.addPathPrefix(WebConstants.ADMIN_API_PREFIX, new RestfulPredicate(List.of(AsAdminApi.class)));
+    }
 
-	@Bean
-	public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
+    @Bean
+    public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
 
-		return builder -> builder
-			.serializerByType(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern(properties.getDateFormat())))
-			.serializerByType(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern(properties.getTimeFormat())))
-			.serializerByType(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(properties.getDatetimeFormat())))
+        return builder -> builder
+            .serializerByType(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern(properties.getDateFormat())))
+            .serializerByType(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern(properties.getTimeFormat())))
+            .serializerByType(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(properties.getDatetimeFormat())))
 
-			.deserializerByType(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern(properties.getDateFormat())))
-			.deserializerByType(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ofPattern(properties.getTimeFormat())))
-			.deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(properties.getDatetimeFormat())))
+            .deserializerByType(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern(properties.getDateFormat())))
+            .deserializerByType(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ofPattern(properties.getTimeFormat())))
+            .deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(properties.getDatetimeFormat())))
 
-			.timeZone(properties.getTimeZone())
-			.featuresToDisable(
-				SerializationFeature.FAIL_ON_EMPTY_BEANS,
-				SerializationFeature.WRITE_DATES_AS_TIMESTAMPS,
-				DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES
-			)
-			.featuresToEnable(
-				JsonParser.Feature.ALLOW_SINGLE_QUOTES,
-				JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES,
-				SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS,
-				JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(),
-				JsonReadFeature.ALLOW_SINGLE_QUOTES.mappedFeature(),
-				JsonReadFeature.ALLOW_UNQUOTED_FIELD_NAMES.mappedFeature()
-			)
-			.modules(
-				new Jdk8Module(),
-				new JavaTimeModule()
-			);
-	}
+            .timeZone(properties.getTimeZone())
+            .featuresToDisable(
+                SerializationFeature.FAIL_ON_EMPTY_BEANS,
+                SerializationFeature.WRITE_DATES_AS_TIMESTAMPS,
+                DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES
+            )
+            .featuresToEnable(
+                JsonParser.Feature.ALLOW_SINGLE_QUOTES,
+                JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES,
+                SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS,
+                JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(),
+                JsonReadFeature.ALLOW_SINGLE_QUOTES.mappedFeature(),
+                JsonReadFeature.ALLOW_UNQUOTED_FIELD_NAMES.mappedFeature()
+            )
+            .modules(
+                new Jdk8Module(),
+                new JavaTimeModule()
+            );
+    }
 
-	@RequiredArgsConstructor
-	public static class RestfulPredicate implements Predicate<Class<?>> {
+    @RequiredArgsConstructor
+    public static class RestfulPredicate implements Predicate<Class<?>> {
 
-		private final List<Class<? extends Annotation>> annotations;
+        private final List<Class<? extends Annotation>> annotations;
 
-		@Override
-		public boolean test(Class<?> aClass) {
-			for (Class<? extends Annotation> annotatedInterface : annotations) {
-				if (null != aClass.getAnnotation(annotatedInterface)) {
-					return true;
-				}
-			}
-			return false;
-		}
-	}
+        @Override
+        public boolean test(Class<?> aClass) {
+            for (Class<? extends Annotation> annotatedInterface : annotations) {
+                if (null != aClass.getAnnotation(annotatedInterface)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
 }

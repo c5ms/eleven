@@ -14,15 +14,16 @@
         <module name="mains" />
         <module name="eleven-upms-security" />
         <module name="eleven-app-upms" />
+        <module name="eleven-app-gateway" />
         <module name="eleven-starter-core" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="eleven-app-access" target="17" />
-      <module name="eleven-app-gateway" target="17" />
       <module name="eleven-config-server" target="17" />
       <module name="eleven-doney-core" target="17" />
       <module name="eleven-doney-service" target="17" />
+      <module name="eleven-gateway-core" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -37,6 +38,7 @@
       <module name="eleven-config-server" options="-parameters" />
       <module name="eleven-doney-core" options="-parameters" />
       <module name="eleven-doney-service" options="-parameters" />
+      <module name="eleven-gateway-core" options="-parameters" />
       <module name="eleven-starter" options="" />
       <module name="eleven-starter-core" options="-parameters" />
       <module name="eleven-starter-data" options="-parameters" />

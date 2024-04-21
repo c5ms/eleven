@@ -109,9 +109,9 @@ public class NettyProxyRouteFilter implements RouteGlobalFilter {
         Duration responseTimeout = gatewayRoute.getTimeout();
         if (responseTimeout != null) {
             responseFlux = responseFlux
-                    .timeout(responseTimeout,
-                            Mono.error(new TimeoutException("Response took longer than timeout: " + responseTimeout)))
-                    .onErrorMap(TimeoutException.class, th -> new ResponseStatusException(HttpStatus.GATEWAY_TIMEOUT, th.getMessage(), th));
+                .timeout(responseTimeout,
+                    Mono.error(new TimeoutException("Response took longer than timeout: " + responseTimeout)))
+                .onErrorMap(TimeoutException.class, th -> new ResponseStatusException(HttpStatus.GATEWAY_TIMEOUT, th.getMessage(), th));
         }
 
         return responseFlux.then(chain.filter(exchange));
@@ -132,7 +132,7 @@ public class NettyProxyRouteFilter implements RouteGlobalFilter {
             } else {
                 // TODO: log warning here, not throw error?
                 throw new IllegalStateException("Unable to set status code " + clientResponse.status().code()
-                        + " on response of type " + response.getClass().getName());
+                                                + " on response of type " + response.getClass().getName());
             }
         }
     }

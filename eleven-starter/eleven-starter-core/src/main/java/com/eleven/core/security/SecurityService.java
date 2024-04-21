@@ -57,6 +57,7 @@ public class SecurityService {
 
     /**
      * invalid a token
+     *
      * @param value token value
      */
     public void invalidToken(String value) {

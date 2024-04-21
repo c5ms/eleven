@@ -24,20 +24,20 @@ public class GatewayRouteRestrictions {
             this.methods = new HashSet<>();
         } else {
             this.methods = methods.stream()
-                    .map(StringUtils::trim)
-                    .filter(StringUtils::isNotBlank)
-                    .map(StringUtils::toRootLowerCase)
-                    .collect(Collectors.toSet());
+                .map(StringUtils::trim)
+                .filter(StringUtils::isNotBlank)
+                .map(StringUtils::toRootLowerCase)
+                .collect(Collectors.toSet());
         }
 
         if (null == contentTypes) {
             this.contentTypes = new HashSet<>();
         } else {
             this.contentTypes = contentTypes.stream()
-                    .map(StringUtils::trim)
-                    .filter(StringUtils::isNotBlank)
-                    .map(MediaType::parseMediaType)
-                    .collect(Collectors.toSet());
+                .map(StringUtils::trim)
+                .filter(StringUtils::isNotBlank)
+                .map(MediaType::parseMediaType)
+                .collect(Collectors.toSet());
         }
 
     }
