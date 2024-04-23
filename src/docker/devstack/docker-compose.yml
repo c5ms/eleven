@@ -22,11 +22,13 @@ services:
 
   mysql:
     container_name: mysql
-    image: mysql:8
-#    env_file:
-#      - ../env/mysql.env
+    image: mysql:8.0
     volumes:
-      - eleven-data-mysql:/var/lib/mysql
+      - ${DATA_STORAGE}/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 111111
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+      MYSQL_RANDOM_ROOT_PASSWORD: no
     ports:
       - "3306:3306"
     healthcheck:
@@ -42,7 +44,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - eleven-data:/var/lib/postgresql/data
+      - ${DATA_STORAGE}/postgres:/var/lib/postgresql/data
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
       POSTGRES_USER: root
@@ -51,8 +53,11 @@ services:
   mongo:
     image: mongo
     restart: always
+    ports:
+      - "27017:27017"
     volumes:
-      - eleven-data-mongo:/var/lib/backup/data
+      - ${DATA_STORAGE}/mongodb/db:/data/db
+      - ${DATA_STORAGE}/mongodb/configdb:/data/configdb
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
@@ -61,9 +66,3 @@ services:
     image: redis:6
     ports:
       - "6379:6379"
-
-volumes:
-  eleven-data-postgres:
-  eleven-data-redis:
-  eleven-data-mongo:
-  eleven-data-mysql:

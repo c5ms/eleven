@@ -5,124 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="95d6db0f-bd5c-4944-84a1-d4f07945e2af" name="Changes" comment="init.">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/management/config/GatewayAdminConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/management/core/GatewayAdminConstants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/management/domain/AbstractPublishableEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/management/domain/Route.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/management/domain/RouteConvertor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/management/domain/RouteRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/management/domain/RouteService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/management/endpoint/RoutesApiV1.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/management/exception/GatewayAdminException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/management/model/RouteCreateAction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/management/model/RouteDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/management/model/RouteQuery.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/supportT/DefaultGatewayObserver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/supportT/DefaultGatewayService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/supportT/GatewayListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/supportT/GatewayResourceProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/supportT/GatewayRouteProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/supportT/GatewayServiceProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/supportT/GatewayStackProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/domain/PaginationQuery.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-data/src/main/java/com/eleven/core/data/DefaultAuditorAware.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-data/src/main/java/com/eleven/core/data/support/ListValue.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-data/src/main/java/com/eleven/core/data/support/ListValueReadConverter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-data/src/main/java/com/eleven/core/data/support/ListValueWriteConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.run/run-gateway.run.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/docker/devstack/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/docker/eleven/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/GatewayRouteBroker.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/GatewayRouteRestrictions.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/GatewayRouteRestrictions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/GatewayRouteUpstream.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/GatewayRouteUpstream.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/GatewayServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/GatewayServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/GatewayServerWebHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/GatewayServerWebHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/GatewayStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/GatewayStack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/GatewayToken.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/GatewayTokenLoader.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/boost/Bootstrap.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/boost/Bootstrap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/filter/AddRequestHeaderRouteFilterFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/filter/AddRequestHeaderRouteFilterFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/filter/RewritePathRouteFilterFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/filter/RewritePathRouteFilterFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/filter/SetRequestHeaderRouteFilterFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/filter/SetRequestHeaderRouteFilterFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/filter/global/NettyProxyRouteFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/filter/global/NettyProxyRouteFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/filter/global/NettyWriteRouteFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/filter/global/NettyWriteRouteFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/filter/global/StaticResourceRouteFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/filter/global/StaticResourceRouteFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/filter/global/WebsocketRoutingFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/filter/global/WebsocketRoutingFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/predicate/CookieRoutePredicateFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/predicate/CookieRoutePredicateFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/predicate/HeaderRoutePredicateFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/core/predicate/HeaderRoutePredicateFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-component/eleven-upms-client/src/main/java/com/eleven/upms/client/UpmsClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-component/eleven-upms-client/src/main/java/com/eleven/upms/client/UpmsClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-component/eleven-upms-core/src/main/java/com/eleven/upms/core/UpmsConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-component/eleven-upms-core/src/main/java/com/eleven/upms/core/UpmsConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-component/eleven-upms-core/src/main/java/com/eleven/upms/model/UserCreateAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-component/eleven-upms-core/src/main/java/com/eleven/upms/model/UserCreateAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-component/eleven-upms-core/src/main/java/com/eleven/upms/model/UserQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-component/eleven-upms-core/src/main/java/com/eleven/upms/model/UserQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-component/eleven-upms-core/src/main/java/com/eleven/upms/model/UserSaveAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-component/eleven-upms-core/src/main/java/com/eleven/upms/model/AbstractUserSaveAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-component/eleven-upms-core/src/main/java/com/eleven/upms/model/UserSummary.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-component/eleven-upms-core/src/main/java/com/eleven/upms/model/UserUpdateAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-component/eleven-upms-core/src/main/java/com/eleven/upms/model/UserUpdateAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.jpb/jpb-settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.workflow/branch-pipeline.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.workflow/master-pipeline.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.workflow/pr-pipeline.yml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/eleven-component/eleven-upms-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-component/eleven-upms-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-component/eleven-upms-service/src/main/java/com/eleven/upms/domain/Authority.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-component/eleven-upms-service/src/main/java/com/eleven/upms/domain/Authority.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-component/eleven-upms-service/src/main/java/com/eleven/upms/domain/AuthorityManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-component/eleven-upms-service/src/main/java/com/eleven/upms/domain/AuthorityManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-component/eleven-upms-service/src/main/java/com/eleven/upms/domain/PasswordService.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-component/eleven-upms-service/src/main/java/com/eleven/upms/domain/PasswordManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-component/eleven-upms-service/src/main/java/com/eleven/upms/domain/RoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-component/eleven-upms-service/src/main/java/com/eleven/upms/domain/RoleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-component/eleven-upms-service/src/main/java/com/eleven/upms/domain/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-component/eleven-upms-service/src/main/java/com/eleven/upms/domain/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-component/eleven-upms-service/src/main/java/com/eleven/upms/domain/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-component/eleven-upms-service/src/main/java/com/eleven/upms/domain/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-component/eleven-upms-service/src/main/java/com/eleven/upms/endpoint/api/RoleRestApiV1.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-component/eleven-upms-service/src/main/java/com/eleven/upms/endpoint/admin/RoleRestApiV1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-component/eleven-upms-service/src/main/java/com/eleven/upms/endpoint/api/TokenRestApiV1.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-component/eleven-upms-service/src/main/java/com/eleven/upms/endpoint/admin/TokenRestApiV1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-component/eleven-upms-service/src/main/java/com/eleven/upms/endpoint/api/UserRestApiV1.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-component/eleven-upms-service/src/main/java/com/eleven/upms/endpoint/admin/UserRestApiV1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-component/eleven-upms-service/src/main/java/com/eleven/upms/endpoint/inner/UpmsInnerApiV1.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-component/eleven-upms-service/src/main/java/com/eleven/upms/endpoint/inner/UpmsInnerApiV1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-component/eleven-upms-service/src/test/java/com/eleven/upms/domain/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-component/eleven-upms-service/src/test/java/com/eleven/upms/domain/UserServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-parent/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-parent/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/domain/DomainConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/exception/DomainErrors.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/domain/DomainError.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/exception/DomainError.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/domain/DomainErroredException.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/exception/ProcessErrorException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/domain/DomainRuntimeException.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/exception/ProcessFailureException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/domain/NoDataFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/exception/NoRequiredDataException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/domain/Pagination.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/domain/PaginationResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/domain/PaginationResult.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/domain/SimpleDomainError.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/exception/SimpleDomainError.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/domain/config/ElevenDomainConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/domain/config/DomainConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/event/EventSendFailureException.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/event/EventSendFailureException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/event/EventSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/event/EventSender.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/event/EventSenderNotfoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/event/EventSenderNotfoundException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/event/EventSupport.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/event/EventSupport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/exception/DataNotFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/exception/ProcessError.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/exception/ProcessErroredException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/exception/ProcessRuntimeException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/exception/SimpleProcessError.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/security/SecurityContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/security/SecurityContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/security/SecurityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/security/SecurityService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/security/Subject.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/security/Subject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/security/config/ElevenSecurityConfigure.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/security/config/ElevenSecurityConfigure.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/security/support/RedisSubjectStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/security/support/RedisSubjectStore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/security/support/RedisTokenStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/security/support/RedisTokenStore.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/time/autoconfigure/DateTimeAutoconfigure.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/time/autoconfigure/DateTimeAutoconfigure.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/web/ElevenExceptionAdvice.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/web/ElevenExceptionAdvice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/web/ElevenResponseAdvice.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/web/ElevenResponseAdvice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/web/RestConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/web/WebConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/web/config/ElevenFeignConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/web/config/ElevenFeignConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/web/config/ElevenOpenapiConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/web/config/ElevenOpenapiConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/web/config/ElevenWebConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/web/config/ElevenWebConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/web/config/ElevenWebProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/web/config/ElevenWebProperties.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/web/feign/ElevenErrorDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/web/feign/ElevenErrorDecoder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/web/feign/ElevenRequestInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/web/feign/ElevenRequestInterceptor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/web/problem/Problem.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/web/problem/Problem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/web/problem/ValidationProblem.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/web/problem/ValidationProblem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-data/src/main/java/com/eleven/core/data/DomainRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-data/src/main/java/com/eleven/core/data/DomainRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-starter/eleven-starter-data/src/main/java/com/eleven/core/data/configure/ElevenDataConfigure.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-starter/eleven-starter-data/src/main/java/com/eleven/core/data/configure/ElevenDataConfigure.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mains/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mains/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mains/src/main/java/org/example/mains/MainsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/mains/src/main/java/org/example/mains/MainsApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mains/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mains/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mains/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mains/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/doc/微服务请求链路.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/docker/devstack/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/docker/devstack/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/docker/mongodb/docker-compose.yml" beforeDir="false" />
     </list>
     <list id="11fbb169-80a7-457f-89c8-758bfcfbfa5e" name="Changes by L1an" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+      <option value="module" />
+    </option>
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$/mains">
@@ -184,6 +96,7 @@
   "keyToString": {
     "Application.MainsApplication.executor": "Debug",
     "Docker.devstack.mongo: Compose Deployment.executor": "Run",
+    "Docker.devstack.mysql: Compose Deployment.executor": "Run",
     "Docker.devstack.postgres: Compose Deployment.executor": "Run",
     "Docker.devstack.redis: Compose Deployment.executor": "Run",
     "Docker.devstack: Compose Deployment.executor": "Run",
@@ -222,7 +135,7 @@
     "jdk.selected.JAVA_MODULE": "azul-17",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "/Users/wangzc/projects/eleven/eleven-component/eleven-upms-service/src/test/java/com/eleven/upms",
-    "last_opened_file_path": "/Users/wangzc/Codes/eleven/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/management",
+    "last_opened_file_path": "/Users/wangzc/codes/eleven/src/docker/eleven",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -240,7 +153,8 @@
       "redis",
       "mysql",
       "h2",
-      "postgresql"
+      "postgresql",
+      "mongo"
     ]
   }
 }]]></component>
@@ -249,17 +163,20 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/docker/eleven" />
       <recent name="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/management" />
       <recent name="$PROJECT_DIR$/eleven-component" />
       <recent name="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core" />
     </key>
     <key name="MoveMembersDialog.RECENTS_KEY">
       <recent name="com.eleven.core.constants.CoreConstants" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/.idea/runConfigurations" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.eleven.upms.domain" />
@@ -285,20 +202,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.run-gateway">
-    <configuration name="MainsApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.mains.MainsApplication" />
-      <module name="mains" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.mains.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Docker.devstack.mysql: Compose Deployment">
     <configuration name="UserServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="eleven-upms-service" />
       <extension name="coverage">
@@ -317,21 +221,6 @@
     <configuration name="MainsApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="mains" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.mains.MainsApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="run-gateway" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="eleven-app-gateway" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.eleven.GatewayApplication" />
-      <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.eleven.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -363,6 +252,19 @@
       </deployment>
       <method v="2" />
     </configuration>
+    <configuration name="devstack.mysql: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker@localhost">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="mysql" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="src/docker/devstack/docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
     <configuration name="devstack.postgres: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker@localhost">
       <deployment type="docker-compose.yml">
         <settings>
@@ -377,7 +279,7 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Application.MainsApplication" />
+      <item itemvalue="Docker.devstack.mysql: Compose Deployment" />
       <item itemvalue="Docker.devstack.mongo: Compose Deployment" />
       <item itemvalue="Docker.devstack.postgres: Compose Deployment" />
       <item itemvalue="Docker.devstack: Compose Deployment" />
@@ -389,11 +291,11 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Docker.devstack.postgres: Compose Deployment" />
+        <item itemvalue="Docker.devstack.mysql: Compose Deployment" />
         <item itemvalue="Docker.devstack: Compose Deployment" />
         <item itemvalue="Docker.devstack.mongo: Compose Deployment" />
+        <item itemvalue="Docker.devstack.postgres: Compose Deployment" />
         <item itemvalue="JUnit.UserServiceTest" />
-        <item itemvalue="Application.MainsApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -491,7 +393,8 @@
       <workItem from="1713571175102" duration="1942000" />
       <workItem from="1713579299115" duration="6692000" />
       <workItem from="1713588076572" duration="10308000" />
-      <workItem from="1713599852048" duration="3842000" />
+      <workItem from="1713599852048" duration="5282000" />
+      <workItem from="1713876062123" duration="1632000" />
     </task>
     <task id="LOCAL-00001" summary="项目管理">
       <option name="closed" value="true" />
@@ -565,11 +468,22 @@
       <option name="project" value="LOCAL" />
       <updated>1713063047154</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="init.">
+      <option name="closed" value="true" />
+      <created>1713693446883</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1713693446883</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
   </component>
   <component name="Vcs.Log.History.Properties">
     <option name="COLUMN_ID_ORDER">
