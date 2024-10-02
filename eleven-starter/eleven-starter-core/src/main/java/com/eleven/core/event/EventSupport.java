@@ -2,6 +2,7 @@ package com.eleven.core.event;
 
 import cn.hutool.extra.spring.SpringUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class EventSupport {
 
+    private final ApplicationEventPublisher eventPublisher;
     private final Optional<EventSender> eventSender;
 
     /**
@@ -18,22 +20,22 @@ public class EventSupport {
      *
      * @param event the event come from domain layer
      */
-    public void publishEvent(Serializable event) {
-        SpringUtil.publishEvent(event);
+    public void publishInternalEvent(Serializable event) {
+        eventPublisher.publishEvent(event);
     }
 
     /**
      * publish event to a particular topic externally, the event will push to an external server, e.g. RabbitMQ,Kafka etc.
      *
-     * @param event is the event which come from domain layer
      * @param topic is the topic which the event need send to
+     * @param event is the event which come from domain layer
      */
-    public void publishEvent(Serializable event, String topic) {
+    public void publishExternalEvent(String topic, Serializable event) {
         try {
             if (eventSender.isEmpty()) {
                 throw new EventSenderNotfoundException();
             }
-            eventSender.get().send(event, topic);
+            eventSender.get().send(topic, event);
         } catch (Exception e) {
             throw new EventSendFailureException(e, event, topic);
         }

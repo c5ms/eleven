@@ -11,11 +11,6 @@ public interface UpmsConstants {
     String SERVICE_NAME = "upms";
 
     /**
-     * 缓存 - 权限
-     */
-    String CACHE_NAME_AUTHORITY = "authority";
-
-    /**
      * 缓存 - 用户
      */
     String CACHE_NAME_USER = "user";

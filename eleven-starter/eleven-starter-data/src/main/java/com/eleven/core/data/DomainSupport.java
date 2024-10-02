@@ -19,7 +19,6 @@ public class DomainSupport {
     private final IdentityGenerator identityGenerator;
     private final JdbcAggregateTemplate jdbcAggregateTemplate;
 
-
     /**
      * 分页查询数据
      *

@@ -67,7 +67,8 @@ public class ElevenExceptionAdvice {
 
         // 403
         else if (e instanceof AccessDeniedException) {
-            status = HttpStatus.FORBIDDEN;
+            var problem = Problem.of(DomainErrors.ERROR_ACCESS_DENIED);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(problem);
         }
 
         //404

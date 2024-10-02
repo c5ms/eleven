@@ -77,9 +77,8 @@ public class ElevenCacheConfiguration {
         return RedisCacheConfiguration.defaultCacheConfig()
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer))
-//                .disableCachingNullValues()
                 .entryTtl(properties.getDuration())
-                .prefixCacheNameWith(prefix);
+                .prefixCacheNameWith(prefix+":");
     }
 
     @Bean

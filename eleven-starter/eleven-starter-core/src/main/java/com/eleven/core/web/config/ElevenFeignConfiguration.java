@@ -90,7 +90,7 @@ public class ElevenFeignConfiguration {
      * 2、特定服务的配置高于全体服务的配置
      * 3、配置文件的配置高于自定义Request.Options
      * 4、如果有特定服务的Options和全体服务的配置文件配置，遵循第二条规则，以特定服务的Options为准；
-     * 5、如果有特性服务的Ribbon配置和全体服务的FeignClient配置，遵循第一条规则，以FeingClient的配置为准
+     * 5、如果有特性服务的Ribbon配置和全体服务的FeignClient配置，遵循第一条规则，以FeignClient的配置为准
      * <p>
      * 最佳实践：
      * 1、不要采用Ribbon配置而要直接配置FeignClient，即配置feign.client.xx

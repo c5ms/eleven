@@ -18,10 +18,6 @@
 
 
     <dependencies>
-        <dependency>
-            <groupId>com.demacia</groupId>
-            <artifactId>eleven-upms-security</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>com.demacia</groupId>

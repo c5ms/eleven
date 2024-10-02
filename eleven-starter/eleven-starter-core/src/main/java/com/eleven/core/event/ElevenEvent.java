@@ -1,4 +1,6 @@
 package com.eleven.core.event;
 
-public interface ElevenEvent {
+import java.io.Serializable;
+
+public interface ElevenEvent extends Serializable {
 }

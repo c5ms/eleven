@@ -9,6 +9,7 @@ spring:
     username: ${db.upms.username}
     password: ${db.upms.password}
 
+
 eleven:
   cache:
     duration: PT8H

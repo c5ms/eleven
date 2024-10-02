@@ -48,7 +48,7 @@ public class SecurityContext {
     @Nonnull
     public static Subject getCurrentSubject() {
         return Optional.ofNullable(getAuthentication())
-            .map(org.springframework.security.core.Authentication::getDetails)
+            .map(Authentication::getDetails)
             .filter(Subject.class::isInstance)
             .map(Subject.class::cast)
             .orElse(Subject.ANONYMOUS_INSTANCE);

@@ -43,7 +43,7 @@ public class ElevenOpenapiConfiguration {
         return GroupedOpenApi.builder()
             .group("open-api")
             .displayName("open")
-            .pathsToMatch(WebConstants.ADMIN_API_PREFIX + "/**")
+            .pathsToMatch(WebConstants.OPEN_API_PREFIX + "/**")
             .build();
     }
 

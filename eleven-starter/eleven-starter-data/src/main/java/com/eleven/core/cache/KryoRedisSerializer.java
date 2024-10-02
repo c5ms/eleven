@@ -46,6 +46,7 @@ public class KryoRedisSerializer<T> implements RedisSerializer<T> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public T deserialize(byte[] bytes) throws SerializationException {
         if (bytes == null || bytes.length <= 0) {
             return null;

@@ -26,7 +26,6 @@ import org.springframework.security.web.SecurityFilterChain;
 public class ElevenSecurityConfigure {
 
     protected final AuthenticationManager authenticationManager;
-    protected final BearerTokenResolver tokenResolver;
 
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -56,7 +55,6 @@ public class ElevenSecurityConfigure {
             .oauth2ResourceServer(oauth2 -> {
                 oauth2.bearerTokenResolver(new ElevenTokenResolver())
                     .opaqueToken(c -> c.authenticationManager(authenticationManager));
-
             })
 
             .exceptionHandling((exceptions) -> exceptions

@@ -8,37 +8,32 @@ import org.junit.jupiter.api.Test;
 import static com.tngtech.archunit.library.Architectures.layeredArchitecture;
 
 public class ArchTest {
-    private static final String packageName = "com.eleven";
-    private static final String moduleName = "upms";
-
-    private static final String modulePackageName = getModulePackageName(moduleName);
+    private static final String packageName = "com.eleven.upms";
 
     @Test
     public void layerCheck() {
-        JavaClasses importedClasses = new ClassFileImporter().importPackages(modulePackageName);
+        JavaClasses importedClasses = new ClassFileImporter().importPackages(packageName);
 
-        Architectures.LayeredArchitecture architecture = layeredArchitecture()
-            .consideringAllDependencies()
-            .layer("Configure").definedBy(getLayerPackageIdentifiers("configure"))
-            .layer("Domain").definedBy(getLayerPackageIdentifiers("domain"))
-            .layer("Endpoint").definedBy(getLayerPackageIdentifiers("endpoint"))
-            .layer("Support").definedBy(getLayerPackageIdentifiers("support"))
+        Architectures.LayeredArchitecture applicationArchitecture = layeredArchitecture()
+            .consideringOnlyDependenciesInLayers()
+            .layer("Core").definedBy(getApplicationLayerPackageIdentifiers("core"))
+            .layer("Configure").definedBy(getApplicationLayerPackageIdentifiers("configure"))
+            .layer("Domain").definedBy(getApplicationLayerPackageIdentifiers("domain"))
+            .layer("Endpoint").definedBy(getApplicationLayerPackageIdentifiers("endpoint"))
+            .layer("Application").definedBy(getApplicationLayerPackageIdentifiers("application"))
 
-            .whereLayer("Configure").mayNotBeAccessedByAnyLayer()
-            .whereLayer("Domain").mayOnlyBeAccessedByLayers("Endpoint")
-            .whereLayer("Endpoint").mayNotBeAccessedByAnyLayer()
-            .whereLayer("Support").mayNotBeAccessedByAnyLayer()
+            .whereLayer("Endpoint").mayOnlyAccessLayers("Application", "Core")
+            .whereLayer("Application").mayOnlyAccessLayers("Domain", "Core")
+            .whereLayer("Domain").mayOnlyAccessLayers("Configure", "Core")
 
             .as("domain driven design layer rule");
 
-        architecture.evaluate(importedClasses);
+        applicationArchitecture.check(importedClasses);
     }
 
-    private static String getModulePackageName(String moduleName) {
-        return packageName + "." + moduleName;
+
+    private static String getApplicationLayerPackageIdentifiers(String layer) {
+        return packageName + "." + layer + "..";
     }
 
-    private static String getLayerPackageIdentifiers( String layer) {
-        return modulePackageName + "." + layer+"..";
-    }
 }

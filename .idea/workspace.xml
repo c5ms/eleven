@@ -4,24 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95d6db0f-bd5c-4944-84a1-d4f07945e2af" name="Changes" comment="init.">
-      <change afterPath="$PROJECT_DIR$/eleven-component/eleven-upms-service/src/test/java/com/eleven/ArchTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-access/src/main/assembly/bin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-access/src/main/assembly/bin.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-demo/src/main/assembly/bin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-demo/src/main/assembly/bin.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/assembly/bin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/assembly/bin.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/GatewayApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/GatewayApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-upms/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-upms/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-upms/src/main/assembly/bin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-upms/src/main/assembly/bin.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-app/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-component/eleven-upms-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-component/eleven-upms-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eleven-parent/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-parent/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mains/src/main/java/org/example/mains/MainsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/mains/src/main/java/org/example/mains/MainsApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/docker/devstack/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/docker/devstack/docker-compose.yml" afterDir="false" />
-    </list>
+    <list default="true" id="95d6db0f-bd5c-4944-84a1-d4f07945e2af" name="Changes" comment="feat: add archunit to test arch." />
     <list id="11fbb169-80a7-457f-89c8-758bfcfbfa5e" name="Changes by L1an" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +134,7 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.28653628",
     "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "inlay.hints",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -435,7 +418,8 @@
       <workItem from="1727183803450" duration="470000" />
       <workItem from="1727184361396" duration="343000" />
       <workItem from="1727184802634" duration="82000" />
-      <workItem from="1727849619571" duration="1706000" />
+      <workItem from="1727849619571" duration="3396000" />
+      <workItem from="1727854612891" duration="10194000" />
     </task>
     <task id="LOCAL-00001" summary="项目管理">
       <option name="closed" value="true" />
@@ -525,7 +509,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713877965020</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="feat: add archunit to test arch.">
+      <option name="closed" value="true" />
+      <created>1727851638961</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1727851638961</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -550,7 +542,8 @@
     <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="项目管理" />
     <MESSAGE value="init." />
-    <option name="LAST_COMMIT_MESSAGE" value="init." />
+    <MESSAGE value="feat: add archunit to test arch." />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add archunit to test arch." />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>

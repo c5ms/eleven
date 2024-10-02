@@ -28,24 +28,4 @@ public class PaginationQuery implements Serializable {
     @Max(value = 1000, message = "每页条数不能超过1000")
     @Schema(description = "页长", defaultValue = "20")
     private int size = 20;
-
-//    public Pagination(Integer page, Integer size) {
-//        this.page = page;
-//        this.size = size;
-//    }
-//
-//    public static Pagination of(Pagination pagination) {
-//        return Pagination.of(pagination.getPage(), pagination.getSize());
-//    }
-//
-//    public static Pagination of(int page, int size) {
-//        if (page <= 0) {
-//            page = 0;
-//        }
-//        if (size <= 0) {
-//            size = 20;
-//        }
-//        return new Pagination(page, size);
-//    }
-
 }
