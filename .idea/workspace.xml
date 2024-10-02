@@ -5,23 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="95d6db0f-bd5c-4944-84a1-d4f07945e2af" name="Changes" comment="init.">
-      <change afterPath="$PROJECT_DIR$/.run/run-gateway.run.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/docker/devstack/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/docker/eleven/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/eleven-component/eleven-upms-service/src/test/java/com/eleven/ArchTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.jpb/jpb-settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.workflow/branch-pipeline.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.workflow/master-pipeline.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.workflow/pr-pipeline.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-access/src/main/assembly/bin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-access/src/main/assembly/bin.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-demo/src/main/assembly/bin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-demo/src/main/assembly/bin.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/assembly/bin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/assembly/bin.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/GatewayApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/GatewayApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-upms/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-upms/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eleven-app/eleven-app-upms/src/main/assembly/bin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/eleven-app-upms/src/main/assembly/bin.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eleven-app/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-app/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/eleven-component/eleven-upms-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-component/eleven-upms-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mains/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mains/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mains/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mains/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/doc/微服务请求链路.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eleven-parent/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/eleven-parent/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mains/src/main/java/org/example/mains/MainsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/mains/src/main/java/org/example/mains/MainsApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/docker/devstack/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/docker/devstack/docker-compose.yml" afterDir="false" />
     </list>
     <list id="11fbb169-80a7-457f-89c8-758bfcfbfa5e" name="Changes by L1an" comment="" />
@@ -59,6 +57,7 @@
         <option value="JUnit5 Test Class" />
         <option value="Interface" />
         <option value="package-info" />
+        <option value="UML Use Case" />
         <option value="Class" />
       </list>
     </option>
@@ -84,6 +83,9 @@
   <component name="MavenRunner">
     <option name="skipTests" value="true" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -94,7 +96,8 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.MainsApplication.executor": "Debug",
+    "Application.MainsApplication.executor": "Run",
+    "DefaultPlantUmlFileTemplate": "UML Use Case",
     "Docker.devstack.mongo: Compose Deployment.executor": "Run",
     "Docker.devstack.mysql: Compose Deployment.executor": "Run",
     "Docker.devstack.postgres: Compose Deployment.executor": "Run",
@@ -102,6 +105,8 @@
     "Docker.devstack: Compose Deployment.executor": "Run",
     "Docker.eleven.demo: Compose Deployment.executor": "Run",
     "Docker.eleven: Compose Deployment.executor": "Run",
+    "JUnit.ArchTest.layerCheck.executor": "Run",
+    "JUnit.ArchTest.some_architecture_rule.executor": "Run",
     "JUnit.UserServiceTest.executor": "Run",
     "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
     "Maven.eleven [clean].executor": "Run",
@@ -110,6 +115,7 @@
     "Maven.eleven [verify].executor": "Run",
     "Maven.eleven-app [package].executor": "Run",
     "Maven.eleven-app-upms [org.springdoc:springdoc-openapi-maven-plugin:1.4:generate].executor": "Run",
+    "Maven.mains [clean].executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -121,7 +127,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.DemoApplication.executor": "Debug",
     "Spring Boot.GatewayApplication.executor": "Debug",
-    "Spring Boot.MainsApplication.executor": "Debug",
+    "Spring Boot.MainsApplication.executor": "Run",
     "Spring Boot.run-demo.executor": "Debug",
     "Spring Boot.run-gateway.executor": "Debug",
     "Spring Boot.run-upms.executor": "Debug",
@@ -145,7 +151,7 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.28653628",
     "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "inlay.hints",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -202,18 +208,48 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Docker.devstack.mysql: Compose Deployment">
-    <configuration name="UserServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="eleven-upms-service" />
+  <component name="RunManager" selected="JUnit.ArchTest.layerCheck">
+    <configuration name="MainsApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.mains.MainsApplication" />
+      <module name="mains" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.eleven.upms.domain.*" />
+          <option name="PATTERN" value="org.example.mains.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.eleven.upms.domain" />
-      <option name="MAIN_CLASS_NAME" value="com.eleven.upms.domain.UserServiceTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ArchTest.layerCheck" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="eleven-upms-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.eleven.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.eleven" />
+      <option name="MAIN_CLASS_NAME" value="com.eleven.ArchTest" />
+      <option name="METHOD_NAME" value="layerCheck" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ArchTest.some_architecture_rule" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="eleven-upms-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.eleven.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.eleven" />
+      <option name="MAIN_CLASS_NAME" value="com.eleven.ArchTest" />
+      <option name="METHOD_NAME" value="some_architecture_rule" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -231,33 +267,12 @@
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration name="devstack: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker@localhost">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="sourceFilePath" value="src/docker/devstack/docker-compose.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
     <configuration name="devstack.mongo: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker@localhost">
       <deployment type="docker-compose.yml">
         <settings>
           <option name="services">
             <list>
               <option value="mongo" />
-            </list>
-          </option>
-          <option name="sourceFilePath" value="src/docker/devstack/docker-compose.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
-    <configuration name="devstack.mysql: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker@localhost">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="services">
-            <list>
-              <option value="mysql" />
             </list>
           </option>
           <option name="sourceFilePath" value="src/docker/devstack/docker-compose.yml" />
@@ -279,31 +294,31 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Docker.devstack.mysql: Compose Deployment" />
+      <item itemvalue="Application.MainsApplication" />
       <item itemvalue="Docker.devstack.mongo: Compose Deployment" />
       <item itemvalue="Docker.devstack.postgres: Compose Deployment" />
-      <item itemvalue="Docker.devstack: Compose Deployment" />
-      <item itemvalue="JUnit.UserServiceTest" />
+      <item itemvalue="JUnit.ArchTest.layerCheck" />
+      <item itemvalue="JUnit.ArchTest.some_architecture_rule" />
       <item itemvalue="Spring Boot.MainsApplication" />
-      <item itemvalue="Spring Boot.run-demo" />
       <item itemvalue="Spring Boot.run-upms" />
       <item itemvalue="Spring Boot.run-gateway" />
+      <item itemvalue="Spring Boot.run-demo" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Docker.devstack.mysql: Compose Deployment" />
-        <item itemvalue="Docker.devstack: Compose Deployment" />
+        <item itemvalue="JUnit.ArchTest.layerCheck" />
+        <item itemvalue="JUnit.ArchTest.some_architecture_rule" />
+        <item itemvalue="Application.MainsApplication" />
         <item itemvalue="Docker.devstack.mongo: Compose Deployment" />
         <item itemvalue="Docker.devstack.postgres: Compose Deployment" />
-        <item itemvalue="JUnit.UserServiceTest" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
-        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.22855.74" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.22855.74" />
       </set>
     </attachedChunks>
   </component>
@@ -394,7 +409,33 @@
       <workItem from="1713579299115" duration="6692000" />
       <workItem from="1713588076572" duration="10308000" />
       <workItem from="1713599852048" duration="5282000" />
-      <workItem from="1713876062123" duration="1632000" />
+      <workItem from="1713876062123" duration="1975000" />
+      <workItem from="1714033737369" duration="5765000" />
+      <workItem from="1714469962055" duration="6499000" />
+      <workItem from="1714715005411" duration="1442000" />
+      <workItem from="1714883739734" duration="715000" />
+      <workItem from="1715491495331" duration="694000" />
+      <workItem from="1715781883168" duration="1412000" />
+      <workItem from="1715999998436" duration="2221000" />
+      <workItem from="1716291441785" duration="49000" />
+      <workItem from="1716294340227" duration="2000" />
+      <workItem from="1716294383120" duration="784000" />
+      <workItem from="1716620187375" duration="219000" />
+      <workItem from="1716816841611" duration="5251000" />
+      <workItem from="1717423952272" duration="6387000" />
+      <workItem from="1719733252288" duration="1026000" />
+      <workItem from="1721224429182" duration="1421000" />
+      <workItem from="1721462639300" duration="223000" />
+      <workItem from="1721463178871" duration="51000" />
+      <workItem from="1721463666184" duration="1205000" />
+      <workItem from="1724667344593" duration="558000" />
+      <workItem from="1726882133635" duration="216000" />
+      <workItem from="1726882658631" duration="6000" />
+      <workItem from="1727183744357" duration="4000" />
+      <workItem from="1727183803450" duration="470000" />
+      <workItem from="1727184361396" duration="343000" />
+      <workItem from="1727184802634" duration="82000" />
+      <workItem from="1727849619571" duration="1706000" />
     </task>
     <task id="LOCAL-00001" summary="项目管理">
       <option name="closed" value="true" />
@@ -476,7 +517,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713693446883</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="init.">
+      <option name="closed" value="true" />
+      <created>1713877965020</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1713877965020</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

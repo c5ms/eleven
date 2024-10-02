@@ -39,7 +39,7 @@ services:
 
 
   postgres:
-    image: postgres
+    image: postgres:16
     restart: always
     ports:
       - "5432:5432"
@@ -48,10 +48,10 @@ services:
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
       POSTGRES_USER: root
-      POSTGRES_PASSWORD: example
+      POSTGRES_PASSWORD: 111111
 
   mongo:
-    image: mongo
+    image: mongo:7
     restart: always
     ports:
       - "27017:27017"

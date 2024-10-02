@@ -11,7 +11,7 @@
     <description>eleven parent pom</description>
 
     <properties>
-        <!-- 构建环境 -->
+        <!-- build -->
         <java.version>17</java.version>
         <resource.delimiter>@</resource.delimiter>
         <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -19,8 +19,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-
-        <!--  打包预设 -->
+        <!--  package -->
         <app.port>9000</app.port>
         <app.main/>
         <app.name>${project.artifactId}</app.name>
@@ -29,13 +28,13 @@
         <!-- docker -->
         <docker.baseImage>azul/zulu-openjdk:17-jre</docker.baseImage>
 
-        <!--  spring 家族 -->
-        <version.spring-boot>3.2.5</version.spring-boot>
-        <version.spring-cloud>2023.0.1</version.spring-cloud>
-        <version.spring-cloud-alibaba>2023.0.0.0-RC1</version.spring-cloud-alibaba>
+        <!--  spring -->
+        <version.spring-boot>3.3.4</version.spring-boot>
+        <version.spring-cloud>2023.0.3</version.spring-cloud>
+        <version.spring-cloud-alibaba>2023.0.1.0</version.spring-cloud-alibaba>
 
-        <!--开源通用工具包-->
-        <version.hutool>5.8.25</version.hutool>
+        <!-- common utils -->
+        <version.hutool>5.8.31</version.hutool>
         <version.commons-io>2.11.0</version.commons-io>
         <version.commons-lang3>3.12.0</version.commons-lang3>
         <version.commons-collections>4.4</version.commons-collections>
@@ -50,18 +49,19 @@
         <version.redisson>3.28.0</version.redisson>
         <version.jetcache>2.7.4</version.jetcache>
 
-        <!-- 数据访问层 -->
-        <version.datasource-micrometer-spring-boot>1.0.2</version.datasource-micrometer-spring-boot>
+        <!-- data -->
+        <version.datasource-micrometer-spring-boot>1.0.5</version.datasource-micrometer-spring-boot>
         <version.mybatis>3.0.3</version.mybatis>
         <version.kryo5>5.5.0</version.kryo5>
 
-        <!-- 开发&运行&监控 -->
+        <!-- dev & runtime & monitor -->
         <version.springdoc>2.3.0</version.springdoc>
         <version.knife4j>4.5.0</version.knife4j>
         <version.findbugs>3.0.2</version.findbugs>
         <version.mapstruct>1.5.5.Final</version.mapstruct>
         <version.lombok-mapstruct>0.2.0</version.lombok-mapstruct>
         <version.jmockdata>4.3.0</version.jmockdata>
+        <version.atchunit>1.3.0</version.atchunit>
 
     </properties>
 
@@ -230,6 +230,14 @@
                 <version>${version.knife4j}</version>
             </dependency>
 
+            <!--test-->
+            <dependency>
+                <groupId>com.tngtech.archunit</groupId>
+                <artifactId>archunit</artifactId>
+                <version>${version.atchunit}</version>
+                <scope>test</scope>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>
@@ -269,6 +277,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
 
     </dependencies>
 
@@ -467,7 +481,7 @@
                     <!-- @see https://dmp.fabric8.io/#build-configuration -->
                     <groupId>io.fabric8</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
-                    <version>0.44.0</version>
+                    <version>0.45.0</version>
                     <configuration>
                         <buildArchiveOnly>false</buildArchiveOnly>
                         <outputDirectory>${app.output}/docker</outputDirectory>
