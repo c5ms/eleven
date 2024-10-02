@@ -10,27 +10,43 @@
         <module name="eleven-app-demo" />
         <module name="eleven-upms-core" />
         <module name="eleven-upms-service" />
-        <module name="eleven-starter-service" />
+        <module name="eleven-starter-data" />
+        <module name="mains" />
         <module name="eleven-upms-security" />
         <module name="eleven-app-upms" />
+        <module name="eleven-app-gateway" />
         <module name="eleven-starter-core" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="eleven-app-access" target="17" />
+      <module name="eleven-config-server" target="17" />
+      <module name="eleven-doney-core" target="17" />
+      <module name="eleven-doney-service" target="17" />
+      <module name="eleven-gateway-core" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="eleven" options="" />
       <module name="eleven-app" options="" />
+      <module name="eleven-app-access" options="-parameters" />
       <module name="eleven-app-demo" options="-parameters" />
+      <module name="eleven-app-gateway" options="-parameters" />
       <module name="eleven-app-upms" options="-parameters" />
       <module name="eleven-component" options="" />
+      <module name="eleven-config-server" options="-parameters" />
+      <module name="eleven-doney-core" options="-parameters" />
+      <module name="eleven-doney-service" options="-parameters" />
+      <module name="eleven-gateway-core" options="-parameters" />
       <module name="eleven-starter" options="" />
       <module name="eleven-starter-core" options="-parameters" />
-      <module name="eleven-starter-service" options="-parameters" />
+      <module name="eleven-starter-data" options="-parameters" />
       <module name="eleven-upms-client" options="-parameters" />
       <module name="eleven-upms-core" options="-parameters" />
       <module name="eleven-upms-security" options="-parameters" />
       <module name="eleven-upms-service" options="-parameters" />
+      <module name="mains" options="-parameters" />
     </option>
   </component>
 </project>

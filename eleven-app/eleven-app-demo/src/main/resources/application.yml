@@ -4,10 +4,15 @@ server:
 spring:
   application:
     name: demo
+  datasource:
+    url: ${db.upms.url}
+    username: ${db.upms.username}
+    password: ${db.upms.password}
 
 eleven:
+
   open-api:
-    title: 用户授权管理
+    title: 项目管理
     description: 这是一个伟大而又了不起的工程！
     version: 1.0.0.dev
     terms-of-service: https://www.demcia.com/
@@ -18,6 +23,5 @@ eleven:
     license:
       name: Apache 2.0
       url: https://www.demcia.com/
-
 
 

@@ -5,17 +5,11 @@ spring:
   application:
     name: upms
   datasource:
-    dynamic:
-      primary: master
-      strict: false
-      datasource:
-        master:
-          url: ${db.upms.url}
-          username: ${db.upms.username}
-          password: ${db.upms.password}
-          hikari:
-            max-lifetime: ${db.upms.maxLifetime:30000}
-            max-pool-size: ${db.upms.maxSize:5}
+    url: ${db.upms.url}
+    username: ${db.upms.username}
+    password: ${db.upms.password}
+
+
 eleven:
   cache:
     duration: PT8H

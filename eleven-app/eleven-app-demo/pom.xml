@@ -13,9 +13,8 @@
     <artifactId>eleven-app-demo</artifactId>
 
     <properties>
-        <appMainClass>com.eleven.DemoApplication</appMainClass>
+        <app.main>com.eleven.DemoApplication</app.main>
     </properties>
-
 
 
     <dependencies>
@@ -23,10 +22,8 @@
             <groupId>com.demacia</groupId>
             <artifactId>eleven-upms-client</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.demacia</groupId>
-            <artifactId>eleven-upms-security</artifactId>
-        </dependency>
+
+
     </dependencies>
 
     <build>
@@ -35,12 +32,11 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>appassembler-maven-plugin</artifactId>
             </plugin>
-            <!--<plugin>
+          <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
             </plugin>-->
             <plugin>
-                <inherited>true</inherited>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
             </plugin>

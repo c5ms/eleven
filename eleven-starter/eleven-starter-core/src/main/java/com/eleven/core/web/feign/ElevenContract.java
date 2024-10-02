@@ -25,13 +25,11 @@
 
 package com.eleven.core.web.feign;
 
-import com.eleven.core.web.RestConstants;
 import feign.MethodMetadata;
 import org.springframework.cloud.openfeign.support.SpringMvcContract;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.nio.file.Paths;
 
 
 public class ElevenContract extends SpringMvcContract {
@@ -39,13 +37,11 @@ public class ElevenContract extends SpringMvcContract {
     @Override
     protected void processAnnotationOnMethod(feign.MethodMetadata data, Annotation methodAnnotation, Method method) {
         super.processAnnotationOnMethod(data, methodAnnotation, method);
-
     }
 
     @Override
     protected void processAnnotationOnClass(MethodMetadata data, Class<?> clz) {
         super.processAnnotationOnClass(data, clz);
-        data.template().uri(Paths.get(RestConstants.INNER_API_PREFIX, data.template().url()).toString());
     }
 
     @Override

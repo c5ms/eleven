@@ -1,103 +1,100 @@
 package com.eleven.core.web;
 
-import com.eleven.core.constants.ElevenConstants;
-import com.eleven.core.exception.DataNotFoundException;
-import com.eleven.core.exception.ProcessRuntimeException;
-import com.eleven.core.web.exception.ClientErrorException;
+import com.eleven.core.exception.DomainError;
+import com.eleven.core.exception.DomainErrors;
+import com.eleven.core.exception.NoRequiredDataException;
+import com.eleven.core.exception.ProcessFailureException;
+import com.eleven.core.web.problem.Problem;
+import com.eleven.core.web.problem.ValidationProblem;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.NoHandlerFoundException;
-
-import java.util.Comparator;
-import java.util.stream.Collectors;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 
 @Slf4j
-@ApiResponses({
-        @ApiResponse(description = "请求无效", responseCode = "400"),
-        @ApiResponse(description = "权限不足", responseCode = "403"),
-        @ApiResponse(description = "无此资源", responseCode = "404"),
-        @ApiResponse(description = "处理失败", responseCode = "422"),
-        @ApiResponse(description = "内部错误", responseCode = "500")
-})
 @ControllerAdvice
 public class ElevenExceptionAdvice {
 
-    // 资源不存在 404
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler({
-            NoHandlerFoundException.class,
-            HttpRequestMethodNotSupportedException.class,
-            DataNotFoundException.class
-    })
-    public void notfound() {
-
-    }
-
-    // 权限不足 - 403
-    @ResponseBody
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ExceptionHandler(AccessDeniedException.class)
-    public void on() {
-
-    }
-
-    // 校验失败 - 400
-    @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({BindException.class})
-    public RestResponse.Failure on(BindException e) {
-        var msg = e.getAllErrors().stream()
-                .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                .filter(StringUtils::isNotBlank)
-                .sorted(Comparator.naturalOrder())
-                .collect(Collectors.joining(";"));
-
-        return RestResponse.Failure.of(ElevenConstants.ERROR_VALIDATE_FAILURE).setMessage(msg);
-    }
-
-    @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({ HttpMessageConversionException.class})
-    public RestResponse.Failure on(HttpMessageConversionException e) {
-        return RestResponse.Failure.of(ElevenConstants.ERROR_VALIDATE_FAILURE);
-    }
-
-    // 处理拒绝 - 422
-    @ResponseBody
-    @ExceptionHandler
+    @ApiResponse(description = "Unprocessable Entity", responseCode = "422")
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public RestResponse.Failure on(ProcessRuntimeException e) {
-        return RestResponse.Failure.of(e.getError());
-    }
-
-
-    // customs client error
     @ResponseBody
-    @ExceptionHandler(ClientErrorException.class)
-    public ResponseEntity<?> on(ClientErrorException e) {
-        return ResponseEntity.status(e.getStatus()).build();
+    @ExceptionHandler({BindException.class,})
+    public ResponseEntity<ValidationProblem> on(BindException ex) {
+        var problem = ValidationProblem.empty();
+        ex.getAllErrors()
+            .stream()
+            .filter(objectError -> objectError instanceof FieldError)
+            .map(objectError -> (FieldError) objectError)
+            .map(fieldError -> new ValidationProblem.Field(fieldError.getField(), fieldError.getCode(), fieldError.getDefaultMessage()))
+            .forEach(problem::addField);
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(problem);
     }
 
+    @ResponseBody
+    @ApiResponse(description = "Bad Request", responseCode = "400")
+    @ApiResponse(description = "Not Found", responseCode = "404")
+    @ApiResponse(description = "Method Not Allowed", responseCode = "405")
+    @ApiResponse(description = "Unsupported Media Type", responseCode = "415")
+    @ApiResponse(description = "Internal Server Error", responseCode = "500")
+    @ExceptionHandler({Exception.class,})
+    public ResponseEntity<Problem> on(Exception e) {
+        HttpStatus status;
 
-    // 服务器错误 - 500
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler
-    public void on(Exception e) {
-        log.error("内部错误", e);
+        //400 - payload
+        if (e instanceof HttpMessageConversionException) {
+            var problem = Problem.of(DomainErrors.ERROR_REQUEST_BODY_FAILED, e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
+        }
+
+        // 400 -  process
+        else if (e instanceof ProcessFailureException) {
+            var problem = Problem.of((DomainError) e, e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
+        }
+
+        // 403
+        else if (e instanceof AccessDeniedException) {
+            var problem = Problem.of(DomainErrors.ERROR_ACCESS_DENIED);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(problem);
+        }
+
+        //404
+        else if (e instanceof NoHandlerFoundException) {
+            status = HttpStatus.NOT_FOUND;
+        } else if (e instanceof NoRequiredDataException) {
+            status = HttpStatus.NOT_FOUND;
+        } else if (e instanceof NoResourceFoundException) {
+            status = HttpStatus.NOT_FOUND;
+        }
+
+        // 415 405
+        else if (e instanceof HttpMediaTypeNotSupportedException) {
+            status = HttpStatus.UNSUPPORTED_MEDIA_TYPE;
+        } else if (e instanceof HttpRequestMethodNotSupportedException) {
+            status = HttpStatus.METHOD_NOT_ALLOWED;
+        }
+
+        // 500
+        else {
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            log.error("internal server error", e);
+        }
+
+        return ResponseEntity.status(status).build();
     }
+
 
 }

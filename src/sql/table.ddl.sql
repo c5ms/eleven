@@ -2,11 +2,11 @@ create table doney_issue
 (
     id               varchar(50)   not null
         primary key,
-    create_at        datetime(6)   not null comment '创建时间',
-    create_by        varchar(100)  not null comment '创建人',
-    update_at        datetime(6)   null comment '更新时间',
-    update_by        varchar(100)  null comment '更新人',
-    delete_at        datetime(3)   null comment '删除时间',
+    create_at        datetime(6)   not null,
+    create_by        varchar(100)  not null,
+    update_at        datetime(6)   null,
+    update_by        varchar(100)  null,
+    delete_at        datetime(3)   null,
     version          int           null,
     project_id       varchar(50)   null,
     title            varchar(200)  not null,
@@ -19,11 +19,11 @@ create table doney_member
 (
     id         varchar(50)  not null
         primary key,
-    create_at  datetime(6)  not null comment '创建时间',
-    create_by  varchar(100) not null comment '创建人',
-    update_at  datetime(6)  null comment '更新时间',
-    update_by  varchar(100) null comment '更新人',
-    delete_at  datetime(3)  null comment '删除时间',
+    create_at  datetime(6)  not null,
+    create_by  varchar(100) not null,
+    update_at  datetime(6)  null,
+    update_by  varchar(100) null,
+    delete_at  datetime(3)  null,
     version    int          null,
     user_id    varchar(50)  not null,
     project_id varchar(50)  not null,
@@ -45,11 +45,11 @@ create table doney_project
 (
     id          varchar(50)   not null
         primary key,
-    create_at   datetime(6)   not null comment '创建时间',
-    create_by   varchar(100)  not null comment '创建人',
-    update_at   datetime(6)   null comment '更新时间',
-    update_by   varchar(100)  null comment '更新人',
-    delete_at   datetime(3)   null comment '删除时间',
+    create_at   datetime(6)   not null,
+    create_by   varchar(100)  not null,
+    update_at   datetime(6)   null,
+    update_by   varchar(100)  null,
+    delete_at   datetime(3)   null,
     version     int           null,
     title       varchar(200)  not null,
     code        varchar(100)  not null,
@@ -80,7 +80,7 @@ create table formula_examination
 
 create table gate_route
 (
-    id         varchar(60)  not null comment '物理主键'
+    id         varchar(60)  not null
         primary key,
     is_started tinyint(1)   null,
     memo       varchar(100) null,
@@ -88,11 +88,11 @@ create table gate_route
     name       varchar(100) null,
     `order`    bigint       null,
     path       varchar(100) null,
-    create_at  datetime(3)  not null comment '创建时间',
-    create_by  varchar(100) not null comment '创建人',
-    update_at  datetime(3)  null comment '更新时间',
-    update_by  varchar(100) null comment '更新人',
-    delete_at  datetime(3)  null comment '删除时间',
+    create_at  datetime(3)  not null,
+    create_by  varchar(100) not null,
+    update_at  datetime(3)  null,
+    update_by  varchar(100) null,
+    delete_at  datetime(3)  null,
     version    bigint       not null comment '版本号',
     target     json         null
 );
@@ -106,14 +106,14 @@ create table gate_site
     memo       varchar(100) null,
     `order`    bigint       null,
     is_started tinyint(1)   null,
-    delete_at  datetime(3)  null comment '删除时间',
+    delete_at  datetime(3)  null,
     version    bigint       not null comment '版本号',
-    id         varchar(60)  not null comment '物理主键'
+    id         varchar(60)  not null
         primary key,
-    create_at  datetime(3)  not null comment '创建时间',
-    create_by  varchar(100) not null comment '创建人',
-    update_at  datetime(3)  null comment '更新时间',
-    update_by  varchar(100) null comment '更新人'
+    create_at  datetime(3)  not null,
+    create_by  varchar(100) not null,
+    update_at  datetime(3)  null,
+    update_by  varchar(100) null
 );
 
 create index idx_gate_site_delete_at
@@ -142,10 +142,10 @@ create table upms_authority
     owner_type varchar(100) not null,
     power_type varchar(100) not null,
     power_name varchar(100) not null,
-    create_at  datetime(6)  not null comment '创建时间',
-    create_by  varchar(100) not null comment '创建人',
-    update_at  datetime(6)  null comment '更新时间',
-    update_by  varchar(100) null comment '更新人'
+    create_at  datetime(6)  not null,
+    create_by  varchar(100) not null,
+    update_at  datetime(6)  null,
+    update_by  varchar(100) null
 );
 
 create index idx_upms_authority_01
@@ -160,31 +160,30 @@ create table upms_role
         primary key,
     code      varchar(50)  not null,
     name      varchar(100) not null,
-    create_at datetime(3)  not null comment '创建时间',
-    create_by varchar(100) not null comment '创建人',
-    update_at datetime(3)  null comment '更新时间',
-    update_by varchar(100) null comment '更新人',
+    create_at datetime(3)  not null,
+    create_by varchar(100) not null,
+    update_at datetime(3)  null,
+    update_by varchar(100) null,
     constraint code
         unique (code)
 );
 
 create table upms_user
 (
-    id          varchar(50)  not null comment '物理主键'
-        primary key,
-    username    varchar(100) null,
-    nickname    varchar(100) null,
-    password    varchar(100) null,
+    id          varchar(50)  not null primary key,
+    username    varchar(100) not null,
+    nickname    varchar(100) not null,
+    password    varchar(100) not null,
     login_at    datetime(3)  null,
-    state       varchar(100) null,
+    state       varchar(100) not null,
     is_locked   tinyint(1)   null,
     type        varchar(50)  null,
     register_at datetime(3)  null,
-    create_at   datetime(6)  not null comment '创建时间',
-    create_by   varchar(100) not null comment '创建人',
-    update_at   datetime(6)  null comment '更新时间',
-    update_by   varchar(100) null comment '更新人',
-    delete_at   datetime(3)  null comment '删除时间',
+    create_at   datetime(6)  not null,
+    create_by   varchar(100) not null,
+    update_at   datetime(6)  null,
+    update_by   varchar(100) null,
+    delete_at   datetime(3)  null,
     version     int          null,
     create_date datetime(6)  null,
     login       varchar(100) null,

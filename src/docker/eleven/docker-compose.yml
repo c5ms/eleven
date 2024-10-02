@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  redis:
+    image: redis:6
+
+  upms:
+    image: demacia/eleven-app-upms
+    domainname: upms
+    ports:
+      - "9001:9000"
+    volumes:
+      - ./config:/app/config
+
+  demo:
+    image: demacia/eleven-app-demo
+    domainname: demo
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./config:/app/config

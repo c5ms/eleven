@@ -3,9 +3,10 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>eleven</artifactId>
         <groupId>com.demacia</groupId>
+        <artifactId>eleven-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../eleven-parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -14,28 +15,43 @@
 
     <modules>
         <module>eleven-upms-core</module>
-        <module>eleven-upms-security</module>
         <module>eleven-upms-service</module>
         <module>eleven-upms-client</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- starter -->
+            <dependency>
+                <groupId>com.demacia</groupId>
+                <artifactId>eleven-starter-core</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.demacia</groupId>
+                <artifactId>eleven-starter-data</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+
+            <!-- upms -->
+            <dependency>
+                <groupId>com.demacia</groupId>
+                <artifactId>eleven-upms-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.demacia</groupId>
                 <artifactId>eleven-upms-client</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.demacia</groupId>
                 <artifactId>eleven-upms-service</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.demacia</groupId>
-                <artifactId>eleven-upms-security</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
-            </dependency>
+
+
         </dependencies>
     </dependencyManagement>
 

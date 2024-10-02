@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="95d6db0f-bd5c-4944-84a1-d4f07945e2af" name="Changes" comment="feat: add archunit to test arch." />
+    <list id="11fbb169-80a7-457f-89c8-758bfcfbfa5e" name="Changes by L1an" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+      <option value="module" />
+    </option>
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/mains">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+        <option value="Interface" />
+        <option value="package-info" />
+        <option value="UML Use Case" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="true" />
+  </component>
+  <component name="KubernetesApiProvider">{
+  &quot;configuredContexts&quot;: [
+    {
+      &quot;name&quot;: &quot;orbstack&quot;,
+      &quot;kubeConfigUrl&quot;: &quot;file:///Users/wangzc/.kube/config&quot;
+    }
+  ],
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenRunner">
+    <option name="skipTests" value="true" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2VmHr8tIPczZ0H0d3ztMwxNz87W" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.MainsApplication.executor": "Run",
+    "DefaultPlantUmlFileTemplate": "UML Use Case",
+    "Docker.devstack.mongo: Compose Deployment.executor": "Run",
+    "Docker.devstack.mysql: Compose Deployment.executor": "Run",
+    "Docker.devstack.postgres: Compose Deployment.executor": "Run",
+    "Docker.devstack.redis: Compose Deployment.executor": "Run",
+    "Docker.devstack: Compose Deployment.executor": "Run",
+    "Docker.eleven.demo: Compose Deployment.executor": "Run",
+    "Docker.eleven: Compose Deployment.executor": "Run",
+    "JUnit.ArchTest.layerCheck.executor": "Run",
+    "JUnit.ArchTest.some_architecture_rule.executor": "Run",
+    "JUnit.UserServiceTest.executor": "Run",
+    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
+    "Maven.eleven [clean].executor": "Run",
+    "Maven.eleven [install].executor": "Run",
+    "Maven.eleven [package].executor": "Run",
+    "Maven.eleven [verify].executor": "Run",
+    "Maven.eleven-app [package].executor": "Run",
+    "Maven.eleven-app-upms [org.springdoc:springdoc-openapi-maven-plugin:1.4:generate].executor": "Run",
+    "Maven.mains [clean].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.DemoApplication.executor": "Debug",
+    "Spring Boot.GatewayApplication.executor": "Debug",
+    "Spring Boot.MainsApplication.executor": "Run",
+    "Spring Boot.run-demo.executor": "Debug",
+    "Spring Boot.run-gateway.executor": "Debug",
+    "Spring Boot.run-upms.executor": "Debug",
+    "WebServerToolWindowFactoryState": "false",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "database.data.extractors.current.export.id": "SQL Inserts",
+    "database.data.extractors.current.id": "SQL Inserts",
+    "git-widget-placeholder": "develop",
+    "go.import.settings.migrated": "true",
+    "jdk.selected.JAVA_MODULE": "azul-17",
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "/Users/wangzc/projects/eleven/eleven-component/eleven-upms-service/src/test/java/com/eleven/upms",
+    "last_opened_file_path": "/Users/wangzc/codes/eleven/src/docker/eleven",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.28653628",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "redis",
+      "mysql",
+      "h2",
+      "postgresql",
+      "mongo"
+    ]
+  }
+}]]></component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/docker/eleven" />
+      <recent name="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway/management" />
+      <recent name="$PROJECT_DIR$/eleven-component" />
+      <recent name="$PROJECT_DIR$/eleven-app/eleven-app-gateway/src/main/java/com/eleven/gateway" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveMembersDialog.RECENTS_KEY">
+      <recent name="com.eleven.core.constants.CoreConstants" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/.idea/runConfigurations" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.eleven.upms.domain" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.eleven.upms.model" />
+      <recent name="com.eleven.upms.domain" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.eleven.core.data.configure" />
+      <recent name="com.eleven.gateway.management.support" />
+      <recent name="com.eleven.gateway.management.model" />
+      <recent name="com.eleven.gateway.management.domain" />
+      <recent name="com.eleven.core.cluster.config" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="JUnit.ArchTest.layerCheck">
+    <configuration name="MainsApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.mains.MainsApplication" />
+      <module name="mains" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.mains.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ArchTest.layerCheck" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="eleven-upms-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.eleven.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.eleven" />
+      <option name="MAIN_CLASS_NAME" value="com.eleven.ArchTest" />
+      <option name="METHOD_NAME" value="layerCheck" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ArchTest.some_architecture_rule" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="eleven-upms-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.eleven.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.eleven" />
+      <option name="MAIN_CLASS_NAME" value="com.eleven.ArchTest" />
+      <option name="METHOD_NAME" value="some_architecture_rule" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MainsApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="mains" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.mains.MainsApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="devstack.mongo: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker@localhost">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="mongo" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="src/docker/devstack/docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="devstack.postgres: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker@localhost">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="postgres" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="src/docker/devstack/docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.MainsApplication" />
+      <item itemvalue="Docker.devstack.mongo: Compose Deployment" />
+      <item itemvalue="Docker.devstack.postgres: Compose Deployment" />
+      <item itemvalue="JUnit.ArchTest.layerCheck" />
+      <item itemvalue="JUnit.ArchTest.some_architecture_rule" />
+      <item itemvalue="Spring Boot.MainsApplication" />
+      <item itemvalue="Spring Boot.run-upms" />
+      <item itemvalue="Spring Boot.run-gateway" />
+      <item itemvalue="Spring Boot.run-demo" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.ArchTest.layerCheck" />
+        <item itemvalue="JUnit.ArchTest.some_architecture_rule" />
+        <item itemvalue="Application.MainsApplication" />
+        <item itemvalue="Docker.devstack.mongo: Compose Deployment" />
+        <item itemvalue="Docker.devstack.postgres: Compose Deployment" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.22855.74" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.22855.74" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="95d6db0f-bd5c-4944-84a1-d4f07945e2af" name="Changes" comment="" />
+      <created>1695434531758</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1695434531758</updated>
+      <workItem from="1695434533230" duration="3145000" />
+      <workItem from="1695437881561" duration="18250000" />
+      <workItem from="1695631013111" duration="4735000" />
+      <workItem from="1695642416765" duration="2432000" />
+      <workItem from="1695695464908" duration="26495000" />
+      <workItem from="1695797019236" duration="3126000" />
+      <workItem from="1695872763406" duration="3606000" />
+      <workItem from="1696139152876" duration="189000" />
+      <workItem from="1696139349089" duration="6628000" />
+      <workItem from="1696219534704" duration="201000" />
+      <workItem from="1696220087670" duration="6198000" />
+      <workItem from="1696261481216" duration="64776000" />
+      <workItem from="1696683018658" duration="687000" />
+      <workItem from="1696761955820" duration="2564000" />
+      <workItem from="1696846853462" duration="5178000" />
+      <workItem from="1696932453947" duration="6476000" />
+      <workItem from="1696939219000" duration="641000" />
+      <workItem from="1696943781439" duration="3612000" />
+      <workItem from="1696981377368" duration="1729000" />
+      <workItem from="1697111135548" duration="2000" />
+      <workItem from="1697112363958" duration="321000" />
+      <workItem from="1697199217632" duration="651000" />
+      <workItem from="1697339121781" duration="3002000" />
+      <workItem from="1697364785152" duration="3563000" />
+      <workItem from="1697369295018" duration="4428000" />
+      <workItem from="1697454987558" duration="1910000" />
+      <workItem from="1697631719529" duration="921000" />
+      <workItem from="1697713438868" duration="597000" />
+      <workItem from="1697803230039" duration="2300000" />
+      <workItem from="1697822289770" duration="739000" />
+      <workItem from="1697850251186" duration="20481000" />
+      <workItem from="1697890084933" duration="599000" />
+      <workItem from="1697939949831" duration="1302000" />
+      <workItem from="1697949090667" duration="2063000" />
+      <workItem from="1697957021494" duration="1106000" />
+      <workItem from="1697964564932" duration="4535000" />
+      <workItem from="1697977731738" duration="1267000" />
+      <workItem from="1698061756724" duration="1213000" />
+      <workItem from="1698146584085" duration="1381000" />
+      <workItem from="1698235572225" duration="1419000" />
+      <workItem from="1698362508865" duration="887000" />
+      <workItem from="1698448819308" duration="29000" />
+      <workItem from="1698562010561" duration="1483000" />
+      <workItem from="1698576814552" duration="2266000" />
+      <workItem from="1698924760297" duration="345000" />
+      <workItem from="1698925336600" duration="21000" />
+      <workItem from="1700904809338" duration="30000" />
+      <workItem from="1700909943481" duration="29000" />
+      <workItem from="1700914859725" duration="30000" />
+      <workItem from="1700916638701" duration="2225000" />
+      <workItem from="1700995430332" duration="1214000" />
+      <workItem from="1701086344163" duration="6000" />
+      <workItem from="1701091473755" duration="819000" />
+      <workItem from="1701174158199" duration="71000" />
+      <workItem from="1701261861578" duration="777000" />
+      <workItem from="1701429947506" duration="1468000" />
+      <workItem from="1701515531112" duration="3972000" />
+      <workItem from="1702295902210" duration="301000" />
+      <workItem from="1702296247417" duration="1033000" />
+      <workItem from="1703413190772" duration="131000" />
+      <workItem from="1704440583701" duration="55000" />
+      <workItem from="1711785783323" duration="2038000" />
+      <workItem from="1711799055802" duration="5931000" />
+      <workItem from="1712234338452" duration="8180000" />
+      <workItem from="1713009244724" duration="2232000" />
+      <workItem from="1713050160628" duration="2496000" />
+      <workItem from="1713055460986" duration="690000" />
+      <workItem from="1713056604430" duration="985000" />
+      <workItem from="1713057604896" duration="3042000" />
+      <workItem from="1713060661447" duration="2465000" />
+      <workItem from="1713092148034" duration="2752000" />
+      <workItem from="1713097463314" duration="1245000" />
+      <workItem from="1713102314399" duration="1707000" />
+      <workItem from="1713442788902" duration="224000" />
+      <workItem from="1713531533256" duration="2143000" />
+      <workItem from="1713571175102" duration="1942000" />
+      <workItem from="1713579299115" duration="6692000" />
+      <workItem from="1713588076572" duration="10308000" />
+      <workItem from="1713599852048" duration="5282000" />
+      <workItem from="1713876062123" duration="1975000" />
+      <workItem from="1714033737369" duration="5765000" />
+      <workItem from="1714469962055" duration="6499000" />
+      <workItem from="1714715005411" duration="1442000" />
+      <workItem from="1714883739734" duration="715000" />
+      <workItem from="1715491495331" duration="694000" />
+      <workItem from="1715781883168" duration="1412000" />
+      <workItem from="1715999998436" duration="2221000" />
+      <workItem from="1716291441785" duration="49000" />
+      <workItem from="1716294340227" duration="2000" />
+      <workItem from="1716294383120" duration="784000" />
+      <workItem from="1716620187375" duration="219000" />
+      <workItem from="1716816841611" duration="5251000" />
+      <workItem from="1717423952272" duration="6387000" />
+      <workItem from="1719733252288" duration="1026000" />
+      <workItem from="1721224429182" duration="1421000" />
+      <workItem from="1721462639300" duration="223000" />
+      <workItem from="1721463178871" duration="51000" />
+      <workItem from="1721463666184" duration="1205000" />
+      <workItem from="1724667344593" duration="558000" />
+      <workItem from="1726882133635" duration="216000" />
+      <workItem from="1726882658631" duration="6000" />
+      <workItem from="1727183744357" duration="4000" />
+      <workItem from="1727183803450" duration="470000" />
+      <workItem from="1727184361396" duration="343000" />
+      <workItem from="1727184802634" duration="82000" />
+      <workItem from="1727849619571" duration="3396000" />
+      <workItem from="1727854612891" duration="10194000" />
+    </task>
+    <task id="LOCAL-00001" summary="项目管理">
+      <option name="closed" value="true" />
+      <created>1696682766278</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1696682766278</updated>
+    </task>
+    <task id="LOCAL-00002" summary="项目管理">
+      <option name="closed" value="true" />
+      <created>1696981391624</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1696981391624</updated>
+    </task>
+    <task id="LOCAL-00003" summary="项目管理">
+      <option name="closed" value="true" />
+      <created>1696981424899</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1696981424899</updated>
+    </task>
+    <task id="LOCAL-00004" summary="项目管理">
+      <option name="closed" value="true" />
+      <created>1697368603100</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1697368603100</updated>
+    </task>
+    <task id="LOCAL-00005" summary="项目管理">
+      <option name="closed" value="true" />
+      <created>1697458835305</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1697458835305</updated>
+    </task>
+    <task id="LOCAL-00006" summary="项目管理">
+      <option name="closed" value="true" />
+      <created>1697459785953</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1697459785953</updated>
+    </task>
+    <task id="LOCAL-00007" summary="项目管理">
+      <option name="closed" value="true" />
+      <created>1697889397505</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1697889397505</updated>
+    </task>
+    <task id="LOCAL-00008" summary="项目管理">
+      <option name="closed" value="true" />
+      <created>1698568301257</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1698568301257</updated>
+    </task>
+    <task id="LOCAL-00009" summary="init.">
+      <option name="closed" value="true" />
+      <created>1713063047154</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1713063047154</updated>
+    </task>
+    <task id="LOCAL-00010" summary="init.">
+      <option name="closed" value="true" />
+      <created>1713693446883</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1713693446883</updated>
+    </task>
+    <task id="LOCAL-00011" summary="init.">
+      <option name="closed" value="true" />
+      <created>1713877965020</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1713877965020</updated>
+    </task>
+    <task id="LOCAL-00012" summary="feat: add archunit to test arch.">
+      <option name="closed" value="true" />
+      <created>1727851638961</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1727851638961</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="GitHub.CommitStatus" />
+      </list>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="项目管理" />
+    <MESSAGE value="init." />
+    <MESSAGE value="feat: add archunit to test arch." />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add archunit to test arch." />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>false</integration-enabled>
+    <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/spring-core/6.1.6/spring-core-6.1.6-sources.jar!/org/springframework/core/convert/support/CollectionToObjectConverter.java</url>
+          <line>54</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/eleven-starter/eleven-starter-core/src/main/java/com/eleven/core/web/ElevenExceptionAdvice.java</url>
+          <line>35</line>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/eleven$java_in_eleven_upms_service.ic" NAME="java in eleven-upms-service Coverage Results" MODIFIED="1697889436341" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/eleven$UserServiceTest__1_.ic" NAME="UserServiceTest (1) Coverage Results" MODIFIED="1697888228980" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.eleven.upms.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/eleven$UserServiceTest.ic" NAME="UserServiceTest Coverage Results" MODIFIED="1697889358806" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.eleven.upms.domain.*</FILTER>
+    </SUITE>
+  </component>
+</project>

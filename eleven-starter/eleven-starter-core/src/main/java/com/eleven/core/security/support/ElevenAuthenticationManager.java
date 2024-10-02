@@ -1,6 +1,6 @@
 package com.eleven.core.security.support;
 
-import com.eleven.core.security.SecurityService;
+import com.eleven.core.security.SecurityManager;
 import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ import java.util.List;
 public class ElevenAuthenticationManager implements AuthenticationManager {
 
 
-    private final SecurityService securityService;
+    private final SecurityManager securityManager;
 
     @Nonnull
     private static AnonymousAuthenticationToken createAnonymous(Authentication authentication) {
@@ -37,7 +37,7 @@ public class ElevenAuthenticationManager implements AuthenticationManager {
                 return createAnonymous(authentication);
             }
 
-            var token = securityService.verifyToken(authToken.getToken()).orElse(null);
+            var token = securityManager.verifyToken(authToken.getToken()).orElse(null);
             if (null == token) {
                 return createAnonymous(authentication);
             }
@@ -45,17 +45,17 @@ public class ElevenAuthenticationManager implements AuthenticationManager {
             // token is existing, but can not read subject for this token
             try {
                 var principal = token.getPrincipal();
-                var subject = securityService.readSubject(principal);
+                var subject = securityManager.readSubject(principal);
 
                 // if token is created after subject, refresh subject for new token,
                 // it's almost like the user re-login.
                 if (token.getCreateAt().isAfter(subject.getCreateAt())) {
-                    subject = securityService.createSubject(principal);
+                    subject = securityManager.createSubject(principal);
                 }
 
                 return new ElevenAuthentication(subject, principal, token);
             } catch (Exception e) {
-                securityService.invalidToken(token.getValue());
+                securityManager.invalidToken(token.getValue());
                 log.warn("token 无效", e);
                 return createAnonymous(authentication);
             }

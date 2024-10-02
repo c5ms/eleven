@@ -7,10 +7,7 @@
 
     <id>bin</id>
 
-
-
     <fileSets>
-
         <fileSet>
             <directory>${project.build.directory}/assembly</directory>
             <outputDirectory/>
@@ -24,8 +21,6 @@
             <fileMode>0755</fileMode>
             <directoryMode>0755</directoryMode>
         </fileSet>
-
-
     </fileSets>
 
 </assembly>

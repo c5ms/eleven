@@ -37,8 +37,8 @@ public class DateTimeAutoconfigure {
     @Bean
     public DynamicAdjustableClock clock(TimestampProvider provider) {
         return new DynamicAdjustableClock(provider,
-                properties.getClockExpiration().toMillis(),
-                properties.getZoneId());
+            properties.getClockExpiration().toMillis(),
+            properties.getZoneId());
     }
 
 

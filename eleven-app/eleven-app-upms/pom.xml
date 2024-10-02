@@ -13,19 +13,27 @@
     <artifactId>eleven-app-upms</artifactId>
 
     <properties>
-        <appMainClass>com.eleven.UpmsApplication</appMainClass>
+        <app.main>com.eleven.UpmsApplication</app.main>
     </properties>
 
 
     <dependencies>
+
         <dependency>
             <groupId>com.demacia</groupId>
             <artifactId>eleven-upms-service</artifactId>
         </dependency>
+
+        <!--<dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+        </dependency>-->
+
         <dependency>
-            <groupId>com.demacia</groupId>
-            <artifactId>eleven-upms-security</artifactId>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -38,8 +46,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
             </plugin>-->
-            <plugin>
-                <inherited>true</inherited>
+           <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
             </plugin>

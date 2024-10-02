@@ -2,8 +2,9 @@ package com.eleven.upms.client;
 
 import com.eleven.core.security.Subject;
 import com.eleven.core.security.Token;
+import com.eleven.core.web.WebConstants;
 import com.eleven.upms.core.UpmsConstants;
-import com.eleven.upms.model.UserDto;
+import com.eleven.upms.core.model.UserDetail;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Primary;
@@ -13,19 +14,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Optional;
 
 @Primary
-@FeignClient(value = UpmsConstants.SERVICE_NAME)
+@FeignClient(value = UpmsConstants.SERVICE_NAME, path = WebConstants.INNER_API_PREFIX)
 public interface UpmsClient {
 
-    // unused
-    @Operation(summary = "读取令牌")
+    @Operation(summary = "read token")
     @GetMapping("/readToken")
     Optional<Token> readToken(@RequestParam("token") String token);
 
-    @Operation(summary = "读取用户")
+    @Operation(summary = "read user")
     @GetMapping("/readUser")
-    Optional<UserDto> readUser(@RequestParam("id") String id);
+    Optional<UserDetail> readUser(@RequestParam("id") String id);
 
-    @Operation(summary = "创建权限")
+    @Operation(summary = "create subject")
     @GetMapping("/createSubject")
     Subject createSubject(@RequestParam("type") String type, @RequestParam("name") String name);
 }

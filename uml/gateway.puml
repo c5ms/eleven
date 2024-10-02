@@ -1,0 +1,16 @@
+@startuml
+left to right direction
+
+actor "Hotel" as hotel
+
+rectangle Restaurant {
+  usecase "assign tradeable coupon" as UC1
+  usecase "Pay for Food" as UC2
+  usecase "Drink" as UC3
+}
+
+hotel --> UC1
+hotel --> UC2
+hotel --> UC3
+
+@enduml
