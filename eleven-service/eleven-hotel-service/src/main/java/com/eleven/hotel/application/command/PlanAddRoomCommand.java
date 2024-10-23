@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class PlanAddRoomCommand implements HotelAware {
+public class PlanAddRoomCommand  {
     private String hotelId;
     private String planId;
     private String roomId;

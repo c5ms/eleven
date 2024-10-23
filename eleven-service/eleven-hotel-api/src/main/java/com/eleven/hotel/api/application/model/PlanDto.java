@@ -32,13 +32,13 @@ public class PlanDto {
     private LocalDate stayStartDate;
     private LocalDate stayEndDate;
 
-    private List<Room> rooms = new ArrayList<>();
+    private List<PlanRoom> rooms = new ArrayList<>();
 
 
     @Getter
     @Setter
     @Accessors(chain = true)
-    public static class Room {
+    public static class PlanRoom {
         private String roomId;
         private Integer stock;
         private Double price;

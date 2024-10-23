@@ -1,12 +1,13 @@
 package com.eleven.hotel.endpoint.resource;
 
-import com.eleven.core.web.ResourceNofFoundException;
 import com.eleven.core.web.annonation.AsMerchantApi;
 import com.eleven.hotel.api.application.model.RoomDto;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.request.RoomCreateRequest;
+import com.eleven.hotel.api.endpoint.request.RoomUpdateRequest;
 import com.eleven.hotel.application.command.RoomCreateCommand;
 import com.eleven.hotel.application.command.RoomDeleteCommand;
+import com.eleven.hotel.application.command.RoomUpdateCommand;
 import com.eleven.hotel.application.convert.HotelConvertor;
 import com.eleven.hotel.application.service.RoomService;
 import com.eleven.hotel.domain.model.hotel.HotelRoomRepository;
@@ -48,13 +49,13 @@ public class RoomMerchantApi {
 
     @Operation(summary = "create room")
     @PostMapping
-    public RoomDto createRoom(@PathVariable("hotelId") String hotelId, @RequestBody RoomCreateRequest request) {
+    public RoomDto createRoom(@PathVariable("hotelId") String hotelId, @RequestBody @Validated RoomCreateRequest request) {
         var command = RoomCreateCommand.builder()
             .hotelId(hotelId)
             .desc(request.getDesc())
             .size(request.getSize())
             .name(request.getName())
-            .stock(Stock.of(request.getTotal()))
+            .stock(Stock.of(request.getAmount()))
             .build();
         var room = roomService.createRoom(command);
         return hotelConvertor.entities.toDto(room);
@@ -68,6 +69,21 @@ public class RoomMerchantApi {
             .roomId(roomId)
             .build();
         roomService.deleteRoom(command);
+    }
+
+    @Operation(summary = "delete room")
+    @PutMapping("/{roomId}")
+    public Optional<RoomDto> updateRoom(@PathVariable("hotelId") String hotelId, @PathVariable("roomId") String roomId, @RequestBody @Validated RoomUpdateRequest request) {
+        var command = RoomUpdateCommand.builder()
+            .hotelId(hotelId)
+            .roomId(roomId)
+            .desc(request.getDesc())
+            .size(request.getSize())
+            .name(request.getName())
+            .stock(Stock.of(request.getAmount()))
+            .build();
+        roomService.updateRoom(command);
+        return readRoom(hotelId,roomId);
     }
 
 

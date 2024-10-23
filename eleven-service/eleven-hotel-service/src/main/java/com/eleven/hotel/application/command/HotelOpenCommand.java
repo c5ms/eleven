@@ -6,6 +6,6 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class HotelOpenCommand implements HotelAware {
+public class HotelOpenCommand  {
     private String hotelId;
 }

@@ -57,6 +57,7 @@ public class HotelRoom extends AbstractEntity implements HotelAware, Sellable {
         room.size = size;
         room.stock = stock;
         room.desc = desc;
+        room.saleState=SaleState.STOPPED;
         return room;
     }
 
@@ -78,5 +79,21 @@ public class HotelRoom extends AbstractEntity implements HotelAware, Sellable {
     @Override
     public boolean isOnSale() {
         return saleState.isOnSale();
+    }
+
+    public void updateDesc(RoomDesc desc) {
+        this.desc = desc;
+    }
+
+    public void updateName(String name) {
+        this.name = name;
+    }
+
+    public void updateSize(RoomSize size) {
+        this.size = size;
+    }
+
+    public void updateStock(Stock stock) {
+        this.stock = stock;
     }
 }

@@ -2,9 +2,11 @@ package com.eleven.hotel.application.service.impl;
 
 import com.eleven.hotel.application.command.RoomCreateCommand;
 import com.eleven.hotel.application.command.RoomDeleteCommand;
+import com.eleven.hotel.application.command.RoomUpdateCommand;
 import com.eleven.hotel.application.service.RoomService;
 import com.eleven.hotel.domain.model.hotel.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cloud.client.CommonsClientAutoConfiguration;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,7 @@ class DefaultRoomService implements RoomService {
     private final HotelManager hotelManager;
     private final HotelRoomRepository hotelRoomRepository;
     private final HotelRepository hotelRepository;
+    private final CommonsClientAutoConfiguration commonsClientAutoConfiguration;
 
     @Override
     public HotelRoom createRoom(RoomCreateCommand command) {
@@ -31,10 +34,21 @@ class DefaultRoomService implements RoomService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @PreAuthorize("@hotelSecurityManager.checkAccessHotel(#command.hotelId)")
     public void deleteRoom(RoomDeleteCommand command) {
         var room = hotelRoomRepository.requireById(command.getRoomId());
         hotelRoomRepository.delete(room);
+    }
+
+    @Override
+    public void updateRoom(RoomUpdateCommand command) {
+        var room = hotelRoomRepository.requireById(command.getRoomId());
+        room.updateDesc(RoomDesc.builder()
+            .desc(command.getDesc())
+            .build());
+        room.updateName(command.getName());
+        room.updateSize(command.getSize());
+        room.updateStock(command.getStock());
+        hotelRoomRepository.save(room);
     }
 
 }

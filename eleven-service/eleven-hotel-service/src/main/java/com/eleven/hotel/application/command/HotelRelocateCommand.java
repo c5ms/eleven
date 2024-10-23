@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class HotelRelocateCommand implements HotelAware {
+public class HotelRelocateCommand  {
     private String hotelId;
     private Position position;
 }

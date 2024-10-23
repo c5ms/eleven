@@ -9,15 +9,13 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class RoomCreateCommand implements HotelAware {
+public class RoomCreateCommand  {
 
     private String hotelId;
 
     private String name;
 
     private RoomSize size;
-
-    private SaleType saleType;
 
     private Stock stock;
 

@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class RoomDeleteCommand implements HotelAware {
+public class RoomDeleteCommand  {
     private String hotelId;
     private String roomId;
 }

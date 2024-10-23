@@ -8,7 +8,6 @@ import com.eleven.hotel.api.application.model.values.ContactDto;
 import com.eleven.hotel.api.application.model.values.PositionDto;
 import com.eleven.hotel.domain.model.hotel.Hotel;
 import com.eleven.hotel.domain.model.hotel.HotelRoom;
-import com.eleven.hotel.domain.model.hotel.HotelRoomRepository;
 import com.eleven.hotel.domain.model.hotel.Register;
 import com.eleven.hotel.domain.model.plan.Plan;
 import com.eleven.hotel.domain.model.plan.PlanRoom;
@@ -31,7 +30,6 @@ public class HotelConvertor {
     public final Entities entities = new Entities();
 
     private final ModelMapper modelMapper;
-    private final HotelRoomRepository hotelRoomRepository;
 
     public class Entities {
         public HotelDto toDto(Hotel hotel) {
@@ -87,8 +85,8 @@ public class HotelConvertor {
                 ;
         }
 
-        private PlanDto.Room toDto(PlanRoom planRoom) {
-            return new PlanDto.Room()
+        private PlanDto.PlanRoom toDto(PlanRoom planRoom) {
+            return new PlanDto.PlanRoom()
                 .setRoomId(planRoom.getRoomId())
                 .setStock(planRoom.getStock().getCount())
                 .setPrice(planRoom.getPrice().getAmount().doubleValue());
@@ -105,6 +103,7 @@ public class HotelConvertor {
                 .setId(hotelRoom.getId())
                 .setName(hotelRoom.getName())
                 .setSize(hotelRoom.getSize())
+                .setSaleState(hotelRoom.getSaleState())
                 .setAmount(hotelRoom.getStock().getCount())
                 .setDesc(hotelRoom.getDesc().getDesc())
                 ;
