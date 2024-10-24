@@ -1,24 +1,15 @@
 package com.eleven.hotel.endpoint;
 
-import com.eleven.hotel.api.application.model.HotelDto;
 import com.eleven.hotel.application.service.HotelService;
-import com.eleven.hotel.domain.model.hotel.Hotel;
 import com.eleven.hotel.endpoint.resource.RegisterAdminApi;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Optional;
-
-import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(RegisterAdminApi.class)
 class TestMvcWithMock {

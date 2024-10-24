@@ -1,7 +1,7 @@
 package com.eleven.hotel.endpoint.resource;
 
 import com.eleven.core.web.annonation.AsMerchantApi;
-import com.eleven.hotel.api.application.model.PlanDto;
+import com.eleven.hotel.api.application.view.PlanDto;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.request.PlanAddRoomRequest;
 import com.eleven.hotel.api.endpoint.request.PlanCreateRequest;

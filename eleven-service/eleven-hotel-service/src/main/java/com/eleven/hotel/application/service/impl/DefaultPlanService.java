@@ -4,7 +4,7 @@ import com.eleven.hotel.application.command.PlanAddRoomCommand;
 import com.eleven.hotel.application.command.PlanCreateCommand;
 import com.eleven.hotel.application.service.PlanService;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
-import com.eleven.hotel.domain.model.hotel.HotelRoomRepository;
+import com.eleven.hotel.domain.model.hotel.RoomRepository;
 import com.eleven.hotel.domain.model.plan.Plan;
 import com.eleven.hotel.domain.model.plan.PlanDesc;
 import com.eleven.hotel.domain.model.plan.PlanManager;
@@ -23,7 +23,7 @@ class DefaultPlanService implements PlanService {
     private final PlanManager planManager;
     private final PlanRepository planRepository;
     private final HotelRepository hotelRepository;
-    private final HotelRoomRepository hotelRoomRepository;
+    private final RoomRepository roomRepository;
 
     @Override
     public Plan createPlan(PlanCreateCommand command) {
@@ -46,7 +46,7 @@ class DefaultPlanService implements PlanService {
     @Override
     public void addRoom(PlanAddRoomCommand command) {
         var plan = planRepository.requireById(command.getPlanId());
-        var room = hotelRoomRepository.requireById(command.getRoomId());
+        var room = roomRepository.requireById(command.getRoomId());
         var stock = command.getStock();
         var price = command.getPrice();
         plan.addRoom(room, stock, price);

@@ -2,7 +2,7 @@ package com.eleven.hotel.domain.model.plan;
 
 import com.eleven.core.domain.DomainUtils;
 import com.eleven.hotel.api.domain.core.HotelErrors;
-import com.eleven.hotel.domain.model.hotel.HotelRoom;
+import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.values.Price;
 import com.eleven.hotel.domain.values.Stock;
 import lombok.AllArgsConstructor;
@@ -36,14 +36,14 @@ public class PlanRoom  {
     @Embedded.Empty
     private Price price;
 
-    private PlanRoom(Plan plan, HotelRoom hotelRoom) {
+    private PlanRoom(Plan plan, Room room) {
         this.planId = plan.getId();
         this.hotelId = plan.getHotelId();
-        this.roomId = hotelRoom.getId();
+        this.roomId = room.getId();
     }
 
-    static PlanRoom create(Plan plan, HotelRoom hotelRoom, Stock stock, Price price) {
-        DomainUtils.mustNot(stock.greaterTan(hotelRoom.getStock()), HotelErrors.PLAN_NO_SO_MUCH_ROOM);
+    static PlanRoom create(Plan plan, Room room, Stock stock, Price price) {
+        DomainUtils.mustNot(stock.greaterTan(room.getStock()), HotelErrors.PLAN_NO_SO_MUCH_ROOM);
 
         if (stock.isZero()) {
             log.info("current stock is zero, the room can not be on sale");
@@ -53,7 +53,7 @@ public class PlanRoom  {
             log.info("current price is zero, the room can not be on sale");
         }
 
-        var planRoom = new PlanRoom(plan, hotelRoom);
+        var planRoom = new PlanRoom(plan, room);
         planRoom.stock = stock;
         planRoom.price = price;
         return planRoom;

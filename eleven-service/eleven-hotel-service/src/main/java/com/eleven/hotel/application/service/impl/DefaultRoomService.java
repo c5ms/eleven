@@ -4,10 +4,11 @@ import com.eleven.hotel.application.command.RoomCreateCommand;
 import com.eleven.hotel.application.command.RoomDeleteCommand;
 import com.eleven.hotel.application.command.RoomUpdateCommand;
 import com.eleven.hotel.application.service.RoomService;
-import com.eleven.hotel.domain.model.hotel.*;
+import com.eleven.hotel.domain.model.hotel.HotelManager;
+import com.eleven.hotel.domain.model.hotel.HotelRepository;
+import com.eleven.hotel.domain.model.hotel.Room;
+import com.eleven.hotel.domain.model.hotel.RoomRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cloud.client.CommonsClientAutoConfiguration;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,38 +18,41 @@ import org.springframework.transaction.annotation.Transactional;
 class DefaultRoomService implements RoomService {
 
     private final HotelManager hotelManager;
-    private final HotelRoomRepository hotelRoomRepository;
+    private final RoomRepository roomRepository;
     private final HotelRepository hotelRepository;
-    private final CommonsClientAutoConfiguration commonsClientAutoConfiguration;
 
     @Override
-    public HotelRoom createRoom(RoomCreateCommand command) {
-        var id = hotelManager.nextRoomId();
+    public Room createRoom(RoomCreateCommand command) {
+        var roomId = hotelManager.nextRoomId();
         var hotel = hotelRepository.requireById(command.getHotelId());
-        var description = RoomDesc.builder().desc(command.getDesc()).build();
-        var room = HotelRoom.create(id, hotel, command.getName(), description, command.getSize(), command.getStock());
+        var room = Room.builder()
+            .roomId(roomId)
+            .hotelId(hotel.getId())
+            .desc(command.getDesc())
+            .stock(command.getStock())
+            .restrict(command.getRestrict())
+            .chargeType(command.getChargeType())
+            .build();
         hotelManager.validate(room);
-        hotelRoomRepository.save(room);
+        roomRepository.save(room);
         return room;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteRoom(RoomDeleteCommand command) {
-        var room = hotelRoomRepository.requireById(command.getRoomId());
-        hotelRoomRepository.delete(room);
+        var room = roomRepository.requireById(command.getRoomId());
+        roomRepository.delete(room);
     }
 
     @Override
-    public void updateRoom(RoomUpdateCommand command) {
-        var room = hotelRoomRepository.requireById(command.getRoomId());
-        room.updateDesc(RoomDesc.builder()
-            .desc(command.getDesc())
-            .build());
-        room.updateName(command.getName());
-        room.updateSize(command.getSize());
-        room.updateStock(command.getStock());
-        hotelRoomRepository.save(room);
+    public Room updateRoom(RoomUpdateCommand command) {
+        var room = roomRepository.requireById(command.getRoomId());
+        room.update(command.getDesc());
+        room.update(command.getChargeType());
+        room.update(command.getRestrict());
+        roomRepository.save(room);
+        return room;
     }
 
 }

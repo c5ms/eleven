@@ -1,10 +1,10 @@
-package com.eleven.hotel.application.query.impl;
+package com.eleven.hotel.application.service.impl;
 
 import com.eleven.core.data.Audition;
 import com.eleven.core.data.QuerySupport;
 import com.eleven.core.model.PageResult;
 import com.eleven.hotel.application.command.HotelQueryFilter;
-import com.eleven.hotel.application.query.HotelQueries;
+import com.eleven.hotel.application.service.HotelQueries;
 import com.eleven.hotel.domain.model.hotel.Hotel;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;

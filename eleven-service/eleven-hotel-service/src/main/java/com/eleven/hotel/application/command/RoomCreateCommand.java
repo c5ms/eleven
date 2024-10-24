@@ -1,8 +1,8 @@
 package com.eleven.hotel.application.command;
 
-import com.eleven.hotel.api.domain.model.RoomSize;
-import com.eleven.hotel.api.domain.model.SaleType;
-import com.eleven.hotel.domain.core.HotelAware;
+import com.eleven.hotel.api.domain.model.ChargeType;
+import com.eleven.hotel.api.domain.model.RoomType;
+import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.values.Stock;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,12 +13,9 @@ public class RoomCreateCommand  {
 
     private String hotelId;
 
-    private String name;
-
-    private RoomSize size;
-
     private Stock stock;
-
-    private String desc;
+    private ChargeType chargeType;
+    private Room.Desc desc;
+    private Room.Restrict restrict;
 
 }

@@ -2,13 +2,12 @@ package com.eleven.hotel.endpoint.resource;
 
 import com.eleven.core.model.PageResult;
 import com.eleven.core.web.annonation.AsAdminApi;
-import com.eleven.hotel.api.application.model.HotelDto;
+import com.eleven.hotel.api.application.view.HotelDto;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.request.HotelQueryRequest;
 import com.eleven.hotel.application.command.HotelQueryFilter;
 import com.eleven.hotel.application.convert.HotelConvertor;
-import com.eleven.hotel.application.query.HotelQueries;
-import com.eleven.hotel.application.service.HotelService;
+import com.eleven.hotel.application.service.HotelQueries;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -17,7 +17,7 @@ public class RoomBookingValidator implements BookingValidator {
 
     @Override
     public Optional<DomainError> isBookable(Booking booking) {
-        var room = booking.getHotelRoom();
+        var room = booking.getRoom();
 
         if (!room.isOnSale()) {
             return Optional.of(HotelErrors.BOOKING_PLAN_IS_NOT_ON_SELL);

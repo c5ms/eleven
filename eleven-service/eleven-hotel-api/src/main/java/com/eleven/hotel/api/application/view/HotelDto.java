@@ -1,7 +1,5 @@
-package com.eleven.hotel.api.application.model;
+package com.eleven.hotel.api.application.view;
 
-import com.eleven.hotel.api.application.model.values.ContactDto;
-import com.eleven.hotel.api.application.model.values.PositionDto;
 import com.eleven.hotel.api.domain.model.SaleState;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,13 +18,21 @@ public class HotelDto {
     private String description;
     private String headPicUrl;
     private Integer roomNumber;
+
     private String tel;
     private String email;
 
     private LocalTime checkIn;
     private LocalTime checkOut;
     private SaleState state;
-    private PositionDto position;
-    private ContactDto contact;
+
+    private String province;
+    private String city;
+    private String district;
+    private String street;
+    private String address;
+    private Double lat;
+    private Double lng;
+
 
 }

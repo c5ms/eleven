@@ -1,8 +1,8 @@
 package com.eleven.hotel.application.command;
 
-import com.eleven.hotel.domain.core.HotelAware;
-import com.eleven.hotel.domain.model.hotel.HotelDesc;
-import com.eleven.hotel.domain.values.Contact;
+import com.eleven.hotel.domain.model.hotel.Admin;
+import com.eleven.hotel.domain.model.hotel.Desc;
+import com.eleven.hotel.domain.model.hotel.Hotel;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -10,6 +10,6 @@ import lombok.Getter;
 @Builder
 public class HotelUpdateCommand  {
     private String hotelId;
-    private HotelDesc desc;
-    private Contact contact;
+    private Desc desc;
+    private Hotel.Contact contact;
 }

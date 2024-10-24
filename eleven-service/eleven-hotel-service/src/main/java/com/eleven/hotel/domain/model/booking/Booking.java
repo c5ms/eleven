@@ -5,7 +5,7 @@ import com.eleven.hotel.api.domain.core.HotelErrors;
 import com.eleven.hotel.domain.model.coupon.Coupon;
 import com.eleven.hotel.domain.model.coupon.CouponCalculator;
 import com.eleven.hotel.domain.model.hotel.Hotel;
-import com.eleven.hotel.domain.model.hotel.HotelRoom;
+import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.model.plan.Plan;
 import com.eleven.hotel.domain.model.traveler.Traveler;
 import com.eleven.hotel.domain.values.DateRange;
@@ -40,7 +40,7 @@ public class Booking extends AbstractEntity  {
     private final Plan plan;
 
     @Column("room_id")
-    private final HotelRoom hotelRoom;
+    private final Room room;
 
     @Column("traveler_id")
     private final Traveler traveler;
@@ -54,14 +54,14 @@ public class Booking extends AbstractEntity  {
     @MappedCollection
     private Set<String> coupons;
 
-    public Booking(String id, Hotel hotel, Plan plan, HotelRoom hotelRoom, DateRange stayPeriod, Traveler traveler) {
+    public Booking(String id, Hotel hotel, Plan plan, Room room, DateRange stayPeriod, Traveler traveler) {
         this.id = id;
         this.hotel = hotel;
         this.plan = plan;
-        this.hotelRoom = hotelRoom;
+        this.room = room;
         this.traveler = traveler;
         this.stayPeriod = stayPeriod;
-        this.price = plan.chargeRoom(hotelRoom)
+        this.price = plan.chargeRoom(room)
                 .map(price -> price.multiply(stayPeriod))
                 .orElseThrow(HotelErrors.BOOKING_NO_SUCH_ROOM::toException);
     }

@@ -1,7 +1,6 @@
 package com.eleven.hotel.application.command;
 
-import com.eleven.hotel.domain.core.HotelAware;
-import com.eleven.hotel.domain.values.Position;
+import com.eleven.hotel.domain.model.hotel.Hotel;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -9,5 +8,5 @@ import lombok.Getter;
 @Builder
 public class HotelRelocateCommand  {
     private String hotelId;
-    private Position position;
+    private Hotel.Position position;
 }
