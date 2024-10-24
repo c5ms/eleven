@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HotelManager {
 
-    private final List<HotelRoomValidator> hotelRoomValidators;
+    private final List<RoomValidator> roomValidators;
     private final List<HotelValidator> hotelValidators;
 
     private final HotelRepository hotelRepository;
@@ -51,8 +51,8 @@ public class HotelManager {
         hotelValidators.forEach(validator -> validator.validate(hotel));
     }
 
-    public void validate(HotelRoom hotelRoom) {
-        hotelRoomValidators.forEach(hotelRoomValidator -> hotelRoomValidator.validate(hotelRoom));
+    public void validate(Room room) {
+        roomValidators.forEach(roomValidator -> roomValidator.validate(room));
     }
 
 

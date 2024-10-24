@@ -7,7 +7,7 @@ import com.eleven.hotel.api.application.model.RoomDto;
 import com.eleven.hotel.api.application.model.values.ContactDto;
 import com.eleven.hotel.api.application.model.values.PositionDto;
 import com.eleven.hotel.domain.model.hotel.Hotel;
-import com.eleven.hotel.domain.model.hotel.HotelRoom;
+import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.model.hotel.Register;
 import com.eleven.hotel.domain.model.plan.Plan;
 import com.eleven.hotel.domain.model.plan.PlanRoom;
@@ -92,20 +92,22 @@ public class HotelConvertor {
                 .setPrice(planRoom.getPrice().getAmount().doubleValue());
         }
 
-        public List<RoomDto> toDto(List<HotelRoom> hotelRooms) {
-            return hotelRooms.stream()
+        public List<RoomDto> toDto(List<Room> rooms) {
+            return rooms.stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
         }
 
-        public RoomDto toDto(HotelRoom hotelRoom) {
+        public RoomDto toDto(Room room) {
             return new RoomDto()
-                .setId(hotelRoom.getId())
-                .setName(hotelRoom.getName())
-                .setSize(hotelRoom.getSize())
-                .setSaleState(hotelRoom.getSaleState())
-                .setAmount(hotelRoom.getStock().getCount())
-                .setDesc(hotelRoom.getDesc().getDesc())
+                .setId(room.getId())
+                .setChargeType(room.getChargeType())
+                .setName(room.getName())
+                .setSize(room.getSize())
+                .setSaleState(room.getSaleState())
+                .setAmount(room.getStock().getCount())
+                .setDesc(room.getDesc().getDesc())
+                .setHeadPicUrl(room.getDesc().getHeadPicUrl())
                 ;
         }
 

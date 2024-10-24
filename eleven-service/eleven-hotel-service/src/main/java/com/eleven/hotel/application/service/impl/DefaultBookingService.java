@@ -6,7 +6,7 @@ import com.eleven.hotel.domain.model.booking.Booking;
 import com.eleven.hotel.domain.model.booking.BookingManager;
 import com.eleven.hotel.domain.model.booking.BookingRepository;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
-import com.eleven.hotel.domain.model.hotel.HotelRoomRepository;
+import com.eleven.hotel.domain.model.hotel.RoomRepository;
 import com.eleven.hotel.domain.model.plan.PlanRepository;
 import com.eleven.hotel.domain.model.traveler.Traveler;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class DefaultBookingService implements BookingService {
     private final PlanRepository planRepository;
     private final HotelRepository hotelRepository;
     private final BookingRepository bookingRepository;
-    private final HotelRoomRepository hotelRoomRepository;
+    private final RoomRepository roomRepository;
 
     private final BookingManager bookingManager;
 
@@ -31,7 +31,7 @@ public class DefaultBookingService implements BookingService {
     public Booking book(BookingCommand bookingCommand) {
         var plan = planRepository.requireById(bookingCommand.getPlanId());
         var hotel = hotelRepository.requireById(plan.getHotelId());
-        var room = hotelRoomRepository.requireById(bookingCommand.getRoomId());
+        var room = roomRepository.requireById(bookingCommand.getRoomId());
         var traveler = new Traveler();
         var bookingId = bookingManager.bookId();
 

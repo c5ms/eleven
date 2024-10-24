@@ -11,4 +11,7 @@ public class RoomDesc {
     @Column(value = "desc")
     private String desc;
 
+    @Column(value = "head_pic_url")
+    private String headPicUrl;
+
 }

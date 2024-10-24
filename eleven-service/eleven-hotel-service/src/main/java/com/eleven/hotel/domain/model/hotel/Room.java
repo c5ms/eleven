@@ -2,6 +2,7 @@ package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.core.data.AbstractEntity;
 import com.eleven.core.domain.DomainUtils;
+import com.eleven.hotel.api.domain.model.ChargeType;
 import com.eleven.hotel.api.domain.model.RoomSize;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.domain.core.HotelAware;
@@ -20,7 +21,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Getter
 @FieldNameConstants
 @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
-public class HotelRoom extends AbstractEntity implements HotelAware, Sellable {
+public class Room extends AbstractEntity implements HotelAware, Sellable {
 
     @Id
     private final String id;
@@ -37,27 +38,31 @@ public class HotelRoom extends AbstractEntity implements HotelAware, Sellable {
     @Column(value = "sale_state")
     private SaleState saleState;
 
+    @Column(value = "charge_type")
+    private ChargeType chargeType;
+
     @Embedded.Empty
     private Stock stock;
 
     @Embedded.Empty
     private RoomDesc desc;
 
-    private HotelRoom(String roomId, String hotelId) {
+    private Room(String roomId, String hotelId) {
         this.id = roomId;
         this.hotelId = hotelId;
     }
 
-    public static HotelRoom create(String id, Hotel hotel, String name, RoomDesc desc, RoomSize size, Stock stock) {
+    public static Room create(String id, Hotel hotel, String name, RoomDesc desc, RoomSize size, Stock stock, ChargeType chargeType) {
         DomainUtils.must(stock.greaterTan(Stock.ZERO), () -> new IllegalArgumentException("stock must gather than zero"));
 
         var hotelId = hotel.getId();
-        var room = new HotelRoom(id, hotelId);
+        var room = new Room(id, hotelId);
         room.name = name;
         room.size = size;
         room.stock = stock;
         room.desc = desc;
-        room.saleState=SaleState.STOPPED;
+        room.chargeType = chargeType;
+        room.saleState = SaleState.STOPPED;
         return room;
     }
 
@@ -81,19 +86,11 @@ public class HotelRoom extends AbstractEntity implements HotelAware, Sellable {
         return saleState.isOnSale();
     }
 
-    public void updateDesc(RoomDesc desc) {
-        this.desc = desc;
-    }
-
-    public void updateName(String name) {
+    public void update(String name, RoomDesc desc, RoomSize size, ChargeType chargeType) {
         this.name = name;
-    }
-
-    public void updateSize(RoomSize size) {
+        this.desc = desc;
         this.size = size;
+        this.chargeType = chargeType;
     }
 
-    public void updateStock(Stock stock) {
-        this.stock = stock;
-    }
 }

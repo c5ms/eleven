@@ -1,5 +1,6 @@
 package com.eleven.hotel.api.endpoint.request;
 
+import com.eleven.hotel.api.domain.model.ChargeType;
 import com.eleven.hotel.api.domain.model.RoomSize;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -15,6 +16,11 @@ public class RoomUpdateRequest {
 
     @NotNull
     private RoomSize size;
+
+    @NotNull
+    private ChargeType chargeType;
+
+    private String headPicUrl;
 
     @NotNull
     @Min(1)

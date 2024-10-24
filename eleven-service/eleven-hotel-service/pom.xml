@@ -47,8 +47,6 @@
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>-->
 
-
-
         <!-- test -->
         <dependency>
             <groupId>com.demacia</groupId>

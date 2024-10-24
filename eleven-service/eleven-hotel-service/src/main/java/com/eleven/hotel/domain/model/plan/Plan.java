@@ -8,7 +8,7 @@ import com.eleven.hotel.api.domain.model.SaleType;
 import com.eleven.hotel.domain.core.HotelAware;
 import com.eleven.hotel.domain.core.Sellable;
 import com.eleven.hotel.domain.model.hotel.Hotel;
-import com.eleven.hotel.domain.model.hotel.HotelRoom;
+import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
 import com.eleven.hotel.domain.values.Price;
@@ -94,8 +94,8 @@ public class Plan extends AbstractEntity implements HotelAware, Sellable {
         return plan;
     }
 
-    public void addRoom(HotelRoom hotelRoom, Stock stock, Price price) {
-        var planRoom = PlanRoom.create(this, hotelRoom, stock, price);
+    public void addRoom(Room room, Stock stock, Price price) {
+        var planRoom = PlanRoom.create(this, room, stock, price);
         this.rooms.add(planRoom);
     }
 
@@ -136,8 +136,8 @@ public class Plan extends AbstractEntity implements HotelAware, Sellable {
                 .findFirst();
     }
 
-    public Optional<Price> chargeRoom(HotelRoom hotelRoom) {
-        return findRoom(hotelRoom.getId()).map(PlanRoom::getPrice);
+    public Optional<Price> chargeRoom(Room room) {
+        return findRoom(room.getId()).map(PlanRoom::getPrice);
     }
 
     private boolean hasRoom() {
