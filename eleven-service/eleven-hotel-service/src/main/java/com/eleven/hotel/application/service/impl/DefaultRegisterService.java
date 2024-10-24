@@ -23,9 +23,7 @@ class DefaultRegisterService implements RegisterService {
 
     @Override
     public Register register(HotelRegisterCommand command) {
-        var register = Register.create(DomainUtils.nextId(),
-            command.getHotelName(), command.getHotelAddress(),
-            command.getAdminName(), command.getAdminContact());
+        var register = Register.create(DomainUtils.nextId(), command.getHotelName(), command.getHotelAddress(), command.getAdminContact());
         hotelManager.validate(register);
         registerRepository.save(register);
         return register;

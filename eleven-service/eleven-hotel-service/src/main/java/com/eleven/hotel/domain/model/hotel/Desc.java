@@ -10,7 +10,7 @@ import java.time.LocalTime;
 @Getter
 @Builder
 @FieldNameConstants
-public class HotelDesc {
+public class Desc {
 
     @Column(value = "description")
     private String description;

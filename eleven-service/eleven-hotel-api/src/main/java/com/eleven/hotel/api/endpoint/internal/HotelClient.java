@@ -1,9 +1,8 @@
 package com.eleven.hotel.api.endpoint.internal;
 
 import com.eleven.core.web.WebConstants;
-import com.eleven.hotel.api.application.model.HotelDto;
+import com.eleven.hotel.api.application.view.HotelDto;
 import com.eleven.hotel.api.domain.core.HotelConstants;
-import com.eleven.hotel.api.domain.core.HotelErrors;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Primary;

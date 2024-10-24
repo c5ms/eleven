@@ -1,7 +1,7 @@
 package com.eleven.hotel.endpoint.resource;
 
 import com.eleven.core.web.annonation.AsMerchantApi;
-import com.eleven.hotel.api.application.model.HotelDto;
+import com.eleven.hotel.api.application.view.HotelDto;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.request.HotelRelocateRequest;
 import com.eleven.hotel.api.endpoint.request.HotelUpdateRequest;
@@ -11,10 +11,9 @@ import com.eleven.hotel.application.command.HotelRelocateCommand;
 import com.eleven.hotel.application.command.HotelUpdateCommand;
 import com.eleven.hotel.application.convert.HotelConvertor;
 import com.eleven.hotel.application.service.HotelService;
-import com.eleven.hotel.domain.model.hotel.HotelDesc;
+import com.eleven.hotel.domain.model.hotel.Hotel;
+import com.eleven.hotel.domain.model.hotel.Desc;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
-import com.eleven.hotel.domain.values.Contact;
-import com.eleven.hotel.domain.values.Position;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -48,14 +47,14 @@ public class HotelMerchantApi {
     public void update(@PathVariable("hotelId") String hotelId, @RequestBody @Validated HotelUpdateRequest request) {
         var command = HotelUpdateCommand.builder()
                 .hotelId(hotelId)
-                .desc(HotelDesc.builder()
+                .desc(Desc.builder()
                         .description(request.getDescription())
                         .roomNumber(request.getRoomNumber())
                         .headPicUrl(request.getHeadPicUrl())
                         .checkInTime(request.getCheckIn())
                         .checkOutTime(request.getCheckOut())
                         .build())
-                .contact(Contact.of(request.getTel(), request.getEmail()))
+                .contact(Hotel.Contact.of(request.getEmail(), request.getTel()))
                 .build();
         hotelService.update(command);
     }
@@ -65,7 +64,7 @@ public class HotelMerchantApi {
     public void relocate(@PathVariable("hotelId") String hotelId, @RequestBody @Validated HotelRelocateRequest request) {
         var command = HotelRelocateCommand.builder()
                 .hotelId(hotelId)
-                .position(Position.builder()
+                .position(Hotel.Position.builder()
                         .province(request.getProvince())
                         .city(request.getCity())
                         .district(request.getDistrict())

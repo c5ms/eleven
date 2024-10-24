@@ -1,8 +1,8 @@
 package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.core.data.AbstractEntity;
-import com.eleven.hotel.domain.values.Contact;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
 import org.springframework.data.annotation.Id;
@@ -23,9 +23,6 @@ public class Admin extends AbstractEntity {
     @Column(value = "hotel_id")
     private final String hotelId;
 
-    @Column(value = "name")
-    private String name;
-
     @Embedded.Empty
     private Contact contact;
 
@@ -35,12 +32,28 @@ public class Admin extends AbstractEntity {
     }
 
     public static Admin create(String id, Hotel hotel, Contact contact) {
-
         var hotelId = hotel.getId();
         var admin = new Admin(id, hotelId);
         admin.contact = contact;
         return admin;
     }
 
+    @Getter
+    @Builder
+    @FieldNameConstants
+    public static class Contact {
 
+        @Column(value = "name")
+        private String name;
+
+        @Column(value = "email")
+        private String email;
+
+        @Column(value = "tel")
+        private String tel;
+
+        public static Contact of(String name ,String email, String tel) {
+            return new Contact(name,email, tel);
+        }
+    }
 }

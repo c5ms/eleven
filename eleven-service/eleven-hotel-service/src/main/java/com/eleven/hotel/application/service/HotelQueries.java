@@ -1,4 +1,4 @@
-package com.eleven.hotel.application.query;
+package com.eleven.hotel.application.service;
 
 import com.eleven.core.model.PageResult;
 import com.eleven.hotel.application.command.HotelQueryFilter;

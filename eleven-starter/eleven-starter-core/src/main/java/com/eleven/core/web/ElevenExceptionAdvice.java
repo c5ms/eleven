@@ -5,7 +5,7 @@ import com.eleven.core.command.CommandHandleException;
 import com.eleven.core.domain.DomainError;
 import com.eleven.core.domain.DomainErrors;
 import com.eleven.core.domain.DomainException;
-import com.eleven.core.domain.NoDomainEntityException;
+import com.eleven.core.domain.NoRequiredEntityException;
 import com.eleven.core.web.problem.Problem;
 import com.eleven.core.web.problem.ValidationProblem;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -30,22 +30,11 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 @ControllerAdvice
 public class ElevenExceptionAdvice {
 
-    @ApiResponse(description = "Unprocessable Entity", responseCode = "422")
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    @ResponseBody
-    @ExceptionHandler({BindException.class,})
-    public ResponseEntity<ValidationProblem> on(BindException ex) {
-        var problem = ValidationProblem.empty();
-        ex.getAllErrors()
-            .stream()
-            .filter(objectError -> objectError instanceof FieldError)
-            .map(objectError -> (FieldError) objectError)
-            .map(fieldError -> new ValidationProblem.Field(fieldError.getField(), fieldError.getCode(), fieldError.getDefaultMessage()))
-            .forEach(problem::addField);
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(problem);
-    }
+
+
 
     @ResponseBody
+    @ApiResponse(description = "Unprocessable Entity", responseCode = "422")
     @ApiResponse(description = "Bad Request", responseCode = "400")
     @ApiResponse(description = "Not Found", responseCode = "404")
     @ApiResponse(description = "Method Not Allowed", responseCode = "405")
@@ -56,21 +45,32 @@ public class ElevenExceptionAdvice {
         HttpStatus status;
 
         //400 - payload
-        if (e instanceof HttpMessageConversionException) {
+        if (e instanceof CommandHandleException) {
+            status = HttpStatus.BAD_REQUEST;
+        } else if (e instanceof NoRequiredEntityException) {
+            status = HttpStatus.BAD_REQUEST;
+        } else if (e instanceof HttpMessageConversionException) {
             log.warn("message convert fail {}", ExceptionUtil.getMessage(e));
             var problem = Problem.of(DomainErrors.ERROR_REQUEST_BODY_FAILED);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
+        } else if (e instanceof DomainException ex) {
+            var problem = Problem.of(ex);
+            log.warn(ExceptionUtil.getMessage(ex), ex);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
         }
 
-        // 400 -  process
-        else if (e instanceof DomainException) {
-            var problem = Problem.of((DomainError) e);
-            log.warn(ExceptionUtil.getMessage(e),e);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
-        } else if (e instanceof CommandHandleException) {
-            status = HttpStatus.BAD_REQUEST;
-        } else if (e instanceof NoDomainEntityException) {
-            status = HttpStatus.BAD_REQUEST;
+
+        // 422
+        else if (e instanceof BindException ex) {
+            var problem = ValidationProblem.empty();
+            ex.getAllErrors()
+                .stream()
+                .filter(objectError -> objectError instanceof FieldError)
+                .map(objectError -> (FieldError) objectError)
+                .map(fieldError -> new ValidationProblem.Field(fieldError.getField(), fieldError.getCode(), fieldError.getDefaultMessage()))
+                .forEach(problem::addField);
+
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(problem);
         }
 
         // 403

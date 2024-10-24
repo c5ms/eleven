@@ -14,10 +14,14 @@ public class Stock {
     public static Stock ONE = Stock.of(1);
 
     @Column("count")
-    private final int count;
+    private final Integer count;
 
     public static Stock of(Integer amount) {
         return new Stock(amount);
+    }
+
+    public boolean isEmpty() {
+        return count == null;
     }
 
     public boolean isZero() {

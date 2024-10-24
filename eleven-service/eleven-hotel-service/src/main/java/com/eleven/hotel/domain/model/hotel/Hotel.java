@@ -8,9 +8,8 @@ import com.eleven.hotel.domain.core.Sellable;
 import com.eleven.hotel.domain.model.hotel.event.HotelClosedEvent;
 import com.eleven.hotel.domain.model.hotel.event.HotelOpenedEvent;
 import com.eleven.hotel.domain.model.hotel.event.HotelRelocatedEvent;
-import com.eleven.hotel.domain.values.Contact;
-import com.eleven.hotel.domain.values.Position;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
 import org.apache.commons.lang3.StringUtils;
@@ -43,7 +42,7 @@ public class Hotel extends AbstractEntity implements Sellable {
     private Contact contact;
 
     @Embedded.Empty(prefix = "hotel_")
-    private HotelDesc desc;
+    private Desc desc;
 
     @Embedded.Empty
     private Audition audition = Audition.empty();
@@ -59,7 +58,7 @@ public class Hotel extends AbstractEntity implements Sellable {
         return hotel;
     }
 
-    public void update(HotelDesc detail) {
+    public void update(Desc detail) {
         this.desc = detail;
     }
 
@@ -91,5 +90,52 @@ public class Hotel extends AbstractEntity implements Sellable {
 
     public boolean isBelongingBy(HotelAware belonging) {
         return StringUtils.equals(belonging.getHotelId(), getId());
+    }
+
+
+    @Getter
+    @Builder
+    @FieldNameConstants
+    public static class Contact {
+
+        @Column(value = "email")
+        private String email;
+
+        @Column(value = "tel")
+        private String tel;
+
+        public static Contact of(String email, String tel) {
+            return new Contact(email, tel);
+        }
+
+    }
+
+
+    @Getter
+    @Builder
+    @FieldNameConstants
+    public static class Position {
+
+        @Column(value = "province")
+        private String province;
+
+        @Column(value = "city")
+        private String city;
+
+        @Column(value = "district")
+        private String district;
+
+        @Column(value = "street")
+        private String street;
+
+        @Column(value = "address")
+        private String address;
+
+        @Column(value = "lat")
+        private Double lat;
+
+        @Column(value = "lng")
+        private Double lng;
+
     }
 }

@@ -1,7 +1,7 @@
 package com.eleven.hotel.endpoint.resource;
 
 import com.eleven.core.web.annonation.AsInternalApi;
-import com.eleven.hotel.api.application.model.HotelDto;
+import com.eleven.hotel.api.application.view.HotelDto;
 import com.eleven.hotel.api.endpoint.internal.HotelClient;
 import com.eleven.hotel.application.convert.HotelConvertor;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;

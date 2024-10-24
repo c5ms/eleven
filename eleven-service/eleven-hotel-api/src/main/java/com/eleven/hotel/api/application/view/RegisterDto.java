@@ -1,4 +1,4 @@
-package com.eleven.hotel.api.application.model;
+package com.eleven.hotel.api.application.view;
 
 import com.eleven.hotel.api.domain.model.RegisterState;
 import lombok.Getter;

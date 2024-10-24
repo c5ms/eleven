@@ -14,14 +14,9 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class RoomNameValidator implements RoomValidator {
-    private final RoomRepository roomRepository;
 
     @Override
     public void validate(Room room) {
-        var existing = roomRepository.getRoomsByHotelIdAndName(room.getHotelId(), room.getName())
-                .stream().filter(exist -> !StringUtils.equals(exist.getId(), room.getId()))
-                .findFirst();
-        DomainUtils.must(existing.isEmpty(), HotelErrors.ROOM_NAME_REPEAT);
     }
 
 }

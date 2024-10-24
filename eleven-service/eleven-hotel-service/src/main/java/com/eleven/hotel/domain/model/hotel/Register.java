@@ -5,7 +5,6 @@ import com.eleven.core.domain.DomainUtils;
 import com.eleven.hotel.api.domain.core.HotelErrors;
 import com.eleven.hotel.api.domain.model.RegisterState;
 import com.eleven.hotel.domain.core.HotelAware;
-import com.eleven.hotel.domain.values.Contact;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
@@ -33,11 +32,8 @@ public class Register extends AbstractEntity implements HotelAware {
     @Column("hotel_address")
     private String hotelAddress;
 
-    @Column(value = "manager_name")
-    private String managerName;
-
     @Embedded.Empty(prefix = "manager_")
-    private Contact managerContact;
+    private Admin.Contact managerContact;
 
     @Column(value = "state")
     private RegisterState state;
@@ -47,11 +43,10 @@ public class Register extends AbstractEntity implements HotelAware {
         this.state = RegisterState.UNDER_REVIEW;
     }
 
-    public static Register create(String id, String hotelName, String hotelAddress, String managerName, Contact managerContact) {
+    public static Register create(String id, String hotelName, String hotelAddress,  Admin.Contact managerContact) {
         var register = new Register(id);
         register.hotelName = hotelName;
         register.hotelAddress = hotelAddress;
-        register.managerName = managerName;
         register.managerContact = managerContact;
         return register;
     }

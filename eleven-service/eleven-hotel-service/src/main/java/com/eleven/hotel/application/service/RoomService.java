@@ -10,5 +10,5 @@ public interface RoomService {
 
     void deleteRoom(RoomDeleteCommand command);
 
-    void updateRoom(RoomUpdateCommand command);
+    Room updateRoom(RoomUpdateCommand command);
 }

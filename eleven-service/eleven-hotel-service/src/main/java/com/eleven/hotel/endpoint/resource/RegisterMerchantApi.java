@@ -1,13 +1,13 @@
 package com.eleven.hotel.endpoint.resource;
 
 import com.eleven.core.web.annonation.AsMerchantApi;
-import com.eleven.hotel.api.application.model.RegisterDto;
+import com.eleven.hotel.api.application.view.RegisterDto;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.request.HotelRegisterRequest;
 import com.eleven.hotel.application.command.HotelRegisterCommand;
 import com.eleven.hotel.application.convert.HotelConvertor;
 import com.eleven.hotel.application.service.RegisterService;
-import com.eleven.hotel.domain.values.Contact;
+import com.eleven.hotel.domain.model.hotel.Admin;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -32,8 +32,7 @@ public class RegisterMerchantApi {
     @PostMapping
     public RegisterDto register(@RequestBody @Validated HotelRegisterRequest request) {
         var command = HotelRegisterCommand.builder()
-            .adminName(request.getAdminName())
-            .adminContact(Contact.of(request.getAdminEmail(), request.getAdminTel()))
+            .adminContact(Admin.Contact.of(request.getAdminName(), request.getAdminEmail(), request.getAdminTel()))
             .hotelName(request.getHotelName())
             .hotelAddress(request.getHotelAddress())
             .build();
