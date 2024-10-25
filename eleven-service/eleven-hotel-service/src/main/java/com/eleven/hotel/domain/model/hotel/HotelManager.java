@@ -14,19 +14,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HotelManager {
 
-
     private final List<HotelValidator> hotelValidators;
 
     private final HotelRepository hotelRepository;
     private final AdminRepository adminRepository;
     private final RegisterRepository registerRepository;
 
-
     public Hotel accept(Register register) {
-        var hotel = Hotel.create(DomainUtils.nextId(), register);
+        var hotel = Hotel.of(DomainUtils.nextId(), register);
         hotelRepository.save(hotel);
 
-        var admin = Admin.create(DomainUtils.nextId(), hotel, register.getManagerContact());
+        var admin = Admin.of(DomainUtils.nextId(), hotel.getId(), register.getManagerContact());
         adminRepository.save(admin);
 
         register.accept();
@@ -42,7 +40,7 @@ public class HotelManager {
     }
 
     public void validate(Register register) {
-        var hotel = Hotel.create(null, register);
+        var hotel = Hotel.of(null, register);
         validate(hotel);
     }
 

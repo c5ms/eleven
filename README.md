@@ -97,7 +97,7 @@
     - xxxSupport
       - xxxEr/Or
       - xxxUtil is the static util you can use it anywhere
-      - xxxContext is the static util with application context component, you can use it as a xxxUtil
+      - xxxContext is the static util with application context component, you can use it as a util
 
 #### 前言
 首先请你清楚的了解什么是 DDD，我不打算说明白什么是 DDD， 但是我首先要告诉你 DDD 并没有要求你做的事情。

@@ -2,13 +2,13 @@ package com.eleven.hotel.endpoint.resource;
 
 import com.eleven.core.model.PageResult;
 import com.eleven.core.web.annonation.AsAdminApi;
-import com.eleven.hotel.api.application.view.HotelDto;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.request.HotelQueryRequest;
+import com.eleven.hotel.api.endpoint.model.HotelDto;
 import com.eleven.hotel.application.query.HotelQuery;
-import com.eleven.hotel.application.convert.HotelConvertor;
-import com.eleven.hotel.application.query.HotelQueryService;
+import com.eleven.hotel.application.service.HotelQueryService;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
+import com.eleven.hotel.endpoint.convert.HotelConvertor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -30,12 +30,13 @@ public class HotelAdminApi {
 
     private final HotelConvertor hotelConvertor;
     private final HotelRepository hotelRepository;
+
     private final HotelQueryService hotelQueryService;
 
     @Operation(summary = "read hotel")
     @GetMapping("/{hotelId}")
     public Optional<HotelDto> readHotel(@PathVariable("hotelId") String hotelId) {
-        return hotelRepository.findById(hotelId).map(hotelConvertor.entities::toDto);
+        return hotelRepository.findById(hotelId).map(hotelConvertor::toDto);
     }
 
     @Operation(summary = "query hotel")
@@ -44,7 +45,7 @@ public class HotelAdminApi {
         var command = HotelQuery.builder()
                 .hotelName(request.getHotelName())
                 .build();
-        return hotelQueryService.queryPage(command).map(hotelConvertor.entities::toDto);
+        return hotelQueryService.queryPage(command).map(hotelConvertor::toDto);
     }
 
 }

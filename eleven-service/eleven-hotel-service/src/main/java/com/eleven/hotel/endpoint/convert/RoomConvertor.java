@@ -1,6 +1,6 @@
-package com.eleven.hotel.application.convert;
+package com.eleven.hotel.endpoint.convert;
 
-import com.eleven.hotel.api.application.view.RoomDto;
+import com.eleven.hotel.api.endpoint.model.RoomDto;
 import com.eleven.hotel.domain.model.room.Room;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,18 +13,19 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class RoomConvertor {
+    public final ValuesConvertor values;
 
     public RoomDto toDto(Room room) {
         return new RoomDto()
                 .setId(room.getId())
                 .setChargeType(room.getChargeType())
                 .setSaleState(room.getSaleState())
-                .setName(room.getDescription().name())
-                .setType(room.getDescription().type())
-                .setDesc(room.getDescription().desc())
-                .setHeadPicUrl(room.getDescription().headPicUrl())
-                .setMinPerson(room.getRestriction().minPerson())
-                .setMaxPerson(room.getRestriction().maxPerson())
+                .setName(room.getDescription().getName())
+                .setType(room.getDescription().getType())
+                .setDesc(room.getDescription().getDesc())
+                .setHeadPicUrl(room.getDescription().getHeadPicUrl())
+                .setMinPerson(room.getRestriction().getMinPerson())
+                .setMaxPerson(room.getRestriction().getMaxPerson())
                 ;
     }
 

@@ -27,20 +27,19 @@ public class Admin extends AbstractEntity {
     @Embedded.Empty
     private Contact contact;
 
-    public Admin(String staffId, String hotelId) {
-        this.id = staffId;
+    private Admin(String id, String hotelId) {
+        this.id = id;
         this.hotelId = hotelId;
     }
 
-    public static Admin create(String id, Hotel hotel, Contact contact) {
-        var hotelId = hotel.getId();
+    public static Admin of(String id, String hotelId, Contact contact) {
         var admin = new Admin(id, hotelId);
         admin.contact = contact;
         return admin;
     }
 
     @Getter
-    @Builder
+    @AllArgsConstructor
     @FieldNameConstants
     public static class Contact {
 
@@ -52,9 +51,5 @@ public class Admin extends AbstractEntity {
 
         @Column(value = "tel")
         private String tel;
-
-        public static Contact of(String name, String email, String tel) {
-            return new Contact(name, email, tel);
-        }
     }
 }

@@ -1,19 +1,21 @@
 package com.eleven.hotel.endpoint.resource;
 
 import com.eleven.core.web.annonation.AsMerchantApi;
-import com.eleven.hotel.api.application.view.PlanDto;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.request.PlanAddRoomRequest;
 import com.eleven.hotel.api.endpoint.request.PlanCreateRequest;
+import com.eleven.hotel.api.endpoint.model.PlanDto;
 import com.eleven.hotel.application.command.PlanAddRoomCommand;
 import com.eleven.hotel.application.command.PlanCreateCommand;
-import com.eleven.hotel.application.convert.HotelConvertor;
-import com.eleven.hotel.application.service.PlanService;
+import com.eleven.hotel.application.service.PlanCommandService;
+import com.eleven.hotel.domain.model.plan.Plan;
 import com.eleven.hotel.domain.model.plan.PlanRepository;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
 import com.eleven.hotel.domain.values.Price;
 import com.eleven.hotel.domain.values.Stock;
+import com.eleven.hotel.endpoint.convert.HotelConvertor;
+import com.eleven.hotel.endpoint.convert.PlanConvertor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -31,14 +33,14 @@ import java.util.Optional;
 @RequestMapping(HotelEndpoints.Paths.PLAN)
 public class PlanMerchantApi {
 
-    private final PlanService planService;
-    private final HotelConvertor hotelConvertor;
+    private final PlanCommandService planCommandService;
     private final PlanRepository planRepository;
+    private final PlanConvertor planConvertor;
 
     @Operation(summary = "read plan")
     @GetMapping("/{planId}")
     public Optional<PlanDto> readPlan(@PathVariable("hotelId") String hotelId, @PathVariable("planId") String planId) {
-        return planRepository.find(hotelId, planId).map(hotelConvertor.entities::toDto);
+        return planRepository.find(hotelId, planId).map(planConvertor::toDto);
     }
 
     @Operation(summary = "create plan")
@@ -46,14 +48,13 @@ public class PlanMerchantApi {
     public PlanDto createPlan(@PathVariable("hotelId") String hotelId, @RequestBody @Validated PlanCreateRequest request) {
         var command = PlanCreateCommand.builder()
                 .hotelId(hotelId)
-                .name(request.getName())
-                .desc(request.getDesc())
+                .description(new Plan.Description(request.getName(),request.getDesc()))
                 .stock(Stock.of(request.getTotal()))
                 .stayPeriod(DateRange.of(request.getStayStartDate(), request.getStayEndDate()))
                 .sellPeriod(DateTimeRange.of(request.getSellStartDate(), request.getSellEndDate()))
                 .build();
-        var plan = planService.createPlan(command);
-        return hotelConvertor.entities.toDto(plan);
+        var plan = planCommandService.createPlan(command);
+        return planConvertor.toDto(plan);
     }
 
     @Operation(summary = "add room")
@@ -66,7 +67,7 @@ public class PlanMerchantApi {
                 .stock(Stock.of(request.getStock()))
                 .price(Price.of(request.getPrice()))
                 .build();
-        planService.addRoom(command);
+        planCommandService.addRoom(command);
     }
 
 }

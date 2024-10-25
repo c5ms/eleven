@@ -1,13 +1,13 @@
 package com.eleven.hotel.endpoint.resource;
 
 import com.eleven.core.web.annonation.AsMerchantApi;
-import com.eleven.hotel.api.application.view.RegisterDto;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.request.HotelRegisterRequest;
+import com.eleven.hotel.api.endpoint.model.RegisterDto;
 import com.eleven.hotel.application.command.HotelRegisterCommand;
-import com.eleven.hotel.application.convert.HotelConvertor;
-import com.eleven.hotel.application.service.RegisterService;
+import com.eleven.hotel.application.service.HotelCommandService;
 import com.eleven.hotel.domain.model.admin.Admin;
+import com.eleven.hotel.endpoint.convert.HotelConvertor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -25,19 +25,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(HotelEndpoints.Paths.REGISTER)
 public class RegisterMerchantApi {
 
-    private final RegisterService registerService;
     private final HotelConvertor hotelConvertor;
+    private final HotelCommandService hotelCommandService;
 
     @Operation(summary = "register hotel")
     @PostMapping
     public RegisterDto register(@RequestBody @Validated HotelRegisterRequest request) {
         var command = HotelRegisterCommand.builder()
-                .adminContact(Admin.Contact.of(request.getAdminName(), request.getAdminEmail(), request.getAdminTel()))
+                .adminContact(new Admin.Contact(request.getAdminName(), request.getAdminEmail(), request.getAdminTel()))
                 .hotelName(request.getHotelName())
                 .hotelAddress(request.getHotelAddress())
                 .build();
-        var register = registerService.register(command);
-        return hotelConvertor.entities.toDto(register);
+        var register = hotelCommandService.register(command);
+        return hotelConvertor.toDto(register);
     }
 
 }

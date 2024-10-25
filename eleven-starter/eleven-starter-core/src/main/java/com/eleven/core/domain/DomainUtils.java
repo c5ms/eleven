@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
-import java.util.Objects;
 import java.util.function.Supplier;
 
 @UtilityClass
@@ -35,16 +34,6 @@ public class DomainUtils {
 
     public static void mustNot(boolean check, DomainError error) throws DomainException {
         mustNot(check, error::toException);
-    }
-
-    public static void equals(Object check, Object expected, Supplier<RuntimeException> e) throws DomainException {
-        if (Objects.equals(check, expected)) {
-            throw e.get();
-        }
-    }
-
-    public static void equals(Object check, Object expected, DomainError error) throws DomainException {
-        equals(check, expected, error::toException);
     }
 
     public static String nextId() {

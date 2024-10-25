@@ -19,4 +19,12 @@ public class HotelUpdateRequest {
     private LocalTime checkIn;
     private LocalTime checkOut;
 
+    private String province;
+    private String city;
+    private String district;
+    private String street;
+    private String address;
+    private Double lat;
+    private Double lng;
+
 }

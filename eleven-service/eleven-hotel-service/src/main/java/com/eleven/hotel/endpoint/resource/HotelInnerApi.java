@@ -1,10 +1,10 @@
 package com.eleven.hotel.endpoint.resource;
 
 import com.eleven.core.web.annonation.AsInternalApi;
-import com.eleven.hotel.api.application.view.HotelDto;
 import com.eleven.hotel.api.endpoint.internal.HotelClient;
-import com.eleven.hotel.application.convert.HotelConvertor;
+import com.eleven.hotel.api.endpoint.model.HotelDto;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
+import com.eleven.hotel.endpoint.convert.HotelConvertor;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +23,6 @@ public class HotelInnerApi implements HotelClient {
 
     @Override
     public Optional<HotelDto> readHotel(@RequestParam("id") String id) {
-        return hotelRepository.findById(id).map(hotelConvertor.entities::toDto);
+        return hotelRepository.findById(id).map(hotelConvertor::toDto);
     }
 }

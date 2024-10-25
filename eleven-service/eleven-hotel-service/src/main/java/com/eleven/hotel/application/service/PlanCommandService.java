@@ -1,11 +1,9 @@
-package com.eleven.hotel.application.service.impl;
+package com.eleven.hotel.application.service;
 
 import com.eleven.hotel.application.command.PlanAddRoomCommand;
 import com.eleven.hotel.application.command.PlanCreateCommand;
-import com.eleven.hotel.application.service.PlanService;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.domain.model.plan.Plan;
-import com.eleven.hotel.domain.model.plan.PlanDesc;
 import com.eleven.hotel.domain.model.plan.PlanManager;
 import com.eleven.hotel.domain.model.plan.PlanRepository;
 import com.eleven.hotel.domain.model.room.RoomRepository;
@@ -18,32 +16,27 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional(rollbackFor = Exception.class)
-class DefaultPlanService implements PlanService {
+public class PlanCommandService {
 
     private final PlanManager planManager;
     private final PlanRepository planRepository;
     private final HotelRepository hotelRepository;
     private final RoomRepository roomRepository;
 
-    @Override
     public Plan createPlan(PlanCreateCommand command) {
-        var plan = Plan.createPlan(
+        var plan = Plan.of(
                 planManager.planId(),
                 hotelRepository.requireById(command.getHotelId()),
-                command.getName(),
                 command.getStock(),
-                command.getSellPeriod(),
                 command.getStayPeriod(),
-                PlanDesc.builder()
-                        .desc(command.getDesc())
-                        .build()
+                command.getSellPeriod(),
+                command.getDescription()
         );
         planManager.validate(plan);
         planRepository.save(plan);
         return plan;
     }
 
-    @Override
     public void addRoom(PlanAddRoomCommand command) {
         var plan = planRepository.requireById(command.getPlanId());
         var room = roomRepository.requireById(command.getRoomId());

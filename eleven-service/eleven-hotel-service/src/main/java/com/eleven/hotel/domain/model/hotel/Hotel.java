@@ -9,8 +9,9 @@ import com.eleven.hotel.domain.model.hotel.event.HotelClosedEvent;
 import com.eleven.hotel.domain.model.hotel.event.HotelOpenedEvent;
 import com.eleven.hotel.domain.model.hotel.event.HotelRelocatedEvent;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Id;
@@ -40,9 +41,7 @@ public class Hotel extends AbstractEntity implements Sellable {
     @Embedded.Empty(prefix = "position_")
     private Position position;
 
-    @Embedded.Empty(prefix = "contact_")
-    private Contact contact;
-
+    @Setter
     @Embedded.Empty(prefix = "hotel_")
     private Description description;
 
@@ -51,21 +50,13 @@ public class Hotel extends AbstractEntity implements Sellable {
 
     private Hotel(String id) {
         this.id = id;
+        this.saleState = SaleState.STARTED;
     }
 
-    public static Hotel create(String id, Register register) {
+    public static Hotel of(String id, Register register) {
         var hotel = new Hotel(id);
         hotel.name = register.getHotelName();
-        hotel.saleState = SaleState.STARTED;
         return hotel;
-    }
-
-    public void update(Description detail) {
-        this.description = detail;
-    }
-
-    public void update(Contact contact) {
-        this.contact = contact;
     }
 
     @Override
@@ -90,76 +81,64 @@ public class Hotel extends AbstractEntity implements Sellable {
         this.addEvent(new HotelRelocatedEvent(id));
     }
 
-    public boolean isBelongingBy(HotelAware belonging) {
+    public boolean has(HotelAware belonging) {
         return StringUtils.equals(belonging.getHotelId(), getId());
     }
 
-
     @Getter
-    @Builder
-    @FieldNameConstants
-    public static class Contact {
-
-        @Column(value = "email")
-        private String email;
-
-        @Column(value = "tel")
-        private String tel;
-
-        public static Contact of(String email, String tel) {
-            return new Contact(email, tel);
-        }
-
-    }
-
-
-    @Getter
-    @Builder
+    @RequiredArgsConstructor
     @FieldNameConstants
     public static class Position {
 
         @Column(value = "province")
-        private String province;
+        private final String province;
 
         @Column(value = "city")
-        private String city;
+        private final String city;
 
         @Column(value = "district")
-        private String district;
+        private final String district;
 
         @Column(value = "street")
-        private String street;
+        private final String street;
 
         @Column(value = "address")
-        private String address;
+        private final String address;
 
         @Column(value = "lat")
-        private Double lat;
+        private final Double lat;
 
         @Column(value = "lng")
-        private Double lng;
+        private final Double lng;
 
     }
 
+
     @Getter
-    @Builder
+    @RequiredArgsConstructor
     @FieldNameConstants
     public static class Description {
 
         @Column(value = "description")
-        private String description;
+        private final String description;
 
         @Column(value = "head_pic_url")
-        private String headPicUrl;
+        private final String headPicUrl;
 
         @Column(value = "room_number")
-        private Integer roomNumber;
+        private final Integer roomNumber;
 
         @Column(value = "check_in_time")
-        private LocalTime checkInTime;
+        private final LocalTime checkInTime;
 
         @Column(value = "check_out_time")
-        private LocalTime checkOutTime;
+        private final LocalTime checkOutTime;
+
+        @Column(value = "email")
+        private final String email;
+
+        @Column(value = "tel")
+        private final String tel;
 
     }
 }

@@ -1,4 +1,4 @@
-package com.eleven.hotel.application.service;
+package com.eleven.hotel.application.service.security;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

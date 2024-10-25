@@ -1,6 +1,7 @@
 package com.eleven.hotel.domain.model.plan;
 
 import com.eleven.core.data.AbstractEntity;
+import com.eleven.core.data.Audition;
 import com.eleven.core.domain.DomainUtils;
 import com.eleven.hotel.api.domain.core.HotelErrors;
 import com.eleven.hotel.api.domain.model.SaleState;
@@ -13,9 +14,7 @@ import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
 import com.eleven.hotel.domain.values.Price;
 import com.eleven.hotel.domain.values.Stock;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 import lombok.experimental.FieldNameConstants;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceCreator;
@@ -40,9 +39,6 @@ public class Plan extends AbstractEntity implements HotelAware, Sellable {
     @Column(value = "hotel_id")
     private final String hotelId;
 
-    @Column(value = "name")
-    private String name;
-
     @Column(value = "sale_type")
     private SaleType saleType;
 
@@ -64,8 +60,11 @@ public class Plan extends AbstractEntity implements HotelAware, Sellable {
     @Embedded.Empty
     private Stock stock;
 
+    @Embedded.Empty(prefix = "plan_")
+    private Description description;
+
     @Embedded.Empty
-    private PlanDesc desc;
+    private Audition audition = Audition.empty();
 
     private Plan(String id, String hotelId) {
         this.id = id;
@@ -73,19 +72,17 @@ public class Plan extends AbstractEntity implements HotelAware, Sellable {
         this.rooms = new HashSet<>();
     }
 
-    public static Plan createPlan(String id,
-                                  Hotel hotel,
-                                  String name,
-                                  Stock stock,
-                                  DateTimeRange sellPeriod,
-                                  DateRange stayPeriod,
-                                  PlanDesc desc) {
+    public static Plan of(String id,
+                          Hotel hotel,
+                          Stock stock,
+                          DateRange stayPeriod,
+                          DateTimeRange sellPeriod,
+                          Description description) {
 
         DomainUtils.must(stock.greaterTan(Stock.ZERO), () -> new IllegalArgumentException("total must gather than zero"));
 
         var plan = new Plan(id, hotel.getId());
-        plan.name = name;
-        plan.desc = desc;
+        plan.description = description;
         plan.stock = stock;
         plan.salePeriod = sellPeriod;
         plan.stayPeriod = stayPeriod;
@@ -144,4 +141,16 @@ public class Plan extends AbstractEntity implements HotelAware, Sellable {
         return this.getRooms().isEmpty();
     }
 
+    @Getter
+    @AllArgsConstructor
+    @FieldNameConstants
+    public static class Description {
+
+        @Column(value = "name")
+        private String name;
+
+        @Column(value = "desc")
+        private String desc;
+
+    }
 }

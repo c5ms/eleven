@@ -5,7 +5,7 @@ import com.eleven.core.command.CommandHandleException;
 import com.eleven.core.security.SecurityContext;
 import com.eleven.core.security.Subject;
 import com.eleven.core.web.annonation.AsMerchantApi;
-import com.eleven.hotel.api.application.view.HotelDto;
+import com.eleven.hotel.api.endpoint.model.HotelDto;
 import com.eleven.hotel.api.endpoint.internal.HotelClient;
 import com.eleven.upms.api.endpoint.UpmsClient;
 import lombok.RequiredArgsConstructor;

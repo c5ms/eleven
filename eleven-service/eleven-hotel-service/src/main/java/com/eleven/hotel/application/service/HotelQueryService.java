@@ -1,10 +1,9 @@
-package com.eleven.hotel.application.query.impl;
+package com.eleven.hotel.application.service;
 
 import com.eleven.core.data.Audition;
 import com.eleven.core.data.QuerySupport;
 import com.eleven.core.model.PageResult;
 import com.eleven.hotel.application.query.HotelQuery;
-import com.eleven.hotel.application.query.HotelQueryService;
 import com.eleven.hotel.domain.model.hotel.Hotel;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -12,14 +11,15 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.data.relational.core.query.Query;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class DefaultHotelQueryService implements HotelQueryService {
+@Transactional(readOnly = true)
+public class HotelQueryService {
 
     private final QuerySupport querySupport;
 
-    @Override
     public PageResult<Hotel> queryPage(HotelQuery query) {
         var criteria = Criteria.empty();
 

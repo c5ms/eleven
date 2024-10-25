@@ -1,7 +1,6 @@
-package com.eleven.hotel.application.service.impl;
+package com.eleven.hotel.application.service;
 
 import com.eleven.hotel.application.command.BookingCommand;
-import com.eleven.hotel.application.service.BookingService;
 import com.eleven.hotel.domain.model.booking.Booking;
 import com.eleven.hotel.domain.model.booking.BookingManager;
 import com.eleven.hotel.domain.model.booking.BookingRepository;
@@ -18,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional(rollbackFor = Exception.class)
-public class DefaultBookingService implements BookingService {
+public class BookingCommandService {
 
     private final PlanRepository planRepository;
     private final HotelRepository hotelRepository;
@@ -27,7 +26,6 @@ public class DefaultBookingService implements BookingService {
 
     private final BookingManager bookingManager;
 
-    @Override
     public Booking book(BookingCommand bookingCommand) {
         var plan = planRepository.requireById(bookingCommand.getPlanId());
         var hotel = hotelRepository.requireById(plan.getHotelId());

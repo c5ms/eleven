@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class HotelListener {
+public class HotelEventListener {
 
     @EventListener
     public void on(DomainEvent event) {
