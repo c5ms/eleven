@@ -1,7 +1,7 @@
 package com.eleven.hotel.application.convert;
 
 import com.eleven.hotel.api.application.view.RoomDto;
-import com.eleven.hotel.domain.model.hotel.Room;
+import com.eleven.hotel.domain.model.room.Room;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -16,22 +16,21 @@ public class RoomConvertor {
 
     public RoomDto toDto(Room room) {
         return new RoomDto()
-            .setId(room.getId())
-            .setChargeType(room.getChargeType())
-            .setSaleState(room.getSaleState())
-            .setName(room.getDesc().getName())
-            .setType(room.getDesc().getType())
-            .setCount(room.getStock().getCount())
-            .setDesc(room.getDesc().getDesc())
-            .setHeadPicUrl(room.getDesc().getHeadPicUrl())
-            .setMinPerson(room.getRestrict().getMinPerson())
-            .setMaxPerson(room.getRestrict().getMaxPerson())
-            ;
+                .setId(room.getId())
+                .setChargeType(room.getChargeType())
+                .setSaleState(room.getSaleState())
+                .setName(room.getDescription().name())
+                .setType(room.getDescription().type())
+                .setDesc(room.getDescription().desc())
+                .setHeadPicUrl(room.getDescription().headPicUrl())
+                .setMinPerson(room.getRestriction().minPerson())
+                .setMaxPerson(room.getRestriction().maxPerson())
+                ;
     }
 
     public List<RoomDto> toDto(List<Room> rooms) {
         return rooms.stream()
-            .map(this::toDto)
-            .collect(Collectors.toList());
+                .map(this::toDto)
+                .collect(Collectors.toList());
     }
 }

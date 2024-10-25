@@ -7,7 +7,7 @@ import com.eleven.hotel.api.endpoint.request.HotelRegisterRequest;
 import com.eleven.hotel.application.command.HotelRegisterCommand;
 import com.eleven.hotel.application.convert.HotelConvertor;
 import com.eleven.hotel.application.service.RegisterService;
-import com.eleven.hotel.domain.model.hotel.Admin;
+import com.eleven.hotel.domain.model.admin.Admin;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -32,10 +32,10 @@ public class RegisterMerchantApi {
     @PostMapping
     public RegisterDto register(@RequestBody @Validated HotelRegisterRequest request) {
         var command = HotelRegisterCommand.builder()
-            .adminContact(Admin.Contact.of(request.getAdminName(), request.getAdminEmail(), request.getAdminTel()))
-            .hotelName(request.getHotelName())
-            .hotelAddress(request.getHotelAddress())
-            .build();
+                .adminContact(Admin.Contact.of(request.getAdminName(), request.getAdminEmail(), request.getAdminTel()))
+                .hotelName(request.getHotelName())
+                .hotelAddress(request.getHotelAddress())
+                .build();
         var register = registerService.register(command);
         return hotelConvertor.entities.toDto(register);
     }

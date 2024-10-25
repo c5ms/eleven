@@ -8,7 +8,7 @@ import com.eleven.hotel.api.domain.model.SaleType;
 import com.eleven.hotel.domain.core.HotelAware;
 import com.eleven.hotel.domain.core.Sellable;
 import com.eleven.hotel.domain.model.hotel.Hotel;
-import com.eleven.hotel.domain.model.hotel.Room;
+import com.eleven.hotel.domain.model.room.Room;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
 import com.eleven.hotel.domain.values.Price;

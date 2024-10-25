@@ -1,7 +1,7 @@
 package com.eleven.hotel.domain.model.booking;
 
-import com.eleven.core.domain.DomainUtils;
 import com.eleven.core.domain.DomainError;
+import com.eleven.core.domain.DomainUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
 package com.eleven.hotel.application.command;
 
-import com.eleven.hotel.domain.model.hotel.Admin;
+import com.eleven.hotel.domain.model.admin.Admin;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;

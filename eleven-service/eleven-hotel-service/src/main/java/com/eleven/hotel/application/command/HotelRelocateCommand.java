@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class HotelRelocateCommand  {
+public class HotelRelocateCommand {
     private String hotelId;
     private Hotel.Position position;
 }

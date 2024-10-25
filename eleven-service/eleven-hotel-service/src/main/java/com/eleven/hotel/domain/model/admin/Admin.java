@@ -1,6 +1,7 @@
-package com.eleven.hotel.domain.model.hotel;
+package com.eleven.hotel.domain.model.admin;
 
 import com.eleven.core.data.AbstractEntity;
+import com.eleven.hotel.domain.model.hotel.Hotel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -52,8 +53,8 @@ public class Admin extends AbstractEntity {
         @Column(value = "tel")
         private String tel;
 
-        public static Contact of(String name ,String email, String tel) {
-            return new Contact(name,email, tel);
+        public static Contact of(String name, String email, String tel) {
+            return new Contact(name, email, tel);
         }
     }
 }

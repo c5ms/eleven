@@ -1,7 +1,6 @@
 package com.eleven.hotel.application.service.impl;
 
 import com.eleven.core.application.ApplicationUtils;
-import com.eleven.core.domain.DomainUtils;
 import com.eleven.hotel.api.application.event.HotelUpdatedEvent;
 import com.eleven.hotel.application.command.HotelCloseCommand;
 import com.eleven.hotel.application.command.HotelOpenCommand;
@@ -26,7 +25,7 @@ class DefaultHotelService implements HotelService {
     @Override
     public void update(HotelUpdateCommand command) {
         var hotel = hotelRepository.requireById(command.getHotelId());
-        hotel.update(command.getDesc());
+        hotel.update(command.getDescription());
         hotel.update(command.getContact());
         hotelManager.validate(hotel);
         hotelRepository.save(hotel);

@@ -24,12 +24,6 @@ public class RoomUpdateRequest {
 
     private String headPicUrl;
 
-    @NotNull
-    @Min(1)
-    private Integer count;
-
-
-
     @Min(1)
     @Max(5)
     private Integer minPerson;

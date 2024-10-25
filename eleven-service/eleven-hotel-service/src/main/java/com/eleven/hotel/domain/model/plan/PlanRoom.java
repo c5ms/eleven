@@ -1,8 +1,6 @@
 package com.eleven.hotel.domain.model.plan;
 
-import com.eleven.core.domain.DomainUtils;
-import com.eleven.hotel.api.domain.core.HotelErrors;
-import com.eleven.hotel.domain.model.hotel.Room;
+import com.eleven.hotel.domain.model.room.Room;
 import com.eleven.hotel.domain.values.Price;
 import com.eleven.hotel.domain.values.Stock;
 import lombok.AllArgsConstructor;
@@ -19,7 +17,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Getter
 @FieldNameConstants
 @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
-public class PlanRoom  {
+public class PlanRoom {
 
     @Column("hotel_id")
     private final String hotelId;
@@ -43,8 +41,6 @@ public class PlanRoom  {
     }
 
     static PlanRoom create(Plan plan, Room room, Stock stock, Price price) {
-        DomainUtils.mustNot(stock.greaterTan(room.getStock()), HotelErrors.PLAN_NO_SO_MUCH_ROOM);
-
         if (stock.isZero()) {
             log.info("current stock is zero, the room can not be on sale");
         }

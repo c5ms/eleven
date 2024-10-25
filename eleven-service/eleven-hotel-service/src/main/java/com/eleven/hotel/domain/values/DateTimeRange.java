@@ -23,8 +23,8 @@ public class DateTimeRange implements Effectiveness {
     private final LocalDateTime end;
 
     public DateTimeRange() {
-            this.start = null;
-            this.end = null;
+        this.start = null;
+        this.end = null;
     }
 
     private DateTimeRange(LocalDateTime start, LocalDateTime end) {
@@ -66,7 +66,7 @@ public class DateTimeRange implements Effectiveness {
     }
 
     public boolean overlap(DateTimeRange range) {
-        if(this.isEmpty() || range.isEmpty()){
+        if (this.isEmpty() || range.isEmpty()) {
             return false;
         }
         var start1 = this.getStart();

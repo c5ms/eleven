@@ -12,7 +12,6 @@ import com.eleven.hotel.application.command.HotelUpdateCommand;
 import com.eleven.hotel.application.convert.HotelConvertor;
 import com.eleven.hotel.application.service.HotelService;
 import com.eleven.hotel.domain.model.hotel.Hotel;
-import com.eleven.hotel.domain.model.hotel.Desc;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -47,7 +46,7 @@ public class HotelMerchantApi {
     public void update(@PathVariable("hotelId") String hotelId, @RequestBody @Validated HotelUpdateRequest request) {
         var command = HotelUpdateCommand.builder()
                 .hotelId(hotelId)
-                .desc(Desc.builder()
+                .description(Hotel.Description.builder()
                         .description(request.getDescription())
                         .roomNumber(request.getRoomNumber())
                         .headPicUrl(request.getHeadPicUrl())

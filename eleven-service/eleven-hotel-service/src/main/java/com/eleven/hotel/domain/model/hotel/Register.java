@@ -5,6 +5,7 @@ import com.eleven.core.domain.DomainUtils;
 import com.eleven.hotel.api.domain.core.HotelErrors;
 import com.eleven.hotel.api.domain.model.RegisterState;
 import com.eleven.hotel.domain.core.HotelAware;
+import com.eleven.hotel.domain.model.admin.Admin;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
@@ -43,7 +44,7 @@ public class Register extends AbstractEntity implements HotelAware {
         this.state = RegisterState.UNDER_REVIEW;
     }
 
-    public static Register create(String id, String hotelName, String hotelAddress,  Admin.Contact managerContact) {
+    public static Register create(String id, String hotelName, String hotelAddress, Admin.Contact managerContact) {
         var register = new Register(id);
         register.hotelName = hotelName;
         register.hotelAddress = hotelAddress;

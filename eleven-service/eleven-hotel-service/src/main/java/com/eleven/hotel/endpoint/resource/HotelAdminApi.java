@@ -5,9 +5,9 @@ import com.eleven.core.web.annonation.AsAdminApi;
 import com.eleven.hotel.api.application.view.HotelDto;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.request.HotelQueryRequest;
-import com.eleven.hotel.application.command.HotelQueryFilter;
+import com.eleven.hotel.application.query.HotelQuery;
 import com.eleven.hotel.application.convert.HotelConvertor;
-import com.eleven.hotel.application.service.HotelQueries;
+import com.eleven.hotel.application.query.HotelQueryService;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,7 +30,7 @@ public class HotelAdminApi {
 
     private final HotelConvertor hotelConvertor;
     private final HotelRepository hotelRepository;
-    private final HotelQueries hotelQueries;
+    private final HotelQueryService hotelQueryService;
 
     @Operation(summary = "read hotel")
     @GetMapping("/{hotelId}")
@@ -41,10 +41,10 @@ public class HotelAdminApi {
     @Operation(summary = "query hotel")
     @GetMapping
     public PageResult<HotelDto> queryHotel(@ParameterObject @Validated HotelQueryRequest request) {
-        var command = HotelQueryFilter.builder()
+        var command = HotelQuery.builder()
                 .hotelName(request.getHotelName())
                 .build();
-        return hotelQueries.queryPage(command).map(hotelConvertor.entities::toDto);
+        return hotelQueryService.queryPage(command).map(hotelConvertor.entities::toDto);
     }
 
 }

@@ -15,7 +15,6 @@ import lombok.experimental.Accessors;
 public class RoomDto {
     private String id;
     private String name;
-    private Integer count;
     private RoomType type;
     private SaleState saleState;
     private ChargeType chargeType;

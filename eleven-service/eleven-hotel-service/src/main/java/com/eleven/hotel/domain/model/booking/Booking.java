@@ -5,8 +5,8 @@ import com.eleven.hotel.api.domain.core.HotelErrors;
 import com.eleven.hotel.domain.model.coupon.Coupon;
 import com.eleven.hotel.domain.model.coupon.CouponCalculator;
 import com.eleven.hotel.domain.model.hotel.Hotel;
-import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.model.plan.Plan;
+import com.eleven.hotel.domain.model.room.Room;
 import com.eleven.hotel.domain.model.traveler.Traveler;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.Price;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @Table(name = "booking")
 @Getter
 @FieldNameConstants
-public class Booking extends AbstractEntity  {
+public class Booking extends AbstractEntity {
 
     @Id
     @Column("booking_id")

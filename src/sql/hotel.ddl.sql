@@ -43,7 +43,7 @@ create table hotel.plan
             references hotel.hotel
             on delete cascade,
     name                varchar(100),
-    "desc"              varchar(255),
+    "description"              varchar(255),
     count               integer,
     sale_type           varchar(20),
     sale_state          varchar(20),
@@ -123,7 +123,7 @@ create table hotel.room
             references hotel.hotel
             on delete cascade,
     name       varchar(100),
-    "desc"     varchar(255),
+    "description"     varchar(255),
     size       varchar(20),
     count      integer,
     sale_state varchar(20)

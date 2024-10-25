@@ -1,4 +1,4 @@
-package com.eleven.hotel.domain.model.hotel;
+package com.eleven.hotel.domain.model.room;
 
 import com.eleven.core.data.AbstractEntity;
 import com.eleven.core.data.Audition;
@@ -7,23 +7,24 @@ import com.eleven.hotel.api.domain.model.RoomType;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.domain.core.HotelAware;
 import com.eleven.hotel.domain.core.Sellable;
-import com.eleven.hotel.domain.values.Stock;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
 import org.apache.commons.lang3.Validate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceCreator;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Embedded;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table(name = "room")
 @Getter
 @FieldNameConstants
+@Table(name = Room.TABLE_NAME)
 @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
 public class Room extends AbstractEntity implements HotelAware, Sellable {
+
+    public static final String TABLE_NAME = "room";
 
     @Id
     private final String id;
@@ -37,30 +38,26 @@ public class Room extends AbstractEntity implements HotelAware, Sellable {
     @Column(value = "charge_type")
     private ChargeType chargeType;
 
-    @Embedded.Empty(prefix = "stock_")
-    private Stock stock;
-
     @Embedded.Empty(prefix = "room_")
-    private Desc desc;
+    private Description description;
 
     @Embedded.Empty(prefix = "restrict_")
-    private Restrict restrict;
+    private Restriction restriction;
+
+    @Version
+    private Integer version;
 
     @Embedded.Empty
     private Audition audition = Audition.empty();
 
-    @Builder
-    public Room(String roomId, String hotelId, Desc desc, Stock stock, ChargeType chargeType, Restrict restrict) {
-        Validate.isTrue(stock.greaterTan(Stock.ZERO), "stock must gather than zero");
-        this.id = roomId;
+    public Room(String id, String hotelId, Description description, Restriction restriction, ChargeType chargeType) {
+        this.id = id;
         this.hotelId = hotelId;
-        this.stock = stock;
-        this.desc = desc;
+        this.description = description;
         this.chargeType = chargeType;
+        this.restriction = restriction;
         this.saleState = SaleState.STOPPED;
-        this.restrict = restrict;
     }
-
 
     @Override
     public void startSale() {
@@ -82,47 +79,25 @@ public class Room extends AbstractEntity implements HotelAware, Sellable {
         return saleState.isOnSale();
     }
 
-    public void update(Desc desc) {
-        this.desc = desc;
-    }
-
-    public void update(ChargeType chargeType) {
+    public void update(ChargeType chargeType, Description description, Restriction restriction) {
         this.chargeType = chargeType;
+        this.description = description;
+        this.restriction = restriction;
     }
 
-    public void update(Restrict restrict) {
-        this.restrict = restrict;
+    public record Description(@Column(value = "name") String name,
+                              @Column(value = "desc") String desc,
+                              @Column(value = "pic_url") String headPicUrl,
+                              @Column(value = "type") RoomType type) {
     }
 
-    @Getter
-    @Builder
-    public static class Desc {
-
-        @Column(value = "name")
-        private String name;
-
-        @Column(value = "desc")
-        private String desc;
-
-        @Column(value = "pic_url")
-        private String headPicUrl;
-
-        @Column(value = "type")
-        private RoomType type;
+    public record Restriction(@Column(value = "max_person") Integer maxPerson,
+                              @Column(value = "min_person") Integer minPerson) {
+        public Restriction {
+            Validate.notNull(maxPerson, "max person must not null");
+            Validate.notNull(minPerson, "min person must not null");
+            Validate.isTrue(maxPerson > minPerson, "max person must be greater than min");
+        }
     }
-
-
-    @Getter
-    @Builder
-    public static class Restrict {
-
-        @Column(value = "max_person")
-        private Integer maxPerson;
-
-        @Column(value = "min_person")
-        private Integer minPerson;
-
-    }
-
 
 }

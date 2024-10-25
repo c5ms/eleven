@@ -19,6 +19,8 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Embedded;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.time.LocalTime;
+
 
 @Table(name = "hotel")
 @Getter
@@ -42,7 +44,7 @@ public class Hotel extends AbstractEntity implements Sellable {
     private Contact contact;
 
     @Embedded.Empty(prefix = "hotel_")
-    private Desc desc;
+    private Description description;
 
     @Embedded.Empty
     private Audition audition = Audition.empty();
@@ -58,8 +60,8 @@ public class Hotel extends AbstractEntity implements Sellable {
         return hotel;
     }
 
-    public void update(Desc detail) {
-        this.desc = detail;
+    public void update(Description detail) {
+        this.description = detail;
     }
 
     public void update(Contact contact) {
@@ -136,6 +138,28 @@ public class Hotel extends AbstractEntity implements Sellable {
 
         @Column(value = "lng")
         private Double lng;
+
+    }
+
+    @Getter
+    @Builder
+    @FieldNameConstants
+    public static class Description {
+
+        @Column(value = "description")
+        private String description;
+
+        @Column(value = "head_pic_url")
+        private String headPicUrl;
+
+        @Column(value = "room_number")
+        private Integer roomNumber;
+
+        @Column(value = "check_in_time")
+        private LocalTime checkInTime;
+
+        @Column(value = "check_out_time")
+        private LocalTime checkOutTime;
 
     }
 }

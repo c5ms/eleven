@@ -1,4 +1,4 @@
-package com.eleven.hotel.domain.model.hotel;
+package com.eleven.hotel.domain.model.room;
 
 import com.eleven.core.data.DomainRepository;
 import org.springframework.data.jdbc.repository.query.Query;

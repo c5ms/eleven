@@ -1,7 +1,7 @@
 package com.eleven.hotel.domain.model.plan;
 
-import com.eleven.core.domain.DomainUtils;
 import com.eleven.core.domain.DomainError;
+import com.eleven.core.domain.DomainUtils;
 import com.eleven.hotel.domain.model.plan.validate.PlanNameValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

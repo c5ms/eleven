@@ -16,7 +16,6 @@ public interface HotelErrors {
     DomainError PLAN_NAME_REPEAT = SimpleDomainError.of("repeated_plan_name", "the plan is existing with given name");
     DomainError PLAN_NO_ROOM = SimpleDomainError.of("plan_has_no_room", "the plan has no room");
     DomainError PLAN_PRE_SALE_NOT_BEFORE_SALE = SimpleDomainError.of("pre_sale_not_before_sale", "the per-sale period must before sale period");
-    DomainError PLAN_NO_SO_MUCH_ROOM = SimpleDomainError.of("no_so_much_room", "the room has no too much stock");
 
     DomainError BOOKING_NO_SUCH_PLAN = SimpleDomainError.of("no_such_plan", "No such plan can be booked");
     DomainError BOOKING_NO_SUCH_ROOM = SimpleDomainError.of("no_such_plan", "No such room can be booked");

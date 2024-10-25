@@ -1,6 +1,8 @@
 package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.core.domain.DomainUtils;
+import com.eleven.hotel.domain.model.admin.Admin;
+import com.eleven.hotel.domain.model.admin.AdminRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,16 +14,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HotelManager {
 
-    private final List<RoomValidator> roomValidators;
+
     private final List<HotelValidator> hotelValidators;
 
     private final HotelRepository hotelRepository;
     private final AdminRepository adminRepository;
     private final RegisterRepository registerRepository;
 
-    public String nextRoomId() {
-        return DomainUtils.nextId();
-    }
 
     public Hotel accept(Register register) {
         var hotel = Hotel.create(DomainUtils.nextId(), register);
@@ -49,10 +48,6 @@ public class HotelManager {
 
     public void validate(Hotel hotel) {
         hotelValidators.forEach(validator -> validator.validate(hotel));
-    }
-
-    public void validate(Room room) {
-        roomValidators.forEach(roomValidator -> roomValidator.validate(room));
     }
 
 

@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @Builder
 @FieldNameConstants
 public class Audition {
-    private static final Audition EMPTY = builder().build();
 
     @CreatedBy
     @Column("create_by")
@@ -34,7 +33,7 @@ public class Audition {
     LocalDateTime updateAt;
 
     public static Audition empty() {
-        return EMPTY;
+        return Audition.builder().build();
     }
 
 }

@@ -1,4 +1,4 @@
-package com.eleven.hotel.domain.model.hotel;
+package com.eleven.hotel.domain.model.admin;
 
 import com.eleven.core.data.DomainRepository;
 
