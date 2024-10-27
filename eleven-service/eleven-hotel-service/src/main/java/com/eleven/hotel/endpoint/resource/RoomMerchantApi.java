@@ -1,5 +1,7 @@
 package com.eleven.hotel.endpoint.resource;
 
+import com.eleven.core.application.ApplicationContext;
+import com.eleven.core.application.security.NoPermissionException;
 import com.eleven.core.web.annonation.AsMerchantApi;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.model.RoomDto;
@@ -9,7 +11,6 @@ import com.eleven.hotel.application.command.RoomCreateCommand;
 import com.eleven.hotel.application.command.RoomDeleteCommand;
 import com.eleven.hotel.application.command.RoomUpdateCommand;
 import com.eleven.hotel.application.service.RoomCommandService;
-import com.eleven.hotel.domain.model.hotel.HotelNotFoundException;
 import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.model.hotel.RoomRepository;
 import com.eleven.hotel.endpoint.convert.RoomConvertor;
@@ -46,12 +47,12 @@ public class RoomMerchantApi {
     @Operation(summary = "read room")
     @GetMapping("/{roomId}")
     public Optional<RoomDto> readRoom(@PathVariable("hotelId") String hotelId, @PathVariable("roomId") String roomId) {
-        return roomRepository.findByHotelIdAndRoomId(hotelId,roomId).map(roomConvertor::toDto);
+        return roomRepository.findByHotelIdAndRoomId(hotelId, roomId).map(roomConvertor::toDto);
     }
 
     @Operation(summary = "create room")
     @PostMapping
-    public RoomDto createRoom(@PathVariable("hotelId") String hotelId, @RequestBody @Validated RoomCreateRequest request)  {
+    public RoomDto createRoom(@PathVariable("hotelId") String hotelId, @RequestBody @Validated RoomCreateRequest request) {
         var command = RoomCreateCommand.builder()
             .hotelId(hotelId)
             .description(new Room.Description(request.getName(), request.getType(), request.getDesc(), request.getHeadPicUrl()))
@@ -81,6 +82,10 @@ public class RoomMerchantApi {
     @Operation(summary = "delete room")
     @DeleteMapping("/{roomId}")
     public void deleteRoom(@PathVariable("hotelId") String hotelId, @PathVariable("roomId") String roomId) {
+        roomRepository.findByHotelIdAndRoomId(hotelId, roomId)
+            .filter(ApplicationContext::isAccessible)
+            .orElseThrow(ApplicationContext::noAccessPermission);
+
         var command = RoomDeleteCommand.builder()
             .hotelId(hotelId)
             .roomId(roomId)

@@ -1,6 +1,6 @@
 package com.eleven.hotel.application.listener;
 
-import com.eleven.core.event.ApplicationEventDispatcher;
+import com.eleven.core.application.event.ApplicationEventDispatcher;
 import com.rabbitmq.client.Channel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

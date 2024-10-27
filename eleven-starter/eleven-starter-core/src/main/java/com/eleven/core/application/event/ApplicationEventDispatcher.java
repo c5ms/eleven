@@ -1,4 +1,4 @@
-package com.eleven.core.event;
+package com.eleven.core.application.event;
 
 import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.json.JSONUtil;

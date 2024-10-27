@@ -1,4 +1,4 @@
-package com.eleven.core.event;
+package com.eleven.core.application.event;
 
 public class ApplicationEventSerializeException extends Exception {
 

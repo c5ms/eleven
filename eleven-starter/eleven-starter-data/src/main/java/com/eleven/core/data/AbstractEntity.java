@@ -1,6 +1,6 @@
 package com.eleven.core.data;
 
-import com.eleven.core.event.DomainEvent;
+import com.eleven.core.domain.DomainEvent;
 import lombok.experimental.FieldNameConstants;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.AfterDomainEventPublication;

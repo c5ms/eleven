@@ -2,6 +2,7 @@ package com.eleven.core.web;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
 import com.eleven.core.application.command.CommandHandleException;
+import com.eleven.core.application.security.NoPermissionException;
 import com.eleven.core.domain.DomainErrors;
 import com.eleven.core.domain.DomainException;
 import com.eleven.core.domain.NoEntityFoundException;
@@ -44,8 +45,6 @@ public class ElevenExceptionAdvice {
         //400 - payload
         if (e instanceof CommandHandleException) {
             status = HttpStatus.BAD_REQUEST;
-        } else if (e instanceof NoEntityFoundException) {
-            status = HttpStatus.BAD_REQUEST;
         } else if (e instanceof HttpMessageConversionException) {
             var problem = Problem.of(DomainErrors.ERROR_REQUEST_BODY_FAILED);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
@@ -78,6 +77,8 @@ public class ElevenExceptionAdvice {
         else if (e instanceof NoHandlerFoundException) {
             status = HttpStatus.NOT_FOUND;
         } else if (e instanceof NoResourceFoundException) {
+            status = HttpStatus.NOT_FOUND;
+        } else if (e instanceof NoPermissionException) {
             status = HttpStatus.NOT_FOUND;
         }
 

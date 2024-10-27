@@ -1,6 +1,6 @@
 package com.eleven.hotel.endpoint.message;
 
-import com.eleven.core.event.ApplicationEventMessageSender;
+import com.eleven.core.application.event.ApplicationEventMessageSender;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
