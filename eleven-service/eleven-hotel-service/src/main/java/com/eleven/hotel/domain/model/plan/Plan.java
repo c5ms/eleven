@@ -2,13 +2,12 @@ package com.eleven.hotel.domain.model.plan;
 
 import com.eleven.core.data.AbstractEntity;
 import com.eleven.core.data.Audition;
-import com.eleven.core.domain.DomainUtils;
+import com.eleven.core.domain.DomainContext;
 import com.eleven.hotel.api.domain.core.HotelErrors;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
-import com.eleven.hotel.domain.core.HotelAware;
 import com.eleven.hotel.domain.core.Sellable;
-import com.eleven.hotel.domain.model.room.Room;
+import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
 import com.eleven.hotel.domain.values.Price;
@@ -36,14 +35,21 @@ import static com.eleven.hotel.domain.model.plan.Plan.TABLE_NAME;
 @Getter
 @FieldNameConstants
 @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}), access = AccessLevel.PROTECTED)
-public class Plan extends AbstractEntity implements HotelAware, Sellable {
+public class Plan extends AbstractEntity implements Sellable {
     public static final String TABLE_NAME = "plan";
+    public static final String DOMAIN_NAME = "Plan";
 
     @Id
     private final String id;
 
     @Column(value = "hotel_id")
     private final String hotelId;
+
+    @Column(value = "plan_id")
+    private final String planId;
+
+    @MappedCollection(idColumn = "plan_id")
+    private final Set<PlanRoom> rooms;
 
     @Column(value = "sale_type")
     private SaleType saleType;
@@ -60,9 +66,6 @@ public class Plan extends AbstractEntity implements HotelAware, Sellable {
     @Embedded.Empty(prefix = "stay_")
     private DateRange stayPeriod;
 
-    @MappedCollection(idColumn = "plan_id")
-    private final Set<PlanRoom> rooms;
-
     @Embedded.Empty(prefix = "stock_")
     private Stock stock;
 
@@ -72,16 +75,17 @@ public class Plan extends AbstractEntity implements HotelAware, Sellable {
     @Embedded.Empty
     private Audition audition = Audition.empty();
 
-    private Plan(String id, String hotelId) {
-        this.id = id;
+    private Plan(String hotelId, String planId) {
+        this.id = DomainContext.nextId();
         this.hotelId = hotelId;
+        this.planId = planId;
         this.rooms = new HashSet<>();
     }
 
     @SuppressWarnings("unused")
     @Builder(builderClassName = "normalBuilder", builderMethodName = "normal", buildMethodName = "create")
-    public static Plan createNormal(String id,
-                                    String hotelId,
+    public static Plan createNormal(String hotelId,
+                                    String planId,
                                     Stock stock,
                                     DateRange stayPeriod,
                                     DateTimeRange sellPeriod,
@@ -92,7 +96,7 @@ public class Plan extends AbstractEntity implements HotelAware, Sellable {
         Validate.notNull(stock, "stock must not be null");
         Validate.isTrue(stock.greaterTan(Stock.ZERO), "total must gather than zero");
 
-        var plan = new Plan(id, hotelId);
+        var plan = new Plan(hotelId,planId);
         plan.stock = stock;
         plan.salePeriod = sellPeriod;
         plan.stayPeriod = stayPeriod;
@@ -110,7 +114,7 @@ public class Plan extends AbstractEntity implements HotelAware, Sellable {
 
     @Override
     public void startSale() {
-        DomainUtils.must(hasRoom(), HotelErrors.PLAN_NO_ROOM);
+        DomainContext.must(hasRoom(), HotelErrors.PLAN_NO_ROOM);
         this.saleState = SaleState.STARTED;
     }
 
@@ -134,7 +138,7 @@ public class Plan extends AbstractEntity implements HotelAware, Sellable {
     }
 
     public void preSale(DateTimeRange preSellPeriod) {
-        DomainUtils.must(preSellPeriod.isBefore(this.salePeriod), HotelErrors.PLAN_PRE_SALE_NOT_BEFORE_SALE);
+        DomainContext.must(preSellPeriod.isBefore(this.salePeriod), HotelErrors.PLAN_PRE_SALE_NOT_BEFORE_SALE);
 
         this.preSalePeriod = preSellPeriod;
     }

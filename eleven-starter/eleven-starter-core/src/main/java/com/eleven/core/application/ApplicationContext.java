@@ -6,7 +6,7 @@ import com.eleven.core.event.DomainEvent;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class ApplicationUtils {
+public class ApplicationContext {
 
     public void publishEvent(DomainEvent domainEvent) {
         SpringUtil.publishEvent(domainEvent);

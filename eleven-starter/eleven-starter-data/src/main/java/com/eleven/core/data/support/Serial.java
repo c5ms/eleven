@@ -1,9 +1,11 @@
 package com.eleven.core.data.support;
 
-import com.eleven.core.domain.DomainUtils;
+import com.eleven.core.data.AbstractEntity;
+import com.eleven.core.domain.DomainContext;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceCreator;
@@ -17,11 +19,11 @@ import org.springframework.data.relational.core.mapping.Table;
 import java.io.Serializable;
 import java.util.concurrent.atomic.LongAdder;
 
-@Table(name = "sys_serial")
+@Table(name = "infra_serial")
 @Getter
 @FieldNameConstants
 @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
-public class Serial implements Serializable {
+public class Serial extends AbstractEntity implements Serializable {
 
     @Transient
     private final LongAdder usedTimes = new LongAdder();
@@ -35,6 +37,7 @@ public class Serial implements Serializable {
     @Column("start_val")
     private Integer startVal;
 
+    @Setter
     @Column("step")
     private Integer step;
 
@@ -55,13 +58,13 @@ public class Serial implements Serializable {
         return this.startVal + usedTimes.longValue();
     }
 
-    public static Key keyOf(String id, String item) {
-        return new Key(id, item);
+    public static Key keyOf(String group, String item) {
+        return new Key(group, item);
     }
 
-    public static Serial create(Key key, int maxVal, int step) {
-        var id = DomainUtils.nextId();
-        return new Serial(id, key, maxVal, step, 0);
+    public static Serial create(Key key, int startVal, int step) {
+        var id = DomainContext.nextId();
+        return new Serial(id, key, startVal, step, 0);
     }
 
 

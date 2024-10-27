@@ -15,6 +15,6 @@ public class HotelSecurityConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(merchantApiInterceptor)
-                .addPathPatterns(WebConstants.API_PREFIX_MERCHANT + "/**");
+            .addPathPatterns(WebConstants.API_PREFIX_MERCHANT + "/**");
     }
 }

@@ -1,10 +1,10 @@
 package com.eleven.core.data.support;
 
-import com.eleven.core.data.DomainRepository;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
-public interface SerialRepository extends DomainRepository<Serial, String> {
+public interface SerialRepository extends CrudRepository<Serial, String> {
 
     Optional<Serial> findByKey(Serial.Key key);
 

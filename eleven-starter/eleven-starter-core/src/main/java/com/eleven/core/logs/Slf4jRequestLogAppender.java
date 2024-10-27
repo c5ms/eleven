@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import net.logstash.logback.marker.LogstashMarker;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -46,22 +47,36 @@ public class Slf4jRequestLogAppender implements RequestLogAppender {
             logger = LoggerFactory.getLogger(RequestLogContext.getHandler());
         }
 
-        // error 的时候 一定输出日志
-        if (exception.isPresent()) {
-            logger.error(marker, "【{}】执行【{}】处理错误 : {}", subject.getNickName(), requestLog.getOperate(), ExceptionUtils.getRootCauseMessage(exception.get()), exception.get());
-            return;
+        var status = HttpStatus.valueOf(requestLog.getResponse().getStatus());
+
+        if (status.is5xxServerError()) {
+            if (logger.isErrorEnabled()) {
+                if (exception.isPresent()) {
+                    logger.error(marker, "【{}】执行【{}】处理错误 : {}", subject.getNickName(), requestLog.getOperate(), ExceptionUtils.getRootCauseMessage(exception.get()), exception.get());
+                    return;
+                }
+            }
         }
 
+        if (status.is4xxClientError()) {
+            if (logger.isDebugEnabled()) {
+                if (exception.isPresent()) {
+                    logger.warn(marker, "【{}】执行【{}】处理失败 : {}", subject.getNickName(), requestLog.getOperate(), ExceptionUtils.getRootCauseMessage(exception.get()),exception.get());
+                    return;
+                }
+            }
 
-        // 要求持久化的时候，使用 info 输出
-        if (RequestLogContext.isDurable()) {
+            if (logger.isWarnEnabled()) {
+                if (exception.isPresent()) {
+                    logger.warn(marker, "【{}】执行【{}】处理失败 : {}", subject.getNickName(), requestLog.getOperate(), ExceptionUtils.getRootCauseMessage(exception.get()));
+                    return;
+                }
+            }
+        }
+
+        if (logger.isInfoEnabled()) {
             logger.info(marker, "【{}】执行【{}】处理成功", subject.getNickName(), requestLog.getOperate());
         }
 
-        // 否则根据是否开启了 trace 级别打印
-        else if (logger.isTraceEnabled()) {
-            // trace 模式全部打印
-            logger.trace(marker, "【{}】执行【{}】处理成功", subject.getNickName(), requestLog.getOperate());
-        }
     }
 }

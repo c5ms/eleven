@@ -37,7 +37,6 @@ import java.util.Optional;
 @RequestMapping(HotelEndpoints.Paths.PLAN)
 public class PlanMerchantApi {
 
-
     private final PlanRepository planRepository;
     private final PlanConvertor planConvertor;
 

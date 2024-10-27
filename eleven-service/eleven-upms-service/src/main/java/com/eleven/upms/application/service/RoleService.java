@@ -1,6 +1,6 @@
 package com.eleven.upms.application.service;
 
-import com.eleven.core.domain.DomainUtils;
+import com.eleven.core.domain.DomainContext;
 import com.eleven.upms.api.application.command.RoleCreateCommand;
 import com.eleven.upms.api.application.command.RoleUpdateCommand;
 import com.eleven.upms.api.application.model.RoleDetail;
@@ -46,7 +46,7 @@ public class RoleService {
     @Transactional(rollbackFor = Exception.class)
     public RoleDetail createRole(RoleCreateCommand action) {
         var role = Role.builder()
-            .id(DomainUtils.nextId())
+            .id(DomainContext.nextId())
             .code(action.getCode())
             .name(action.getName())
             .build();

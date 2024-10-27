@@ -1,6 +1,6 @@
 package com.eleven.hotel.domain.model.booking;
 
-import com.eleven.core.data.DomainRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface BookingRepository extends DomainRepository<Booking, String> {
+public interface BookingRepository extends CrudRepository<Booking, String> {
 }

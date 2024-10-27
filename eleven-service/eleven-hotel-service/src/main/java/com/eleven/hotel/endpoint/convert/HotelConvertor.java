@@ -17,38 +17,38 @@ public class HotelConvertor {
 
     public RegisterDto toDto(Register register) {
         return new RegisterDto()
-                .setId(register.getId())
-                .setHotelName(register.getHotelName())
-                .setHotelAddress(register.getHotelAddress())
-                .setAdminName(register.getManagerContact().getName())
-                .setAdminEmail(register.getManagerContact().getEmail())
-                .setAdminTel(register.getManagerContact().getTel())
-                .setState(register.getState());
+            .setRegisterID(register.getRegisterId())
+            .setHotelName(register.getHotel().getName())
+            .setHotelAddress(register.getHotel().getAddress())
+            .setAdminName(register.getAdmin().getName())
+            .setAdminEmail(register.getAdmin().getEmail())
+            .setAdminTel(register.getAdmin().getTel())
+            .setState(register.getState());
     }
 
     public HotelDto toDto(Hotel hotel) {
         return new HotelDto()
-                .setId(hotel.getId())
-                .setState(hotel.getSaleState())
-                .setName(hotel.getName())
+            .setHotelId(hotel.getHotelId())
+            .setState(hotel.getSaleState())
 
-                .setDescription(hotel.getDescription().getDescription())
-                .setRoomNumber(hotel.getDescription().getRoomNumber())
-                .setHeadPicUrl(hotel.getDescription().getHeadPicUrl())
-                .setCheckIn(hotel.getDescription().getCheckInTime())
-                .setCheckOut(hotel.getDescription().getCheckOutTime())
+            .setName(hotel.getDescription().getName())
+            .setDescription(hotel.getDescription().getDescription())
+            .setRoomNumber(hotel.getDescription().getRoomNumber())
+            .setHeadPicUrl(hotel.getDescription().getHeadPicUrl())
+            .setCheckIn(hotel.getDescription().getCheckInTime())
+            .setCheckOut(hotel.getDescription().getCheckOutTime())
 
-                .setTel(hotel.getDescription().getTel())
-                .setEmail(hotel.getDescription().getEmail())
+            .setTel(hotel.getDescription().getTel())
+            .setEmail(hotel.getDescription().getEmail())
 
-                .setProvince(hotel.getPosition().getProvince())
-                .setCity(hotel.getPosition().getCity())
-                .setDistrict(hotel.getPosition().getDistrict())
-                .setStreet(hotel.getPosition().getStreet())
-                .setAddress(hotel.getPosition().getAddress())
-                .setLat(hotel.getPosition().getLat())
-                .setLng(hotel.getPosition().getLng())
-                ;
+            .setProvince(hotel.getPosition().getProvince())
+            .setCity(hotel.getPosition().getCity())
+            .setDistrict(hotel.getPosition().getDistrict())
+            .setStreet(hotel.getPosition().getStreet())
+            .setAddress(hotel.getPosition().getAddress())
+            .setLat(hotel.getPosition().getLat())
+            .setLng(hotel.getPosition().getLng())
+            ;
     }
 
 

@@ -1,4 +1,4 @@
-package com.eleven.hotel.domain.model.room;
+package com.eleven.hotel.domain.model.hotel;
 
 
 public interface RoomValidator {

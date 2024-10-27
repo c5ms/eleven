@@ -1,6 +1,5 @@
 package com.eleven.hotel.domain.values;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
 import org.springframework.data.relational.core.mapping.Column;

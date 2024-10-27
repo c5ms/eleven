@@ -1,14 +1,13 @@
-package com.eleven.hotel.domain.model.room;
+package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.core.data.AbstractEntity;
 import com.eleven.core.data.Audition;
+import com.eleven.core.domain.DomainContext;
 import com.eleven.hotel.api.domain.model.ChargeType;
 import com.eleven.hotel.api.domain.model.RoomType;
 import com.eleven.hotel.api.domain.model.SaleState;
-import com.eleven.hotel.domain.core.HotelAware;
 import com.eleven.hotel.domain.core.Sellable;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
@@ -24,15 +23,20 @@ import org.springframework.data.relational.core.mapping.Table;
 @FieldNameConstants
 @Table(name = Room.TABLE_NAME)
 @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
-public class Room extends AbstractEntity implements HotelAware, Sellable {
+public class Room extends AbstractEntity implements Sellable {
 
     public static final String TABLE_NAME = "room";
+    public static final String DOMAIN_NAME = "Room";
 
     @Id
+    @Column("obj_id")
     private final String id;
 
     @Column(value = "hotel_id")
-    private final String hotelId;
+    private String hotelId;
+
+    @Column(value = "room_id")
+    private String roomId;
 
     @Column(value = "sale_state")
     private SaleState saleState;
@@ -56,18 +60,19 @@ public class Room extends AbstractEntity implements HotelAware, Sellable {
     @Embedded.Empty
     private Audition audition = Audition.empty();
 
-    private Room(String id, String hotelId) {
-        this.id = id;
+    Room(String hotelId, String roomId) {
+        this.id = DomainContext.nextId();
         this.hotelId = hotelId;
+        this.roomId = roomId;
         this.saleState = SaleState.STOPPED;
     }
 
-    public static Room of(String id, String hotelId, Description description, Restriction restriction, ChargeType chargeType) {
+    static Room of(String hotelId, String roomId, Description description, Restriction restriction, ChargeType chargeType) {
         Validate.notNull(restriction.maxPerson, "max person must not null");
         Validate.notNull(restriction.minPerson, "min person must not null");
         Validate.isTrue(restriction.maxPerson > restriction.minPerson, "max person must be greater than min");
 
-        var room = new Room(id, hotelId);
+        var room = new Room(hotelId, roomId);
         room.setDescription(description);
         room.setChargeType(chargeType);
         room.setRestriction(restriction);
@@ -131,7 +136,7 @@ public class Room extends AbstractEntity implements HotelAware, Sellable {
         @Column(value = "min_person")
         private final Integer minPerson;
 
-        public Restriction(Integer maxPerson, Integer minPerson) {
+        public Restriction(Integer minPerson, Integer maxPerson) {
             this.maxPerson = maxPerson;
             this.minPerson = minPerson;
         }

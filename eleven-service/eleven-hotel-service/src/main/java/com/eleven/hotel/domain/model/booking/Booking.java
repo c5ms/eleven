@@ -6,7 +6,7 @@ import com.eleven.hotel.domain.model.coupon.Coupon;
 import com.eleven.hotel.domain.model.coupon.CouponCalculator;
 import com.eleven.hotel.domain.model.hotel.Hotel;
 import com.eleven.hotel.domain.model.plan.Plan;
-import com.eleven.hotel.domain.model.room.Room;
+import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.model.traveler.Traveler;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.Price;
@@ -29,25 +29,19 @@ import java.util.stream.Collectors;
 @FieldNameConstants
 public class Booking extends AbstractEntity {
 
+    @Column("hotel_id")
+    private final Hotel hotel;
+    @Column("plan_id")
+    private final Plan plan;
+    @Column("room_id")
+    private final Room room;
+    @Column("traveler_id")
+    private final Traveler traveler;
+    @Embedded.Empty(prefix = "stay_")
+    private final DateRange stayPeriod;
     @Id
     @Column("booking_id")
     private String id;
-
-    @Column("hotel_id")
-    private final Hotel hotel;
-
-    @Column("plan_id")
-    private final Plan plan;
-
-    @Column("room_id")
-    private final Room room;
-
-    @Column("traveler_id")
-    private final Traveler traveler;
-
-    @Embedded.Empty(prefix = "stay_")
-    private final DateRange stayPeriod;
-
     @Embedded.Empty
     private Price price;
 
@@ -62,8 +56,8 @@ public class Booking extends AbstractEntity {
         this.traveler = traveler;
         this.stayPeriod = stayPeriod;
         this.price = plan.chargeRoom(room)
-                .map(price -> price.multiply(stayPeriod))
-                .orElseThrow(HotelErrors.BOOKING_NO_SUCH_ROOM::toException);
+            .map(price -> price.multiply(stayPeriod))
+            .orElseThrow(HotelErrors.BOOKING_NO_SUCH_ROOM::toException);
     }
 
     public void applyCoupon(List<Coupon> coupons) {

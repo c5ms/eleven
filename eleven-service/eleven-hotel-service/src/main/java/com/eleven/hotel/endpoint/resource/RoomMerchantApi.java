@@ -9,8 +9,9 @@ import com.eleven.hotel.application.command.RoomCreateCommand;
 import com.eleven.hotel.application.command.RoomDeleteCommand;
 import com.eleven.hotel.application.command.RoomUpdateCommand;
 import com.eleven.hotel.application.service.RoomCommandService;
-import com.eleven.hotel.domain.model.room.Room;
-import com.eleven.hotel.domain.model.room.RoomRepository;
+import com.eleven.hotel.domain.model.hotel.HotelNotFoundException;
+import com.eleven.hotel.domain.model.hotel.Room;
+import com.eleven.hotel.domain.model.hotel.RoomRepository;
 import com.eleven.hotel.endpoint.convert.RoomConvertor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -45,18 +46,18 @@ public class RoomMerchantApi {
     @Operation(summary = "read room")
     @GetMapping("/{roomId}")
     public Optional<RoomDto> readRoom(@PathVariable("hotelId") String hotelId, @PathVariable("roomId") String roomId) {
-        return roomRepository.find(hotelId, roomId).map(roomConvertor::toDto);
+        return roomRepository.findByHotelIdAndRoomId(hotelId,roomId).map(roomConvertor::toDto);
     }
 
     @Operation(summary = "create room")
     @PostMapping
-    public RoomDto createRoom(@PathVariable("hotelId") String hotelId, @RequestBody @Validated RoomCreateRequest request) {
+    public RoomDto createRoom(@PathVariable("hotelId") String hotelId, @RequestBody @Validated RoomCreateRequest request)  {
         var command = RoomCreateCommand.builder()
-                .hotelId(hotelId)
-                .chargeType(request.getChargeType())
-                .description(new Room.Description(request.getName(), request.getType(), request.getDesc(), request.getHeadPicUrl()))
-                .restriction(new Room.Restriction(request.getMinPerson(), request.getMaxPerson()))
-                .build();
+            .hotelId(hotelId)
+            .description(new Room.Description(request.getName(), request.getType(), request.getDesc(), request.getHeadPicUrl()))
+            .restriction(new Room.Restriction(request.getMinPerson(), request.getMaxPerson()))
+            .chargeType(request.getChargeType())
+            .build();
         var room = roomCommandService.createRoom(command);
         return roomConvertor.toDto(room);
     }
@@ -67,12 +68,12 @@ public class RoomMerchantApi {
                               @PathVariable("roomId") String roomId,
                               @RequestBody @Validated RoomUpdateRequest request) {
         var command = RoomUpdateCommand.builder()
-                .hotelId(hotelId)
-                .roomId(roomId)
-                .chargeType(request.getChargeType())
-                .description(new Room.Description(request.getName(), request.getType(), request.getDesc(), request.getHeadPicUrl()))
-                .restriction(new Room.Restriction(request.getMinPerson(), request.getMaxPerson()))
-                .build();
+            .hotelId(hotelId)
+            .roomId(roomId)
+            .chargeType(request.getChargeType())
+            .description(new Room.Description(request.getName(), request.getType(), request.getDesc(), request.getHeadPicUrl()))
+            .restriction(new Room.Restriction(request.getMinPerson(), request.getMaxPerson()))
+            .build();
         var room = roomCommandService.updateRoom(command);
         return roomConvertor.toDto(room);
     }
@@ -81,9 +82,9 @@ public class RoomMerchantApi {
     @DeleteMapping("/{roomId}")
     public void deleteRoom(@PathVariable("hotelId") String hotelId, @PathVariable("roomId") String roomId) {
         var command = RoomDeleteCommand.builder()
-                .hotelId(hotelId)
-                .roomId(roomId)
-                .build();
+            .hotelId(hotelId)
+            .roomId(roomId)
+            .build();
         roomCommandService.deleteRoom(command);
     }
 

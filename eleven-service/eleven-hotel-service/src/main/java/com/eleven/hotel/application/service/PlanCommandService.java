@@ -6,7 +6,7 @@ import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.domain.model.plan.Plan;
 import com.eleven.hotel.domain.model.plan.PlanManager;
 import com.eleven.hotel.domain.model.plan.PlanRepository;
-import com.eleven.hotel.domain.model.room.RoomRepository;
+import com.eleven.hotel.domain.model.hotel.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,28 +24,26 @@ public class PlanCommandService {
     private final RoomRepository roomRepository;
 
     public Plan createPlan(PlanCreateCommand command) {
-        var hotel = hotelRepository.requireById(command.getHotelId());
-        var plan = Plan.normal()
-            .id(planManager.nextPlanId())
-            .hotelId(command.getHotelId())
-            .sellPeriod(command.getSellPeriod())
-            .preSellPeriod(command.getPreSellPeriod())
-            .stayPeriod(command.getStayPeriod())
-            .description(command.getDescription())
-            .stock(command.getStock())
-            .create();
+        var hotel = hotelRepository.require(command.getHotelId());
+        var plan = planManager.create(hotel,
+            command.getSellPeriod(),
+            command.getPreSellPeriod(),
+            command.getStayPeriod(),
+            command.getDescription(),
+            command.getStock()
+        );
         planManager.validate(plan);
         planRepository.save(plan);
         return plan;
     }
 
     public void addRoom(PlanAddRoomCommand command) {
-        var plan = planRepository.requireById(command.getPlanId());
-        var room = roomRepository.requireById(command.getRoomId());
-        var stock = command.getStock();
-        var price = command.getPrice();
-        plan.addRoom(room, stock, price);
-        planRepository.save(plan);
+//        var plan = planRepository.requireById(command.getPlanId());
+//        var room = roomRepository.requireById(command.getRoomId());
+//        var stock = command.getStock();
+//        var price = command.getPrice();
+//        plan.addRoom(room, stock, price);
+//        planRepository.save(plan);
     }
 
 

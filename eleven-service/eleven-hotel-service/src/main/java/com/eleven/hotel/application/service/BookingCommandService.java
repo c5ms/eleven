@@ -5,9 +5,8 @@ import com.eleven.hotel.domain.model.booking.Booking;
 import com.eleven.hotel.domain.model.booking.BookingManager;
 import com.eleven.hotel.domain.model.booking.BookingRepository;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
+import com.eleven.hotel.domain.model.hotel.RoomRepository;
 import com.eleven.hotel.domain.model.plan.PlanRepository;
-import com.eleven.hotel.domain.model.room.RoomRepository;
-import com.eleven.hotel.domain.model.traveler.Traveler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,23 +26,24 @@ public class BookingCommandService {
     private final BookingManager bookingManager;
 
     public Booking book(BookingCommand bookingCommand) {
-        var plan = planRepository.requireById(bookingCommand.getPlanId());
-        var hotel = hotelRepository.requireById(plan.getHotelId());
-        var room = roomRepository.requireById(bookingCommand.getRoomId());
-        var traveler = new Traveler();
-        var bookingId = bookingManager.bookId();
-
-        var booking = new Booking(
-                bookingId,
-                hotel,
-                plan,
-                room,
-                bookingCommand.getStayPeriod(),
-                traveler
-        );
-        bookingManager.validate(booking);
-        bookingRepository.save(booking);
-        return booking;
+//        var plan = planRepository.requireById(bookingCommand.getPlanId());
+//        var hotel = hotelRepository.requireById(plan.getHotelId());
+//        var room = roomRepository.requireById(bookingCommand.getRoomId());
+//        var traveler = new Traveler();
+//        var bookingId = bookingManager.bookId();
+//
+//        var booking = new Booking(
+//            bookingId,
+//            hotel,
+//            plan,
+//            room,
+//            bookingCommand.getStayPeriod(),
+//            traveler
+//        );
+//        bookingManager.validate(booking);
+//        bookingRepository.save(booking);
+//        return booking;
+        return null;
     }
 
 }

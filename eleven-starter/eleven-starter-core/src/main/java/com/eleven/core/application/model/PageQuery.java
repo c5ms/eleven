@@ -16,7 +16,7 @@ public class PageQuery {
     @NotNull(message = "页码不能为空")
     @Min(value = 0, message = "页码不能为负")
     @Schema(description = "页码", defaultValue = "1")
-    private int page = 1;
+    private int page = 0;
 
     @NotNull(message = "每页条数不能为空")
     @Min(value = 1, message = "每页条数至少为1条")

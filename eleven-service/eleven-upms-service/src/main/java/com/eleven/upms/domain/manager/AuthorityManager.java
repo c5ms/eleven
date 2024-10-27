@@ -1,6 +1,6 @@
 package com.eleven.upms.domain.manager;
 
-import com.eleven.core.domain.DomainUtils;
+import com.eleven.core.domain.DomainContext;
 import com.eleven.upms.domain.model.Authority;
 import com.eleven.upms.domain.model.AuthorityRepository;
 import com.eleven.upms.domain.model.User;
@@ -40,7 +40,7 @@ public class AuthorityManager {
      */
     public void grant(Authority.Owner owner, List<Authority.Power> powers) {
         var authorities = powers.stream().map(power -> {
-            var id = DomainUtils.nextId();
+            var id = DomainContext.nextId();
             return new Authority(id, owner, power);
         }).toList();
         authorityRepository.saveAll(authorities);

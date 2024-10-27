@@ -2,9 +2,9 @@ package com.eleven.core.web;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
 import com.eleven.core.application.command.CommandHandleException;
+import com.eleven.core.domain.NoEntityFoundException;
 import com.eleven.core.domain.DomainErrors;
 import com.eleven.core.domain.DomainException;
-import com.eleven.core.domain.NoRequiredEntityException;
 import com.eleven.core.web.problem.Problem;
 import com.eleven.core.web.problem.ValidationProblem;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -29,7 +29,6 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 @ControllerAdvice
 public class ElevenExceptionAdvice {
 
-
     @ResponseBody
     @ApiResponse(description = "Unprocessable Entity", responseCode = "422")
     @ApiResponse(description = "Bad Request", responseCode = "400")
@@ -44,10 +43,7 @@ public class ElevenExceptionAdvice {
         //400 - payload
         if (e instanceof CommandHandleException) {
             status = HttpStatus.BAD_REQUEST;
-        } else if (e instanceof NoRequiredEntityException) {
-            status = HttpStatus.BAD_REQUEST;
-        } else if (e instanceof HttpMessageConversionException) {
-            log.warn("message convert fail {}", ExceptionUtil.getMessage(e));
+        }else if (e instanceof HttpMessageConversionException) {
             var problem = Problem.of(DomainErrors.ERROR_REQUEST_BODY_FAILED);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
         } else if (e instanceof DomainException ex) {
@@ -66,7 +62,6 @@ public class ElevenExceptionAdvice {
                 .map(objectError -> (FieldError) objectError)
                 .map(fieldError -> new ValidationProblem.Field(fieldError.getField(), fieldError.getCode(), fieldError.getDefaultMessage()))
                 .forEach(problem::addField);
-
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(problem);
         }
 
@@ -81,7 +76,7 @@ public class ElevenExceptionAdvice {
             status = HttpStatus.NOT_FOUND;
         } else if (e instanceof NoResourceFoundException) {
             status = HttpStatus.NOT_FOUND;
-        } else if (e instanceof ResourceNofFoundException) {
+        }else if (e instanceof NoEntityFoundException) {
             status = HttpStatus.NOT_FOUND;
         }
 
@@ -100,6 +95,8 @@ public class ElevenExceptionAdvice {
                 return ResponseEntity.status(status).body(problem);
             }
         }
+
+
 
         return ResponseEntity.status(status).build();
     }

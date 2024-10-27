@@ -1,6 +1,6 @@
 package com.eleven.hotel.application.command;
 
-import com.eleven.hotel.domain.model.admin.Admin;
+import com.eleven.hotel.domain.model.hotel.Register;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,14 +8,9 @@ import lombok.Getter;
 @Getter
 @Builder
 public class HotelRegisterCommand {
+    @NotBlank
+    private Register.HotelInformation hotel;
 
     @NotBlank
-    private String hotelName;
-
-    @NotBlank
-    private String hotelAddress;
-
-    @NotBlank
-    private Admin.Contact adminContact;
-
+    private Register.AdminInformation admin;
 }

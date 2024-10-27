@@ -35,8 +35,8 @@ public class RaindropGenerator implements IdentityGenerator {
 //            seq.incrementAndGet()
 //        );
         return String.format("%s%s%06d",
-            Long.toHexString(datacenterId * 100 + workerId),
             Long.toHexString(TimeContext.getClock().millis()/1000),
+            Long.toHexString(datacenterId * 100 + workerId),
             seq.incrementAndGet()
         ).toUpperCase(Locale.ROOT);
     }

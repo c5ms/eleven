@@ -1,6 +1,6 @@
 package com.eleven.hotel.domain.model.plan;
 
-import com.eleven.hotel.domain.model.room.Room;
+import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.values.Price;
 import com.eleven.hotel.domain.values.Stock;
 import lombok.AllArgsConstructor;

@@ -2,7 +2,7 @@ package com.eleven.upms.application.service;
 
 import com.eleven.core.data.Audition;
 import com.eleven.core.data.QuerySupport;
-import com.eleven.core.domain.DomainUtils;
+import com.eleven.core.domain.DomainContext;
 import com.eleven.core.application.model.PageResult;
 import com.eleven.core.time.TimeContext;
 import com.eleven.upms.api.application.command.UserCreateCommand;
@@ -75,8 +75,8 @@ public class UserService {
             criteria = criteria.and(ranges);
         }
 
-        var query = Query.query(criteria).sort(Sort.by(Audition.Fields.createAt).descending());
-        var page = querySupport.query(query, User.class, command.getPage(), command.getSize());
+        var sort=Sort.by(Audition.Fields.createAt).descending();
+        var page = querySupport.query(User.class,criteria,command,sort);
         return page.map(userConvertor::toDetail);
 
     }
@@ -93,7 +93,7 @@ public class UserService {
     @Transactional(rollbackFor = Exception.class)
     public UserDetail createUser(UserCreateCommand command) {
         var user = User.builder()
-            .id(DomainUtils.nextId())
+            .id(DomainContext.nextId())
             .username(command.getUsername())
             .type(User.USER_TYPE_ADMIN)
             .isLocked(false)

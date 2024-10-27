@@ -17,7 +17,8 @@ public class PlanConvertor {
 
     public PlanDto toDto(Plan plan) {
         return new PlanDto()
-            .setId(plan.getId())
+            .setPlanId(plan.getPlanId())
+            .setHotelId(plan.getHotelId())
             .setName(plan.getDescription().getName())
             .setDesc(plan.getDescription().getDesc())
             .setStock(plan.getStock().getCount())

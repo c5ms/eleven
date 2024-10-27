@@ -1,11 +1,9 @@
 package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.core.data.AbstractEntity;
-import com.eleven.core.domain.DomainUtils;
+import com.eleven.core.domain.DomainContext;
 import com.eleven.hotel.api.domain.core.HotelErrors;
 import com.eleven.hotel.api.domain.model.RegisterState;
-import com.eleven.hotel.domain.core.HotelAware;
-import com.eleven.hotel.domain.model.admin.Admin;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
@@ -19,7 +17,10 @@ import org.springframework.data.relational.core.mapping.Table;
 @Getter
 @FieldNameConstants
 @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
-public class Register extends AbstractEntity implements HotelAware {
+public class Register extends AbstractEntity {
+
+    public static final String DOMAIN_NAME = "Register";
+
 
     @Id
     private String id;
@@ -27,28 +28,28 @@ public class Register extends AbstractEntity implements HotelAware {
     @Column("hotel_id")
     private String hotelId;
 
-    @Column("hotel_name")
-    private String hotelName;
+    @Column("register_id")
+    private String registerId;
 
-    @Column("hotel_address")
-    private String hotelAddress;
+    @Embedded.Empty(prefix = "hotel_")
+    private HotelInformation hotel;
 
-    @Embedded.Empty(prefix = "manager_")
-    private Admin.Contact managerContact;
+    @Embedded.Empty(prefix = "admin_")
+    private AdminInformation admin;
 
     @Column(value = "state")
     private RegisterState state;
 
-    private Register(String id) {
-        this.id = id;
+    Register(String registerId) {
+        this.id = DomainContext.nextId();
+        this.registerId = registerId;
         this.state = RegisterState.UNDER_REVIEW;
     }
 
-    public static Register create(String id, String hotelName, String hotelAddress, Admin.Contact managerContact) {
-        var register = new Register(id);
-        register.hotelName = hotelName;
-        register.hotelAddress = hotelAddress;
-        register.managerContact = managerContact;
+    static Register of(String registerId, HotelInformation hotel, AdminInformation admin) {
+        var register = new Register(registerId);
+        register.hotel = hotel;
+        register.admin = admin;
         return register;
     }
 
@@ -63,10 +64,41 @@ public class Register extends AbstractEntity implements HotelAware {
     }
 
     private void checkBeforeReview() {
-        DomainUtils.must(this.state == RegisterState.UNDER_REVIEW, HotelErrors.REGISTRATION_NOT_REVIEWABLE);
+        DomainContext.must(this.state == RegisterState.UNDER_REVIEW, HotelErrors.REGISTRATION_NOT_REVIEWABLE);
     }
 
     public void belongTo(Hotel hotel) {
-        this.hotelId = hotel.getId();
+        this.hotelId = hotel.getHotelId();
     }
+
+    @Getter
+    @FieldNameConstants
+    @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
+    public static class AdminInformation {
+
+        @Column(value = "name")
+        private String name;
+
+        @Column(value = "email")
+        private String email;
+
+        @Column(value = "tel")
+        private String tel;
+
+    }
+
+    @Getter
+    @FieldNameConstants
+    @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
+    public static class HotelInformation {
+
+        @Column("name")
+        private String name;
+
+        @Column("address")
+        private String address;
+
+    }
+
+
 }

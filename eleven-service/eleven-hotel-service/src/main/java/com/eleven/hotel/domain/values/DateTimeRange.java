@@ -1,7 +1,6 @@
 package com.eleven.hotel.domain.values;
 
 import com.eleven.core.time.TimeContext;
-import com.eleven.hotel.domain.core.Effectiveness;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
@@ -14,7 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @EqualsAndHashCode
 @FieldNameConstants
-public class DateTimeRange  {
+public class DateTimeRange {
 
     @Column(value = "start_date")
     private final LocalDateTime start;
@@ -36,6 +35,10 @@ public class DateTimeRange  {
         return new DateTimeRange(null, null);
     }
 
+    public static DateTimeRange of(LocalDateTime start, LocalDateTime end) {
+        return new DateTimeRange(start, end);
+    }
+
     public boolean isEmpty() {
         return ObjectUtils.anyNull(this.start, this.end);
     }
@@ -45,32 +48,28 @@ public class DateTimeRange  {
     }
 
     public boolean isCurrent() {
-        if(isEmpty()){
+        if (isEmpty()) {
             return false;
         }
         return contains(TimeContext.localDateTime());
     }
 
     public boolean isBefore(DateTimeRange dateTimeRange) {
-        if(isEmpty()){
+        if (isEmpty()) {
             return false;
         }
         return this.end.isBefore(dateTimeRange.end);
     }
 
     public boolean isAfter(DateTimeRange dateTimeRange) {
-        if(isEmpty()){
+        if (isEmpty()) {
             return false;
         }
         return this.end.isAfter(dateTimeRange.end);
     }
 
-    public static DateTimeRange of(LocalDateTime start, LocalDateTime end) {
-        return new DateTimeRange(start, end);
-    }
-
     public boolean overlap(DateTimeRange range) {
-        if(isEmpty()){
+        if (isEmpty()) {
             return false;
         }
         if (this.isEmpty() || range.isEmpty()) {
@@ -84,7 +83,7 @@ public class DateTimeRange  {
     }
 
     public boolean contains(LocalDateTime time) {
-        if(isEmpty()){
+        if (isEmpty()) {
             return false;
         }
         if (start.isAfter(time)) {
@@ -97,7 +96,7 @@ public class DateTimeRange  {
     }
 
     public boolean contains(DateTimeRange range) {
-        if(isEmpty()){
+        if (isEmpty()) {
             return false;
         }
         if (this.start.isAfter(range.start)) {
@@ -110,7 +109,7 @@ public class DateTimeRange  {
     }
 
     public boolean contains(DateRange range) {
-        if(isEmpty()){
+        if (isEmpty()) {
             return false;
         }
         return this.contains(range.toDateTimeRange());

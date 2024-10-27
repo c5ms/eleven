@@ -71,8 +71,14 @@ public class RequestLogFilter extends OncePerRequestFilter {
                 Subject subject = SecurityContext.getCurrentSubject();
                 requestLog.setUserId(subject.getUserId());
 
-                //  异常
                 if (HttpStatus.valueOf(response.getStatus()).is5xxServerError()) {
+                    var se = (Throwable) request.getAttribute(DispatcherServlet.EXCEPTION_ATTRIBUTE);
+                    if (null != se) {
+                        exception = se;
+                    }
+                }
+
+                if (HttpStatus.valueOf(response.getStatus()).is4xxClientError()) {
                     var se = (Throwable) request.getAttribute(DispatcherServlet.EXCEPTION_ATTRIBUTE);
                     if (null != se) {
                         exception = se;

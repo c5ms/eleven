@@ -12,6 +12,8 @@ public class ElevenDataProperties {
 
     private IdGeneratorType idType = IdGeneratorType.RAINDROP;
 
+    private Integer serialCacheSize = 5;
+
     enum IdGeneratorType {
         UUID,
         SNOWFLAKE,

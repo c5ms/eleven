@@ -12,7 +12,7 @@ import org.springframework.core.annotation.Order;
 import java.util.function.Supplier;
 
 @UtilityClass
-public class DomainUtils {
+public class DomainContext {
 
    private static IdentityGenerator identityGenerator;
 
@@ -37,7 +37,7 @@ public class DomainUtils {
     }
 
     public static String nextId() {
-        return identityGenerator.next();
+        return SpringUtil.getBean(IdentityGenerator.class).next();
     }
 
     public void publishEvent(DomainEvent domainEvent) {
@@ -49,7 +49,7 @@ public class DomainUtils {
     static class DomainHelperAutoconfigure {
         @Autowired
         public DomainHelperAutoconfigure(IdentityGenerator identityGenerator) {
-            DomainUtils.identityGenerator = identityGenerator;
+            DomainContext.identityGenerator = identityGenerator;
         }
     }
 

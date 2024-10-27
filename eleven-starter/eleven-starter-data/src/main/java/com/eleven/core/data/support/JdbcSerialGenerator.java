@@ -1,6 +1,7 @@
 package com.eleven.core.data.support;
 
 import com.eleven.core.data.SerialGenerator;
+import com.eleven.core.data.configure.ElevenDataProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Isolation;
@@ -15,11 +16,12 @@ import java.util.concurrent.locks.ReentrantLock;
 @RequiredArgsConstructor
 public class JdbcSerialGenerator implements SerialGenerator {
 
-    public ReentrantLock lock = new ReentrantLock();
+
+    public final ReentrantLock lock = new ReentrantLock();
+    private final Map<Serial.Key, Serial> serials = new ConcurrentHashMap<>();
 
     private final JdbcSerialMaintainer jdbcSerialMaintainer;
 
-    private final Map<Serial.Key, Serial> serials = new ConcurrentHashMap<>();
 
     @Override
     public long next(String group, String name) {
@@ -54,24 +56,27 @@ public class JdbcSerialGenerator implements SerialGenerator {
     @RequiredArgsConstructor
     public static class JdbcSerialMaintainer {
 
+        private final ElevenDataProperties elevenDataProperties;
         private final SerialRepository serialRepository;
 
         @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRES_NEW)
         Serial loadSerial(Serial.Key key) {
-            var serial = serialRepository.findByKey(key).orElseGet(() -> createSerial(key));
-            serial.refresh();
+            var serialOptional = serialRepository.findByKey(key);
+
+            if (serialOptional.isEmpty()) {
+                Serial serial = Serial.create(key, 0, elevenDataProperties.getSerialCacheSize());
+                serialRepository.save(serial);
+                return serial;
+            }
+
+            Serial serial = serialOptional.get();
+            serial.setStep(elevenDataProperties.getSerialCacheSize());
+                serial.refresh();
             serialRepository.save(serial);
             return serial;
         }
 
-        private Serial createSerial(Serial.Key key) {
-            Serial serial = Serial.create(key, 10, 5);
-            serialRepository.save(serial);
-            return serial;
-        }
-
-
-        public void delete(Serial.Key key) {
+        void delete(Serial.Key key) {
             serialRepository.deleteByKey(key);
         }
     }

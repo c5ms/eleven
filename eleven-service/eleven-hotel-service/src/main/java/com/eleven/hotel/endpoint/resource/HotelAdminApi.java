@@ -3,8 +3,8 @@ package com.eleven.hotel.endpoint.resource;
 import com.eleven.core.application.model.PageResult;
 import com.eleven.core.web.annonation.AsAdminApi;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
-import com.eleven.hotel.api.endpoint.request.HotelQueryRequest;
 import com.eleven.hotel.api.endpoint.model.HotelDto;
+import com.eleven.hotel.api.endpoint.request.HotelQueryRequest;
 import com.eleven.hotel.application.query.HotelQuery;
 import com.eleven.hotel.application.service.HotelQueryService;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
@@ -43,8 +43,8 @@ public class HotelAdminApi {
     @GetMapping
     public PageResult<HotelDto> queryHotel(@ParameterObject @Validated HotelQueryRequest request) {
         var command = HotelQuery.builder()
-                .hotelName(request.getHotelName())
-                .build();
+            .hotelName(request.getHotelName())
+            .build();
         return hotelQueryService.queryPage(command).map(hotelConvertor::toDto);
     }
 

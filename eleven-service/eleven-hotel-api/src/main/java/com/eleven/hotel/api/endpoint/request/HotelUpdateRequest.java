@@ -9,6 +9,7 @@ import java.time.LocalTime;
 @Setter
 public class HotelUpdateRequest {
 
+    private String name;
     private String description;
     private String headPicUrl;
     private Integer roomNumber;

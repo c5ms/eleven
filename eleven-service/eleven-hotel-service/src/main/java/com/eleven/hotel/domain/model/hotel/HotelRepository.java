@@ -1,14 +1,21 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import com.eleven.core.data.DomainRepository;
-import com.eleven.hotel.domain.model.plan.Plan;
 import org.springframework.data.jdbc.repository.query.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Collection;
 import java.util.Optional;
 
-public interface HotelRepository extends DomainRepository<Hotel, String> {
+public interface HotelRepository extends CrudRepository<Hotel, String> {
 
     @Query("select * from hotel where hotel_name=:name")
-    Optional<Hotel> getHotelByName(@Param("name") String name);
+    Collection<Hotel> getHotelByName(@Param("name") String name);
+
+    Optional<Hotel> findByHotelId(String hotelId);
+
+    default Hotel require(String hotelId) throws HotelNotFoundException {
+        return findByHotelId(hotelId).orElseThrow(() -> new HotelNotFoundException(hotelId));
+    }
+
 }

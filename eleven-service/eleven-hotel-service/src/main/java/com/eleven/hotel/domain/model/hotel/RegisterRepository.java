@@ -1,6 +1,14 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import com.eleven.core.data.DomainRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface RegisterRepository extends DomainRepository<Register, String> {
+import java.util.Optional;
+
+public interface RegisterRepository extends CrudRepository<Register, String> {
+
+    Optional<Register> findByRegisterId(String registerId);
+
+    default Register require(String registerId) throws RegisterNotFoundException {
+        return findByRegisterId(registerId).orElseThrow(() -> new RegisterNotFoundException(registerId));
+    }
 }

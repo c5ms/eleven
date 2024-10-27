@@ -16,7 +16,9 @@ import java.util.List;
 @Accessors(chain = true)
 public class PlanDto {
 
-    private String id;
+    private String planId;
+    private String hotelId;
+
     private String name;
     private String desc;
     private Integer stock;

@@ -26,10 +26,12 @@ public class RoomCreateRequest {
 
     @Min(1)
     @Max(5)
+    @NotNull
     private Integer maxPerson;
 
     @Min(1)
     @Max(5)
+    @NotNull
     private Integer minPerson;
 
     @NotBlank

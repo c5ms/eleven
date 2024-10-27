@@ -43,26 +43,27 @@ public class HotelMerchantApi {
     @PostMapping("/{hotelId}")
     public void update(@PathVariable("hotelId") String hotelId, @RequestBody @Validated HotelUpdateRequest request) {
         var command = HotelUpdateCommand.builder()
-                .hotelId(hotelId)
-                .description(new Hotel.Description(
-                        request.getDescription(),
-                        request.getHeadPicUrl(),
-                        request.getRoomNumber(),
-                        request.getCheckIn(),
-                        request.getCheckOut(),
-                        request.getEmail(),
-                        request.getTel())
-                )
-                .position(new Hotel.Position(
-                        request.getProvince(),
-                        request.getCity(),
-                        request.getDistrict(),
-                        request.getStreet(),
-                        request.getAddress(),
-                        request.getLat(),
-                        request.getLng()
-                ))
-                .build();
+            .hotelId(hotelId)
+            .description(new Hotel.Description(
+                request.getName(),
+                request.getDescription(),
+                request.getHeadPicUrl(),
+                request.getRoomNumber(),
+                request.getCheckIn(),
+                request.getCheckOut(),
+                request.getEmail(),
+                request.getTel())
+            )
+            .position(new Hotel.Position(
+                request.getProvince(),
+                request.getCity(),
+                request.getDistrict(),
+                request.getStreet(),
+                request.getAddress(),
+                request.getLat(),
+                request.getLng()
+            ))
+            .build();
         hotelCommandService.update(command);
     }
 
@@ -71,8 +72,8 @@ public class HotelMerchantApi {
     @PostMapping("/{hotelId}/operations/open")
     public void openHotel(@PathVariable("hotelId") String hotelId) {
         var command = HotelOpenCommand.builder()
-                .hotelId(hotelId)
-                .build();
+            .hotelId(hotelId)
+            .build();
         hotelCommandService.open(command);
     }
 
@@ -80,8 +81,8 @@ public class HotelMerchantApi {
     @PostMapping("/{hotelId}/operations/close")
     public void closeHotel(@PathVariable("hotelId") String hotelId) {
         var command = HotelCloseCommand.builder()
-                .hotelId(hotelId)
-                .build();
+            .hotelId(hotelId)
+            .build();
         hotelCommandService.close(command);
     }
 
