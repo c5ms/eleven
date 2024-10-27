@@ -7,8 +7,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class HotelQuery extends PageQuery {
-
-    private String hotelName;
-
+public class PlanQuery extends PageQuery {
+    private String hotelId;
+    private String planName;
 }

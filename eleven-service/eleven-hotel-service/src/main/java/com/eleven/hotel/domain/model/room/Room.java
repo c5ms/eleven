@@ -8,6 +8,7 @@ import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.domain.core.HotelAware;
 import com.eleven.hotel.domain.core.Sellable;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
@@ -49,6 +50,7 @@ public class Room extends AbstractEntity implements HotelAware, Sellable {
     private Restriction restriction;
 
     @Version
+    @Column("update_version")
     private Integer version;
 
     @Embedded.Empty
@@ -61,6 +63,10 @@ public class Room extends AbstractEntity implements HotelAware, Sellable {
     }
 
     public static Room of(String id, String hotelId, Description description, Restriction restriction, ChargeType chargeType) {
+        Validate.notNull(restriction.maxPerson, "max person must not null");
+        Validate.notNull(restriction.minPerson, "min person must not null");
+        Validate.isTrue(restriction.maxPerson > restriction.minPerson, "max person must be greater than min");
+
         var room = new Room(id, hotelId);
         room.setDescription(description);
         room.setChargeType(chargeType);
@@ -87,7 +93,6 @@ public class Room extends AbstractEntity implements HotelAware, Sellable {
     public boolean isOnSale() {
         return saleState.isOnSale();
     }
-
 
     @Getter
     @FieldNameConstants
@@ -127,9 +132,6 @@ public class Room extends AbstractEntity implements HotelAware, Sellable {
         private final Integer minPerson;
 
         public Restriction(Integer maxPerson, Integer minPerson) {
-            Validate.notNull(maxPerson, "max person must not null");
-            Validate.notNull(minPerson, "min person must not null");
-            Validate.isTrue(maxPerson > minPerson, "max person must be greater than min");
             this.maxPerson = maxPerson;
             this.minPerson = minPerson;
         }

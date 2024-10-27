@@ -1,5 +1,6 @@
-package com.eleven.core.command.support;
+package com.eleven.core.application.command.support;
 
+import com.eleven.core.application.command.*;
 import com.eleven.core.command.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,7 @@ public class DefaultCommandDispatcher implements CommandDispatcher, CommandRegis
     }
 
     @Override
-    public <C, R> R dispatch(@Validated C c, Class<R> resultClass) throws CommandHandleException,CommandValidateException {
+    public <C, R> R dispatch(@Validated C c, Class<R> resultClass) throws CommandHandleException, CommandValidateException {
         validate(c);
 
         @SuppressWarnings("unchecked")

@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @EqualsAndHashCode
 @FieldNameConstants
-public class DateTimeRange implements Effectiveness {
+public class DateTimeRange  {
 
     @Column(value = "start_date")
     private final LocalDateTime start;
@@ -22,10 +22,6 @@ public class DateTimeRange implements Effectiveness {
     @Column(value = "end_date")
     private final LocalDateTime end;
 
-    public DateTimeRange() {
-        this.start = null;
-        this.end = null;
-    }
 
     private DateTimeRange(LocalDateTime start, LocalDateTime end) {
         if (null != start && null != end) {
@@ -37,28 +33,36 @@ public class DateTimeRange implements Effectiveness {
     }
 
     public static DateTimeRange empty() {
-        return new DateTimeRange();
+        return new DateTimeRange(null, null);
     }
 
     public boolean isEmpty() {
         return ObjectUtils.anyNull(this.start, this.end);
     }
 
+    public boolean isNotEmpty() {
+        return !isEmpty();
+    }
+
     public boolean isCurrent() {
+        if(isEmpty()){
+            return false;
+        }
         return contains(TimeContext.localDateTime());
     }
 
     public boolean isBefore(DateTimeRange dateTimeRange) {
+        if(isEmpty()){
+            return false;
+        }
         return this.end.isBefore(dateTimeRange.end);
     }
 
     public boolean isAfter(DateTimeRange dateTimeRange) {
+        if(isEmpty()){
+            return false;
+        }
         return this.end.isAfter(dateTimeRange.end);
-    }
-
-    @Override
-    public boolean isEffective() {
-        return contains(TimeContext.localDateTime());
     }
 
     public static DateTimeRange of(LocalDateTime start, LocalDateTime end) {
@@ -66,6 +70,9 @@ public class DateTimeRange implements Effectiveness {
     }
 
     public boolean overlap(DateTimeRange range) {
+        if(isEmpty()){
+            return false;
+        }
         if (this.isEmpty() || range.isEmpty()) {
             return false;
         }
@@ -77,6 +84,9 @@ public class DateTimeRange implements Effectiveness {
     }
 
     public boolean contains(LocalDateTime time) {
+        if(isEmpty()){
+            return false;
+        }
         if (start.isAfter(time)) {
             return false;
         }
@@ -87,6 +97,9 @@ public class DateTimeRange implements Effectiveness {
     }
 
     public boolean contains(DateTimeRange range) {
+        if(isEmpty()){
+            return false;
+        }
         if (this.start.isAfter(range.start)) {
             return false;
         }
@@ -97,6 +110,9 @@ public class DateTimeRange implements Effectiveness {
     }
 
     public boolean contains(DateRange range) {
+        if(isEmpty()){
+            return false;
+        }
         return this.contains(range.toDateTimeRange());
     }
 

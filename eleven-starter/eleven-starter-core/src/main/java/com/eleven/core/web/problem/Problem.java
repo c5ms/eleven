@@ -25,4 +25,8 @@ public class Problem {
         return  new Problem(error.getError(), message);
     }
 
+    public static Problem of(String error, String message) {
+        return  new Problem(error, message);
+    }
+
 }

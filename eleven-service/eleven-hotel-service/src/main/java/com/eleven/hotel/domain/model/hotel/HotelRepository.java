@@ -1,6 +1,7 @@
 package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.core.data.DomainRepository;
+import com.eleven.hotel.domain.model.plan.Plan;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.query.Param;
 

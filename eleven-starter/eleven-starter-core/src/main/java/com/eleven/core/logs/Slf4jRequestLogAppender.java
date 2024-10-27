@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import net.logstash.logback.marker.LogstashMarker;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
@@ -47,7 +48,7 @@ public class Slf4jRequestLogAppender implements RequestLogAppender {
 
         // error 的时候 一定输出日志
         if (exception.isPresent()) {
-            logger.error(marker, "【{}】执行【{}】处理错误", subject.getNickName(), requestLog.getOperate(), exception.get());
+            logger.error(marker, "【{}】执行【{}】处理错误 : {}", subject.getNickName(), requestLog.getOperate(), ExceptionUtils.getRootCauseMessage(exception.get()), exception.get());
             return;
         }
 

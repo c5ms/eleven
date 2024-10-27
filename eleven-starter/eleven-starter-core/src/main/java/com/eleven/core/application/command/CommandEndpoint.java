@@ -1,4 +1,4 @@
-package com.eleven.core.command;
+package com.eleven.core.application.command;
 
 
 import java.lang.annotation.*;

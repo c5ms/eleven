@@ -4,7 +4,7 @@ import cn.hutool.core.util.IdUtil;
 import com.eleven.core.domain.IdentityGenerator;
 import com.eleven.core.time.TimeContext;
 
-import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class RaindropGenerator implements IdentityGenerator {
@@ -22,18 +22,23 @@ public class RaindropGenerator implements IdentityGenerator {
 
     @Override
     public synchronized String next() {
-        LocalDateTime localDate = LocalDateTime.now(TimeContext.getClock());
-        return String.format("%02d%02d%02d%02d%02d%02d%02d%02d%06d",
-            datacenterId,
-            workerId,
-            localDate.getYear(),
-            localDate.getMonthValue(),
-            localDate.getDayOfMonth(),
-            localDate.getHour(),
-            localDate.getMinute(),
-            localDate.getSecond(),
+//        LocalDateTime localDate = LocalDateTime.now(TimeContext.getClock());
+//        return String.format("%02d%02d%02d%02d%02d%02d%02d%02d%06d",
+//            datacenterId,
+//            workerId,
+//            localDate.getYear(),
+//            localDate.getMonthValue(),
+//            localDate.getDayOfMonth(),
+//            localDate.getHour(),
+//            localDate.getMinute(),
+//            localDate.getSecond(),
+//            seq.incrementAndGet()
+//        );
+        return String.format("%s%s%06d",
+            Long.toHexString(datacenterId * 100 + workerId),
+            Long.toHexString(TimeContext.getClock().millis()/1000),
             seq.incrementAndGet()
-        );
+        ).toUpperCase(Locale.ROOT);
     }
 
 }

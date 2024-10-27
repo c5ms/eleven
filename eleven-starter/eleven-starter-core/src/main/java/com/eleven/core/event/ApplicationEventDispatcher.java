@@ -20,7 +20,7 @@ public class ApplicationEventDispatcher {
 
     @EventListener
     public void outbound(ApplicationEvent event) throws ApplicationEventSerializeException {
-        if (null == event.getClass().getAnnotation(OutboundEvent.class)) {
+        if (null == event.getClass().getAnnotation(IntegrationEvent.class)) {
             return;
         }
         if (event.meta().getFrom() != ApplicationEventMeta.From.INTERNAL) {

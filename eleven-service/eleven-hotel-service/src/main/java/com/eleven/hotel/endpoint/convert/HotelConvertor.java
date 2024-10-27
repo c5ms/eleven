@@ -38,8 +38,8 @@ public class HotelConvertor {
                 .setCheckIn(hotel.getDescription().getCheckInTime())
                 .setCheckOut(hotel.getDescription().getCheckOutTime())
 
-                .setTel(hotel.getContact().getTel())
-                .setEmail(hotel.getContact().getEmail())
+                .setTel(hotel.getDescription().getTel())
+                .setEmail(hotel.getDescription().getEmail())
 
                 .setProvince(hotel.getPosition().getProvince())
                 .setCity(hotel.getPosition().getCity())

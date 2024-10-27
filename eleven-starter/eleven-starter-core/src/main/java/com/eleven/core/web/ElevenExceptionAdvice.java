@@ -1,8 +1,7 @@
 package com.eleven.core.web;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
-import com.eleven.core.command.CommandHandleException;
-import com.eleven.core.domain.DomainError;
+import com.eleven.core.application.command.CommandHandleException;
 import com.eleven.core.domain.DomainErrors;
 import com.eleven.core.domain.DomainException;
 import com.eleven.core.domain.NoRequiredEntityException;
@@ -10,6 +9,7 @@ import com.eleven.core.web.problem.Problem;
 import com.eleven.core.web.problem.ValidationProblem;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
@@ -21,7 +21,6 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
@@ -29,8 +28,6 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 @Slf4j
 @ControllerAdvice
 public class ElevenExceptionAdvice {
-
-
 
 
     @ResponseBody
@@ -98,7 +95,10 @@ public class ElevenExceptionAdvice {
         // 500
         else {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
-//            log.error("internal server error", e);
+            var problem = Problem.of("system_internal", ExceptionUtils.getRootCauseMessage(e));
+            if (log.isDebugEnabled()) {
+                return ResponseEntity.status(status).body(problem);
+            }
         }
 
         return ResponseEntity.status(status).build();

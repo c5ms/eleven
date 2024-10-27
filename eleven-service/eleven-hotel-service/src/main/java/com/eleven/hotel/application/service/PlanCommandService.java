@@ -24,14 +24,16 @@ public class PlanCommandService {
     private final RoomRepository roomRepository;
 
     public Plan createPlan(PlanCreateCommand command) {
-        var plan = Plan.of(
-                planManager.planId(),
-                hotelRepository.requireById(command.getHotelId()),
-                command.getStock(),
-                command.getStayPeriod(),
-                command.getSellPeriod(),
-                command.getDescription()
-        );
+        var hotel = hotelRepository.requireById(command.getHotelId());
+        var plan = Plan.normal()
+            .id(planManager.nextPlanId())
+            .hotelId(command.getHotelId())
+            .sellPeriod(command.getSellPeriod())
+            .preSellPeriod(command.getPreSellPeriod())
+            .stayPeriod(command.getStayPeriod())
+            .description(command.getDescription())
+            .stock(command.getStock())
+            .create();
         planManager.validate(plan);
         planRepository.save(plan);
         return plan;

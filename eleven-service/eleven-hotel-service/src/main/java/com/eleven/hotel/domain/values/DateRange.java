@@ -21,11 +21,6 @@ public class DateRange {
     @Column(value = "end_date")
     private final LocalDate end;
 
-    public DateRange() {
-        this.start = null;
-        this.end = null;
-    }
-
     private DateRange(LocalDate start, LocalDate end) {
         if (null != start && null != end) {
             Assert.isTrue(start.isBefore(end), "start must before end");
@@ -36,7 +31,7 @@ public class DateRange {
     }
 
     public static DateRange empty() {
-        return new DateRange();
+        return new DateRange(null, null);
     }
 
 
@@ -49,10 +44,16 @@ public class DateRange {
     }
 
     public boolean isBefore(DateRange range) {
+        if (isEmpty()) {
+            return false;
+        }
         return this.end.isBefore(range.end);
     }
 
     public boolean isAfter(DateRange range) {
+        if (isEmpty()) {
+            return false;
+        }
         return this.end.isAfter(range.end);
     }
 
@@ -61,6 +62,9 @@ public class DateRange {
     }
 
     public boolean isCurrent() {
+        if (isEmpty()) {
+            return false;
+        }
         return contains(TimeContext.localDate());
     }
 
@@ -72,21 +76,21 @@ public class DateRange {
     }
 
     public boolean overlap(DateRange time) {
+        if (isEmpty()) {
+            return false;
+        }
         return toDateTimeRange().overlap(time.toDateTimeRange());
     }
 
     public boolean contains(LocalDate date) {
+        if (isEmpty()) {
+            return false;
+        }
         return toDateTimeRange().contains(date.atStartOfDay());
     }
 
     public boolean contains(DateRange range) {
-        if (this.start.isAfter(range.start)) {
-            return false;
-        }
-        if (this.end.isBefore(range.end)) {
-            return false;
-        }
-        return start.isBefore(end);
+        return toDateTimeRange().contains(range.toDateTimeRange());
     }
 
 }

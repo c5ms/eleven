@@ -1,7 +1,7 @@
 package com.eleven.demo.endpoint.rest;
 
-import com.eleven.core.command.CommandDispatcher;
-import com.eleven.core.command.CommandHandleException;
+import com.eleven.core.application.command.CommandDispatcher;
+import com.eleven.core.application.command.CommandHandleException;
 import com.eleven.core.security.SecurityContext;
 import com.eleven.core.security.Subject;
 import com.eleven.core.web.annonation.AsMerchantApi;

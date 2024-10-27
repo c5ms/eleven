@@ -14,6 +14,7 @@ public class PlanCreateCommand {
 
     private Stock stock;
     private DateTimeRange sellPeriod;
+    private DateTimeRange preSellPeriod;
     private DateRange stayPeriod;
     private Plan.Description description;
 }

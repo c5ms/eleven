@@ -19,13 +19,16 @@ public class PlanDto {
     private String id;
     private String name;
     private String desc;
-    private Integer count;
+    private Integer stock;
     private SaleType type;
     private SaleState state;
 
+    private Boolean isPreSale;
+    private Boolean isPreSaleOngoing;
     private LocalDateTime preSellStartDate;
     private LocalDateTime preSellEndDate;
 
+    private Boolean isSaleOngoing;
     private LocalDateTime sellStartDate;
     private LocalDateTime sellEndDate;
 

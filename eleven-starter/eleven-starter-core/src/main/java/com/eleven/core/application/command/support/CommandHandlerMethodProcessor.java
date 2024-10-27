@@ -1,8 +1,8 @@
 
-package com.eleven.core.command.support;
+package com.eleven.core.application.command.support;
 
-import com.eleven.core.command.CommandEndpoint;
-import com.eleven.core.command.CommandRegister;
+import com.eleven.core.application.command.CommandEndpoint;
+import com.eleven.core.application.command.CommandRegister;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.aop.framework.autoproxy.AutoProxyUtils;

@@ -1,9 +1,8 @@
 package com.eleven.core.logs;
 
 import cn.hutool.json.JSONUtil;
-import com.eleven.core.model.PageResult;
+import com.eleven.core.application.model.PageResult;
 import jakarta.annotation.Nonnull;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.Order;

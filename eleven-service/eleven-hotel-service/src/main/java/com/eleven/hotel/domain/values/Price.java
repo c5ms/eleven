@@ -8,7 +8,6 @@ import org.springframework.data.relational.core.mapping.Column;
 import java.math.BigDecimal;
 
 @Getter
-@Builder
 @FieldNameConstants
 public class Price {
 
@@ -17,6 +16,10 @@ public class Price {
 
     @Column(value = "price")
     private final BigDecimal amount;
+
+    public Price(BigDecimal amount) {
+        this.amount = amount;
+    }
 
     public static Price of(double price) {
         return of(BigDecimal.valueOf(price));

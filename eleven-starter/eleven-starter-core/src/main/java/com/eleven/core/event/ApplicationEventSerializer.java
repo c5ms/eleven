@@ -103,7 +103,7 @@ public class ApplicationEventSerializer {
     }
 
     private String tryGetNameByAnnotation(Class<? extends ApplicationEvent> clazz) {
-        var outbound = clazz.getAnnotation(OutboundEvent.class);
+        var outbound = clazz.getAnnotation(IntegrationEvent.class);
         if (null != outbound) {
             var name = outbound.value();
             if (StringUtils.isNotBlank(name)) {

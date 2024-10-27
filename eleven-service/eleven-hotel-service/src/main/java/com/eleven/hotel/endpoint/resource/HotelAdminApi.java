@@ -1,6 +1,6 @@
 package com.eleven.hotel.endpoint.resource;
 
-import com.eleven.core.model.PageResult;
+import com.eleven.core.application.model.PageResult;
 import com.eleven.core.web.annonation.AsAdminApi;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.request.HotelQueryRequest;

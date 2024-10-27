@@ -1,4 +1,4 @@
-package com.eleven.core.model;
+package com.eleven.core.application.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Max;

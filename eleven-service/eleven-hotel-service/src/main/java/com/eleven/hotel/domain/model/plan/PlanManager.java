@@ -23,7 +23,7 @@ public class PlanManager {
         }
     }
 
-    public String planId() {
+    public String nextPlanId() {
         return DomainUtils.nextId();
     }
 

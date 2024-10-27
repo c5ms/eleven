@@ -9,9 +9,6 @@ import java.util.Optional;
 
 public interface PlanRepository extends DomainRepository<Plan, String> {
 
-    @Query("select * from plan where hotel_id=:hotelId and name=:name")
-    Collection<PlanSummary> getPlansByHotelIdAndName(@Param("hotelId") String hotelId, @Param("name") String name);
-
     @Query("select * from plan where  hotel_id=:hotelId and id=:roomId")
     Optional<Plan> find(@Param("hotelId") String hotelId, @Param("roomId") String roomId);
 }

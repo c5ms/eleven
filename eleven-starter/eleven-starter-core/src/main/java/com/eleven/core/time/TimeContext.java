@@ -18,39 +18,22 @@ public final class TimeContext {
     @Getter
     static Clock clock = Clock.systemDefaultZone();
 
-
-    /**
-     * 根据当前系统时钟服务，创建当前系统时间
-     *
-     * @return 当前系统时间
-     */
     public static LocalDateTime localDateTime() {
         return LocalDateTime.now(clock);
     }
 
-    /**
-     * 根据当前系统时钟服务，创建当前系统时间
-     *
-     * @return 当前系统时间
-     */
     public static LocalDate localDate() {
         return LocalDate.now(clock);
     }
 
-    /**
-     * 根据当前系统时钟服务，创建当前系统时间
-     *
-     * @return 当前系统时间
-     */
     public static LocalTime localTime() {
         return LocalTime.now(clock);
     }
 
-    /**
-     * 当前时间戳
-     *
-     * @return 时间戳
-     */
+    public  static  long millis(){
+        return clock.millis();
+    }
+
     public static Instant instant() {
         return Instant.now(getClock());
     }

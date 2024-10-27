@@ -1,11 +1,8 @@
-package com.eleven.core.model;
+package com.eleven.core.application.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.Nonnull;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.With;
 import lombok.experimental.Accessors;
 
 import java.util.Iterator;

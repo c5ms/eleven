@@ -17,31 +17,34 @@ public class PlanConvertor {
 
     public PlanDto toDto(Plan plan) {
         return new PlanDto()
-                .setId(plan.getId())
-                .setName(plan.getDescription().getName())
-                .setDesc(plan.getDescription().getDesc())
-                .setCount(plan.getStock().getCount())
-                .setType(plan.getSaleType())
-                .setState(plan.getSaleState())
+            .setId(plan.getId())
+            .setName(plan.getDescription().getName())
+            .setDesc(plan.getDescription().getDesc())
+            .setStock(plan.getStock().getCount())
+            .setType(plan.getSaleType())
+            .setState(plan.getSaleState())
 
-                .setPreSellStartDate(plan.getPreSalePeriod().getStart())
-                .setPreSellEndDate(plan.getPreSalePeriod().getEnd())
+            .setIsPreSale(plan.getPreSalePeriod().isNotEmpty())
+            .setIsPreSaleOngoing(plan.getPreSalePeriod().isCurrent())
+            .setPreSellStartDate(plan.getPreSalePeriod().getStart())
+            .setPreSellEndDate(plan.getPreSalePeriod().getEnd())
 
-                .setSellStartDate(plan.getSalePeriod().getStart())
-                .setSellEndDate(plan.getSalePeriod().getEnd())
+            .setIsSaleOngoing(plan.getPreSalePeriod().isCurrent())
+            .setSellStartDate(plan.getSalePeriod().getStart())
+            .setSellEndDate(plan.getSalePeriod().getEnd())
 
-                .setStayStartDate(plan.getStayPeriod().getStart())
-                .setStayEndDate(plan.getStayPeriod().getEnd())
+            .setStayStartDate(plan.getStayPeriod().getStart())
+            .setStayEndDate(plan.getStayPeriod().getEnd())
 
-                .setRooms(plan.getRooms().stream().map(this::toDto).collect(Collectors.toList()))
-                ;
+            .setRooms(plan.getRooms().stream().map(this::toDto).collect(Collectors.toList()))
+            ;
     }
 
     private PlanDto.PlanRoom toDto(PlanRoom planRoom) {
         return new PlanDto.PlanRoom()
-                .setRoomId(planRoom.getRoomId())
-                .setStock(planRoom.getStock().getCount())
-                .setPrice(planRoom.getPrice().getAmount().doubleValue());
+            .setRoomId(planRoom.getRoomId())
+            .setStock(planRoom.getStock().getCount())
+            .setPrice(planRoom.getPrice().getAmount().doubleValue());
     }
 
 }

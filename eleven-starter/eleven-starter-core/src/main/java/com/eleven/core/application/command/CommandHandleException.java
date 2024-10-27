@@ -1,4 +1,4 @@
-package com.eleven.core.command;
+package com.eleven.core.application.command;
 
 public class CommandHandleException extends Exception {
 

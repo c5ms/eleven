@@ -1,6 +1,7 @@
 package com.eleven.core.data;
 
-import com.eleven.core.model.PageResult;
+import com.eleven.core.application.model.PageQuery;
+import com.eleven.core.application.model.PageResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jdbc.core.JdbcAggregateTemplate;
@@ -15,6 +16,10 @@ import java.util.List;
 public class QuerySupport {
 
     private final JdbcAggregateTemplate jdbcAggregateTemplate;
+
+    public <T> PageResult<T> query(Query query, Class<T> domain, PageQuery pageQuery) {
+        return this.query(query, domain, pageQuery.getPage(), pageQuery.getSize());
+    }
 
     public <T> PageResult<T> query(Query query, Class<T> domain, int page, int size) {
         if (page <= 0) {

@@ -8,14 +8,17 @@ import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
 import com.eleven.hotel.domain.core.HotelAware;
 import com.eleven.hotel.domain.core.Sellable;
-import com.eleven.hotel.domain.model.hotel.Hotel;
 import com.eleven.hotel.domain.model.room.Room;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
 import com.eleven.hotel.domain.values.Price;
 import com.eleven.hotel.domain.values.Stock;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
+import org.apache.commons.lang3.Validate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.relational.core.mapping.Column;
@@ -27,11 +30,14 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-@Table(name = "plan")
+import static com.eleven.hotel.domain.model.plan.Plan.TABLE_NAME;
+
+@Table(name = TABLE_NAME)
 @Getter
 @FieldNameConstants
 @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}), access = AccessLevel.PROTECTED)
 public class Plan extends AbstractEntity implements HotelAware, Sellable {
+    public static final String TABLE_NAME = "plan";
 
     @Id
     private final String id;
@@ -57,7 +63,7 @@ public class Plan extends AbstractEntity implements HotelAware, Sellable {
     @MappedCollection(idColumn = "plan_id")
     private final Set<PlanRoom> rooms;
 
-    @Embedded.Empty
+    @Embedded.Empty(prefix = "stock_")
     private Stock stock;
 
     @Embedded.Empty(prefix = "plan_")
@@ -72,22 +78,28 @@ public class Plan extends AbstractEntity implements HotelAware, Sellable {
         this.rooms = new HashSet<>();
     }
 
-    public static Plan of(String id,
-                          Hotel hotel,
-                          Stock stock,
-                          DateRange stayPeriod,
-                          DateTimeRange sellPeriod,
-                          Description description) {
+    @SuppressWarnings("unused")
+    @Builder(builderClassName = "normalBuilder", builderMethodName = "normal", buildMethodName = "create")
+    public static Plan createNormal(String id,
+                                    String hotelId,
+                                    Stock stock,
+                                    DateRange stayPeriod,
+                                    DateTimeRange sellPeriod,
+                                    DateTimeRange preSellPeriod,
+                                    Description description) {
 
-        DomainUtils.must(stock.greaterTan(Stock.ZERO), () -> new IllegalArgumentException("total must gather than zero"));
+        Validate.notNull(hotelId, "hotelId must not be null");
+        Validate.notNull(stock, "stock must not be null");
+        Validate.isTrue(stock.greaterTan(Stock.ZERO), "total must gather than zero");
 
-        var plan = new Plan(id, hotel.getId());
-        plan.description = description;
+        var plan = new Plan(id, hotelId);
         plan.stock = stock;
         plan.salePeriod = sellPeriod;
         plan.stayPeriod = stayPeriod;
+        plan.preSalePeriod = preSellPeriod;
         plan.saleType = SaleType.NORMAL;
         plan.saleState = SaleState.STOPPED;
+        plan.description = description;
         return plan;
     }
 
@@ -115,7 +127,7 @@ public class Plan extends AbstractEntity implements HotelAware, Sellable {
         if (this.salePeriod == null) {
             return false;
         }
-        if (null != preSalePeriod && preSalePeriod.isEffective()) {
+        if (null != preSalePeriod && preSalePeriod.isCurrent()) {
             return true;
         }
         return stayPeriod.isCurrent();
@@ -129,8 +141,8 @@ public class Plan extends AbstractEntity implements HotelAware, Sellable {
 
     public Optional<PlanRoom> findRoom(String roomId) {
         return this.rooms.stream()
-                .filter(planRoom -> planRoom.getRoomId().equals(roomId))
-                .findFirst();
+            .filter(planRoom -> planRoom.getRoomId().equals(roomId))
+            .findFirst();
     }
 
     public Optional<Price> chargeRoom(Room room) {

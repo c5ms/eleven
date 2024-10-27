@@ -22,11 +22,11 @@ public class PlanCreateRequest {
     private String desc;
 
     @NotNull
-    private SaleType saleType;
-
-    @NotNull
     @Min(1)
-    private Integer total;
+    private Integer stock;
+
+    private LocalDateTime preSellStartDate;
+    private LocalDateTime preSellEndDate;
 
     private LocalDateTime sellStartDate;
     private LocalDateTime sellEndDate;
