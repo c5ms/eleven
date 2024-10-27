@@ -2,9 +2,9 @@ package com.eleven.core.web;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
 import com.eleven.core.application.command.CommandHandleException;
-import com.eleven.core.domain.NoEntityFoundException;
 import com.eleven.core.domain.DomainErrors;
 import com.eleven.core.domain.DomainException;
+import com.eleven.core.domain.NoEntityFoundException;
 import com.eleven.core.web.problem.Problem;
 import com.eleven.core.web.problem.ValidationProblem;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -21,6 +21,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
@@ -43,7 +44,9 @@ public class ElevenExceptionAdvice {
         //400 - payload
         if (e instanceof CommandHandleException) {
             status = HttpStatus.BAD_REQUEST;
-        }else if (e instanceof HttpMessageConversionException) {
+        } else if (e instanceof NoEntityFoundException) {
+            status = HttpStatus.BAD_REQUEST;
+        } else if (e instanceof HttpMessageConversionException) {
             var problem = Problem.of(DomainErrors.ERROR_REQUEST_BODY_FAILED);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
         } else if (e instanceof DomainException ex) {
@@ -76,8 +79,6 @@ public class ElevenExceptionAdvice {
             status = HttpStatus.NOT_FOUND;
         } else if (e instanceof NoResourceFoundException) {
             status = HttpStatus.NOT_FOUND;
-        }else if (e instanceof NoEntityFoundException) {
-            status = HttpStatus.NOT_FOUND;
         }
 
         // 415 405
@@ -85,6 +86,11 @@ public class ElevenExceptionAdvice {
             status = HttpStatus.UNSUPPORTED_MEDIA_TYPE;
         } else if (e instanceof HttpRequestMethodNotSupportedException) {
             status = HttpStatus.METHOD_NOT_ALLOWED;
+        }
+
+        // dynamic
+        else if (e instanceof ResponseStatusException ex) {
+            status = HttpStatus.valueOf(ex.getStatusCode().value());
         }
 
         // 500
@@ -95,7 +101,6 @@ public class ElevenExceptionAdvice {
                 return ResponseEntity.status(status).body(problem);
             }
         }
-
 
 
         return ResponseEntity.status(status).build();

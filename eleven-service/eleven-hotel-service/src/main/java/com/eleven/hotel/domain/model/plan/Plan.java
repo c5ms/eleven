@@ -83,8 +83,8 @@ public class Plan extends AbstractEntity implements Sellable {
     }
 
     @SuppressWarnings("unused")
-    @Builder(builderClassName = "normalBuilder", builderMethodName = "normal", buildMethodName = "create")
-    public static Plan createNormal(String hotelId,
+    @Builder(builderClassName = "normalBuilder", builderMethodName = "normal", buildMethodName = "create",access = AccessLevel.PROTECTED)
+     static Plan createNormal(String hotelId,
                                     String planId,
                                     Stock stock,
                                     DateRange stayPeriod,

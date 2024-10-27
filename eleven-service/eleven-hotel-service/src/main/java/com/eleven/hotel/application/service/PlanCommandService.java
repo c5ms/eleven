@@ -1,12 +1,13 @@
 package com.eleven.hotel.application.service;
 
+import com.eleven.hotel.api.domain.core.HotelErrors;
 import com.eleven.hotel.application.command.PlanAddRoomCommand;
 import com.eleven.hotel.application.command.PlanCreateCommand;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
+import com.eleven.hotel.domain.model.hotel.RoomRepository;
 import com.eleven.hotel.domain.model.plan.Plan;
 import com.eleven.hotel.domain.model.plan.PlanManager;
 import com.eleven.hotel.domain.model.plan.PlanRepository;
-import com.eleven.hotel.domain.model.hotel.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -38,12 +39,13 @@ public class PlanCommandService {
     }
 
     public void addRoom(PlanAddRoomCommand command) {
-//        var plan = planRepository.requireById(command.getPlanId());
-//        var room = roomRepository.requireById(command.getRoomId());
-//        var stock = command.getStock();
-//        var price = command.getPrice();
-//        plan.addRoom(room, stock, price);
-//        planRepository.save(plan);
+        var plan = planRepository.require(command.getHotelId(), command.getPlanId());
+        //todo how to throw
+        var room = roomRepository.require(command.getHotelId(), command.getRoomId());
+        var stock = command.getStock();
+        var price = command.getPrice();
+        plan.addRoom(room, stock, price);
+        planRepository.save(plan);
     }
 
 

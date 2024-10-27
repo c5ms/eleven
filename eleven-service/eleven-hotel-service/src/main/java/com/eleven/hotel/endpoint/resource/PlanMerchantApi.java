@@ -13,6 +13,7 @@ import com.eleven.hotel.application.query.PlanQuery;
 import com.eleven.hotel.application.service.HotelQueryService;
 import com.eleven.hotel.application.service.PlanCommandService;
 import com.eleven.hotel.domain.model.plan.Plan;
+import com.eleven.hotel.domain.model.plan.PlanNotFoundException;
 import com.eleven.hotel.domain.model.plan.PlanRepository;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
@@ -24,8 +25,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -57,7 +60,7 @@ public class PlanMerchantApi {
     @Operation(summary = "read plan")
     @GetMapping("/{planId}")
     public Optional<PlanDto> readPlan(@PathVariable("hotelId") String hotelId, @PathVariable("planId") String planId) {
-        return planRepository.find(hotelId, planId).map(planConvertor::toDto);
+        return planRepository.findByHotelIdAndPlanId(hotelId, planId).map(planConvertor::toDto);
     }
 
     @Operation(summary = "create plan")
@@ -78,14 +81,18 @@ public class PlanMerchantApi {
     @Operation(summary = "add room")
     @PostMapping("/{planId}/rooms")
     public void addRoom(@PathVariable("hotelId") String hotelId, @PathVariable("planId") String planId, @RequestBody @Validated PlanAddRoomRequest request) {
-        var command = PlanAddRoomCommand.builder()
-            .hotelId(hotelId)
-            .planId(planId)
-            .roomId(request.getRoomId())
-            .stock(Stock.of(request.getStock()))
-            .price(Price.of(request.getPrice()))
-            .build();
-        planCommandService.addRoom(command);
+        try {
+            var command = PlanAddRoomCommand.builder()
+                .hotelId(hotelId)
+                .planId(planId)
+                .roomId(request.getRoomId())
+                .stock(Stock.of(request.getStock()))
+                .price(Price.of(request.getPrice()))
+                .build();
+            planCommandService.addRoom(command);
+        } catch (PlanNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 
 }

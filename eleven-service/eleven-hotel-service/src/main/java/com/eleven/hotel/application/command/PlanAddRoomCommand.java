@@ -10,6 +10,7 @@ import lombok.Getter;
 public class PlanAddRoomCommand {
     private String hotelId;
     private String planId;
+
     private String roomId;
     private Stock stock;
     private Price price;
