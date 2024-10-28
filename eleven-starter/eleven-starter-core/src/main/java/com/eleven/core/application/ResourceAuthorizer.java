@@ -1,4 +1,4 @@
-package com.eleven.core.application.security;
+package com.eleven.core.application;
 
 public interface ResourceAuthorizer {
 

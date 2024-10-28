@@ -1,4 +1,4 @@
-package com.eleven.core.logs;
+package com.eleven.core.web.log;
 
 import com.eleven.core.security.SecurityContext;
 import com.eleven.core.security.Subject;
@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import net.logstash.logback.marker.LogstashMarker;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -25,10 +26,13 @@ public class Slf4jRequestLogAppender implements RequestLogAppender {
 
     @Override
     public void append(RequestLog requestLog) {
-        Subject subject = SecurityContext.getCurrentSubject();
+        if(StringUtils.isBlank(requestLog.getOperate())){
+            return;
+        }
+        var subject = SecurityContext.getCurrentSubject();
         requestLog.setUserId(subject.getUserId());
-        Optional<Throwable> exception = RequestLogContext.getCurrentError();
-        LogstashMarker marker = new LogstashMarker("requestLog") {
+        var exception = RequestLogContext.getCurrentError();
+        var marker = new LogstashMarker("requestLog") {
             @Override
             public void writeTo(JsonGenerator generator) throws IOException {
                 generator.writePOJOField("request", requestLog.getRequest());
@@ -59,18 +63,13 @@ public class Slf4jRequestLogAppender implements RequestLogAppender {
         }
 
         if (status.is4xxClientError()) {
-            if (logger.isDebugEnabled()) {
+            if (logger.isWarnEnabled()) {
                 if (exception.isPresent()) {
                     logger.warn(marker, "【{}】执行【{}】处理失败 : {}", subject.getNickName(), requestLog.getOperate(), ExceptionUtils.getRootCauseMessage(exception.get()),exception.get());
                     return;
                 }
-            }
-
-            if (logger.isWarnEnabled()) {
-                if (exception.isPresent()) {
-                    logger.warn(marker, "【{}】执行【{}】处理失败 : {}", subject.getNickName(), requestLog.getOperate(), ExceptionUtils.getRootCauseMessage(exception.get()));
-                    return;
-                }
+                logger.warn(marker, "【{}】执行【{}】处理失败", subject.getNickName(), requestLog.getOperate());
+                return;
             }
         }
 

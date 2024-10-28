@@ -1,4 +1,4 @@
-package com.eleven.core.application.security;
+package com.eleven.core.application;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,16 +25,18 @@ public class ResourceSecurityManager {
                 .allMatch(resourceAuthorizer -> resourceAuthorizer.isWritable(resource));
     }
 
-    public void mustReadable(Object resource) throws NoReadPermissionException {
+    public boolean mustReadable(Object resource) throws NoReadPermissionException {
         if (!isReadable(resource)) {
             throw NoReadPermissionException.instance();
         }
+        return true;
     }
 
-    public void mustWritable(Object resource) throws NoWritePermissionException {
+    public boolean mustWritable(Object resource) throws NoWritePermissionException {
         if (!isWritable(resource)) {
             throw NoWritePermissionException.instance();
         }
+        return true;
     }
 
 }

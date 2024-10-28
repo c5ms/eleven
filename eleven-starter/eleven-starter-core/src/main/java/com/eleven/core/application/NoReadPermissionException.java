@@ -1,6 +1,6 @@
-package com.eleven.core.application.security;
+package com.eleven.core.application;
 
-public class NoReadPermissionException extends NoSufficientPermissionException {
+public class NoReadPermissionException extends NoPermissionException {
     public NoReadPermissionException(String message) {
         super(message);
     }

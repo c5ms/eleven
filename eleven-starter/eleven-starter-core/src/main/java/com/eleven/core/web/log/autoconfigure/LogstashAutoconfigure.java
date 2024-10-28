@@ -1,4 +1,4 @@
-package com.eleven.core.logs.autoconfigure;
+package com.eleven.core.web.log.autoconfigure;
 
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;

@@ -1,10 +1,14 @@
-package com.eleven.hotel.infrastructure.security;
+package com.eleven.hotel.endpoint.resource.support;
 
+import com.eleven.core.application.ApplicationContext;
+import com.eleven.hotel.application.service.security.HotelResourceAuthorizer;
+import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -17,12 +21,22 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MerchantApiInterceptor implements HandlerInterceptor {
 
+    private final HotelRepository hotelRepository;
 
     @Override
     public boolean preHandle(@Nonnull HttpServletRequest request, @Nonnull HttpServletResponse response, @Nonnull Object handler) {
         if (handler instanceof HandlerMethod handlerMethod) {
-            var access = getAccess(request);
-//            log.info("access = {}", access);
+            var variables = getAccess(request);
+            log.info("request uri variables = {}", variables);
+
+            var hotelId = variables.get("hotelId");
+            if (StringUtils.isNotBlank(hotelId)) {
+
+//                hotelRepository.findByHotelId(hotelId)
+//                    .filter(ApplicationContext::mustReadable)
+//                    .orElseThrow(ApplicationContext::noResource);
+
+            }
         }
         return true;
     }

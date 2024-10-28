@@ -1,6 +1,6 @@
-package com.eleven.core.application.security;
+package com.eleven.core.application;
 
-public class NoWritePermissionException extends NoSufficientPermissionException {
+public class NoWritePermissionException extends NoPermissionException {
     public NoWritePermissionException(String message) {
         super(message);
     }

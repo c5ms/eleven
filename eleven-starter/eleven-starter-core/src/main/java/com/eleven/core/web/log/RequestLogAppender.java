@@ -1,4 +1,4 @@
-package com.eleven.core.logs;
+package com.eleven.core.web.log;
 
 public interface RequestLogAppender {
     /**

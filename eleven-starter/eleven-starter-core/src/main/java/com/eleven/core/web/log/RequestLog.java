@@ -1,4 +1,4 @@
-package com.eleven.core.logs;
+package com.eleven.core.web.log;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

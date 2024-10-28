@@ -1,6 +1,6 @@
-package com.eleven.core.logs;
+package com.eleven.core.web.log;
 
-import com.eleven.core.logs.annonation.UseRequestLog;
+import com.eleven.core.web.log.annonation.UseRequestLog;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.http.HttpServletRequest;

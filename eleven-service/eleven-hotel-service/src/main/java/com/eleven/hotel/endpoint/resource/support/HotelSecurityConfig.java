@@ -1,4 +1,4 @@
-package com.eleven.hotel.infrastructure.security;
+package com.eleven.hotel.endpoint.resource.support;
 
 import com.eleven.core.web.WebConstants;
 import lombok.AllArgsConstructor;

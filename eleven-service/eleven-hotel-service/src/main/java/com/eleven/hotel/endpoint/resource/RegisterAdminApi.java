@@ -5,7 +5,6 @@ import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.request.RegisterReviewRequest;
 import com.eleven.hotel.application.command.RegisterReviewCommand;
 import com.eleven.hotel.application.service.RegisterCommandService;
-import com.eleven.hotel.domain.model.hotel.RegisterNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

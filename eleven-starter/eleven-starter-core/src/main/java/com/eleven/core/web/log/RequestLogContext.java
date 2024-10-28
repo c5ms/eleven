@@ -1,4 +1,4 @@
-package com.eleven.core.logs;
+package com.eleven.core.web.log;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -82,7 +82,7 @@ public final class RequestLogContext {
     public static void setCurrentError(Throwable e) {
         exceptionHolder.set(e);
         var sysLog = getLog();
-        var firstElement = e.getStackTrace()[0];
+
         var exception = new RequestLog.Exception();
         exception.setTraceId(sysLog.getTraceId());
         exception.setHappenTime(sysLog.getRequestTime());
@@ -91,10 +91,13 @@ public final class RequestLogContext {
         exception.setExceptionStack(ExceptionUtils.getStackTrace(e));
         exception.setRootCauseClass(e.getClass().getName());
         exception.setRootCauseMessage(StringUtils.substring(ExceptionUtils.getRootCauseMessage(e), 0, 1024));
-        exception.setDeclaringClass(firstElement.getClassName());
-        exception.setMethodName(firstElement.getMethodName());
-        exception.setFileName(firstElement.getFileName());
-        exception.setLineNumber(firstElement.getLineNumber());
+        if (e.getStackTrace().length > 0) {
+            var firstElement = e.getStackTrace()[0];
+            exception.setDeclaringClass(firstElement.getClassName());
+            exception.setMethodName(firstElement.getMethodName());
+            exception.setFileName(firstElement.getFileName());
+            exception.setLineNumber(firstElement.getLineNumber());
+        }
         sysLog.setException(exception);
     }
 

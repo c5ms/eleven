@@ -1,6 +1,6 @@
-package com.eleven.core.application.security.support;
+package com.eleven.core.application.support;
 
-import com.eleven.core.application.security.ResourceAuthorizer;
+import com.eleven.core.application.ResourceAuthorizer;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

@@ -1,7 +1,6 @@
 package com.eleven.hotel.application.service;
 
 import com.eleven.core.application.ApplicationContext;
-import com.eleven.core.application.security.ResourceSecurityManager;
 import com.eleven.hotel.application.command.RoomCreateCommand;
 import com.eleven.hotel.application.command.RoomDeleteCommand;
 import com.eleven.hotel.application.command.RoomUpdateCommand;
@@ -25,7 +24,10 @@ public class RoomCommandService {
     private final HotelRepository hotelRepository;
 
     public Room createRoom(RoomCreateCommand command) {
-        var hotel = hotelRepository.require(command.getHotelId());
+        var hotel = hotelRepository.findByHotelId(command.getHotelId())
+            .filter(ApplicationContext::mustWritable)
+            .orElseThrow(ApplicationContext::noResource);
+
         var room = roomManager.create(hotel, command.getDescription(), command.getRestriction(), command.getChargeType());
         roomManager.validate(room);
         roomRepository.save(room);
@@ -34,14 +36,17 @@ public class RoomCommandService {
 
     public void deleteRoom(RoomDeleteCommand command) {
         var room = roomRepository.findByHotelIdAndRoomId(command.getHotelId(), command.getRoomId())
-                .filter(ApplicationContext::isWritable)
-                .orElseThrow(ApplicationContext::noWritePermission);
+            .filter(ApplicationContext::mustWritable)
+            .orElseThrow(ApplicationContext::noResource);
 
         roomRepository.delete(room);
     }
 
     public Room updateRoom(RoomUpdateCommand command) {
-        var room = roomRepository.require(command.getHotelId(), command.getRoomId());
+        var room = roomRepository.findByHotelIdAndRoomId(command.getHotelId(), command.getRoomId())
+            .filter(ApplicationContext::mustWritable)
+            .orElseThrow(ApplicationContext::noResource);
+
         Optional.ofNullable(command.getChargeType()).ifPresent(room::setChargeType);
         Optional.ofNullable(command.getDescription()).ifPresent(room::setDescription);
         Optional.ofNullable(command.getRestriction()).ifPresent(room::setRestriction);

@@ -1,6 +1,6 @@
-package com.eleven.core.logs.autoconfigure;
+package com.eleven.core.web.log.autoconfigure;
 
-import com.eleven.core.logs.RequestLogInterceptor;
+import com.eleven.core.web.log.RequestLogInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

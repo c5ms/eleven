@@ -1,4 +1,4 @@
-package com.eleven.core.logs;
+package com.eleven.core.web.log;
 
 import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
