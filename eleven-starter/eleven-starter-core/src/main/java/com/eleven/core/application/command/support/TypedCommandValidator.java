@@ -1,4 +1,6 @@
-package com.eleven.core.application.command;
+package com.eleven.core.application.command.support;
+
+import com.eleven.core.application.command.CommandValidator;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

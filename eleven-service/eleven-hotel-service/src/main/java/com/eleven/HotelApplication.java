@@ -1,7 +1,5 @@
 package com.eleven;
 
-import cn.hutool.core.util.IdUtil;
-import com.eleven.core.domain.support.SnowflakeIdentityGenerator;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

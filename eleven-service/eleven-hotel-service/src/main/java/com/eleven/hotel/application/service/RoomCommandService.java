@@ -1,5 +1,7 @@
 package com.eleven.hotel.application.service;
 
+import com.eleven.core.application.ApplicationContext;
+import com.eleven.core.application.security.ResourceSecurityManager;
 import com.eleven.hotel.application.command.RoomCreateCommand;
 import com.eleven.hotel.application.command.RoomDeleteCommand;
 import com.eleven.hotel.application.command.RoomUpdateCommand;
@@ -31,7 +33,10 @@ public class RoomCommandService {
     }
 
     public void deleteRoom(RoomDeleteCommand command) {
-        var room = roomRepository.require(command.getHotelId(), command.getRoomId());
+        var room = roomRepository.findByHotelIdAndRoomId(command.getHotelId(), command.getRoomId())
+                .filter(ApplicationContext::isWritable)
+                .orElseThrow(ApplicationContext::noWritePermission);
+
         roomRepository.delete(room);
     }
 

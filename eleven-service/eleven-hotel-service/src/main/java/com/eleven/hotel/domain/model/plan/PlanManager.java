@@ -1,10 +1,8 @@
 package com.eleven.hotel.domain.model.plan;
 
 import com.eleven.core.data.SerialGenerator;
-import com.eleven.core.domain.DomainContext;
 import com.eleven.core.domain.DomainError;
 import com.eleven.hotel.domain.model.hotel.Hotel;
-import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.model.plan.validate.PlanNameValidator;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;

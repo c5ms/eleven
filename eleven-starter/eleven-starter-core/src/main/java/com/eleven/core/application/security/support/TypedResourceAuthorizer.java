@@ -1,4 +1,6 @@
-package com.eleven.core.application.security;
+package com.eleven.core.application.security.support;
+
+import com.eleven.core.application.security.ResourceAuthorizer;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -30,7 +32,7 @@ public abstract class TypedResourceAuthorizer<C> implements ResourceAuthorizer {
         return checkIsWritable(c);
     }
 
-   public    abstract boolean checkIsReadable(C c);
+    public abstract boolean checkIsReadable(C c);
 
     public abstract boolean checkIsWritable(C c);
 }

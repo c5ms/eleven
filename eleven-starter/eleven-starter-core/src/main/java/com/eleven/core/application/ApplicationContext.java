@@ -2,9 +2,9 @@ package com.eleven.core.application;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.eleven.core.application.event.ApplicationEvent;
-import com.eleven.core.application.security.ApplicationSecurityManager;
-import com.eleven.core.application.security.NoAccessPermissionException;
+import com.eleven.core.application.security.NoReadPermissionException;
 import com.eleven.core.application.security.NoWritePermissionException;
+import com.eleven.core.application.security.ResourceSecurityManager;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -14,22 +14,28 @@ public class ApplicationContext {
         SpringUtil.publishEvent(applicationEvent);
     }
 
-    public boolean isAccessible(Object resource)  {
-        return SpringUtil.getBean(ApplicationSecurityManager.class).isReadable(resource);
+    public boolean isReadable(Object resource) {
+        return SpringUtil.getBean(ResourceSecurityManager.class).isReadable(resource);
     }
 
     public boolean isWritable(Object resource) {
-        return SpringUtil.getBean(ApplicationSecurityManager.class).isWritable(resource);
+        return SpringUtil.getBean(ResourceSecurityManager.class).isWritable(resource);
     }
 
-    public static NoAccessPermissionException noAccessPermission () {
-        return NoAccessPermissionException.because("the user has no permission or the resource is not exist");
+    public void mustReadable(Object resource) {
+        SpringUtil.getBean(ResourceSecurityManager.class).mustReadable(resource);
     }
 
-    public static NoWritePermissionException noWritePermission () {
-        return NoWritePermissionException.because("the user has no permission or the resource is not exist");
+    public void mustWritable(Object resource) {
+        SpringUtil.getBean(ResourceSecurityManager.class).mustWritable(resource);
     }
 
+    public NoWritePermissionException noWritePermission() {
+        return NoWritePermissionException.instance();
+    }
 
+    public NoReadPermissionException noReadPermission() {
+        return NoReadPermissionException.instance();
+    }
 
 }

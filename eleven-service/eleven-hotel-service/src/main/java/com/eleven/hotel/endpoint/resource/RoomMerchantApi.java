@@ -1,7 +1,7 @@
 package com.eleven.hotel.endpoint.resource;
 
 import com.eleven.core.application.ApplicationContext;
-import com.eleven.core.application.security.NoPermissionException;
+import com.eleven.core.web.WebContext;
 import com.eleven.core.web.annonation.AsMerchantApi;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.model.RoomDto;
@@ -54,11 +54,11 @@ public class RoomMerchantApi {
     @PostMapping
     public RoomDto createRoom(@PathVariable("hotelId") String hotelId, @RequestBody @Validated RoomCreateRequest request) {
         var command = RoomCreateCommand.builder()
-            .hotelId(hotelId)
-            .description(new Room.Description(request.getName(), request.getType(), request.getDesc(), request.getHeadPicUrl()))
-            .restriction(new Room.Restriction(request.getMinPerson(), request.getMaxPerson()))
-            .chargeType(request.getChargeType())
-            .build();
+                .hotelId(hotelId)
+                .description(new Room.Description(request.getName(), request.getType(), request.getDesc(), request.getHeadPicUrl()))
+                .restriction(new Room.Restriction(request.getMinPerson(), request.getMaxPerson()))
+                .chargeType(request.getChargeType())
+                .build();
         var room = roomCommandService.createRoom(command);
         return roomConvertor.toDto(room);
     }
@@ -69,12 +69,12 @@ public class RoomMerchantApi {
                               @PathVariable("roomId") String roomId,
                               @RequestBody @Validated RoomUpdateRequest request) {
         var command = RoomUpdateCommand.builder()
-            .hotelId(hotelId)
-            .roomId(roomId)
-            .chargeType(request.getChargeType())
-            .description(new Room.Description(request.getName(), request.getType(), request.getDesc(), request.getHeadPicUrl()))
-            .restriction(new Room.Restriction(request.getMinPerson(), request.getMaxPerson()))
-            .build();
+                .hotelId(hotelId)
+                .roomId(roomId)
+                .chargeType(request.getChargeType())
+                .description(new Room.Description(request.getName(), request.getType(), request.getDesc(), request.getHeadPicUrl()))
+                .restriction(new Room.Restriction(request.getMinPerson(), request.getMaxPerson()))
+                .build();
         var room = roomCommandService.updateRoom(command);
         return roomConvertor.toDto(room);
     }
@@ -83,13 +83,12 @@ public class RoomMerchantApi {
     @DeleteMapping("/{roomId}")
     public void deleteRoom(@PathVariable("hotelId") String hotelId, @PathVariable("roomId") String roomId) {
         roomRepository.findByHotelIdAndRoomId(hotelId, roomId)
-            .filter(ApplicationContext::isAccessible)
-            .orElseThrow(ApplicationContext::noAccessPermission);
+                .ifPresentOrElse(ApplicationContext::mustWritable, WebContext::throwNotFound);
 
         var command = RoomDeleteCommand.builder()
-            .hotelId(hotelId)
-            .roomId(roomId)
-            .build();
+                .hotelId(hotelId)
+                .roomId(roomId)
+                .build();
         roomCommandService.deleteRoom(command);
     }
 

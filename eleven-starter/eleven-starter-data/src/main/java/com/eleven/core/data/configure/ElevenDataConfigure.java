@@ -1,8 +1,8 @@
 package com.eleven.core.data.configure;
 
 import cn.hutool.core.lang.Snowflake;
-import com.eleven.core.domain.*;
 import com.eleven.core.data.support.*;
+import com.eleven.core.domain.IdentityGenerator;
 import com.eleven.core.domain.support.*;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.PostConstruct;
@@ -51,9 +51,7 @@ public class ElevenDataConfigure extends AbstractJdbcConfiguration {
                 return new ArrayList<>(context.getSource().getValues());
             }
         });
-
     }
-
 
     @Bean
     public IdentityGenerator idGenerator() {

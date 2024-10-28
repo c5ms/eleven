@@ -2,10 +2,8 @@ package com.eleven.core.web;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
 import com.eleven.core.application.command.CommandHandleException;
-import com.eleven.core.application.security.NoPermissionException;
-import com.eleven.core.domain.DomainErrors;
+import com.eleven.core.application.security.NoSufficientPermissionException;
 import com.eleven.core.domain.DomainException;
-import com.eleven.core.domain.NoEntityFoundException;
 import com.eleven.core.web.problem.Problem;
 import com.eleven.core.web.problem.ValidationProblem;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -46,7 +44,7 @@ public class ElevenExceptionAdvice {
         if (e instanceof CommandHandleException) {
             status = HttpStatus.BAD_REQUEST;
         } else if (e instanceof HttpMessageConversionException) {
-            var problem = Problem.of(DomainErrors.ERROR_REQUEST_BODY_FAILED);
+            var problem = Problem.of(WebErrors.ERROR_REQUEST_BODY_FAILED);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
         } else if (e instanceof DomainException ex) {
             var problem = Problem.of(ex);
@@ -59,17 +57,20 @@ public class ElevenExceptionAdvice {
         else if (e instanceof BindException ex) {
             var problem = ValidationProblem.empty();
             ex.getAllErrors()
-                .stream()
-                .filter(objectError -> objectError instanceof FieldError)
-                .map(objectError -> (FieldError) objectError)
-                .map(fieldError -> new ValidationProblem.Field(fieldError.getField(), fieldError.getCode(), fieldError.getDefaultMessage()))
-                .forEach(problem::addField);
+                    .stream()
+                    .filter(objectError -> objectError instanceof FieldError)
+                    .map(objectError -> (FieldError) objectError)
+                    .map(fieldError -> new ValidationProblem.Field(fieldError.getField(), fieldError.getCode(), fieldError.getDefaultMessage()))
+                    .forEach(problem::addField);
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(problem);
         }
 
         // 403
         else if (e instanceof AccessDeniedException) {
-            var problem = Problem.of(DomainErrors.ERROR_ACCESS_DENIED);
+            var problem = Problem.of(WebErrors.ERROR_ACCESS_DENIED);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(problem);
+        } else if (e instanceof NoSufficientPermissionException) {
+            var problem = Problem.of(WebErrors.ERROR_ACCESS_DENIED);
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(problem);
         }
 
@@ -77,8 +78,6 @@ public class ElevenExceptionAdvice {
         else if (e instanceof NoHandlerFoundException) {
             status = HttpStatus.NOT_FOUND;
         } else if (e instanceof NoResourceFoundException) {
-            status = HttpStatus.NOT_FOUND;
-        } else if (e instanceof NoPermissionException) {
             status = HttpStatus.NOT_FOUND;
         }
 

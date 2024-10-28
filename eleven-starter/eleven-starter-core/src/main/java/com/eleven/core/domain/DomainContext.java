@@ -3,17 +3,11 @@ package com.eleven.core.domain;
 import cn.hutool.extra.spring.SpringUtil;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.BooleanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 
 import java.util.function.Supplier;
 
 @UtilityClass
 public class DomainContext {
-
-   private static IdentityGenerator identityGenerator;
 
     public static void must(boolean check, Supplier<RuntimeException> e) {
         if (BooleanUtils.isFalse(check)) {
@@ -41,15 +35,6 @@ public class DomainContext {
 
     public void publishEvent(DomainEvent domainEvent) {
         SpringUtil.publishEvent(domainEvent);
-    }
-
-    @Order(Ordered.HIGHEST_PRECEDENCE)
-    @Configuration(proxyBeanMethods = false)
-    static class DomainHelperAutoconfigure {
-        @Autowired
-        public DomainHelperAutoconfigure(IdentityGenerator identityGenerator) {
-            DomainContext.identityGenerator = identityGenerator;
-        }
     }
 
 }

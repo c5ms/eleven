@@ -1,6 +1,6 @@
 package com.eleven.hotel.application.service.security;
 
-import com.eleven.core.application.security.TypedResourceAuthorizer;
+import com.eleven.core.application.security.support.TypedResourceAuthorizer;
 import com.eleven.hotel.domain.model.hotel.Room;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
