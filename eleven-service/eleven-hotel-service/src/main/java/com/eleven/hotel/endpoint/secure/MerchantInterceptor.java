@@ -1,4 +1,4 @@
-package com.eleven.hotel.endpoint.resource.support;
+package com.eleven.hotel.endpoint.secure;
 
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import jakarta.annotation.Nonnull;
@@ -17,7 +17,7 @@ import java.util.Map;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class MerchantApiInterceptor implements HandlerInterceptor {
+public class MerchantInterceptor implements HandlerInterceptor {
 
     private final HotelRepository hotelRepository;
 

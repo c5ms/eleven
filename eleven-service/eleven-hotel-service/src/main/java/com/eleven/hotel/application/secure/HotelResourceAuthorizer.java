@@ -1,7 +1,7 @@
-package com.eleven.hotel.application.service.security;
+package com.eleven.hotel.application.secure;
 
 import com.eleven.core.application.secure.TypedDomainAuthorizer;
-import com.eleven.hotel.domain.model.hotel.Room;
+import com.eleven.hotel.domain.model.hotel.Hotel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -9,15 +9,15 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class RoomResourceAuthorizer extends TypedDomainAuthorizer<Room> {
+public class HotelResourceAuthorizer extends TypedDomainAuthorizer<Hotel> {
 
     @Override
-    public boolean checkIsReadable(Room room) {
+    public boolean checkIsReadable(Hotel hotel) {
         return true;
     }
 
     @Override
-    public boolean checkIsWritable(Room room) {
+    public boolean checkIsWritable(Hotel hotel) {
         return true;
     }
 }

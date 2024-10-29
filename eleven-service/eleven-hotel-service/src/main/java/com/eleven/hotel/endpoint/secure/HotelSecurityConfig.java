@@ -1,4 +1,4 @@
-package com.eleven.hotel.endpoint.resource.support;
+package com.eleven.hotel.endpoint.secure;
 
 import com.eleven.core.web.WebConstants;
 import lombok.AllArgsConstructor;
@@ -10,11 +10,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @AllArgsConstructor
 public class HotelSecurityConfig implements WebMvcConfigurer {
 
-    private final MerchantApiInterceptor merchantApiInterceptor;
+    private final MerchantInterceptor merchantInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(merchantApiInterceptor)
+        registry.addInterceptor(merchantInterceptor)
             .addPathPatterns(WebConstants.API_PREFIX_MERCHANT + "/**");
     }
 }
