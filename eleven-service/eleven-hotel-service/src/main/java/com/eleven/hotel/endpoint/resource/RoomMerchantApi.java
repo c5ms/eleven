@@ -1,7 +1,5 @@
 package com.eleven.hotel.endpoint.resource;
 
-import com.eleven.core.application.ApplicationHelper;
-import com.eleven.core.application.NoPrincipalException;
 import com.eleven.core.web.annonation.AsMerchantApi;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.model.RoomDto;
@@ -11,7 +9,6 @@ import com.eleven.hotel.application.command.RoomCreateCommand;
 import com.eleven.hotel.application.command.RoomDeleteCommand;
 import com.eleven.hotel.application.command.RoomUpdateCommand;
 import com.eleven.hotel.application.service.RoomService;
-import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.model.hotel.RoomRepository;
 import com.eleven.hotel.endpoint.convert.RoomConvertor;
@@ -37,13 +34,10 @@ public class RoomMerchantApi {
     private final RoomRepository roomRepository;
 
     private final RoomService roomService;
-    private final HotelRepository hotelRepository;
 
     @Operation(summary = "list room")
     @GetMapping
     public List<RoomDto> listRoom(@PathVariable("hotelId") String hotelId) {
-        hotelRepository.findByHotelId(hotelId).orElseThrow(NoPrincipalException::instance);
-
         var rooms = roomRepository.getRoomsByHotelId(hotelId);
         return rooms.stream().map(roomConvertor::toDto).collect(Collectors.toList());
     }

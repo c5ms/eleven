@@ -1,6 +1,6 @@
 package com.eleven.hotel.endpoint.resource;
 
-import com.eleven.core.application.model.PageResult;
+import com.eleven.core.application.query.PageResult;
 import com.eleven.core.web.annonation.AsMerchantApi;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.model.PlanDto;

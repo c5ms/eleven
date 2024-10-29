@@ -1,7 +1,7 @@
 package com.eleven.upms.application.service;
 
-import com.eleven.core.security.SecurityManager;
-import com.eleven.core.security.*;
+import com.eleven.core.auth.*;
+import com.eleven.core.auth.SecurityManager;
 import com.eleven.upms.api.domain.core.UpmsConstants;
 import com.eleven.upms.domain.manager.UserManager;
 import com.eleven.upms.domain.model.AccessToken;

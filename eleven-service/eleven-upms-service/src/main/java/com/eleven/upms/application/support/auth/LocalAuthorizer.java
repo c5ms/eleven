@@ -1,7 +1,7 @@
 package com.eleven.upms.application.support.auth;
 
-import com.eleven.core.security.Authorizer;
-import com.eleven.core.security.Principal;
+import com.eleven.core.auth.Authorizer;
+import com.eleven.core.auth.Principal;
 import com.eleven.upms.domain.manager.AuthorityManager;
 import com.eleven.upms.domain.model.Authority;
 import lombok.RequiredArgsConstructor;

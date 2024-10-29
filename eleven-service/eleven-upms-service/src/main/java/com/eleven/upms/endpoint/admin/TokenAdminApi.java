@@ -1,7 +1,7 @@
 package com.eleven.upms.endpoint.admin;
 
 import cn.hutool.extra.servlet.JakartaServletUtil;
-import com.eleven.core.security.*;
+import com.eleven.core.auth.*;
 import com.eleven.core.web.annonation.AsAdminApi;
 import com.eleven.upms.application.service.TokenService;
 import com.eleven.upms.api.application.command.AccessTokenCreateCommand;

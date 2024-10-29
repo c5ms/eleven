@@ -1,7 +1,7 @@
 package com.eleven.upms.endpoint.inner;
 
-import com.eleven.core.security.Subject;
-import com.eleven.core.security.Token;
+import com.eleven.core.auth.Subject;
+import com.eleven.core.auth.Token;
 import com.eleven.core.web.annonation.AsInternalApi;
 import com.eleven.upms.application.service.TokenService;
 import com.eleven.upms.application.service.UserService;

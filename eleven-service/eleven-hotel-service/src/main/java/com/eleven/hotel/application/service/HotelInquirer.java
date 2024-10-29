@@ -1,6 +1,6 @@
 package com.eleven.hotel.application.service;
 
-import com.eleven.core.application.model.PageResult;
+import com.eleven.core.application.query.PageResult;
 import com.eleven.core.data.Audition;
 import com.eleven.core.data.QuerySupport;
 import com.eleven.hotel.application.query.HotelQuery;

@@ -2,13 +2,11 @@ package com.eleven.hotel.endpoint.secure;
 
 import com.eleven.core.web.WebHelper;
 import com.eleven.hotel.application.secure.HotelAuthorizer;
-import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;

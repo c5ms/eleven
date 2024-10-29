@@ -1,9 +1,9 @@
 package com.eleven.upms.domain.model;
 
 import com.eleven.core.data.AbstractEntity;
-import com.eleven.core.security.Identifiable;
-import com.eleven.core.security.Principal;
-import com.eleven.core.security.ToPrincipal;
+import com.eleven.core.auth.Identifiable;
+import com.eleven.core.auth.Principal;
+import com.eleven.core.auth.ToPrincipal;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,8 +1,8 @@
 package com.eleven.core.data;
 
-import com.eleven.core.security.Principal;
-import com.eleven.core.security.SecurityContext;
-import com.eleven.core.security.Subject;
+import com.eleven.core.auth.Principal;
+import com.eleven.core.auth.SecurityContext;
+import com.eleven.core.auth.Subject;
 import lombok.NonNull;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;

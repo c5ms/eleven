@@ -2,8 +2,8 @@ package com.eleven.demo.endpoint.rest;
 
 import com.eleven.core.application.command.CommandDispatcher;
 import com.eleven.core.application.command.CommandHandleException;
-import com.eleven.core.security.SecurityContext;
-import com.eleven.core.security.Subject;
+import com.eleven.core.auth.SecurityContext;
+import com.eleven.core.auth.Subject;
 import com.eleven.core.web.annonation.AsMerchantApi;
 import com.eleven.hotel.api.endpoint.model.HotelDto;
 import com.eleven.hotel.api.endpoint.internal.HotelClient;

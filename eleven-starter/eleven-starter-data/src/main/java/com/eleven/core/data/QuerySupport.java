@@ -1,7 +1,7 @@
 package com.eleven.core.data;
 
-import com.eleven.core.application.model.PageQuery;
-import com.eleven.core.application.model.PageResult;
+import com.eleven.core.application.query.PageQuery;
+import com.eleven.core.application.query.PageResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;

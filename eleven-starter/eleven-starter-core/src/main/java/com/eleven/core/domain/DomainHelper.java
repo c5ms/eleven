@@ -1,7 +1,6 @@
 package com.eleven.core.domain;
 
 import cn.hutool.extra.spring.SpringUtil;
-import com.eleven.core.application.NoPrincipalException;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.BooleanUtils;
 

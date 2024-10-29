@@ -1,7 +1,6 @@
 package com.eleven.hotel.application.service;
 
 import com.eleven.core.application.ApplicationHelper;
-import com.eleven.core.application.NoPrincipalException;
 import com.eleven.hotel.application.command.RoomCreateCommand;
 import com.eleven.hotel.application.command.RoomDeleteCommand;
 import com.eleven.hotel.application.command.RoomUpdateCommand;

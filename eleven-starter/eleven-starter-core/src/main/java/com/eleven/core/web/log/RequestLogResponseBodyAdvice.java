@@ -1,7 +1,7 @@
 package com.eleven.core.web.log;
 
 import cn.hutool.json.JSONUtil;
-import com.eleven.core.application.model.PageResult;
+import com.eleven.core.application.query.PageResult;
 import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;

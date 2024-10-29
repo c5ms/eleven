@@ -1,8 +1,7 @@
 package com.eleven.core.application.event;
 
-import com.eleven.core.security.Principal;
+import com.eleven.core.auth.Principal;
 import lombok.Data;
-import net.bytebuddy.asm.Advice;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
