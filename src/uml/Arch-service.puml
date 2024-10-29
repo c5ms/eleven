@@ -38,12 +38,12 @@ end box
         Service -> Transaction
         return
 
-            group #LightYellow  Transactional by <color:blue>Infrastructure</color>
+            group #LightYellow  Transaction by <color:blue>Infrastructure</color>
 
                     Service -> persist : locate
                     return
 
-                    group #LightBlue Secure by <color:blue>SecurityContext</color>
+                    group #LightBlue Secure by <color:blue>Security context</color>
 
                         Service -> Security : check authorize
                         note left Security
@@ -85,7 +85,7 @@ end box
                         end group
 
 
-                        group Integration by <color:blue>event-driven</color>
+                        group Integration by <color:blue>Application event</color>
                             Service -> applicationEvent : publish application event
                                 applicationEvent -> message
                                 return

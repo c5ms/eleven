@@ -1,6 +1,6 @@
 package com.eleven.hotel.application.service;
 
-import com.eleven.core.application.ApplicationContext;
+import com.eleven.core.application.ApplicationHelper;
 import com.eleven.hotel.api.application.event.HotelCreatedEvent;
 import com.eleven.hotel.application.command.HotelRegisterCommand;
 import com.eleven.hotel.application.command.RegisterReviewCommand;
@@ -43,7 +43,7 @@ public class RegisterCommandService {
             register.belongTo(hotel);
             registerRepository.save(register);
 
-            ApplicationContext.publishEvent(new HotelCreatedEvent(hotel.getId()));
+            ApplicationHelper.publishEvent(new HotelCreatedEvent(hotel.getId()));
         } else {
             register.reject();
             registerRepository.save(register);

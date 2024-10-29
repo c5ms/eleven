@@ -1,7 +1,6 @@
 package com.eleven.core.application.event;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.extra.spring.SpringUtil;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -35,25 +34,26 @@ public class ApplicationEventSerializer {
 
     public ApplicationEventSerializer() {
         this.objectMapper = JsonMapper.builder()
-            .configure(MapperFeature.USE_ANNOTATIONS, true)
-            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-            .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
-            .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-            .serializationInclusion(JsonInclude.Include.USE_DEFAULTS)
-            .visibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY)
-            .addModules(new Jdk8Module(), new JavaTimeModule())
-            .build();
+                .configure(MapperFeature.USE_ANNOTATIONS, true)
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
+                .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+                .serializationInclusion(JsonInclude.Include.USE_DEFAULTS)
+                .visibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY)
+                .addModules(new Jdk8Module(), new JavaTimeModule())
+                .build();
     }
 
 
     public ApplicationEventMessage serialize(ApplicationEvent event) throws ApplicationEventSerializeException {
         try {
             ApplicationEventMessage message = new ApplicationEventMessage();
-            message.setClassName(event.getClass().getName());
+            message.setCls(event.getClass().getName());
+            message.setTime(event.getHeader().getTime());
+            message.setService(event.getHeader().getService());
+            message.setTrigger(event.getHeader().getTrigger());
             message.setEvent(eventNames.computeIfAbsent(event.getClass(), this::getEventName));
             message.setBody(objectMapper.writeValueAsString(event));
-            message.setTime(event.time());
-            message.setService(SpringUtil.getApplicationName());
             return message;
         } catch (JsonProcessingException e) {
             throw new ApplicationEventSerializeException("fail to serialize event", e);
@@ -69,12 +69,18 @@ public class ApplicationEventSerializer {
      */
     public Optional<ApplicationEvent> deserialize(ApplicationEventMessage message) throws ApplicationEventSerializeException {
         try {
-            var clazz = eventClasses.computeIfAbsent(message.getClassName(), this::tryGetEventClass);
-            if (clazz != ApplicationEvent.class) {
-                var event = objectMapper.readValue(message.getBody(), clazz);
-                return Optional.of(event);
+            var clazz = eventClasses.computeIfAbsent(message.getCls(), this::tryGetEventClass);
+            if (!StringUtils.equals(getEventName(clazz), message.getEvent())) {
+                return Optional.empty();
             }
-            return Optional.empty();
+            if (clazz == ApplicationEvent.class) {
+                return Optional.empty();
+            }
+            var event = objectMapper.readValue(message.getBody(), clazz);
+            event.getHeader().setService(message.getService());
+            event.getHeader().setTrigger(message.getTrigger());
+            event.getHeader().setTime(message.getTime());
+            return Optional.of(event);
         } catch (JsonProcessingException e) {
             throw new ApplicationEventSerializeException("fail to serialize event", e);
         }
@@ -86,9 +92,7 @@ public class ApplicationEventSerializer {
             return name;
         }
         String eventName = ClassUtils.getSimpleName(clazz);
-        if (StringUtils.endsWith(eventName, "Event")) {
-            eventName = eventName.substring(0, eventName.length() - 5);
-        }
+        eventName = StringUtils.removeEnd(eventName,"Event");
         eventName = StrUtil.toUnderlineCase(eventName);
         return StringUtils.uncapitalize(eventName);
     }

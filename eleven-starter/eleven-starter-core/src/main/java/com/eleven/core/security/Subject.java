@@ -1,6 +1,6 @@
 package com.eleven.core.security;
 
-import com.eleven.core.time.TimeContext;
+import com.eleven.core.time.TimeHelper;
 import lombok.Data;
 
 import java.io.Serial;
@@ -50,7 +50,7 @@ public class Subject implements Serializable {
     /**
      * 创建时间
      */
-    private LocalDateTime createAt = TimeContext.localDateTime();
+    private LocalDateTime createAt = TimeHelper.localDateTime();
 
 
     public Subject() {

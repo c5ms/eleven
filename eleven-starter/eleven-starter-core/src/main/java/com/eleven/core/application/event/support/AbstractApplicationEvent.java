@@ -1,30 +1,24 @@
 package com.eleven.core.application.event.support;
 
 import com.eleven.core.application.event.ApplicationEvent;
-import com.eleven.core.application.event.ApplicationEventMeta;
-import com.eleven.core.time.TimeContext;
+import com.eleven.core.application.event.ApplicationEventHeader;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.annotation.Nonnull;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
 
 @Setter
 @Getter
 public abstract class AbstractApplicationEvent implements ApplicationEvent {
 
     @JsonIgnore
-    private  transient final LocalDateTime time = TimeContext.localDateTime();
+    private transient final ApplicationEventHeader header = new ApplicationEventHeader();
 
-    @JsonIgnore
-    private transient final ApplicationEventMeta meta = new ApplicationEventMeta();
-
+    @Nonnull
     @Override
-    public ApplicationEventMeta meta() {
-        return meta;
+    @JsonIgnore
+    public ApplicationEventHeader getHeader() {
+        return header;
     }
 
-    public LocalDateTime time() {
-        return time;
-    }
 }

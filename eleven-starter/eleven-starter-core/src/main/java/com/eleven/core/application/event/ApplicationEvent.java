@@ -1,12 +1,12 @@
 package com.eleven.core.application.event;
 
+import jakarta.annotation.Nonnull;
+
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 public interface ApplicationEvent extends Serializable {
 
-    LocalDateTime time();
-
-    ApplicationEventMeta meta();
+    @Nonnull
+    ApplicationEventHeader getHeader();
 
 }

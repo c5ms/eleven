@@ -1,6 +1,6 @@
 package com.eleven.hotel.domain.values;
 
-import com.eleven.core.time.TimeContext;
+import com.eleven.core.time.TimeHelper;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
@@ -51,7 +51,7 @@ public class DateTimeRange {
         if (isEmpty()) {
             return false;
         }
-        return contains(TimeContext.localDateTime());
+        return contains(TimeHelper.localDateTime());
     }
 
     public boolean isBefore(DateTimeRange dateTimeRange) {

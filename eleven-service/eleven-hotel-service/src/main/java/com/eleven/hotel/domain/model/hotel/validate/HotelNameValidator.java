@@ -1,7 +1,7 @@
 package com.eleven.hotel.domain.model.hotel.validate;
 
 import com.alibaba.cloud.commons.lang.StringUtils;
-import com.eleven.core.domain.DomainContext;
+import com.eleven.core.domain.DomainHelper;
 import com.eleven.hotel.api.domain.core.HotelErrors;
 import com.eleven.hotel.domain.model.hotel.Hotel;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
@@ -22,7 +22,7 @@ public class HotelNameValidator implements HotelValidator {
         var existing = hotelRepository.getHotelByName(hotel.getDescription().getName())
             .stream().filter(exist -> !StringUtils.equals(exist.getId(), hotel.getId()))
             .findFirst();
-        DomainContext.must(existing.isEmpty(), HotelErrors.HOTEL_NAME_REPEAT);
+        DomainHelper.must(existing.isEmpty(), HotelErrors.HOTEL_NAME_REPEAT);
     }
 
 }

@@ -1,6 +1,6 @@
 package com.eleven.hotel.domain.values;
 
-import com.eleven.core.time.TimeContext;
+import com.eleven.core.time.TimeHelper;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
@@ -65,7 +65,7 @@ public class DateRange {
         if (isEmpty()) {
             return false;
         }
-        return contains(TimeContext.localDate());
+        return contains(TimeHelper.localDate());
     }
 
     public DateTimeRange toDateTimeRange() {

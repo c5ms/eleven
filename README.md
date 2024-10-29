@@ -92,12 +92,12 @@
    - 我觉得重构100遍不算多。
 
 #### 依赖顺序
-- xxxService
-  - xxxManager
-    - xxxSupport
-      - xxxEr/Or
-      - xxxUtil is the static util you can use it anywhere
-      - xxxContext is the static util with application context component, you can use it as a util
+- xxxService      Spring bean 级别的 Application service
+  - xxxManager    Spring bean 级别的 domain service
+    - xxxSupport  Spring bean 级别业务公共方法类
+      - xxxEr/Or  Spring bean 级别的底层工具类，无层级依赖，他通常是业务级别的
+        - xxxUtil   纯粹的技术支持工具类，只能依赖基础工具包，他通常是三方common包级别的
+        - xxxHelper 关联到某个特定问题空间下的静态工具类，可以用技术手段解决依赖问题，他通常是框架级别的
 
 #### 前言
 首先请你清楚的了解什么是 DDD，我不打算说明白什么是 DDD， 但是我首先要告诉你 DDD 并没有要求你做的事情。

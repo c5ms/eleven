@@ -1,6 +1,6 @@
 package com.eleven.core.security;
 
-import com.eleven.core.time.TimeContext;
+import com.eleven.core.time.TimeHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -49,7 +49,7 @@ public class SecurityManager {
     public Optional<Token> verifyToken(String value) {
         var token = tokenStore.retrieval(value);
         token.ifPresent(hit -> log.debug("hit existing Token for {}", hit.getPrincipal().identity()));
-        return token.filter(exist -> exist.getExpireAt().isAfter(TimeContext.localDateTime()));
+        return token.filter(exist -> exist.getExpireAt().isAfter(TimeHelper.localDateTime()));
     }
 
     /**

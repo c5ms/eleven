@@ -7,7 +7,7 @@ import org.apache.commons.lang3.BooleanUtils;
 import java.util.function.Supplier;
 
 @UtilityClass
-public class DomainContext {
+public class DomainHelper {
 
     public static void must(boolean check, Supplier<RuntimeException> e) {
         if (BooleanUtils.isFalse(check)) {

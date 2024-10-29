@@ -5,7 +5,7 @@ import com.eleven.core.data.Audition;
 import com.eleven.core.data.LogicDeletable;
 import com.eleven.core.security.Principal;
 import com.eleven.core.security.ToPrincipal;
-import com.eleven.core.time.TimeContext;
+import com.eleven.core.time.TimeHelper;
 import com.eleven.upms.api.domain.event.UserDeletedEvent;
 import com.eleven.upms.api.domain.event.UserLoginEvent;
 import com.eleven.upms.api.domain.event.UserStatusChangedEvent;
@@ -77,7 +77,7 @@ public class User extends AbstractEntity implements ToPrincipal, Serializable, L
     }
 
     public void deleted() {
-        this.deleteAt = TimeContext.localDateTime();
+        this.deleteAt = TimeHelper.localDateTime();
         this.addEvent(new UserDeletedEvent(id));
     }
 
@@ -99,7 +99,7 @@ public class User extends AbstractEntity implements ToPrincipal, Serializable, L
      * 登入
      */
     public void login() {
-        this.loginAt = TimeContext.localDateTime();
+        this.loginAt = TimeHelper.localDateTime();
         this.addEvent(new UserLoginEvent(id));
     }
 

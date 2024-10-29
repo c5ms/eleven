@@ -6,7 +6,7 @@ import com.eleven.core.security.Principal;
 import com.eleven.core.security.Token;
 import com.eleven.core.security.TokenCreator;
 import com.eleven.core.security.TokenDetail;
-import com.eleven.core.time.TimeContext;
+import com.eleven.core.time.TimeHelper;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
@@ -19,7 +19,7 @@ public class OpaqueTokenCreator implements TokenCreator {
     }
 
     private LocalDateTime getExpireAt() {
-        return TimeContext.localDateTime().plusDays(10);
+        return TimeHelper.localDateTime().plusDays(10);
     }
 
     @Override

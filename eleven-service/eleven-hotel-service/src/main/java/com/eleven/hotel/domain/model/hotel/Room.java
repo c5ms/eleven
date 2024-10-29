@@ -2,7 +2,7 @@ package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.core.data.AbstractEntity;
 import com.eleven.core.data.Audition;
-import com.eleven.core.domain.DomainContext;
+import com.eleven.core.domain.DomainHelper;
 import com.eleven.hotel.api.domain.model.ChargeType;
 import com.eleven.hotel.api.domain.model.RoomType;
 import com.eleven.hotel.api.domain.model.SaleState;
@@ -61,7 +61,7 @@ public class Room extends AbstractEntity implements Sellable {
     private Audition audition = Audition.empty();
 
     Room(String hotelId, String roomId) {
-        this.id = DomainContext.nextId();
+        this.id = DomainHelper.nextId();
         this.hotelId = hotelId;
         this.roomId = roomId;
         this.saleState = SaleState.STOPPED;

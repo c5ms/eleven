@@ -1,6 +1,6 @@
 package com.eleven.hotel.domain.model.booking;
 
-import com.eleven.core.domain.DomainContext;
+import com.eleven.core.domain.DomainHelper;
 import com.eleven.core.domain.DomainError;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ public class BookingManager {
     private final List<BookingValidator> bookingValidators;
 
     public String bookId() {
-        return DomainContext.nextId();
+        return DomainHelper.nextId();
     }
 
     public void validate(Booking booking) {

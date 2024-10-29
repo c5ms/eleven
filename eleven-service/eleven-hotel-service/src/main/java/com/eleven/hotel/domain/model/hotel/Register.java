@@ -1,7 +1,7 @@
 package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.core.data.AbstractEntity;
-import com.eleven.core.domain.DomainContext;
+import com.eleven.core.domain.DomainHelper;
 import com.eleven.hotel.api.domain.core.HotelErrors;
 import com.eleven.hotel.api.domain.model.RegisterState;
 import lombok.AllArgsConstructor;
@@ -41,7 +41,7 @@ public class Register extends AbstractEntity {
     private RegisterState state;
 
     Register(String registerId) {
-        this.id = DomainContext.nextId();
+        this.id = DomainHelper.nextId();
         this.registerId = registerId;
         this.state = RegisterState.UNDER_REVIEW;
     }
@@ -64,7 +64,7 @@ public class Register extends AbstractEntity {
     }
 
     private void checkBeforeReview() {
-        DomainContext.must(this.state == RegisterState.UNDER_REVIEW, HotelErrors.REGISTRATION_NOT_REVIEWABLE);
+        DomainHelper.must(this.state == RegisterState.UNDER_REVIEW, HotelErrors.REGISTRATION_NOT_REVIEWABLE);
     }
 
     public void belongTo(Hotel hotel) {

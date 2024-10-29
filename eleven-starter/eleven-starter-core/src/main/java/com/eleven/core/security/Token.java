@@ -1,6 +1,6 @@
 package com.eleven.core.security;
 
-import com.eleven.core.time.TimeContext;
+import com.eleven.core.time.TimeHelper;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -17,8 +17,8 @@ public class Token implements Serializable {
 
     private String value;
     private String issuer;
-    private LocalDateTime createAt = TimeContext.localDateTime();
-    private LocalDateTime expireAt = TimeContext.localDateTime();
+    private LocalDateTime createAt = TimeHelper.localDateTime();
+    private LocalDateTime expireAt = TimeHelper.localDateTime();
     private Principal principal;
     private TokenDetail detail;
 

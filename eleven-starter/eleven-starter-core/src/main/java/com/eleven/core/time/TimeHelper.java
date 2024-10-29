@@ -13,7 +13,7 @@ import java.time.*;
  * 时间服务上下文，确保了进入spring上下文的线程会持有一个系统自己实现的时钟服务
  */
 @UtilityClass
-public final class TimeContext {
+public final class TimeHelper {
 
     @Getter
     static Clock clock = Clock.systemDefaultZone();
@@ -40,12 +40,11 @@ public final class TimeContext {
 
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @Configuration(proxyBeanMethods = false)
-    public static class DataTimeContextAutoconfigure {
+    public static class TimeHelperAutoconfigure {
         @Autowired
-        public DataTimeContextAutoconfigure(DynamicAdjustableClock clock) {
-            TimeContext.clock = clock;
+        public TimeHelperAutoconfigure(DynamicAdjustableClock clock) {
+            TimeHelper.clock = clock;
         }
-
     }
 
 }

@@ -1,7 +1,7 @@
 package com.eleven.core.data.support;
 
 import com.eleven.core.data.AbstractEntity;
-import com.eleven.core.domain.DomainContext;
+import com.eleven.core.domain.DomainHelper;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -63,7 +63,7 @@ public class Serial extends AbstractEntity implements Serializable {
     }
 
     public static Serial create(Key key, int startVal, int step) {
-        var id = DomainContext.nextId();
+        var id = DomainHelper.nextId();
         return new Serial(id, key, startVal, step, 0);
     }
 

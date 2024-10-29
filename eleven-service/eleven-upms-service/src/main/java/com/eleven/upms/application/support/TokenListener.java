@@ -2,7 +2,7 @@ package com.eleven.upms.application.support;
 
 import com.eleven.core.security.SubjectStore;
 import com.eleven.core.security.TokenStore;
-import com.eleven.core.time.TimeContext;
+import com.eleven.core.time.TimeHelper;
 import com.eleven.upms.api.domain.event.UserDeletedEvent;
 import com.eleven.upms.domain.model.AccessToken;
 import com.eleven.upms.domain.model.AccessTokenRepository;
@@ -25,7 +25,7 @@ public class TokenListener {
     //    @Async
 //    @EventListener(ApplicationStartedEvent.class)
     public void on(ApplicationStartedEvent e) {
-        var now = TimeContext.localDateTime();
+        var now = TimeHelper.localDateTime();
         var tokens = accessTokenRepository.findValidToken(now);
         tokens.stream()
             .parallel()
@@ -36,7 +36,7 @@ public class TokenListener {
 
     @EventListener(UserDeletedEvent.class)
     public void on(UserDeletedEvent e) {
-        var now = TimeContext.localDateTime();
+        var now = TimeHelper.localDateTime();
         var user = userRepository.requireById(e.getUserId());
         var owner = new AccessToken.Owner(user.toPrincipal());
         subjectStore.remove(user.toPrincipal());

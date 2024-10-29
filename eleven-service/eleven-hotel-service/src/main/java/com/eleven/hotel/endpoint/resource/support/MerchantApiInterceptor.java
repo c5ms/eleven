@@ -1,7 +1,5 @@
 package com.eleven.hotel.endpoint.resource.support;
 
-import com.eleven.core.application.ApplicationContext;
-import com.eleven.hotel.application.service.security.HotelResourceAuthorizer;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.http.HttpServletRequest;

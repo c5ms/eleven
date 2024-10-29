@@ -3,7 +3,7 @@ package com.eleven.core.security.support;
 import cn.hutool.json.JSONUtil;
 import com.eleven.core.security.Token;
 import com.eleven.core.security.TokenStore;
-import com.eleven.core.time.TimeContext;
+import com.eleven.core.time.TimeHelper;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -29,7 +29,7 @@ public class RedisTokenStore implements TokenStore {
     public void save(Token token) {
         var key = toKey(token.getValue());
         var value = JSONUtil.toJsonStr(token);
-        var duration = TimeContext.localDateTime().until(token.getExpireAt(), ChronoUnit.DECADES);
+        var duration = TimeHelper.localDateTime().until(token.getExpireAt(), ChronoUnit.DECADES);
         redisTemplate.opsForValue().set(key, value, duration);
     }
 

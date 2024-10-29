@@ -1,6 +1,6 @@
 package com.eleven.hotel.endpoint.resource;
 
-import com.eleven.core.application.ApplicationContext;
+import com.eleven.core.application.ApplicationHelper;
 import com.eleven.core.web.annonation.AsMerchantApi;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.model.RoomDto;
@@ -42,8 +42,8 @@ public class RoomMerchantApi {
     @GetMapping
     public List<RoomDto> listRoom(@PathVariable("hotelId") String hotelId) {
         hotelRepository.findByHotelId(hotelId)
-            .filter(ApplicationContext::mustReadable)
-            .orElseThrow(ApplicationContext::noResource);
+            .filter(ApplicationHelper::mustReadable)
+            .orElseThrow(ApplicationHelper::createNoResourceEx);
 
         var rooms = roomRepository.getRoomsByHotelId(hotelId);
         return rooms.stream().map(roomConvertor::toDto).collect(Collectors.toList());

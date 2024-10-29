@@ -2,7 +2,7 @@ package com.eleven.core.domain.support;
 
 import cn.hutool.core.util.IdUtil;
 import com.eleven.core.domain.IdentityGenerator;
-import com.eleven.core.time.TimeContext;
+import com.eleven.core.time.TimeHelper;
 
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicLong;
@@ -35,7 +35,7 @@ public class RaindropGenerator implements IdentityGenerator {
 //            seq.incrementAndGet()
 //        );
         return String.format("%s%s%06d",
-            Long.toHexString(TimeContext.getClock().millis()/1000),
+            Long.toHexString(TimeHelper.getClock().millis()/1000),
             Long.toHexString(datacenterId * 100 + workerId),
             seq.incrementAndGet()
         ).toUpperCase(Locale.ROOT);

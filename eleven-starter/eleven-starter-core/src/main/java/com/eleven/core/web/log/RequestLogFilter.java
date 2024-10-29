@@ -5,7 +5,7 @@ import cn.hutool.extra.servlet.JakartaServletUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.eleven.core.security.SecurityContext;
 import com.eleven.core.security.Subject;
-import com.eleven.core.time.TimeContext;
+import com.eleven.core.time.TimeHelper;
 import io.micrometer.tracing.Tracer;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.annotation.WebFilter;
@@ -64,7 +64,7 @@ public class RequestLogFilter extends OncePerRequestFilter {
             exception = e;
         } finally {
             try {
-                requestLog.setResponseTime(TimeContext.localDateTime());
+                requestLog.setResponseTime(TimeHelper.localDateTime());
                 requestLog.setDuration(Duration.between(requestLog.getRequestTime(), requestLog.getResponseTime()).toMillis());
                 requestLog.getResponse().setStatus(response.getStatus());
 
@@ -112,7 +112,7 @@ public class RequestLogFilter extends OncePerRequestFilter {
         RequestLog requestLog = new RequestLog();
         requestLog.setServerIp(serverIp);
         requestLog.setServiceName(SpringUtil.getApplicationName());
-        requestLog.setRequestTime(TimeContext.localDateTime());
+        requestLog.setRequestTime(TimeHelper.localDateTime());
         requestLog.setClientIp(JakartaServletUtil.getClientIP(request));
         requestLog.getRequest().setPath(request.getServletPath());
         requestLog.getRequest().setUrl(request.getRequestURL().toString());

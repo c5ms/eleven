@@ -1,6 +1,6 @@
 package com.eleven.core.data;
 
-import com.eleven.core.time.TimeContext;
+import com.eleven.core.time.TimeHelper;
 import jakarta.annotation.Nonnull;
 import org.springframework.data.auditing.DateTimeProvider;
 import org.springframework.stereotype.Component;
@@ -13,6 +13,6 @@ public class DefaultDateTimeProvider implements DateTimeProvider {
     @Override
     @Nonnull
     public Optional<TemporalAccessor> getNow() {
-        return Optional.of(TimeContext.localDateTime());
+        return Optional.of(TimeHelper.localDateTime());
     }
 }

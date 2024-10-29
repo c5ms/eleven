@@ -1,6 +1,6 @@
 package com.eleven.hotel.application.service;
 
-import com.eleven.core.application.ApplicationContext;
+import com.eleven.core.application.ApplicationHelper;
 import com.eleven.hotel.api.application.event.HotelUpdatedEvent;
 import com.eleven.hotel.application.command.*;
 import com.eleven.hotel.domain.model.hotel.*;
@@ -25,7 +25,7 @@ public class HotelCommandService {
 
         hotelManager.validate(hotel);
         hotelRepository.save(hotel);
-        ApplicationContext.publishEvent(new HotelUpdatedEvent(hotel.getId()));
+        ApplicationHelper.publishEvent(new HotelUpdatedEvent(hotel.getId()));
     }
 
     public void open(HotelOpenCommand command) {

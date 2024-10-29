@@ -2,7 +2,7 @@ package com.eleven.hotel.domain.model.plan;
 
 import com.eleven.core.data.AbstractEntity;
 import com.eleven.core.data.Audition;
-import com.eleven.core.domain.DomainContext;
+import com.eleven.core.domain.DomainHelper;
 import com.eleven.hotel.api.domain.core.HotelErrors;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
@@ -76,7 +76,7 @@ public class Plan extends AbstractEntity implements Sellable {
     private Audition audition = Audition.empty();
 
     private Plan(String hotelId, String planId) {
-        this.id = DomainContext.nextId();
+        this.id = DomainHelper.nextId();
         this.hotelId = hotelId;
         this.planId = planId;
         this.rooms = new HashSet<>();
@@ -114,7 +114,7 @@ public class Plan extends AbstractEntity implements Sellable {
 
     @Override
     public void startSale() {
-        DomainContext.must(hasRoom(), HotelErrors.PLAN_NO_ROOM);
+        DomainHelper.must(hasRoom(), HotelErrors.PLAN_NO_ROOM);
         this.saleState = SaleState.STARTED;
     }
 
@@ -138,7 +138,7 @@ public class Plan extends AbstractEntity implements Sellable {
     }
 
     public void preSale(DateTimeRange preSellPeriod) {
-        DomainContext.must(preSellPeriod.isBefore(this.salePeriod), HotelErrors.PLAN_PRE_SALE_NOT_BEFORE_SALE);
+        DomainHelper.must(preSellPeriod.isBefore(this.salePeriod), HotelErrors.PLAN_PRE_SALE_NOT_BEFORE_SALE);
 
         this.preSalePeriod = preSellPeriod;
     }
