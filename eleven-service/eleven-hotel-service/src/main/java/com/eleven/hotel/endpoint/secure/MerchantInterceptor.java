@@ -22,7 +22,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MerchantInterceptor implements HandlerInterceptor {
 
-    private final HotelRepository hotelRepository;
     private final HotelAuthorizer hotelAuthorizer;
 
     @Override
