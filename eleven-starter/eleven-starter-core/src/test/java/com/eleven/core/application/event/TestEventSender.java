@@ -2,7 +2,6 @@ package com.eleven.core.application.event;
 
 import lombok.Getter;
 import org.springframework.boot.test.context.TestComponent;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,9 @@
 package com.eleven.core.web;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
-import com.eleven.core.application.NoResourceException;
-import com.eleven.core.application.NoPermissionException;
+import com.eleven.core.application.command.NoCommandAcceptorException;
+import com.eleven.core.application.command.CommandInvalidException;
+import com.eleven.core.application.secure.NoAuthorityException;
 import com.eleven.core.domain.DomainException;
 import com.eleven.core.web.problem.Problem;
 import com.eleven.core.web.problem.ValidationProblem;
@@ -46,8 +47,10 @@ public class ElevenExceptionAdvice {
         if (e instanceof HttpMessageConversionException) {
             var problem = Problem.of(WebErrors.ERROR_REQUEST_BODY_FAILED);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
+        }else if (e instanceof CommandInvalidException){
+            var problem = Problem.of(WebErrors.ERROR_REQUEST_BODY_FAILED);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
         }
-
 
         // 422
         else if (e instanceof BindException ex) {
@@ -91,9 +94,9 @@ public class ElevenExceptionAdvice {
             var problem = Problem.of(ex);
             log.warn(ExceptionUtil.getMessage(ex), ex);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
-        } else if (e instanceof NoResourceException) {
+        } else if (e instanceof NoCommandAcceptorException) {
             status = HttpStatus.NOT_FOUND;
-        } else if (e instanceof NoPermissionException) {
+        } else if (e instanceof NoAuthorityException) {
             var problem = Problem.of(WebErrors.ERROR_ACCESS_DENIED);
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(problem);
         }

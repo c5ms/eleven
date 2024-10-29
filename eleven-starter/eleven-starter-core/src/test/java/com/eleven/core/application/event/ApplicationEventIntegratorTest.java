@@ -1,6 +1,7 @@
 package com.eleven.core.application.event;
 
-import com.eleven.core.application.ApplicationHelper;
+import com.eleven.core.application.*;
+import com.eleven.core.application.event.support.JacksonApplicationEventSerializer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -10,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 
 @SpringBootTest(
-        classes = {ApplicationEventIntegrator.class, ApplicationEventSerializer.class, TestEventSender.class, TestEventListener.class}
+        classes = {ApplicationEventIntegrator.class, JacksonApplicationEventSerializer.class, TestEventSender.class, TestEventListener.class}
 )
 @SpringBootConfiguration
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)

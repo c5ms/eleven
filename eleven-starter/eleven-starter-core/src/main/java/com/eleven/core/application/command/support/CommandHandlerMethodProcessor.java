@@ -3,6 +3,7 @@ package com.eleven.core.application.command.support;
 
 import com.eleven.core.application.command.CommandEndpoint;
 import com.eleven.core.application.command.CommandRegister;
+import jakarta.annotation.Nonnull;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.aop.framework.autoproxy.AutoProxyUtils;
@@ -36,9 +37,8 @@ public class CommandHandlerMethodProcessor implements SmartInitializingSingleton
 
     private ConfigurableListableBeanFactory beanFactory;
 
-
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
+    public void setApplicationContext(@Nonnull ApplicationContext applicationContext) {
         this.applicationContext = (ConfigurableApplicationContext) applicationContext;
     }
 

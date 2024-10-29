@@ -43,7 +43,7 @@ public class RoomMerchantApi {
     public List<RoomDto> listRoom(@PathVariable("hotelId") String hotelId) {
         hotelRepository.findByHotelId(hotelId)
             .filter(ApplicationHelper::mustReadable)
-            .orElseThrow(ApplicationHelper::createNoResourceEx);
+            .orElseThrow(ApplicationHelper::noCommandAcceptorException);
 
         var rooms = roomRepository.getRoomsByHotelId(hotelId);
         return rooms.stream().map(roomConvertor::toDto).collect(Collectors.toList());

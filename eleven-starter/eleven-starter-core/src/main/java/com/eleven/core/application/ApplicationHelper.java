@@ -1,7 +1,11 @@
 package com.eleven.core.application;
 
 import cn.hutool.extra.spring.SpringUtil;
+import com.eleven.core.application.command.NoCommandAcceptorException;
 import com.eleven.core.application.event.ApplicationEvent;
+import com.eleven.core.application.secure.NoReadAuthorityException;
+import com.eleven.core.application.secure.NoWriteAuthorityException;
+import com.eleven.core.application.secure.DomainSecurityManager;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -15,36 +19,24 @@ public class ApplicationHelper {
         SpringUtil.publishEvent(event);
     }
 
-    public boolean mustReadable(Object resource) throws NoReadPermissionException {
-        return SpringUtil.getBean(ResourceSecurityManager.class).mustReadable(resource);
+    public boolean mustReadable(Object resource) throws NoReadAuthorityException {
+        return SpringUtil.getBean(DomainSecurityManager.class).mustReadable(resource);
     }
 
-    public boolean mustWritable(Object resource) throws NoWritePermissionException {
-        return SpringUtil.getBean(ResourceSecurityManager.class).mustWritable(resource);
+    public boolean mustWritable(Object resource) throws NoWriteAuthorityException {
+        return SpringUtil.getBean(DomainSecurityManager.class).mustWritable(resource);
     }
 
-    public NoWritePermissionException createNoWritePermissionEx() {
-        return NoWritePermissionException.instance();
+    public NoWriteAuthorityException noWritePermissionException() {
+        return NoWriteAuthorityException.instance();
     }
 
-    public NoReadPermissionException createNoReadPermissionEx() {
-        return NoReadPermissionException.instance();
+    public NoReadAuthorityException noReadPermissionException() {
+        return NoReadAuthorityException.instance();
     }
 
-    public NoResourceException createNoResourceEx() {
-        return NoResourceException.instance();
-    }
-
-    public void throwNoWritePermissionEx() {
-        throw createNoWritePermissionEx();
-    }
-
-    public void throwNoReadPermissionEx() {
-        throw createNoReadPermissionEx();
-    }
-
-    public void throwNoResourceEx() {
-        throw createNoResourceEx();
+    public NoCommandAcceptorException noCommandAcceptorException() {
+        return NoCommandAcceptorException.instance();
     }
 
 }

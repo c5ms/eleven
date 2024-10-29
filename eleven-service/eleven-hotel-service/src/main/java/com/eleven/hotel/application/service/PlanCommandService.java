@@ -40,7 +40,6 @@ public class PlanCommandService {
 
     public void addRoom(PlanAddRoomCommand command) {
         var plan = planRepository.require(command.getHotelId(), command.getPlanId());
-        //todo how to throw
         var room = roomRepository.require(command.getHotelId(), command.getRoomId());
         var stock = command.getStock();
         var price = command.getPrice();

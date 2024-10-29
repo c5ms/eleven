@@ -1,6 +1,6 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import com.eleven.core.domain.NoEntityException;
+import com.eleven.core.data.NoEntityException;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

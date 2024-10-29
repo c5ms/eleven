@@ -4,6 +4,6 @@ public interface CommandValidator {
 
     boolean support(Object command);
 
-    void validate(Object command) throws CommandValidateException;
+    void validate(Object command) throws CommandInvalidException;
 
 }

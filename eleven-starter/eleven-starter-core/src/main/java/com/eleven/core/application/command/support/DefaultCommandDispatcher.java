@@ -26,7 +26,7 @@ public class DefaultCommandDispatcher implements CommandDispatcher, CommandRegis
     }
 
     @Override
-    public <C, R> R dispatch(@Validated C c, Class<R> resultClass) throws CommandHandleException, CommandValidateException {
+    public <C, R> R dispatch(@Validated C c, Class<R> resultClass) throws CommandHandleException, CommandInvalidException {
         validate(c);
 
         @SuppressWarnings("unchecked")
@@ -38,13 +38,13 @@ public class DefaultCommandDispatcher implements CommandDispatcher, CommandRegis
         return handler.get().handle(c);
     }
 
-    public void validate(Object... subjects) throws CommandValidateException {
+    public void validate(Object... subjects) throws CommandInvalidException {
         for (Object subject : subjects) {
             validate(subject);
         }
     }
 
-    private void validate(Object subject) throws CommandValidateException {
+    private void validate(Object subject) throws CommandInvalidException {
         for (CommandValidator commandValidator : commandValidators) {
             if (commandValidator.support(subject)) {
                 commandValidator.validate(subject);

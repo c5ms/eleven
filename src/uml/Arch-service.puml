@@ -32,20 +32,21 @@ box "Infra layer"  #LightBlue
     database        Queue               as message
 end box
 
-
     endpoint -> Service  : command
 
         Service -> Transaction
+            Transaction -> db
+            return
         return
 
             group #LightYellow  Transaction by <color:blue>Infrastructure</color>
 
                     Service -> persist : locate
-                    return
+                    return Aggregate,Projection etc.
 
                     group #LightBlue Secure by <color:blue>Security context</color>
 
-                        Service -> Security : check authorize
+                        Service -> Security : check domain authority
                         note left Security
                               1. no resource readable permission
                               2. no resource writeable permission

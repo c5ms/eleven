@@ -14,7 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ApplicationEventIntegrator {
 
-
     private final ApplicationEventSerializer serializer;
     private final List<ApplicationEventMessageSender> senders;
     private final ApplicationEventPublisher applicationEventPublisher;

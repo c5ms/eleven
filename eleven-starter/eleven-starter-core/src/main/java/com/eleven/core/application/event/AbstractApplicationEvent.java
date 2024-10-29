@@ -1,7 +1,5 @@
-package com.eleven.core.application.event.support;
+package com.eleven.core.application.event;
 
-import com.eleven.core.application.event.ApplicationEvent;
-import com.eleven.core.application.event.ApplicationEventHeader;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nonnull;
 import lombok.Getter;

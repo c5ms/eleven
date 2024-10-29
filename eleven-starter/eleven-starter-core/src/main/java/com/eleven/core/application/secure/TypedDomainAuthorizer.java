@@ -1,11 +1,9 @@
-package com.eleven.core.application.support;
-
-import com.eleven.core.application.ResourceAuthorizer;
+package com.eleven.core.application.secure;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-public abstract class TypedResourceAuthorizer<C> implements ResourceAuthorizer {
+public abstract class TypedDomainAuthorizer<C> implements DomainAuthorizer {
 
     @Override
     public boolean support(Object resource) {

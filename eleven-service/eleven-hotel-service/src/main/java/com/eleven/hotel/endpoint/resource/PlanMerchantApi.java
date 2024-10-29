@@ -13,7 +13,6 @@ import com.eleven.hotel.application.query.PlanQuery;
 import com.eleven.hotel.application.service.HotelQueryService;
 import com.eleven.hotel.application.service.PlanCommandService;
 import com.eleven.hotel.domain.model.plan.Plan;
-import com.eleven.hotel.domain.model.plan.PlanNotFoundException;
 import com.eleven.hotel.domain.model.plan.PlanRepository;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
@@ -25,10 +24,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -51,9 +48,9 @@ public class PlanMerchantApi {
     @GetMapping
     public PageResult<PlanDto> queryPlan(@PathVariable("hotelId") String hotelId, @ParameterObject @Validated PlanQueryRequest request) {
         var command = PlanQuery.builder()
-            .hotelId(hotelId)
-            .planName(request.getPlanName())
-            .build();
+                .hotelId(hotelId)
+                .planName(request.getPlanName())
+                .build();
         return hotelQueryService.queryPage(command).map(planConvertor::toDto);
     }
 
@@ -67,13 +64,13 @@ public class PlanMerchantApi {
     @PostMapping
     public PlanDto createPlan(@PathVariable("hotelId") String hotelId, @RequestBody @Validated PlanCreateRequest request) {
         var command = PlanCreateCommand.builder()
-            .hotelId(hotelId)
-            .description(new Plan.Description(request.getName(), request.getDesc()))
-            .stock(Stock.of(request.getStock()))
-            .preSellPeriod(DateTimeRange.of(request.getPreSellStartDate(), request.getPreSellEndDate()))
-            .stayPeriod(DateRange.of(request.getStayStartDate(), request.getStayEndDate()))
-            .sellPeriod(DateTimeRange.of(request.getSellStartDate(), request.getSellEndDate()))
-            .build();
+                .hotelId(hotelId)
+                .description(new Plan.Description(request.getName(), request.getDesc()))
+                .stock(Stock.of(request.getStock()))
+                .preSellPeriod(DateTimeRange.of(request.getPreSellStartDate(), request.getPreSellEndDate()))
+                .stayPeriod(DateRange.of(request.getStayStartDate(), request.getStayEndDate()))
+                .sellPeriod(DateTimeRange.of(request.getSellStartDate(), request.getSellEndDate()))
+                .build();
         var plan = planCommandService.createPlan(command);
         return planConvertor.toDto(plan);
     }
@@ -81,18 +78,14 @@ public class PlanMerchantApi {
     @Operation(summary = "add room")
     @PostMapping("/{planId}/rooms")
     public void addRoom(@PathVariable("hotelId") String hotelId, @PathVariable("planId") String planId, @RequestBody @Validated PlanAddRoomRequest request) {
-        try {
-            var command = PlanAddRoomCommand.builder()
+        var command = PlanAddRoomCommand.builder()
                 .hotelId(hotelId)
                 .planId(planId)
                 .roomId(request.getRoomId())
                 .stock(Stock.of(request.getStock()))
                 .price(Price.of(request.getPrice()))
                 .build();
-            planCommandService.addRoom(command);
-        } catch (PlanNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
+        planCommandService.addRoom(command);
     }
 
 }
