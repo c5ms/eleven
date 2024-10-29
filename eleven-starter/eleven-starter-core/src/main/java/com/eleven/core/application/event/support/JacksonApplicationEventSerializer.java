@@ -26,7 +26,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Component
-@ConditionalOnMissingBean
 @RequiredArgsConstructor
 public class JacksonApplicationEventSerializer implements ApplicationEventSerializer {
 
@@ -37,14 +36,14 @@ public class JacksonApplicationEventSerializer implements ApplicationEventSerial
 
     public JacksonApplicationEventSerializer() {
         this.objectMapper = JsonMapper.builder()
-                .configure(MapperFeature.USE_ANNOTATIONS, true)
-                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
-                .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-                .serializationInclusion(JsonInclude.Include.USE_DEFAULTS)
-                .visibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY)
-                .addModules(new Jdk8Module(), new JavaTimeModule())
-                .build();
+            .configure(MapperFeature.USE_ANNOTATIONS, true)
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
+            .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+            .serializationInclusion(JsonInclude.Include.USE_DEFAULTS)
+            .visibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY)
+            .addModules(new Jdk8Module(), new JavaTimeModule())
+            .build();
     }
 
 
@@ -82,9 +81,7 @@ public class JacksonApplicationEventSerializer implements ApplicationEventSerial
                 return Optional.empty();
             }
             var event = objectMapper.readValue(message.getBody(), clazz);
-            event.getHeader().setService(message.getService());
-            event.getHeader().setTrigger(message.getTrigger());
-            event.getHeader().setTime(message.getTime());
+            message.writeHeaderTo(event);
             return Optional.of(event);
         } catch (JsonProcessingException e) {
             throw new ApplicationEventSerializeException("fail to serialize event", e);
@@ -97,7 +94,7 @@ public class JacksonApplicationEventSerializer implements ApplicationEventSerial
             return name;
         }
         String eventName = ClassUtils.getSimpleName(clazz);
-        eventName = StringUtils.removeEnd(eventName,"Event");
+        eventName = StringUtils.removeEnd(eventName, "Event");
         eventName = StrUtil.toUnderlineCase(eventName);
         return StringUtils.uncapitalize(eventName);
     }

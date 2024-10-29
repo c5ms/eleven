@@ -10,8 +10,8 @@ import com.eleven.hotel.api.endpoint.request.PlanQueryRequest;
 import com.eleven.hotel.application.command.PlanAddRoomCommand;
 import com.eleven.hotel.application.command.PlanCreateCommand;
 import com.eleven.hotel.application.query.PlanQuery;
-import com.eleven.hotel.application.service.HotelQueryService;
-import com.eleven.hotel.application.service.PlanCommandService;
+import com.eleven.hotel.application.service.HotelInquirer;
+import com.eleven.hotel.application.service.PlanService;
 import com.eleven.hotel.domain.model.plan.Plan;
 import com.eleven.hotel.domain.model.plan.PlanRepository;
 import com.eleven.hotel.domain.values.DateRange;
@@ -40,8 +40,8 @@ public class PlanMerchantApi {
     private final PlanRepository planRepository;
     private final PlanConvertor planConvertor;
 
-    private final HotelQueryService hotelQueryService;
-    private final PlanCommandService planCommandService;
+    private final HotelInquirer hotelInquirer;
+    private final PlanService planService;
 
 
     @Operation(summary = "query plan")
@@ -51,7 +51,7 @@ public class PlanMerchantApi {
                 .hotelId(hotelId)
                 .planName(request.getPlanName())
                 .build();
-        return hotelQueryService.queryPage(command).map(planConvertor::toDto);
+        return hotelInquirer.queryPage(command).map(planConvertor::toDto);
     }
 
     @Operation(summary = "read plan")
@@ -71,7 +71,7 @@ public class PlanMerchantApi {
                 .stayPeriod(DateRange.of(request.getStayStartDate(), request.getStayEndDate()))
                 .sellPeriod(DateTimeRange.of(request.getSellStartDate(), request.getSellEndDate()))
                 .build();
-        var plan = planCommandService.createPlan(command);
+        var plan = planService.createPlan(command);
         return planConvertor.toDto(plan);
     }
 
@@ -85,7 +85,7 @@ public class PlanMerchantApi {
                 .stock(Stock.of(request.getStock()))
                 .price(Price.of(request.getPrice()))
                 .build();
-        planCommandService.addRoom(command);
+        planService.addRoom(command);
     }
 
 }

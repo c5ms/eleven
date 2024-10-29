@@ -22,7 +22,7 @@ import static org.springframework.data.relational.core.query.Criteria.where;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class HotelQueryService {
+public class HotelInquirer {
 
     private final JdbcAggregateTemplate jdbcAggregateTemplate;
     private final QuerySupport querySupport;

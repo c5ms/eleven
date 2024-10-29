@@ -7,7 +7,7 @@ import com.eleven.hotel.api.endpoint.request.HotelUpdateRequest;
 import com.eleven.hotel.application.command.HotelCloseCommand;
 import com.eleven.hotel.application.command.HotelOpenCommand;
 import com.eleven.hotel.application.command.HotelUpdateCommand;
-import com.eleven.hotel.application.service.HotelCommandService;
+import com.eleven.hotel.application.service.HotelService;
 import com.eleven.hotel.domain.model.hotel.Hotel;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.endpoint.convert.HotelConvertor;
@@ -31,7 +31,7 @@ public class HotelMerchantApi {
     private final HotelConvertor hotelConvertor;
     private final HotelRepository hotelRepository;
 
-    private final HotelCommandService hotelCommandService;
+    private final HotelService hotelService;
 
     @Operation(summary = "read hotel")
     @GetMapping("/{hotelId}")
@@ -64,7 +64,7 @@ public class HotelMerchantApi {
                 request.getLng()
             ))
             .build();
-        hotelCommandService.update(command);
+        hotelService.update(command);
     }
 
 
@@ -74,7 +74,7 @@ public class HotelMerchantApi {
         var command = HotelOpenCommand.builder()
             .hotelId(hotelId)
             .build();
-        hotelCommandService.open(command);
+        hotelService.open(command);
     }
 
     @Operation(summary = "close hotel")
@@ -83,7 +83,7 @@ public class HotelMerchantApi {
         var command = HotelCloseCommand.builder()
             .hotelId(hotelId)
             .build();
-        hotelCommandService.close(command);
+        hotelService.close(command);
     }
 
 }

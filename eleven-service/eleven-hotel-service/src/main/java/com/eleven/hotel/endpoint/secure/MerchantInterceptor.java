@@ -1,5 +1,7 @@
 package com.eleven.hotel.endpoint.secure;
 
+import com.eleven.core.web.WebHelper;
+import com.eleven.hotel.application.secure.HotelAuthorizer;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.HandlerMapping;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Component
@@ -20,21 +23,18 @@ import java.util.Map;
 public class MerchantInterceptor implements HandlerInterceptor {
 
     private final HotelRepository hotelRepository;
+    private final HotelAuthorizer hotelAuthorizer;
 
     @Override
     public boolean preHandle(@Nonnull HttpServletRequest request, @Nonnull HttpServletResponse response, @Nonnull Object handler) {
-        if (handler instanceof HandlerMethod handlerMethod) {
+        if (handler instanceof HandlerMethod) {
             var variables = getAccess(request);
             log.info("request uri variables = {}", variables);
 
-            var hotelId = variables.get("hotelId");
-            if (StringUtils.isNotBlank(hotelId)) {
+            Optional.ofNullable(variables.get("hotelId"))
+                .filter(hotelAuthorizer::isAccessible)
+                .orElseThrow(WebHelper::accessDeniedException);
 
-//                hotelRepository.findByHotelId(hotelId)
-//                    .filter(ApplicationContext::mustReadable)
-//                    .orElseThrow(ApplicationContext::noResource);
-
-            }
         }
         return true;
     }

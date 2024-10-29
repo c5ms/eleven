@@ -1,6 +1,6 @@
 package com.eleven.hotel.endpoint;
 
-import com.eleven.hotel.application.service.HotelCommandService;
+import com.eleven.hotel.application.service.HotelService;
 import com.eleven.hotel.endpoint.resource.RegisterAdminApi;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ class TestMvcWithMock {
     private MockMvc mvc;
 
     @MockBean
-    private HotelCommandService hotelCommandService;
+    private HotelService hotelService;
 
     @Test
     @WithMockUser(roles = "ROLE_HOTEL_STAFF")

@@ -4,7 +4,7 @@ import com.eleven.core.web.annonation.AsAdminApi;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.request.RegisterReviewRequest;
 import com.eleven.hotel.application.command.RegisterReviewCommand;
-import com.eleven.hotel.application.service.RegisterCommandService;
+import com.eleven.hotel.application.service.RegisterService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(HotelEndpoints.Paths.REGISTER)
 public class RegisterAdminApi {
 
-    private final RegisterCommandService registerCommandService;
+    private final RegisterService registerService;
 
     @Operation(summary = "review the register")
     @PostMapping("/{registerId}/reviews")
@@ -31,7 +31,7 @@ public class RegisterAdminApi {
             .registerId(registerId)
             .pass(request.getPass())
             .build();
-        registerCommandService.review(command);
+        registerService.review(command);
     }
 
 

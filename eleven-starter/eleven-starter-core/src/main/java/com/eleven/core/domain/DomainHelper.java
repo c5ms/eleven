@@ -1,6 +1,7 @@
 package com.eleven.core.domain;
 
 import cn.hutool.extra.spring.SpringUtil;
+import com.eleven.core.application.NoPrincipalException;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.BooleanUtils;
 
@@ -28,6 +29,7 @@ public class DomainHelper {
     public static void mustNot(boolean check, DomainError error) throws DomainException {
         mustNot(check, error::toException);
     }
+
 
     public static String nextId() {
         return SpringUtil.getBean(IdentityGenerator.class).next();

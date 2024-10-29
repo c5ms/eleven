@@ -2,6 +2,7 @@ package com.eleven.core.application.event;
 
 import com.eleven.core.security.Principal;
 import lombok.Data;
+import net.bytebuddy.asm.Advice;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -21,4 +22,9 @@ public class ApplicationEventMessage implements Serializable {
 
     private String body;
 
+    public void writeHeaderTo(ApplicationEvent event) {
+        event.getHeader().setService(this.getService());
+        event.getHeader().setTrigger(this.getTrigger());
+        event.getHeader().setTime(this.getTime());
+    }
 }

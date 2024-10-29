@@ -3,7 +3,7 @@ package com.eleven.core.application.secure;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-public abstract class TypedDomainAuthorizer<C> implements DomainAuthorizer {
+public abstract class TypedObjectAuthorizer<C> implements ObjectAuthorizer {
 
     @Override
     public boolean support(Object resource) {

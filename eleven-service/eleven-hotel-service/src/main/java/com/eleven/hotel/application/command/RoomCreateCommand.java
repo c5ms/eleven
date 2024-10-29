@@ -8,7 +8,6 @@ import lombok.Getter;
 @Getter
 @Builder
 public class RoomCreateCommand {
-
     private String hotelId;
 
     private ChargeType chargeType;

@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional(rollbackFor = Exception.class)
-public class BookingCommandService {
+public class BookingService {
 
     private final PlanRepository planRepository;
     private final HotelRepository hotelRepository;

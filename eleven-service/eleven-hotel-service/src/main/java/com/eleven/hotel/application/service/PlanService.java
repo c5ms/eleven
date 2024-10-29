@@ -1,6 +1,5 @@
 package com.eleven.hotel.application.service;
 
-import com.eleven.hotel.api.domain.core.HotelErrors;
 import com.eleven.hotel.application.command.PlanAddRoomCommand;
 import com.eleven.hotel.application.command.PlanCreateCommand;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
@@ -17,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional(rollbackFor = Exception.class)
-public class PlanCommandService {
+public class PlanService {
 
     private final PlanManager planManager;
     private final PlanRepository planRepository;

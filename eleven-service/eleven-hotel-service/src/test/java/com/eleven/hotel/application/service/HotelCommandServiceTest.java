@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class HotelCommandServiceTest {
 
     @Autowired
-    HotelCommandService hotelCommandService;
+    HotelService hotelService;
 
     @Test
     void getHotel() {

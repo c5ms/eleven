@@ -1,7 +1,7 @@
 package com.eleven.core.web;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
-import com.eleven.core.application.command.NoCommandAcceptorException;
+import com.eleven.core.application.NoPrincipalException;
 import com.eleven.core.application.command.CommandInvalidException;
 import com.eleven.core.application.secure.NoAuthorityException;
 import com.eleven.core.domain.DomainException;
@@ -94,7 +94,7 @@ public class ElevenExceptionAdvice {
             var problem = Problem.of(ex);
             log.warn(ExceptionUtil.getMessage(ex), ex);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
-        } else if (e instanceof NoCommandAcceptorException) {
+        } else if (e instanceof NoPrincipalException) {
             status = HttpStatus.NOT_FOUND;
         } else if (e instanceof NoAuthorityException) {
             var problem = Problem.of(WebErrors.ERROR_ACCESS_DENIED);

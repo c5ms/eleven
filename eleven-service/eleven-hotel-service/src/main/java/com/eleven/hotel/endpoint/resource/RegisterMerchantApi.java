@@ -5,7 +5,7 @@ import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.model.RegisterDto;
 import com.eleven.hotel.api.endpoint.request.HotelRegisterRequest;
 import com.eleven.hotel.application.command.HotelRegisterCommand;
-import com.eleven.hotel.application.service.RegisterCommandService;
+import com.eleven.hotel.application.service.RegisterService;
 import com.eleven.hotel.domain.model.hotel.Register;
 import com.eleven.hotel.endpoint.convert.HotelConvertor;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class RegisterMerchantApi {
 
     private final HotelConvertor hotelConvertor;
-    private final RegisterCommandService registerCommandService;
+    private final RegisterService registerService;
 
     @Operation(summary = "register hotel")
     @PostMapping
@@ -35,7 +35,7 @@ public class RegisterMerchantApi {
             .admin(new Register.AdminInformation(request.getAdminName(), request.getAdminEmail(), request.getAdminTel()))
             .hotel(new Register.HotelInformation(request.getHotelName(),request.getHotelAddress() ))
             .build();
-        var register = registerCommandService.register(command);
+        var register = registerService.register(command);
         return hotelConvertor.toDto(register);
     }
 

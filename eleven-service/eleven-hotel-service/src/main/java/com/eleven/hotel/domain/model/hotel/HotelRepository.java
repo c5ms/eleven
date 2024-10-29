@@ -1,6 +1,6 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import com.eleven.core.data.NoEntityException;
+import com.eleven.core.data.NoRequiredEntityException;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -16,7 +16,7 @@ public interface HotelRepository extends CrudRepository<Hotel, String> {
     Optional<Hotel> findByHotelId(String hotelId);
 
     default Hotel require(String hotelId) {
-        return findByHotelId(hotelId).orElseThrow(NoEntityException::new);
+        return findByHotelId(hotelId).orElseThrow(NoRequiredEntityException::new);
     }
 
 }

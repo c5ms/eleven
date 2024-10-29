@@ -1,6 +1,6 @@
 package com.eleven.core.application.secure;
 
-public interface DomainAuthorizer {
+public interface ObjectAuthorizer {
 
     boolean support(Object resource);
 

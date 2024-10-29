@@ -9,9 +9,9 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class DomainSecurityManager {
+public class ObjectSecurityManager {
 
-    private final List<DomainAuthorizer> authorizers;
+    private final List<ObjectAuthorizer> authorizers;
 
     public boolean isReadable(Object resource) {
         return authorizers.stream()

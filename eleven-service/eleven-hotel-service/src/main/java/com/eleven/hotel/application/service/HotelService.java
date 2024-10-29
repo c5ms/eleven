@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional(rollbackFor = Exception.class)
-public class HotelCommandService {
+public class HotelService {
     private final HotelManager hotelManager;
     private final HotelRepository hotelRepository;
 
