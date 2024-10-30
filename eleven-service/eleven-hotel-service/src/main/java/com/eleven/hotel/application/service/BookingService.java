@@ -2,7 +2,7 @@ package com.eleven.hotel.application.service;
 
 import com.eleven.hotel.application.command.BookingCommand;
 import com.eleven.hotel.domain.model.booking.Booking;
-import com.eleven.hotel.domain.model.booking.BookingManager;
+import com.eleven.hotel.domain.manager.BookingManager;
 import com.eleven.hotel.domain.model.booking.BookingRepository;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.domain.model.hotel.RoomRepository;

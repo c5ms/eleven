@@ -46,7 +46,7 @@ public class Register extends AbstractEntity {
         this.state = RegisterState.UNDER_REVIEW;
     }
 
-  public   static Register of(String registerId, HotelInformation hotel, AdminInformation admin) {
+    public static Register of(String registerId, HotelInformation hotel, AdminInformation admin) {
         var register = new Register(registerId);
         register.hotel = hotel;
         register.admin = admin;

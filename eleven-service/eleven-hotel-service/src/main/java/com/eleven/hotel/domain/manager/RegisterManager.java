@@ -1,6 +1,8 @@
-package com.eleven.hotel.domain.model.hotel;
+package com.eleven.hotel.domain.manager;
 
 import com.eleven.core.data.SerialGenerator;
+import com.eleven.hotel.domain.model.hotel.Register;
+import com.eleven.hotel.domain.model.hotel.RegisterValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -20,7 +22,7 @@ public class RegisterManager {
     }
 
     public Register create(Register.HotelInformation hotel, Register.AdminInformation admin) {
-        var register= Register.of(nextId(),hotel,admin);
+        var register = Register.of(nextId(), hotel, admin);
         validate(register);
         return register;
     }

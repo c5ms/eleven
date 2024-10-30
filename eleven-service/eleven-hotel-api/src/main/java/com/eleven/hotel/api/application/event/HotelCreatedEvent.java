@@ -14,4 +14,10 @@ public class HotelCreatedEvent extends AbstractApplicationEvent {
 
     private String hotelId;
 
+    public static HotelCreatedEvent of(String hotelId) {
+        var event = new HotelCreatedEvent();
+        event.setHotelId(hotelId);
+        return event;
+    }
+
 }

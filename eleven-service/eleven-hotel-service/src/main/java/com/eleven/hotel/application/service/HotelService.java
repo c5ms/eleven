@@ -57,7 +57,7 @@ public class HotelService {
 
         hotelManager.validate(hotel);
         hotelRepository.save(hotel);
-        ApplicationHelper.publishEvent(new HotelUpdatedEvent(hotel.getId()));
+        ApplicationHelper.publishEvent(HotelUpdatedEvent.of(hotel.getId()));
     }
 
     public void open(HotelOpenCommand command) {

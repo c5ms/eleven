@@ -1,18 +1,21 @@
 package com.eleven.hotel.api.application.event;
 
-import com.eleven.core.application.event.support.AbstractApplicationEvent;
 import com.eleven.core.application.event.IntegrationEvent;
-import lombok.AllArgsConstructor;
+import com.eleven.core.application.event.support.AbstractApplicationEvent;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@IntegrationEvent(HotelUpdatedEvent.NAME)
+@IntegrationEvent
 public class HotelUpdatedEvent extends AbstractApplicationEvent {
-    public static final String NAME = "HotelUpdated";
+
     private String hotelId;
+
+    public static HotelUpdatedEvent of(String hotelId) {
+        var event = new HotelUpdatedEvent();
+        event.setHotelId(hotelId);
+        return event;
+    }
+
 }

@@ -4,6 +4,8 @@ import com.eleven.core.application.ApplicationHelper;
 import com.eleven.hotel.api.application.event.HotelCreatedEvent;
 import com.eleven.hotel.application.command.HotelRegisterCommand;
 import com.eleven.hotel.application.command.RegisterReviewCommand;
+import com.eleven.hotel.domain.manager.AdminManager;
+import com.eleven.hotel.domain.manager.RegisterManager;
 import com.eleven.hotel.domain.model.hotel.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

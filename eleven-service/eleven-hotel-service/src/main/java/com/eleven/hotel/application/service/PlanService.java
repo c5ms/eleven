@@ -9,12 +9,13 @@ import com.eleven.hotel.application.query.PlanQuery;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.domain.model.hotel.RoomRepository;
 import com.eleven.hotel.domain.model.hotel.Plan;
-import com.eleven.hotel.domain.model.hotel.PlanManager;
+import com.eleven.hotel.domain.manager.PlanManager;
 import com.eleven.hotel.domain.model.hotel.PlanRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

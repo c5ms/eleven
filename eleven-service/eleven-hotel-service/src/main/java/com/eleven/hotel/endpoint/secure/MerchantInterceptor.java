@@ -1,7 +1,7 @@
 package com.eleven.hotel.endpoint.secure;
 
 import com.eleven.core.web.WebHelper;
-import com.eleven.hotel.application.secure.HotelAuthorizer;
+import com.eleven.hotel.application.authorize.HotelAuthorizer;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

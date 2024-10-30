@@ -1,7 +1,9 @@
-package com.eleven.hotel.domain.model.booking;
+package com.eleven.hotel.domain.manager;
 
 import com.eleven.core.domain.DomainError;
 import com.eleven.core.domain.DomainHelper;
+import com.eleven.hotel.domain.model.booking.Booking;
+import com.eleven.hotel.domain.model.booking.BookingValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -24,6 +26,5 @@ public class BookingManager {
             bookingValidator.isBookable(booking).ifPresent(DomainError::throwException);
         }
     }
-
 
 }

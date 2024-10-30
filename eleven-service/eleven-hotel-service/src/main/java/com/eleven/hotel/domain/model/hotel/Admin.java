@@ -30,7 +30,7 @@ public class Admin extends AbstractEntity {
         this.hotelId = hotelId;
     }
 
-    public   static Admin of(String id, String hotelId, Description description) {
+    public static Admin of(String id, String hotelId, Description description) {
         var admin = new Admin(id, hotelId);
         admin.description = description;
         return admin;

@@ -82,8 +82,8 @@ public class Plan extends AbstractEntity implements Sellable {
     }
 
     @SuppressWarnings("unused")
-    @Builder(builderClassName = "normalBuilder", builderMethodName = "normal", buildMethodName = "create",access = AccessLevel.PROTECTED)
-     static Plan createNormal(String hotelId,
+    @Builder(builderClassName = "normalBuilder", builderMethodName = "normal", buildMethodName = "create")
+    public static Plan createNormal(String hotelId,
                                     String planId,
                                     Stock stock,
                                     DateRange stayPeriod,
@@ -95,7 +95,7 @@ public class Plan extends AbstractEntity implements Sellable {
         Validate.notNull(stock, "stock must not be null");
         Validate.isTrue(stock.greaterTan(Stock.ZERO), "total must gather than zero");
 
-        var plan = new Plan(hotelId,planId);
+        var plan = new Plan(hotelId, planId);
         plan.stock = stock;
         plan.salePeriod = sellPeriod;
         plan.stayPeriod = stayPeriod;
@@ -155,6 +155,8 @@ public class Plan extends AbstractEntity implements Sellable {
     private boolean hasRoom() {
         return this.getRooms().isEmpty();
     }
+
+  
 
     @Getter
     @AllArgsConstructor

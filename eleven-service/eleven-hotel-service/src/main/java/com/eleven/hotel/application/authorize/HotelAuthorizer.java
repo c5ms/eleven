@@ -1,4 +1,4 @@
-package com.eleven.hotel.application.secure;
+package com.eleven.hotel.application.authorize;
 
 import com.eleven.hotel.domain.model.hotel.Hotel;
 import lombok.RequiredArgsConstructor;

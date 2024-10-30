@@ -1,7 +1,9 @@
-package com.eleven.hotel.domain.model.hotel;
+package com.eleven.hotel.domain.manager;
 
 import com.eleven.core.data.SerialGenerator;
 import com.eleven.core.domain.DomainError;
+import com.eleven.hotel.domain.model.hotel.Hotel;
+import com.eleven.hotel.domain.model.hotel.Plan;
 import com.eleven.hotel.domain.model.hotel.validate.PlanNameValidator;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
@@ -39,7 +41,7 @@ public class PlanManager {
             .preSellPeriod(preSellPeriod)
             .stayPeriod(stayPeriod)
             .description(description)
-            .stock( stock)
+            .stock(stock)
             .create();
         validate(plan);
         return plan;
