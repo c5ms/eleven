@@ -16,7 +16,7 @@ public class Subject implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private static final String ANONYMOUS_SUBJECT_NICK_NAME = "匿名用户";
+    private static final String ANONYMOUS_SUBJECT_NICK_NAME = "anonymous";
     private static final String ANONYMOUS_SUBJECT_USER_ID = "anonymous";
     private static final Set<String> ANONYMOUS_AUTHORITIES = Set.of("ROLE_anonymous");
 

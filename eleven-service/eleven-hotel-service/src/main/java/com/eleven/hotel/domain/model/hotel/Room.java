@@ -6,7 +6,7 @@ import com.eleven.core.domain.DomainHelper;
 import com.eleven.hotel.api.domain.model.ChargeType;
 import com.eleven.hotel.api.domain.model.RoomType;
 import com.eleven.hotel.api.domain.model.SaleState;
-import com.eleven.hotel.domain.core.Sellable;
+import com.eleven.hotel.domain.core.Saleable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +23,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @FieldNameConstants
 @Table(name = Room.TABLE_NAME)
 @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
-public class Room extends AbstractEntity implements Sellable {
+public class Room extends AbstractEntity implements Saleable {
 
     public static final String TABLE_NAME = "room";
     public static final String DOMAIN_NAME = "Room";

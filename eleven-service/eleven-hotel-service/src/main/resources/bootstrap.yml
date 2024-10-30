@@ -28,6 +28,11 @@ spring:
     database-change-log-table: 001_DATABASECHANGELOG
     database-change-log-lock-table: 001_DATABASECHANGELOGLOCK
 
+  jpa:
+    generate-ddl: false
+    properties:
+      'hibernate.create_empty_composites.enabled': true
+
 eleven:
   cache:
     duration: PT8H

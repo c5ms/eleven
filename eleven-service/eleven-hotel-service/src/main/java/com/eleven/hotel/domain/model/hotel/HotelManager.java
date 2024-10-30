@@ -20,7 +20,7 @@ public class HotelManager {
     }
 
     public Hotel create(Register register) {
-        return Hotel.of(nextHotelId(), register);
+        return Hotel.of( register);
     }
 
     public String nextHotelId() {

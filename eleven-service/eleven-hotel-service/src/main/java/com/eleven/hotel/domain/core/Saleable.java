@@ -2,7 +2,7 @@ package com.eleven.hotel.domain.core;
 
 import com.eleven.hotel.api.domain.model.SaleState;
 
-public interface Sellable {
+public interface Saleable {
 
     void startSale();
 

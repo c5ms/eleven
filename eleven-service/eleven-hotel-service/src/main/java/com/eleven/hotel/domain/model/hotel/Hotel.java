@@ -1,64 +1,49 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import com.eleven.core.data.AbstractEntity;
-import com.eleven.core.data.Audition;
 import com.eleven.core.domain.DomainHelper;
 import com.eleven.hotel.api.domain.model.SaleState;
-import com.eleven.hotel.domain.core.Sellable;
-import com.eleven.hotel.domain.model.hotel.event.HotelClosedEvent;
-import com.eleven.hotel.domain.model.hotel.event.HotelOpenedEvent;
-import com.eleven.hotel.domain.model.hotel.event.HotelRelocatedEvent;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import com.eleven.hotel.domain.core.Saleable;
+import jakarta.annotation.Nullable;
+import jakarta.persistence.*;
+import lombok.*;
 import lombok.experimental.FieldNameConstants;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.PersistenceCreator;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Embedded;
-import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalTime;
+import java.util.Optional;
 
 
 @Table(name = Hotel.TABLE_NAME)
+@Entity
 @Getter
 @FieldNameConstants
-@AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
-public class Hotel extends AbstractEntity implements Sellable {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Hotel implements Saleable {
 
-    public static final String TABLE_NAME = "hotel";
+    public static final String TABLE_NAME = "hms_hotel";
     public static final String DOMAIN_NAME = "Hotel";
 
     @Id
-    private final String id;
+    private String id = DomainHelper.nextId();
 
-    @Column(value = "hotel_id")
+    @Column(name = "hotel_id")
     private String hotelId;
 
-    @Column(value = "sale_state")
-    private SaleState saleState;
+    @Column(name = "sale_state")
+    @Enumerated(EnumType.STRING)
+    private SaleState saleState = SaleState.STOPPED;
 
-    @Embedded.Empty(prefix = "position_")
-    private Position position;
+    @Nullable
+    @Embedded
+    private Position position = new Position();
 
     @Setter
-    @Embedded.Empty(prefix = "hotel_")
-    private Description description;
+    @Embedded
+    private Description description = new Description();
 
-    @Embedded.Empty
-    private Audition audition = Audition.empty();
-
-    Hotel(String hotelId) {
-        this.id = DomainHelper.nextId();
-        this.hotelId = hotelId;
-        this.saleState = SaleState.STARTED;
-    }
-
-    public static Hotel of(String hotelId, Register register) {
+    public static Hotel of( Register register) {
         var description = new Description(register.getHotel().getName());
 
-        var hotel = new Hotel(hotelId);
+        var hotel = new Hotel();
         hotel.setDescription(description);
 
         return hotel;
@@ -67,13 +52,11 @@ public class Hotel extends AbstractEntity implements Sellable {
     @Override
     public void startSale() {
         this.saleState = SaleState.STARTED;
-        addEvent(new HotelOpenedEvent(id));
     }
 
     @Override
     public void stopSale() {
         this.saleState = SaleState.STOPPED;
-        addEvent(new HotelClosedEvent(id));
     }
 
     @Override
@@ -83,65 +66,71 @@ public class Hotel extends AbstractEntity implements Sellable {
 
     public void relocate(Position position) {
         this.position = position;
-        this.addEvent(new HotelRelocatedEvent(id));
+    }
+
+    public Position getPosition() {
+        return Optional.ofNullable(position).orElse(new Position());
     }
 
     @Getter
+    @Embeddable
     @FieldNameConstants
-    @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
+    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Position {
 
-        @Column(value = "province")
+        @Column(name = "position_province")
         private String province;
 
-        @Column(value = "city")
+        @Column(name = "position_city")
         private String city;
 
-        @Column(value = "district")
+        @Column(name = "position_district")
         private String district;
 
-        @Column(value = "street")
+        @Column(name = "position_street")
         private String street;
 
-        @Column(value = "address")
+        @Column(name = "position_address")
         private String address;
 
-        @Column(value = "lat")
+        @Column(name = "position_lat")
         private Double lat;
 
-        @Column(value = "lng")
+        @Column(name = "position_lng")
         private Double lng;
-
     }
 
 
     @Getter
+    @Embeddable
+    @AllArgsConstructor
     @FieldNameConstants
-    @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Description {
 
-        @Column(value = "name")
+        @Column(name = "hotel_name")
         private String name;
 
-        @Column(value = "description")
+        @Column(name = "hotel_description")
         private String description;
 
-        @Column(value = "head_pic_url")
+        @Column(name = "hotel_head_pic_url")
         private String headPicUrl;
 
-        @Column(value = "room_number")
+        @Column(name = "hotel_room_number")
         private Integer roomNumber;
 
-        @Column(value = "check_in_time")
+        @Column(name = "hotel_check_in_time")
         private LocalTime checkInTime;
 
-        @Column(value = "check_out_time")
+        @Column(name = "hotel_check_out_time")
         private LocalTime checkOutTime;
 
-        @Column(value = "email")
+        @Column(name = "contact_email")
         private String email;
 
-        @Column(value = "tel")
+        @Column(name = "contact_tel")
         private String tel;
 
         public Description(String name) {

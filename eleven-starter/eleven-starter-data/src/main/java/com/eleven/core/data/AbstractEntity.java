@@ -47,4 +47,5 @@ public abstract class AbstractEntity implements Persistable<String> {
     protected Collection<DomainEvent> domainEvents() {
         return Collections.unmodifiableList(domainEvents);
     }
+
 }

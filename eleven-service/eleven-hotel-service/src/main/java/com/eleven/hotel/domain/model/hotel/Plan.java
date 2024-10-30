@@ -6,7 +6,7 @@ import com.eleven.core.domain.DomainHelper;
 import com.eleven.hotel.api.domain.error.HotelErrors;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
-import com.eleven.hotel.domain.core.Sellable;
+import com.eleven.hotel.domain.core.Saleable;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
 import com.eleven.hotel.domain.values.Price;
@@ -34,7 +34,7 @@ import static com.eleven.hotel.domain.model.hotel.Plan.TABLE_NAME;
 @Getter
 @FieldNameConstants
 @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}), access = AccessLevel.PROTECTED)
-public class Plan extends AbstractEntity implements Sellable {
+public class Plan extends AbstractEntity implements Saleable {
     public static final String TABLE_NAME = "plan";
     public static final String DOMAIN_NAME = "Plan";
 
@@ -156,7 +156,7 @@ public class Plan extends AbstractEntity implements Sellable {
         return this.getRooms().isEmpty();
     }
 
-  
+
 
     @Getter
     @AllArgsConstructor

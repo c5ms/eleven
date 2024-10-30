@@ -13,7 +13,7 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Embedded;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table(name = "register")
+@Table(name = "hms_register")
 @Getter
 @FieldNameConstants
 @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
@@ -59,7 +59,7 @@ public class Register extends AbstractEntity {
     }
 
     public void accept() {
-        this.checkBeforeReview();
+//        this.checkBeforeReview();
         this.state = RegisterState.ACCEPTED;
     }
 

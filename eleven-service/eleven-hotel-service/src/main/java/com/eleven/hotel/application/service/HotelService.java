@@ -2,7 +2,6 @@ package com.eleven.hotel.application.service;
 
 import com.eleven.core.application.ApplicationHelper;
 import com.eleven.core.application.query.PageResult;
-import com.eleven.core.data.Audition;
 import com.eleven.core.data.QuerySupport;
 import com.eleven.hotel.api.application.event.HotelUpdatedEvent;
 import com.eleven.hotel.application.command.HotelCloseCommand;
@@ -14,7 +13,6 @@ import com.eleven.hotel.domain.model.hotel.HotelManager;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +32,7 @@ public class HotelService {
 
     @Transactional(readOnly = true)
     public Optional<Hotel> read(String hotelId) {
-        return hotelRepository.findById(hotelId);
+        return hotelRepository.findByHotelId(hotelId);
     }
 
     @Transactional(readOnly = true)
@@ -42,11 +40,10 @@ public class HotelService {
         var criteria = empty();
 
         if (StringUtils.isNotBlank(query.getHotelName())) {
-            criteria = criteria.and(where(String.join(Hotel.Fields.description, Hotel.Description.Fields.name)).like(query.getHotelName()+"%"));
+            criteria = criteria.and(where(String.join(Hotel.Fields.description, Hotel.Description.Fields.name)).like(query.getHotelName() + "%"));
         }
 
-        var sort = Sort.by(String.join(Hotel.Fields.audition, Audition.Fields.createAt)).descending();
-        return querySupport.query(Hotel.class, criteria,  query,sort);
+        return querySupport.query(Hotel.class, criteria, query);
     }
 
     public void update(HotelUpdateCommand command) {
@@ -71,7 +68,6 @@ public class HotelService {
         hotel.stopSale();
         hotelRepository.save(hotel);
     }
-
 
 
 }
