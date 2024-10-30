@@ -2,11 +2,10 @@ package com.eleven.demo.endpoint.rest;
 
 import com.eleven.core.application.command.CommandDispatcher;
 import com.eleven.core.application.command.CommandHandleException;
-import com.eleven.core.auth.SecurityContext;
-import com.eleven.core.auth.Subject;
-import com.eleven.core.web.annonation.AsMerchantApi;
-import com.eleven.hotel.api.endpoint.model.HotelDto;
+import com.eleven.core.authorization.SecurityContext;
+import com.eleven.core.authorization.Subject;
 import com.eleven.hotel.api.endpoint.internal.HotelClient;
+import com.eleven.hotel.api.endpoint.model.HotelDto;
 import com.eleven.upms.api.endpoint.UpmsClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +17,6 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/demo")
-@AsMerchantApi
 public class DemoApi {
     private final UpmsClient upmsClient;
     private final HotelClient hotelClient;
@@ -39,8 +37,8 @@ public class DemoApi {
     private final CommandDispatcher commandDispatcher;
 
     @GetMapping("/03")
-    public void _03() throws CommandHandleException {
-        ;
+    public String _03() throws CommandHandleException {
+        return "";
     }
 
 }

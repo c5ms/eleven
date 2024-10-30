@@ -1,9 +1,9 @@
 package com.eleven.upms.application.service;
 
+import com.eleven.core.application.query.PageResult;
 import com.eleven.core.data.Audition;
 import com.eleven.core.data.QuerySupport;
 import com.eleven.core.domain.DomainHelper;
-import com.eleven.core.application.query.PageResult;
 import com.eleven.core.time.TimeHelper;
 import com.eleven.upms.api.application.command.UserCreateCommand;
 import com.eleven.upms.api.application.command.UserQueryCommand;

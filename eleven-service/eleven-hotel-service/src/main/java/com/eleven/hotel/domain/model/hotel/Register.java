@@ -2,7 +2,7 @@ package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.core.data.AbstractEntity;
 import com.eleven.core.domain.DomainHelper;
-import com.eleven.hotel.api.domain.core.HotelErrors;
+import com.eleven.hotel.api.domain.error.HotelErrors;
 import com.eleven.hotel.api.domain.model.RegisterState;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -46,7 +46,7 @@ public class Register extends AbstractEntity {
         this.state = RegisterState.UNDER_REVIEW;
     }
 
-    static Register of(String registerId, HotelInformation hotel, AdminInformation admin) {
+  public   static Register of(String registerId, HotelInformation hotel, AdminInformation admin) {
         var register = new Register(registerId);
         register.hotel = hotel;
         register.admin = admin;

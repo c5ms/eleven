@@ -1,6 +1,5 @@
 package com.eleven.hotel.api.endpoint.request;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,6 +1,6 @@
 package com.eleven.upms.application.support.auth;
 
-import com.eleven.core.auth.*;
+import com.eleven.core.authorization.*;
 import com.eleven.core.time.TimeHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;

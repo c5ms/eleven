@@ -1,12 +1,12 @@
 package com.eleven.hotel.domain.model.booking;
 
 import com.eleven.core.data.AbstractEntity;
-import com.eleven.hotel.api.domain.core.HotelErrors;
+import com.eleven.hotel.api.domain.error.HotelErrors;
 import com.eleven.hotel.domain.model.coupon.Coupon;
 import com.eleven.hotel.domain.model.coupon.CouponCalculator;
 import com.eleven.hotel.domain.model.hotel.Hotel;
-import com.eleven.hotel.domain.model.plan.Plan;
 import com.eleven.hotel.domain.model.hotel.Room;
+import com.eleven.hotel.domain.model.hotel.Plan;
 import com.eleven.hotel.domain.model.traveler.Traveler;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.Price;

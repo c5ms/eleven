@@ -1,6 +1,5 @@
 package com.eleven.hotel.api.endpoint.request;
 
-import com.eleven.hotel.api.domain.model.SaleType;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

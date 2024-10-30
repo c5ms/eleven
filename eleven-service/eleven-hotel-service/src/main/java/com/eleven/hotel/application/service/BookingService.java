@@ -6,7 +6,7 @@ import com.eleven.hotel.domain.model.booking.BookingManager;
 import com.eleven.hotel.domain.model.booking.BookingRepository;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.domain.model.hotel.RoomRepository;
-import com.eleven.hotel.domain.model.plan.PlanRepository;
+import com.eleven.hotel.domain.model.hotel.PlanRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

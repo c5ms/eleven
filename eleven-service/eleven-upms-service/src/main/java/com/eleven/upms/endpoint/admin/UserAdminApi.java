@@ -2,11 +2,11 @@ package com.eleven.upms.endpoint.admin;
 
 import com.eleven.core.application.query.PageResult;
 import com.eleven.core.web.annonation.AsAdminApi;
-import com.eleven.upms.application.service.UserService;
 import com.eleven.upms.api.application.command.UserCreateCommand;
 import com.eleven.upms.api.application.command.UserQueryCommand;
 import com.eleven.upms.api.application.command.UserStatusChangeCommand;
 import com.eleven.upms.api.application.model.UserDetail;
+import com.eleven.upms.application.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

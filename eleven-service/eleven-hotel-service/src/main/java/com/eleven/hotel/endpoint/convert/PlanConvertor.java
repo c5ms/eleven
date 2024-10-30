@@ -1,8 +1,8 @@
 package com.eleven.hotel.endpoint.convert;
 
 import com.eleven.hotel.api.endpoint.model.PlanDto;
-import com.eleven.hotel.domain.model.plan.Plan;
-import com.eleven.hotel.domain.model.plan.PlanRoom;
+import com.eleven.hotel.domain.model.hotel.Plan;
+import com.eleven.hotel.domain.model.hotel.PlanRoom;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

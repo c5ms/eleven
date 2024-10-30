@@ -1,10 +1,10 @@
 package com.eleven.upms.domain.model;
 
 import com.eleven.core.data.AbstractEntity;
-import com.eleven.core.auth.Principal;
-import com.eleven.core.auth.ToPrincipal;
-import com.eleven.core.auth.Token;
-import com.eleven.core.auth.TokenDetail;
+import com.eleven.core.authorization.Principal;
+import com.eleven.core.authorization.ToPrincipal;
+import com.eleven.core.authorization.Token;
+import com.eleven.core.authorization.TokenDetail;
 import com.eleven.core.time.TimeHelper;
 import com.eleven.upms.api.domain.event.AccessTokenCreatedEvent;
 import lombok.AllArgsConstructor;

@@ -18,12 +18,12 @@ public class HotelEventReceiver {
     public static final String QUEUE_HOTEL_EVENT_ERROR = "hotel_event_error";
 
     private final AmqpTemplate amqpTemplate;
-    private final ApplicationEventIntegrator applicationEventDispatcher;
+    private final ApplicationEventIntegrator integrator;
 
     @RabbitListener(queues = QUEUE_HOTEL_EVENT, ackMode = "MANUAL")
     public void receive(String message, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag) {
         try {
-            applicationEventDispatcher.inbound(message);
+            integrator.receive(message);
             channel.basicAck(tag, false);
         } catch (Exception e) {
             log.error("fail to receive event", e);

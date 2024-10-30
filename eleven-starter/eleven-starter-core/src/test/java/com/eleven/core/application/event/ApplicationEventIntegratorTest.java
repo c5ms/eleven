@@ -1,8 +1,9 @@
 package com.eleven.core.application.event;
 
-import com.eleven.core.application.*;
+import com.eleven.core.application.ApplicationHelper;
 import com.eleven.core.application.event.support.JacksonApplicationEventSerializer;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,27 +28,43 @@ class ApplicationEventIntegratorTest {
     TestEventListener eventListener;
 
     @org.junit.jupiter.api.Test
-    void outbound() throws ApplicationEventSerializeException {
+    void send() throws ApplicationEventSerializeException {
 
         TestEvent event = new TestEvent();
         event.setContent("test event content");
-        integrator.outbound(event);
+        integrator.send(event);
 
         event = new TestEvent();
         event.getHeader().setFrom(ApplicationEventOrigin.EXTERNAL);
         event.setContent("test event content");
-        integrator.outbound(event);
+        integrator.send(event);
+
+        Assertions.assertEquals(1, eventSender.getMessages().size());
+    }
+
+    @DisplayName("don't send external message")
+    @org.junit.jupiter.api.Test
+    void send_external_message() throws ApplicationEventSerializeException {
+
+        TestEvent event = new TestEvent();
+        event.setContent("test event content");
+        integrator.send(event);
+
+        event = new TestEvent();
+        event.getHeader().setFrom(ApplicationEventOrigin.EXTERNAL);
+        event.setContent("test event content");
+        integrator.send(event);
 
         Assertions.assertEquals(1, eventSender.getMessages().size());
     }
 
     @org.junit.jupiter.api.Test
-    void inbound() throws ApplicationEventSerializeException {
+    void receive() throws ApplicationEventSerializeException {
         var message = "{\"cls\":\"com.eleven.core.application.event.TestEvent\",\"event\":\"SystemTestEvent\",\"time\":1730180030238,\"body\":\"{\\\"content\\\":\\\"test event content\\\"}\"}";
-        integrator.inbound(message);
+        integrator.receive(message);
 
         message = "{\"cls\":\"com.eleven.core.application.event.NoSuchTestEvent\",\"event\":\"SystemTestEvent\",\"time\":1730180030238,\"body\":\"{\\\"content\\\":\\\"test event content\\\"}\"}";
-        integrator.inbound(message);
+        integrator.receive(message);
 
         Assertions.assertEquals(1, eventListener.getEvents().size());
         Assertions.assertEquals(ApplicationEventOrigin.EXTERNAL, eventListener.getEvents().get(0).getHeader().getFrom());

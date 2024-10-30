@@ -67,7 +67,7 @@ public class Room extends AbstractEntity implements Sellable {
         this.saleState = SaleState.STOPPED;
     }
 
-    static Room of(String hotelId, String roomId, Description description, Restriction restriction, ChargeType chargeType) {
+    public   static Room of(String hotelId, String roomId, Description description, Restriction restriction, ChargeType chargeType) {
         Validate.notNull(restriction.maxPerson, "max person must not null");
         Validate.notNull(restriction.minPerson, "min person must not null");
         Validate.isTrue(restriction.maxPerson > restriction.minPerson, "max person must be greater than min");

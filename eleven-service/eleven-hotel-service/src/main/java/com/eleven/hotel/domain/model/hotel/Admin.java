@@ -25,12 +25,12 @@ public class Admin extends AbstractEntity {
     @Embedded.Empty
     private Description description;
 
-    private Admin(String id, String hotelId) {
+    Admin(String id, String hotelId) {
         this.id = id;
         this.hotelId = hotelId;
     }
 
-     static Admin of(String id, String hotelId, Description description) {
+    public   static Admin of(String id, String hotelId, Description description) {
         var admin = new Admin(id, hotelId);
         admin.description = description;
         return admin;

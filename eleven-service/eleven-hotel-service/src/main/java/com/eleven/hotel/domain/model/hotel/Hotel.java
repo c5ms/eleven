@@ -49,13 +49,13 @@ public class Hotel extends AbstractEntity implements Sellable {
     @Embedded.Empty
     private Audition audition = Audition.empty();
 
-    protected Hotel(String hotelId) {
+      Hotel(String hotelId) {
         this.id = DomainHelper.nextId();
         this.hotelId = hotelId;
         this.saleState = SaleState.STARTED;
     }
 
-    protected static Hotel of(String hotelId, Register register) {
+    public  static Hotel of(String hotelId, Register register) {
         var description = new Description(register.getHotel().getName());
 
         var hotel = new Hotel(hotelId);

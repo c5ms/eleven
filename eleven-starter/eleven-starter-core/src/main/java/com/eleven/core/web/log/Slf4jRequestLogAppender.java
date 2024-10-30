@@ -1,6 +1,6 @@
 package com.eleven.core.web.log;
 
-import com.eleven.core.auth.SecurityContext;
+import com.eleven.core.authorization.SecurityContext;
 import com.fasterxml.jackson.core.JsonGenerator;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -63,10 +63,10 @@ public class Slf4jRequestLogAppender implements RequestLogAppender {
         if (status.is4xxClientError()) {
             if (logger.isWarnEnabled()) {
                 if (exception.isPresent()) {
-                    logger.warn(marker, "【{}】执行【{}】处理失败 : {}", subject.getNickName(), requestLog.getOperate(), ExceptionUtils.getRootCauseMessage(exception.get()),exception.get());
+                    logger.warn(marker, "【{}】执行【{}】处理失败 {}: {}", subject.getNickName(), requestLog.getOperate(), ExceptionUtils.getRootCauseMessage(exception.get()),status.value(),exception.get());
                     return;
                 }
-                logger.warn(marker, "【{}】执行【{}】处理失败", subject.getNickName(), requestLog.getOperate());
+                logger.warn(marker, "【{}】执行【{}】处理失败 {}", subject.getNickName(), requestLog.getOperate(),status.value());
                 return;
             }
         }

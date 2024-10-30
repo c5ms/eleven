@@ -1,6 +1,6 @@
 package com.eleven.hotel.endpoint;
 
-import com.eleven.hotel.endpoint.resource.RegisterMerchantApi;
+import com.eleven.hotel.endpoint.web.hotel.RegisterMerchantApi;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
