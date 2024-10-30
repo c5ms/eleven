@@ -45,7 +45,7 @@ public class HotelAdminApi {
         var command = HotelQuery.builder()
             .hotelName(request.getHotelName())
             .build();
-        return hotelService.queryPage(command).map(hotelConvertor::toDto);
+        return hotelService.query(command).map(hotelConvertor::toDto);
     }
 
 }

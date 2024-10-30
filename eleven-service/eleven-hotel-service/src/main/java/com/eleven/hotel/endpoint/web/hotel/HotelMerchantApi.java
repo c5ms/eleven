@@ -9,7 +9,6 @@ import com.eleven.hotel.application.command.HotelOpenCommand;
 import com.eleven.hotel.application.command.HotelUpdateCommand;
 import com.eleven.hotel.application.service.HotelService;
 import com.eleven.hotel.domain.model.hotel.Hotel;
-import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.endpoint.convert.HotelConvertor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,15 +27,13 @@ import java.util.Optional;
 @RequestMapping(HotelEndpoints.Paths.HOTEL)
 public class HotelMerchantApi {
 
-    private final HotelConvertor hotelConvertor;
-    private final HotelRepository hotelRepository;
-
     private final HotelService hotelService;
+    private final HotelConvertor hotelConvertor;
 
     @Operation(summary = "read hotel")
     @GetMapping("/{hotelId}")
     public Optional<HotelDto> readHotel(@PathVariable("hotelId") String hotelId) {
-        return hotelRepository.findById(hotelId).map(hotelConvertor::toDto);
+        return hotelService.read(hotelId).map(hotelConvertor::toDto);
     }
 
     @Operation(summary = "update hotel")
@@ -66,7 +63,6 @@ public class HotelMerchantApi {
             .build();
         hotelService.update(command);
     }
-
 
     @Operation(summary = "open hotel")
     @PostMapping("/{hotelId}/operations/open")

@@ -1,4 +1,4 @@
-package com.eleven.hotel.endpoint.web.hotel;
+package com.eleven.hotel.endpoint.web.admin;
 
 import com.eleven.core.web.annonation.AsAdminApi;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;

@@ -33,7 +33,12 @@ public class HotelService {
     private final QuerySupport querySupport;
 
     @Transactional(readOnly = true)
-    public PageResult<Hotel> queryPage(HotelQuery query) {
+    public Optional<Hotel> read(String hotelId) {
+        return hotelRepository.findById(hotelId);
+    }
+
+    @Transactional(readOnly = true)
+    public PageResult<Hotel> query(HotelQuery query) {
         var criteria = empty();
 
         if (StringUtils.isNotBlank(query.getHotelName())) {
@@ -66,6 +71,7 @@ public class HotelService {
         hotel.stopSale();
         hotelRepository.save(hotel);
     }
+
 
 
 }

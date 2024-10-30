@@ -1,6 +1,7 @@
 package com.eleven.hotel.endpoint.web.inner;
 
 import com.eleven.core.web.annonation.AsInternalApi;
+import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.internal.HotelClient;
 import com.eleven.hotel.api.endpoint.model.HotelDto;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
@@ -14,7 +15,7 @@ import java.util.Optional;
 
 @Slf4j
 @AsInternalApi
-@Tag(name = "hotel")
+@Tag(name = HotelEndpoints.Tags.HOTEL)
 @RequiredArgsConstructor
 public class HotelInnerApi implements HotelClient {
 
