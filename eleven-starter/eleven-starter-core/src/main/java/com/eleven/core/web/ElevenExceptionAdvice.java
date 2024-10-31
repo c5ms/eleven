@@ -105,6 +105,9 @@ public class ElevenExceptionAdvice {
         else {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
             var problem = Problem.of("system_internal", ExceptionUtils.getRootCauseMessage(e));
+            if(log.isErrorEnabled()){
+                log.error(ExceptionUtil.getMessage(e), e);
+            }
             if (log.isDebugEnabled()) {
                 return ResponseEntity.status(status).body(problem);
             }

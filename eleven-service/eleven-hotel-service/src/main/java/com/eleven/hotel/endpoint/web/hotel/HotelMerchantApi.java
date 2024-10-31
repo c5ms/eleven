@@ -8,7 +8,6 @@ import com.eleven.hotel.api.endpoint.request.HotelUpdateRequest;
 import com.eleven.hotel.application.service.HotelService;
 import com.eleven.hotel.endpoint.configure.AsMerchantApi;
 import com.eleven.hotel.endpoint.convert.HotelConvertor;
-import com.eleven.hotel.endpoint.value.ResourceId;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +29,7 @@ public class HotelMerchantApi {
     private final HotelConvertor hotelConvertor;
 
     @Operation(summary = "read hotel")
-    @GetMapping("/{hotelId}")
+    @GetMapping("/{hotelId:\\d+}")
     public Optional<HotelDto> readHotel(@PathVariable("hotelId") Integer hotelId) {
         return hotelService.read(hotelId)
             .filter(ApplicationHelper::mustReadable)
@@ -38,23 +37,23 @@ public class HotelMerchantApi {
     }
 
     @Operation(summary = "update hotel")
-    @PostMapping("/{hotelId}")
+    @PostMapping("/{hotelId:\\d+}")
     public void update(@PathVariable("hotelId") Integer hotelId, @RequestBody @Validated HotelUpdateRequest request) {
         var command = hotelConvertor.toCommand(request);
         hotelService.update(hotelId, command);
     }
 
     @Operation(summary = "open hotel")
-    @PostMapping("/{hotelId}/operations/open")
-    public void openHotel(@PathVariable("hotelId") ResourceId hotelId) {
-        hotelService.read(hotelId.val())
+    @PostMapping("/{hotelId:\\d+}/operations/open")
+    public void openHotel(@PathVariable("hotelId") Integer hotelId) {
+        hotelService.read(hotelId)
             .filter(ApplicationHelper::mustWritable)
             .orElseThrow(WebHelper::notFoundException);
-        hotelService.open(hotelId.val());
+        hotelService.open(hotelId);
     }
 
     @Operation(summary = "close hotel")
-    @PostMapping("/{hotelId}/operations/close")
+    @PostMapping("/{hotelId::\\d+]}/operations/close")
     public void closeHotel(@PathVariable("hotelId") Integer hotelId) {
         hotelService.read(hotelId)
             .filter(ApplicationHelper::mustWritable)

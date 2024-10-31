@@ -41,12 +41,15 @@ public class RequestLogInterceptor implements HandlerInterceptor {
 
         }
 
-        var subject = SecurityContext.getCurrentSubject();
-        var logger = LoggerFactory.getLogger(RequestLogContext.getHandler());
-        logger.debug("request {} begin by {}",
-            RequestLogContext.getLog().getOperation(),
-            subject.getNickName()
-        );
+        if(null!=RequestLogContext.getHandler()){
+            var subject = SecurityContext.getCurrentSubject();
+            var logger = LoggerFactory.getLogger(RequestLogContext.getHandler());
+            logger.debug("request {} begin by {}",
+                RequestLogContext.getLog().getOperation(),
+                subject.getNickName()
+            );
+        }
+
         return true;
     }
 }
