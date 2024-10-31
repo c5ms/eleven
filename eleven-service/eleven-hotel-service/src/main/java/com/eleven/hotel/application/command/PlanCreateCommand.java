@@ -10,8 +10,6 @@ import lombok.Getter;
 @Getter
 @Builder
 public class PlanCreateCommand {
-    private String hotelId;
-
     private Stock stock;
     private DateTimeRange sellPeriod;
     private DateTimeRange preSellPeriod;

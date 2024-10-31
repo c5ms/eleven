@@ -8,10 +8,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class PlanAddRoomCommand {
-    private String hotelId;
-    private String planId;
-
-    private String roomId;
+    private Integer roomId;
     private Stock stock;
     private Price price;
 }

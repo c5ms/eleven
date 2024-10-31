@@ -35,7 +35,7 @@ public class HotelAdminApi {
 
     @Operation(summary = "read hotel")
     @GetMapping("/{hotelId}")
-    public Optional<HotelDto> readHotel(@PathVariable("hotelId") String hotelId) {
+    public Optional<HotelDto> readHotel(@PathVariable("hotelId") Integer hotelId) {
         return hotelRepository.findById(hotelId).map(hotelConvertor::toDto);
     }
 

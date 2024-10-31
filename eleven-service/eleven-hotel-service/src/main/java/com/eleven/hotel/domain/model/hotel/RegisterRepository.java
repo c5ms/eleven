@@ -1,15 +1,8 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import com.eleven.core.data.NoRequiredEntityException;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-import java.util.Optional;
+public interface RegisterRepository extends JpaRepository<Register, Integer>, JpaSpecificationExecutor<Register> {
 
-public interface RegisterRepository extends CrudRepository<Register, String> {
-
-    Optional<Register> findByRegisterId(String registerId);
-
-    default Register require(String registerId) {
-        return findByRegisterId(registerId).orElseThrow(NoRequiredEntityException::new);
-    }
 }

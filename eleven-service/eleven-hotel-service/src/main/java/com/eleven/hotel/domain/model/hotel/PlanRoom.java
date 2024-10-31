@@ -2,56 +2,45 @@ package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.hotel.domain.values.Price;
 import com.eleven.hotel.domain.values.Stock;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.annotation.PersistenceCreator;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Embedded;
-import org.springframework.data.relational.core.mapping.Table;
 
-@Slf4j
-@Table(name = "plan_room")
+@Table(name = "hms_plan_room")
+@Entity
 @Getter
 @FieldNameConstants
-@AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PlanRoom {
 
-    @Column("hotel_id")
-    private final String hotelId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.TABLE,generator = "hms_generator")
+    @TableGenerator(name = "hms_generator", table = "hms_sequences")
+    private Integer id;
 
-    @Column("plan_id")
-    private final String planId;
+    @Column(name = "hotel_id")
+    private Integer hotelId;
 
-    @Column("room_id")
-    private final String roomId;
+    @Column(name = "plan_id",insertable = false, updatable = false)
+    private Integer planId;
 
-    @Embedded.Empty
+    @Column(name = "room_id")
+    private Integer roomId;
+
+    @Embedded
     private Stock stock;
 
-    @Embedded.Empty
+    @Embedded
     private Price price;
 
-    private PlanRoom(Plan plan, Room room) {
+    public PlanRoom(Plan plan, Room room, Stock stock, Price price) {
         this.planId = plan.getId();
         this.hotelId = plan.getHotelId();
         this.roomId = room.getId();
-    }
-
-    static PlanRoom create(Plan plan, Room room, Stock stock, Price price) {
-        if (stock.isZero()) {
-            log.info("current stock is zero, the room can not be on sale");
-        }
-
-        if (price.isZero()) {
-            log.info("current price is zero, the room can not be on sale");
-        }
-
-        var planRoom = new PlanRoom(plan, room);
-        planRoom.stock = stock;
-        planRoom.price = price;
-        return planRoom;
+        this.stock = stock;
+        this.price = price;
     }
 
 }

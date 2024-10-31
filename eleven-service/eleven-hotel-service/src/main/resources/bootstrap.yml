@@ -1,4 +1,3 @@
-
 server:
   port: 9000
 
@@ -29,9 +28,9 @@ spring:
     database-change-log-lock-table: 001_DATABASECHANGELOGLOCK
 
   jpa:
-    generate-ddl: false
-    properties:
-      'hibernate.create_empty_composites.enabled': true
+    generate-ddl: true
+
+
 
 eleven:
   cache:

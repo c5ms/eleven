@@ -25,18 +25,16 @@ public class ApplicationEventIntegrator {
             log.debug("send {} to outbound :{}", event.getClass().getSimpleName(), JSONUtil.toJsonStr(event));
         }
         var message = serializer.serialize(event);
-        var json = toMessageString(message);
         for (ApplicationEventMessageSender sender : senders) {
-            sender.send(json);
+            sender.send(message);
         }
     }
 
-    public void receive(String content) throws ApplicationEventSerializeException {
-        var message = toMessageObject(content);
+    public void receive(ApplicationEventMessage message) throws ApplicationEventSerializeException {
         var eventOpt = serializer.deserialize(message);
         if (eventOpt.isEmpty()) {
             if (log.isWarnEnabled()) {
-                log.warn("ignore message {}", content);
+                log.warn("ignore message {}", message);
             }
             return;
         }
@@ -51,12 +49,5 @@ public class ApplicationEventIntegrator {
 
     }
 
-    private String toMessageString(ApplicationEventMessage message) {
-        return JSONUtil.toJsonStr(message);
-    }
-
-    private ApplicationEventMessage toMessageObject(String content) {
-        return JSONUtil.toBean(content, ApplicationEventMessage.class);
-    }
 
 }

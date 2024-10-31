@@ -2,7 +2,7 @@ package com.eleven.hotel.domain.values;
 
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
-import org.springframework.data.relational.core.mapping.Column;
+
 
 @Getter
 @FieldNameConstants
@@ -11,8 +11,10 @@ public class Stock {
     public static Stock ZERO = Stock.of(0);
     public static Stock ONE = Stock.of(1);
 
-    @Column("count")
-    private final Integer count;
+    private Integer count;
+
+    protected Stock() {
+    }
 
     public Stock(Integer count) {
         this.count = count;

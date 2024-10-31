@@ -27,10 +27,14 @@ public class PlanCreateRequest {
     private LocalDateTime preSellStartDate;
     private LocalDateTime preSellEndDate;
 
+    @NotNull
     private LocalDateTime sellStartDate;
+    @NotNull
     private LocalDateTime sellEndDate;
 
+    @NotNull
     private LocalDate stayStartDate;
+    @NotNull
     private LocalDate stayEndDate;
 
     private List<String> rooms = new ArrayList<>();

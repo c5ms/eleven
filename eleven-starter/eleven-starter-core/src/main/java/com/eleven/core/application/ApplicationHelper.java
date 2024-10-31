@@ -2,10 +2,7 @@ package com.eleven.core.application;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.eleven.core.application.event.ApplicationEvent;
-import com.eleven.core.application.security.NoPrincipalException;
-import com.eleven.core.application.security.NoReadAuthorityException;
-import com.eleven.core.application.security.NoWriteAuthorityException;
-import com.eleven.core.application.security.ObjectSecurityManager;
+import com.eleven.core.application.security.*;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -27,16 +24,13 @@ public class ApplicationHelper {
         return SpringUtil.getBean(ObjectSecurityManager.class).mustWritable(resource);
     }
 
-    public NoWriteAuthorityException noWritePermissionException() {
-        return NoWriteAuthorityException.instance();
-    }
-
-    public NoReadAuthorityException noReadPermissionException() {
-        return NoReadAuthorityException.instance();
-    }
 
     public NoPrincipalException noPrincipalException() {
-        return NoPrincipalException.instance();
+        return new NoPrincipalException();
+    }
+
+    public NoEntityException noEntityException() {
+        return new NoEntityException();
     }
 
 }

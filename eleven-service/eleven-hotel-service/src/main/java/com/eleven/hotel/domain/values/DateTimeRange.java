@@ -1,28 +1,30 @@
 package com.eleven.hotel.domain.values;
 
 import com.eleven.core.time.TimeHelper;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
 import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.util.Assert;
 
 import java.time.LocalDateTime;
 
 @Getter
+@Embeddable
 @EqualsAndHashCode
 @FieldNameConstants
 public class DateTimeRange {
 
-    @Column(value = "start_date")
-    private final LocalDateTime start;
+    private LocalDateTime start;
+    private LocalDateTime end;
 
-    @Column(value = "end_date")
-    private final LocalDateTime end;
+    public DateTimeRange() {
 
+    }
 
-    private DateTimeRange(LocalDateTime start, LocalDateTime end) {
+    public DateTimeRange(LocalDateTime start, LocalDateTime end) {
         if (null != start && null != end) {
             Assert.isTrue(start.isBefore(end), "start must before end");
         }
@@ -31,12 +33,9 @@ public class DateTimeRange {
         this.end = end;
     }
 
-    public static DateTimeRange empty() {
-        return new DateTimeRange(null, null);
-    }
 
-    public static DateTimeRange of(LocalDateTime start, LocalDateTime end) {
-        return new DateTimeRange(start, end);
+    public static DateTimeRange empty() {
+        return new DateTimeRange();
     }
 
     public boolean isEmpty() {

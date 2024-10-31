@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Slf4j
+@Component
 @RequiredArgsConstructor
 public class ObjectSecurityManager {
 
@@ -26,14 +27,14 @@ public class ObjectSecurityManager {
 
     public boolean mustReadable(Object resource) throws NoReadAuthorityException {
         if (!isReadable(resource)) {
-            throw NoReadAuthorityException.instance();
+            throw new NoReadAuthorityException();
         }
         return true;
     }
 
     public boolean mustWritable(Object resource) throws NoWriteAuthorityException {
         if (!isWritable(resource)) {
-            throw NoWriteAuthorityException.instance();
+            throw new NoWriteAuthorityException();
         }
         return true;
     }

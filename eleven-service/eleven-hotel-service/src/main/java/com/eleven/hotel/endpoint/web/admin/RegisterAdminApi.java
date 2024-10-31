@@ -26,12 +26,11 @@ public class RegisterAdminApi {
 
     @Operation(summary = "review the register")
     @PostMapping("/{registerId}/reviews")
-    public void reviewRegister(@PathVariable("registerId") String registerId, @RequestBody @Validated RegisterReviewRequest request)  {
+    public void reviewRegister(@PathVariable("registerId") Integer registerId, @RequestBody @Validated RegisterReviewRequest request)  {
         var command = RegisterReviewCommand.builder()
-            .registerId(registerId)
             .pass(request.getPass())
             .build();
-        registerService.review(command);
+        registerService.review(registerId,command);
     }
 
 

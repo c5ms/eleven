@@ -12,29 +12,29 @@ import static org.junit.jupiter.api.Assertions.*;
 class DateTimeRangeTest {
     @Test
     void basic() {
-        DateTimeRange range1 = DateTimeRange.of(LocalDateTime.of(2024, 11, 15, 0, 0), LocalDateTime.of(2024, 11, 18, 0, 0));
+        DateTimeRange range1 = new DateTimeRange(LocalDateTime.of(2024, 11, 15, 0, 0), LocalDateTime.of(2024, 11, 18, 0, 0));
         assertEquals(range1.getStart(), LocalDateTime.of(2024, 11, 15, 0, 0));
         assertEquals(range1.getEnd(), LocalDateTime.of(2024, 11, 18, 0, 0));
 
-        assertThrows(IllegalArgumentException.class,() -> DateRange.of(LocalDate.of(2024, 11, 15), LocalDate.of(2024, 11, 14)));
+        assertThrows(IllegalArgumentException.class,() -> new DateRange(LocalDate.of(2024, 11, 15), LocalDate.of(2024, 11, 14)));
     }
 
     @Test
     void overlap() {
-        DateTimeRange range1 = DateTimeRange.of(LocalDate.of(2024, 11, 15).atStartOfDay(), LocalDate.of(2024, 11, 18).atStartOfDay());
-        DateTimeRange range2 = DateTimeRange.of(LocalDate.of(2024, 11, 15).atStartOfDay(), LocalDate.of(2024, 11, 18).atStartOfDay());
+        DateTimeRange range1 = new DateTimeRange(LocalDate.of(2024, 11, 15).atStartOfDay(), LocalDate.of(2024, 11, 18).atStartOfDay());
+        DateTimeRange range2 = new DateTimeRange(LocalDate.of(2024, 11, 15).atStartOfDay(), LocalDate.of(2024, 11, 18).atStartOfDay());
         assertTrue(range1.overlap(range2));
 
-        range1 = DateTimeRange.of(LocalDate.of(2024, 11, 15).atStartOfDay(), LocalDate.of(2024, 11, 18).atStartOfDay());
-        range2 = DateTimeRange.of(LocalDate.of(2024, 11, 16).atStartOfDay(), LocalDate.of(2024, 11, 17).atStartOfDay());
+        range1 = new DateTimeRange(LocalDate.of(2024, 11, 15).atStartOfDay(), LocalDate.of(2024, 11, 18).atStartOfDay());
+        range2 = new DateTimeRange(LocalDate.of(2024, 11, 16).atStartOfDay(), LocalDate.of(2024, 11, 17).atStartOfDay());
         assertTrue(range1.overlap(range2));
 
-        range1 = DateTimeRange.of(LocalDate.of(2024, 11, 15).atStartOfDay(), LocalDate.of(2024, 11, 18).atStartOfDay());
-        range2 = DateTimeRange.of(LocalDate.of(2024, 11, 17).atStartOfDay(), LocalDate.of(2024, 11, 20).atStartOfDay());
+        range1 = new DateTimeRange(LocalDate.of(2024, 11, 15).atStartOfDay(), LocalDate.of(2024, 11, 18).atStartOfDay());
+        range2 = new DateTimeRange(LocalDate.of(2024, 11, 17).atStartOfDay(), LocalDate.of(2024, 11, 20).atStartOfDay());
         assertTrue(range1.overlap(range2));
 
-        range1 = DateTimeRange.of(LocalDate.of(2024, 11, 15).atStartOfDay(), LocalDate.of(2024, 11, 18).atStartOfDay());
-        range2 = DateTimeRange.of(LocalDate.of(2024, 11, 19).atStartOfDay(), LocalDate.of(2024, 11, 20).atStartOfDay());
+        range1 = new DateTimeRange(LocalDate.of(2024, 11, 15).atStartOfDay(), LocalDate.of(2024, 11, 18).atStartOfDay());
+        range2 = new DateTimeRange(LocalDate.of(2024, 11, 19).atStartOfDay(), LocalDate.of(2024, 11, 20).atStartOfDay());
         assertFalse(range1.overlap(range2));
 
     }
@@ -43,7 +43,7 @@ class DateTimeRangeTest {
     void contains() {
         DateTimeRange range;
 
-        range = DateTimeRange.of(LocalDate.of(2024, 11, 15).atStartOfDay(), LocalDate.of(2024, 11, 20).atStartOfDay());
+        range = new DateTimeRange(LocalDate.of(2024, 11, 15).atStartOfDay(), LocalDate.of(2024, 11, 20).atStartOfDay());
         assertTrue(range.contains(LocalDate.of(2024, 11, 16).atStartOfDay()));
         assertFalse(range.contains(LocalDate.of(2024, 11, 14).atStartOfDay()));
         assertFalse(range.contains(LocalDate.of(2024, 11, 21).atStartOfDay()));

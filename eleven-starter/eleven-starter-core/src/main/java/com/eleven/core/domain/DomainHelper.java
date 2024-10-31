@@ -29,7 +29,6 @@ public class DomainHelper {
         mustNot(check, error::toException);
     }
 
-
     public static String nextId() {
         return SpringUtil.getBean(IdentityGenerator.class).next();
     }

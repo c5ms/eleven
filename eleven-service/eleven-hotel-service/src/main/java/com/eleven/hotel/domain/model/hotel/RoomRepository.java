@@ -1,20 +1,15 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import com.eleven.core.data.NoRequiredEntityException;
-import org.springframework.data.jdbc.repository.query.Query;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Collection;
 import java.util.Optional;
 
-public interface RoomRepository extends CrudRepository<Room, String> {
+public interface RoomRepository extends JpaRepository<Room, Integer>, JpaSpecificationExecutor<Room> {
 
-    @Query("select * from room where hotel_id=:hotelId  order by create_at desc")
-    Collection<Room> getRoomsByHotelId(String hotelId);
+    Collection<Room> findRoomsByHotelId(Integer hotelId);
 
-    Optional<Room> findByHotelIdAndRoomId(String hotelId, String roomId);
-
-    default Room require(String hotelId, String roomId) {
-        return findByHotelIdAndRoomId(hotelId, roomId).orElseThrow(NoRequiredEntityException::new);
-    }
+    Optional<Room> findByHotelIdAndId(@Param("hotelId") Integer hotelId, @Param("Id") Integer roomId);
 }

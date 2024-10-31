@@ -1,6 +1,8 @@
 package com.eleven.hotel.application.listener;
 
+import cn.hutool.json.JSONUtil;
 import com.eleven.core.application.event.ApplicationEventIntegrator;
+import com.eleven.core.application.event.ApplicationEventMessage;
 import com.rabbitmq.client.Channel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,10 +22,12 @@ public class HotelEventReceiver {
     private final AmqpTemplate amqpTemplate;
     private final ApplicationEventIntegrator integrator;
 
+
     @RabbitListener(queues = QUEUE_HOTEL_EVENT, ackMode = "MANUAL")
     public void receive(String message, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag) {
         try {
-            integrator.receive(message);
+            var ems = JSONUtil.toBean(message, ApplicationEventMessage.class);
+            integrator.receive(ems);
             channel.basicAck(tag, false);
         } catch (Exception e) {
             log.error("fail to receive event", e);

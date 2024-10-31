@@ -12,7 +12,7 @@ import java.time.LocalTime;
 @Accessors(chain = true)
 public class HotelDto {
 
-    private String hotelId;
+    private Integer hotelId;
 
     private String name;
     private String description;

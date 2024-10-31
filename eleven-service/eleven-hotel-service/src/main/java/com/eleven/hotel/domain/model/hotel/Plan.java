@@ -1,90 +1,102 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import com.eleven.core.data.AbstractEntity;
-import com.eleven.core.data.Audition;
 import com.eleven.core.domain.DomainHelper;
 import com.eleven.hotel.api.domain.error.HotelErrors;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
+import com.eleven.hotel.domain.core.AbstractEntity;
 import com.eleven.hotel.domain.core.Saleable;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
 import com.eleven.hotel.domain.values.Price;
 import com.eleven.hotel.domain.values.Stock;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+import jakarta.persistence.*;
+import lombok.*;
 import lombok.experimental.FieldNameConstants;
 import org.apache.commons.lang3.Validate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.PersistenceCreator;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Embedded;
-import org.springframework.data.relational.core.mapping.MappedCollection;
-import org.springframework.data.relational.core.mapping.Table;
 
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static com.eleven.hotel.domain.model.hotel.Plan.TABLE_NAME;
-
-@Table(name = TABLE_NAME)
+@Table(name = "hms_plan")
+@Entity
 @Getter
 @FieldNameConstants
-@AllArgsConstructor(onConstructor = @__({@PersistenceCreator}), access = AccessLevel.PROTECTED)
+@Setter(AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Plan extends AbstractEntity implements Saleable {
-    public static final String TABLE_NAME = "plan";
-    public static final String DOMAIN_NAME = "Plan";
 
     @Id
-    private final String id;
+    @GeneratedValue(strategy = GenerationType.TABLE,generator = "hms_generator")
+    @TableGenerator(name = "hms_generator", table = "hms_sequences")
+    @Column(name = "plan_id")
+    private Integer id;
 
-    @Column(value = "hotel_id")
-    private final String hotelId;
+    @NonNull
+    @Column(name = "hotel_id")
+    private Integer hotelId;
 
-    @Column(value = "plan_id")
-    private final String planId;
+    @NonNull
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "plan_id", nullable = false)
+    private Set<PlanRoom> rooms = new HashSet<>();
 
-    @MappedCollection(idColumn = "plan_id")
-    private final Set<PlanRoom> rooms;
-
-    @Column(value = "sale_type")
+    @NonNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sale_type")
     private SaleType saleType;
 
-    @Column(value = "sell_state")
+    @NonNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sale_state")
     private SaleState saleState;
 
-    @Embedded.Empty(prefix = "sell_")
+    @Nullable
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = DateTimeRange.Fields.start, column = @Column(name = "sale_period_start")),
+            @AttributeOverride(name = DateTimeRange.Fields.end, column = @Column(name = "sale_period_end"))
+    })
     private DateTimeRange salePeriod;
 
-    @Embedded.Empty(prefix = "pre_sell_")
+    @Nullable
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = DateTimeRange.Fields.start, column = @Column(name = "pre_sale_period_start")),
+            @AttributeOverride(name = DateTimeRange.Fields.end, column = @Column(name = "pre_sale_period_end"))
+    })
     private DateTimeRange preSalePeriod;
 
-    @Embedded.Empty(prefix = "stay_")
+    @Nullable
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = DateRange.Fields.start, column = @Column(name = "stay_period_start")),
+            @AttributeOverride(name =  DateRange.Fields.end, column = @Column(name = "stay_period_end"))
+    })
     private DateRange stayPeriod;
 
-    @Embedded.Empty(prefix = "stock_")
+    @Nullable
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = Stock.Fields.count, column = @Column(name = "stock_count")),
+    })
     private Stock stock;
 
-    @Embedded.Empty(prefix = "plan_")
+    @Nullable
+    @Embedded
     private Description description;
 
-    @Embedded.Empty
-    private Audition audition = Audition.empty();
-
-    private Plan(String hotelId, String planId) {
-        this.id = DomainHelper.nextId();
+    private Plan(@NonNull Integer hotelId) {
         this.hotelId = hotelId;
-        this.planId = planId;
         this.rooms = new HashSet<>();
     }
 
     @SuppressWarnings("unused")
     @Builder(builderClassName = "normalBuilder", builderMethodName = "normal", buildMethodName = "create")
-    public static Plan createNormal(String hotelId,
-                                    String planId,
+    public static Plan createNormal(Integer hotelId,
                                     Stock stock,
                                     DateRange stayPeriod,
                                     DateTimeRange sellPeriod,
@@ -95,7 +107,7 @@ public class Plan extends AbstractEntity implements Saleable {
         Validate.notNull(stock, "stock must not be null");
         Validate.isTrue(stock.greaterTan(Stock.ZERO), "total must gather than zero");
 
-        var plan = new Plan(hotelId, planId);
+        var plan = new Plan(hotelId);
         plan.stock = stock;
         plan.salePeriod = sellPeriod;
         plan.stayPeriod = stayPeriod;
@@ -104,11 +116,6 @@ public class Plan extends AbstractEntity implements Saleable {
         plan.saleState = SaleState.STOPPED;
         plan.description = description;
         return plan;
-    }
-
-    public void addRoom(Room room, Stock stock, Price price) {
-        var planRoom = PlanRoom.create(this, room, stock, price);
-        this.rooms.add(planRoom);
     }
 
     @Override
@@ -133,7 +140,7 @@ public class Plan extends AbstractEntity implements Saleable {
         if (null != preSalePeriod && preSalePeriod.isCurrent()) {
             return true;
         }
-        return stayPeriod.isCurrent();
+        return salePeriod.isCurrent();
     }
 
     public void preSale(DateTimeRange preSellPeriod) {
@@ -142,10 +149,16 @@ public class Plan extends AbstractEntity implements Saleable {
         this.preSalePeriod = preSellPeriod;
     }
 
-    public Optional<PlanRoom> findRoom(String roomId) {
+    public void addRoom(Room room, Stock stock, Price price) {
+        var planRoom = new PlanRoom(this, room, stock, price);
+        this.rooms.add(planRoom);
+    }
+
+
+    public Optional<PlanRoom> findRoom(Integer roomId) {
         return this.rooms.stream()
-            .filter(planRoom -> planRoom.getRoomId().equals(roomId))
-            .findFirst();
+                .filter(planRoom -> planRoom.getRoomId().equals(roomId))
+                .findFirst();
     }
 
     public Optional<Price> chargeRoom(Room room) {
@@ -157,16 +170,32 @@ public class Plan extends AbstractEntity implements Saleable {
     }
 
 
+    public DateRange getStayPeriod() {
+        return Optional.ofNullable(stayPeriod).orElseGet(DateRange::new);
+    }
+
+    public DateTimeRange getPreSalePeriod() {
+        return Optional.ofNullable(preSalePeriod).orElseGet(DateTimeRange::new);
+    }
+
+    public DateTimeRange getSalePeriod() {
+        return Optional.ofNullable(salePeriod).orElseGet(DateTimeRange::new);
+    }
+
+    public Description getDescription() {
+        return Optional.ofNullable(description).orElseGet(Description::new);
+    }
 
     @Getter
+    @NoArgsConstructor
     @AllArgsConstructor
     @FieldNameConstants
     public static class Description {
 
-        @Column(value = "name")
+        @Column(name = "plan_name")
         private String name;
 
-        @Column(value = "desc")
+        @Column(name = "plan_desc")
         private String desc;
 
     }

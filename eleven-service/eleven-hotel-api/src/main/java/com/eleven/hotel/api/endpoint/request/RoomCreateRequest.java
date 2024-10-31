@@ -27,12 +27,12 @@ public class RoomCreateRequest {
     @Min(1)
     @Max(5)
     @NotNull
-    private Integer maxPerson;
+    private Integer minPerson;
 
     @Min(1)
     @Max(5)
     @NotNull
-    private Integer minPerson;
+    private Integer maxPerson;
 
     @NotBlank
     private String desc;

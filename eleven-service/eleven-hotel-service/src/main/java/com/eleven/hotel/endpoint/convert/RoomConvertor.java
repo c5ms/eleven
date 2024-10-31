@@ -17,7 +17,7 @@ public class RoomConvertor {
 
     public RoomDto toDto(Room room) {
         return new RoomDto()
-            .setRoomId(room.getRoomId())
+            .setRoomId(room.getId())
             .setHotelId(room.getHotelId())
             .setChargeType(room.getChargeType())
             .setSaleState(room.getSaleState())

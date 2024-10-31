@@ -8,10 +8,6 @@ import lombok.Getter;
 @Getter
 @Builder
 public class RoomUpdateCommand {
-
-    private String hotelId;
-    private String roomId;
-
     private ChargeType chargeType;
     private Room.Description description;
     private Room.Restriction restriction;

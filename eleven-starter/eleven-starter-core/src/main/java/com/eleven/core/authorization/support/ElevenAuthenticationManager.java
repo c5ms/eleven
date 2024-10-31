@@ -16,10 +16,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Slf4j
-@Component
 @RequiredArgsConstructor
 public class ElevenAuthenticationManager implements AuthenticationManager {
-
 
     private final SecurityManager securityManager;
 

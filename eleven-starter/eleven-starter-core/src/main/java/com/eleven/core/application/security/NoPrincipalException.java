@@ -4,12 +4,8 @@ import com.eleven.core.application.command.CommandException;
 
 public class NoPrincipalException extends CommandException {
 
-    public NoPrincipalException(String message) {
-        super(message);
-    }
-
-    public static NoPrincipalException instance() {
-        return new NoPrincipalException("No principal can be found");
+    public NoPrincipalException() {
+        super("No required principal can be found");
     }
 
     @Override

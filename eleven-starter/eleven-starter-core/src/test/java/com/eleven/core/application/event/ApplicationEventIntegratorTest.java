@@ -1,5 +1,6 @@
 package com.eleven.core.application.event;
 
+import cn.hutool.json.JSONUtil;
 import com.eleven.core.application.ApplicationHelper;
 import com.eleven.core.application.event.support.JacksonApplicationEventSerializer;
 import org.junit.jupiter.api.Assertions;
@@ -61,10 +62,10 @@ class ApplicationEventIntegratorTest {
     @org.junit.jupiter.api.Test
     void receive() throws ApplicationEventSerializeException {
         var message = "{\"cls\":\"com.eleven.core.application.event.TestEvent\",\"event\":\"SystemTestEvent\",\"time\":1730180030238,\"body\":\"{\\\"content\\\":\\\"test event content\\\"}\"}";
-        integrator.receive(message);
+        integrator.receive(JSONUtil.toBean(message,ApplicationEventMessage.class));
 
         message = "{\"cls\":\"com.eleven.core.application.event.NoSuchTestEvent\",\"event\":\"SystemTestEvent\",\"time\":1730180030238,\"body\":\"{\\\"content\\\":\\\"test event content\\\"}\"}";
-        integrator.receive(message);
+        integrator.receive(JSONUtil.toBean(message,ApplicationEventMessage.class));
 
         Assertions.assertEquals(1, eventListener.getEvents().size());
         Assertions.assertEquals(ApplicationEventOrigin.EXTERNAL, eventListener.getEvents().get(0).getHeader().getFrom());

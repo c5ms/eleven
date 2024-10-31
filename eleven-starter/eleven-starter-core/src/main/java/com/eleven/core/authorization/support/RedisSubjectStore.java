@@ -13,7 +13,6 @@ import java.time.Duration;
 import java.util.Optional;
 
 
-@Component
 @RequiredArgsConstructor
 public class RedisSubjectStore implements SubjectStore {
 

@@ -4,7 +4,6 @@ import org.springframework.security.authentication.AuthenticationTrustResolverIm
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-@Component
 public class ElevenAuthenticationTrustResolver extends AuthenticationTrustResolverImpl {
     @Override
     public boolean isAnonymous(Authentication authentication) {

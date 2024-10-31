@@ -1,31 +1,31 @@
 package com.eleven.hotel.domain.values;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
-import org.springframework.data.relational.core.mapping.Column;
 
 import java.math.BigDecimal;
 
 @Getter
+@Embeddable
 @FieldNameConstants
 public class Price {
 
-    public static Price ZERO = Price.of(0);
-    public static Price ONE = Price.of(1);
+    public static Price ZERO = new Price(0);
+    public static Price ONE = new Price(1);
 
-    @Column(value = "price")
-    private final BigDecimal amount;
+    private BigDecimal amount;
+
+    protected Price() {
+    }
 
     public Price(BigDecimal amount) {
         this.amount = amount;
     }
 
-    public static Price of(double price) {
-        return of(BigDecimal.valueOf(price));
-    }
-
-    public static Price of(BigDecimal price) {
-        return new Price(price);
+    public Price(double amount) {
+        this.amount = BigDecimal.valueOf(amount);
     }
 
     public boolean isZero() {
@@ -46,6 +46,6 @@ public class Price {
 
     public Price multiply(DateRange stayPeriod) {
         var amount = this.amount.multiply(BigDecimal.valueOf(stayPeriod.days()));
-        return Price.of(amount);
+        return new Price(amount);
     }
 }

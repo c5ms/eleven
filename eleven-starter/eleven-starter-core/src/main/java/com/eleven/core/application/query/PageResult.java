@@ -19,6 +19,11 @@ public class PageResult<T> implements Iterable<T> {
     private long total;
     private List<T> items;
 
+
+    public static <T> PageResult<T> empty() {
+        return new PageResult<T>();
+    }
+
     public static <T> PageResult<T> of(List<T> items, long total) {
         return new PageResult<T>()
             .setItems(items)

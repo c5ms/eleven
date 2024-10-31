@@ -7,7 +7,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenResolver;
 import org.springframework.stereotype.Component;
 
-@Component
 public class ElevenTokenResolver implements BearerTokenResolver {
     public static final String HEADER_TOKEN_NAME = "X-access_token";
     public static final String QUERY_TOKEN_NAME = "access_token";

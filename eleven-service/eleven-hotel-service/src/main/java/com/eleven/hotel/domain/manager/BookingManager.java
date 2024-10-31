@@ -17,10 +17,6 @@ public class BookingManager {
 
     private final List<BookingValidator> bookingValidators;
 
-    public String bookId() {
-        return DomainHelper.nextId();
-    }
-
     public void validate(Booking booking) {
         for (BookingValidator bookingValidator : bookingValidators) {
             bookingValidator.isBookable(booking).ifPresent(DomainError::throwException);

@@ -16,8 +16,8 @@ import java.util.List;
 @Accessors(chain = true)
 public class PlanDto {
 
-    private String planId;
-    private String hotelId;
+    private Integer planId;
+    private Integer hotelId;
 
     private String name;
     private String desc;
@@ -44,7 +44,7 @@ public class PlanDto {
     @Setter
     @Accessors(chain = true)
     public static class PlanRoom {
-        private String roomId;
+        private Integer roomId;
         private Integer stock;
         private Double price;
     }

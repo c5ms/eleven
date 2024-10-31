@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PlanAddRoomRequest {
-    private String roomId;
+    private Integer roomId;
     private Integer stock;
     private Double price;
 }

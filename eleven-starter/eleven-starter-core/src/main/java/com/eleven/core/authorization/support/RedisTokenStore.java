@@ -13,7 +13,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 
-@Component
 @RequiredArgsConstructor
 public class RedisTokenStore implements TokenStore {
 

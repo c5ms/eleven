@@ -4,7 +4,6 @@ import com.eleven.core.application.ApplicationHelper;
 import com.eleven.hotel.api.application.event.HotelCreatedEvent;
 import com.eleven.hotel.application.command.HotelRegisterCommand;
 import com.eleven.hotel.application.command.RegisterReviewCommand;
-import com.eleven.hotel.domain.manager.AdminManager;
 import com.eleven.hotel.domain.manager.RegisterManager;
 import com.eleven.hotel.domain.model.hotel.*;
 import lombok.RequiredArgsConstructor;
@@ -13,32 +12,37 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(rollbackFor = Exception.class)
 public class RegisterService {
 
-    private final RegisterManager registerManager;
+    private final HotelRepository hotelRepository;
+    private final AdminRepository adminRepository;
     private final RegisterRepository registerRepository;
 
-    private final HotelManager hotelManager;
-    private final HotelRepository hotelRepository;
+    private final RegisterManager registerManager;
 
-    private final AdminManager adminManager;
-    private final AdminRepository adminRepository;
 
+    @Transactional(rollbackFor = Exception.class)
     public Register register(HotelRegisterCommand command) {
-        var register = registerManager.create(command.getHotel(), command.getAdmin());
+        var register = new Register(command.getHotel(), command.getAdmin());
+        registerManager.validate(register);
         registerRepository.save(register);
         return register;
     }
 
-    public void review(RegisterReviewCommand command)  {
-        var register = registerRepository.require(command.getRegisterId());
+    @Transactional(rollbackFor = Exception.class)
+    public void review(Integer registerId,RegisterReviewCommand command) {
+        var register = registerRepository.findById(registerId).orElseThrow(ApplicationHelper::noPrincipalException);
         if (command.isPass()) {
 
-            var hotel = hotelManager.create(register);
+            var hotel = new Hotel(register);
             hotelRepository.save(hotel);
 
-            var admin = adminManager.create(hotel, register);
+            var description = new Admin.Description(
+                    register.getAdmin().getName(),
+                    register.getAdmin().getEmail(),
+                    register.getAdmin().getTel()
+            );
+            var admin = new Admin(hotel.getId(), description);
             adminRepository.save(admin);
 
             register.accept();

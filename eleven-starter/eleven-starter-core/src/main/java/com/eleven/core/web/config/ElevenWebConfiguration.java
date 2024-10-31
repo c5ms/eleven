@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.hibernate6.Hibernate6Module;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -105,7 +106,8 @@ public class ElevenWebConfiguration implements WebMvcConfigurer {
                 )
                 .modules(
                         new Jdk8Module(),
-                        new JavaTimeModule()
+                        new JavaTimeModule(),
+                        new Hibernate6Module()
                 );
     }
 

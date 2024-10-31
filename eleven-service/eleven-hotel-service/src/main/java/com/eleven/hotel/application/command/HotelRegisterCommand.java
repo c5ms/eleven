@@ -8,9 +8,6 @@ import lombok.Getter;
 @Getter
 @Builder
 public class HotelRegisterCommand {
-    @NotBlank
     private Register.HotelInformation hotel;
-
-    @NotBlank
     private Register.AdminInformation admin;
 }

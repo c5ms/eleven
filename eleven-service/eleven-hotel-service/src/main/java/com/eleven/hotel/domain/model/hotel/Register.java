@@ -1,56 +1,45 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import com.eleven.core.data.AbstractEntity;
 import com.eleven.core.domain.DomainHelper;
 import com.eleven.hotel.api.domain.error.HotelErrors;
 import com.eleven.hotel.api.domain.model.RegisterState;
+import com.eleven.hotel.domain.core.AbstractEntity;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.PersistenceCreator;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Embedded;
-import org.springframework.data.relational.core.mapping.Table;
 
 @Table(name = "hms_register")
+@Entity
 @Getter
 @FieldNameConstants
-@AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Register extends AbstractEntity {
 
-    public static final String DOMAIN_NAME = "Register";
-
-
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.TABLE,generator = "hms_generator")
+    @TableGenerator(name = "hms_generator", table = "hms_sequences")
+    private Integer id;
 
-    @Column("hotel_id")
-    private String hotelId;
+    @Column(name = "hotel_id")
+    private Integer hotelId;
 
-    @Column("register_id")
-    private String registerId;
-
-    @Embedded.Empty(prefix = "hotel_")
+    @Embedded
     private HotelInformation hotel;
 
-    @Embedded.Empty(prefix = "admin_")
+    @Embedded
     private AdminInformation admin;
 
-    @Column(value = "state")
+    @Column(name = "state")
+    @Enumerated(EnumType.STRING)
     private RegisterState state;
 
-    Register(String registerId) {
-        this.id = DomainHelper.nextId();
-        this.registerId = registerId;
+    public Register(HotelInformation hotel, AdminInformation admin) {
+        this.hotel = hotel;
+        this.admin = admin;
         this.state = RegisterState.UNDER_REVIEW;
-    }
-
-    public static Register of(String registerId, HotelInformation hotel, AdminInformation admin) {
-        var register = new Register(registerId);
-        register.hotel = hotel;
-        register.admin = admin;
-        return register;
     }
 
     public void reject() {
@@ -59,7 +48,7 @@ public class Register extends AbstractEntity {
     }
 
     public void accept() {
-//        this.checkBeforeReview();
+        this.checkBeforeReview();
         this.state = RegisterState.ACCEPTED;
     }
 
@@ -68,34 +57,38 @@ public class Register extends AbstractEntity {
     }
 
     public void belongTo(Hotel hotel) {
-        this.hotelId = hotel.getHotelId();
+        this.hotelId = hotel.getId();
     }
 
     @Getter
+    @Embeddable
     @FieldNameConstants
-    @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
+    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class AdminInformation {
 
-        @Column(value = "name")
+        @Column(name = "admin_name")
         private String name;
 
-        @Column(value = "email")
+        @Column(name = "admin_email")
         private String email;
 
-        @Column(value = "tel")
+        @Column(name = "admin_tel")
         private String tel;
 
     }
 
     @Getter
+    @Embeddable
     @FieldNameConstants
-    @AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
+    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class HotelInformation {
 
-        @Column("name")
+        @Column(name = "hotel_name")
         private String name;
 
-        @Column("address")
+        @Column(name = "hotel_address")
         private String address;
 
     }

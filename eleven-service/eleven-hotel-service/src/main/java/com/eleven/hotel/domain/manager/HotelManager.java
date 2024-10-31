@@ -1,6 +1,7 @@
-package com.eleven.hotel.domain.model.hotel;
+package com.eleven.hotel.domain.manager;
 
-import com.eleven.core.data.SerialGenerator;
+import com.eleven.hotel.domain.model.hotel.Hotel;
+import com.eleven.hotel.domain.model.hotel.HotelValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -13,18 +14,10 @@ import java.util.List;
 public class HotelManager {
 
     private final List<HotelValidator> hotelValidators;
-    private final SerialGenerator serialGenerator;
 
     public void validate(Hotel hotel) {
         hotelValidators.forEach(validator -> validator.validate(hotel));
     }
 
-    public Hotel create(Register register) {
-        return Hotel.of( register);
-    }
-
-    public String nextHotelId() {
-        return serialGenerator.nextString(Hotel.DOMAIN_NAME);
-    }
 
 }

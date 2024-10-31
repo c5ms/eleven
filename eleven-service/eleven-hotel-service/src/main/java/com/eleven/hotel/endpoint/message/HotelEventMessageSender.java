@@ -1,5 +1,6 @@
 package com.eleven.hotel.endpoint.message;
 
+import com.eleven.core.application.event.ApplicationEventMessage;
 import com.eleven.core.application.event.ApplicationEventMessageSender;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +15,7 @@ public class HotelEventMessageSender implements ApplicationEventMessageSender {
 //    private final AmqpTemplate amqpTemplate;
 
     @Override
-    public void send(String message) {
+    public void send(ApplicationEventMessage message) {
         System.out.println(message);
 //        amqpTemplate.convertAndSend(HotelEventMessageSender.QUEUE_HOTEL_EVENT, message);
     }

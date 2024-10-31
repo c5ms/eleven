@@ -1,27 +1,29 @@
 package com.eleven.hotel.domain.values;
 
 import com.eleven.core.time.TimeHelper;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
 import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
 
 @Getter
+@Embeddable
 @EqualsAndHashCode
 @FieldNameConstants
 public class DateRange {
 
-    @Column(value = "start_date")
-    private final LocalDate start;
+    private LocalDate start;
+    private LocalDate end;
 
-    @Column(value = "end_date")
-    private final LocalDate end;
+    public DateRange() {
+    }
 
-    private DateRange(LocalDate start, LocalDate end) {
+    public DateRange(LocalDate start, LocalDate end) {
         if (null != start && null != end) {
             Assert.isTrue(start.isBefore(end), "start must before end");
         }
@@ -34,10 +36,6 @@ public class DateRange {
         return new DateRange(null, null);
     }
 
-
-    public static DateRange of(LocalDate startDate, LocalDate endDate) {
-        return new DateRange(startDate, endDate);
-    }
 
     public int days() {
         return start.until(end).getDays();
@@ -72,7 +70,7 @@ public class DateRange {
         if (isEmpty()) {
             return DateTimeRange.empty();
         }
-        return DateTimeRange.of(start.atStartOfDay(), end.atStartOfDay());
+        return new DateTimeRange(start.atStartOfDay(), end.atStartOfDay());
     }
 
     public boolean overlap(DateRange time) {

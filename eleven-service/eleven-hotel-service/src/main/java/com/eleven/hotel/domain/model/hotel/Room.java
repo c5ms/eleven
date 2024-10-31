@@ -1,82 +1,65 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import com.eleven.core.data.AbstractEntity;
-import com.eleven.core.data.Audition;
-import com.eleven.core.domain.DomainHelper;
 import com.eleven.hotel.api.domain.model.ChargeType;
 import com.eleven.hotel.api.domain.model.RoomType;
 import com.eleven.hotel.api.domain.model.SaleState;
+import com.eleven.hotel.domain.core.AbstractEntity;
 import com.eleven.hotel.domain.core.Saleable;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
 import org.apache.commons.lang3.Validate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.PersistenceCreator;
-import org.springframework.data.annotation.Version;
-import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Embedded;
-import org.springframework.data.relational.core.mapping.Table;
 
+
+@Table(name = "hms_room")
+@Entity
 @Getter
 @FieldNameConstants
-@Table(name = Room.TABLE_NAME)
-@AllArgsConstructor(onConstructor = @__({@PersistenceCreator}))
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Room extends AbstractEntity implements Saleable {
 
-    public static final String TABLE_NAME = "room";
-    public static final String DOMAIN_NAME = "Room";
-
     @Id
-    @Column("obj_id")
-    private final String id;
+    @GeneratedValue(strategy = GenerationType.TABLE,generator = "hms_generator")
+    @TableGenerator(name = "hms_generator", table = "hms_sequences")
+    private Integer id;
 
-    @Column(value = "hotel_id")
-    private String hotelId;
+    @Column(name = "hotel_id")
+    private Integer hotelId;
 
-    @Column(value = "room_id")
-    private String roomId;
-
-    @Column(value = "sale_state")
+    @Column(name = "sale_state")
+    @Enumerated(EnumType.STRING)
     private SaleState saleState;
 
     @Setter
-    @Column(value = "charge_type")
+    @Column(name = "charge_type")
+    @Enumerated(EnumType.STRING)
     private ChargeType chargeType;
 
     @Setter
-    @Embedded.Empty(prefix = "room_")
+    @Embedded
     private Description description;
 
     @Setter
-    @Embedded.Empty(prefix = "restrict_")
+    @Embedded
     private Restriction restriction;
 
     @Version
-    @Column("update_version")
+    @Column(name = "update_version")
     private Integer version;
 
-    @Embedded.Empty
-    private Audition audition = Audition.empty();
-
-    Room(String hotelId, String roomId) {
-        this.id = DomainHelper.nextId();
-        this.hotelId = hotelId;
-        this.roomId = roomId;
-        this.saleState = SaleState.STOPPED;
-    }
-
-    public static Room of(String hotelId, String roomId, Description description, Restriction restriction, ChargeType chargeType) {
+    public Room(Integer hotelId, Description description, Restriction restriction, ChargeType chargeType) {
         Validate.notNull(restriction.maxPerson, "max person must not null");
         Validate.notNull(restriction.minPerson, "min person must not null");
         Validate.isTrue(restriction.maxPerson > restriction.minPerson, "max person must be greater than min");
 
-        var room = new Room(hotelId, roomId);
-        room.setDescription(description);
-        room.setChargeType(chargeType);
-        room.setRestriction(restriction);
-        return room;
+        this.hotelId = hotelId;
+        this.saleState = SaleState.STOPPED;
+        this.setDescription(description);
+        this.setChargeType(chargeType);
+        this.setRestriction(restriction);
     }
 
     @Override
@@ -100,20 +83,22 @@ public class Room extends AbstractEntity implements Saleable {
     }
 
     @Getter
+    @Embeddable
     @FieldNameConstants
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static final class Description {
 
-        @Column(value = "name")
-        private final String name;
+        @Column(name = "room_name")
+        private String name;
 
-        @Column(value = "type")
-        private final RoomType type;
+        @Column(name = "room_type")
+        private RoomType type;
 
-        @Column(value = "desc")
-        private final String desc;
+        @Column(name = "room_desc")
+        private String desc;
 
-        @Column(value = "pic_url")
-        private final String headPicUrl;
+        @Column(name = "room_pic_url")
+        private String headPicUrl;
 
         public Description(String name, RoomType type, String desc, String headPicUrl) {
             Validate.notNull(name, "name must not null");
@@ -123,18 +108,19 @@ public class Room extends AbstractEntity implements Saleable {
             this.desc = desc;
             this.headPicUrl = headPicUrl;
         }
-
     }
 
     @Getter
+    @Embeddable
     @FieldNameConstants
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static final class Restriction {
 
-        @Column(value = "max_person")
-        private final Integer maxPerson;
+        @Column(name = "restrict_max_person")
+        private Integer maxPerson;
 
-        @Column(value = "min_person")
-        private final Integer minPerson;
+        @Column(name = "restrict_min_person")
+        private Integer minPerson;
 
         public Restriction(Integer minPerson, Integer maxPerson) {
             this.maxPerson = maxPerson;

@@ -1,9 +1,8 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import com.eleven.core.domain.DomainHelper;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.domain.core.Saleable;
-import jakarta.annotation.Nullable;
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldNameConstants;
@@ -12,41 +11,33 @@ import java.time.LocalTime;
 import java.util.Optional;
 
 
-@Table(name = Hotel.TABLE_NAME)
+@Table(name = "hms_hotel")
 @Entity
 @Getter
 @FieldNameConstants
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Hotel implements Saleable {
 
-    public static final String TABLE_NAME = "hms_hotel";
-    public static final String DOMAIN_NAME = "Hotel";
-
     @Id
-    private String id = DomainHelper.nextId();
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "hms_generator")
+    @TableGenerator(name = "hms_generator", table = "hms_sequences")
+    private Integer id;
 
-    @Column(name = "hotel_id")
-    private String hotelId;
-
+    @NonNull
     @Column(name = "sale_state")
     @Enumerated(EnumType.STRING)
     private SaleState saleState = SaleState.STOPPED;
 
-    @Nullable
     @Embedded
-    private Position position = new Position();
+    private Position position;
 
     @Setter
     @Embedded
-    private Description description = new Description();
+    private Description description;
 
-    public static Hotel of( Register register) {
+    public Hotel(Register register) {
         var description = new Description(register.getHotel().getName());
-
-        var hotel = new Hotel();
-        hotel.setDescription(description);
-
-        return hotel;
+        this.setDescription(description);
     }
 
     @Override
@@ -68,8 +59,13 @@ public class Hotel implements Saleable {
         this.position = position;
     }
 
+    @Nonnull
     public Position getPosition() {
         return Optional.ofNullable(position).orElse(new Position());
+    }
+
+    public Description getDescription() {
+        return Optional.ofNullable(description).orElse(new Description());
     }
 
     @Getter
@@ -101,7 +97,6 @@ public class Hotel implements Saleable {
         private Double lng;
     }
 
-
     @Getter
     @Embeddable
     @AllArgsConstructor
@@ -118,13 +113,13 @@ public class Hotel implements Saleable {
         @Column(name = "hotel_head_pic_url")
         private String headPicUrl;
 
-        @Column(name = "hotel_room_number")
-        private Integer roomNumber;
+        @Column(name = "hotel_total_rooms")
+        private Integer totalRooms;
 
-        @Column(name = "hotel_check_in_time")
+        @Column(name = "check_in_time")
         private LocalTime checkInTime;
 
-        @Column(name = "hotel_check_out_time")
+        @Column(name = "check_out_time")
         private LocalTime checkOutTime;
 
         @Column(name = "contact_email")

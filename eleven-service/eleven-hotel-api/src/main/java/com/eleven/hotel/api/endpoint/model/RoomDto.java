@@ -13,8 +13,8 @@ import lombok.experimental.Accessors;
 @Schema(name = "Room")
 @Accessors(chain = true)
 public class RoomDto {
-    private String hotelId;
-    private String roomId;
+    private Integer hotelId;
+    private Integer roomId;
     private String name;
     private RoomType type;
     private SaleState saleState;

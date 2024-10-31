@@ -6,7 +6,6 @@ import lombok.Getter;
 @Getter
 @Builder
 public class RegisterReviewCommand {
-    private String registerId;
     private boolean pass;
 
 }

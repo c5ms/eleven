@@ -12,9 +12,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class HotelCreatedEvent extends AbstractApplicationEvent {
 
-    private String hotelId;
+    private Integer hotelId;
 
-    public static HotelCreatedEvent of(String hotelId) {
+    public static HotelCreatedEvent of(Integer hotelId) {
         var event = new HotelCreatedEvent();
         event.setHotelId(hotelId);
         return event;
