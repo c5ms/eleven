@@ -31,9 +31,7 @@ public class HotelMerchantApi {
     @Operation(summary = "read hotel")
     @GetMapping("/{hotelId:\\d+}")
     public Optional<HotelDto> readHotel(@PathVariable("hotelId") Integer hotelId) {
-        return hotelService.read(hotelId)
-            .filter(ApplicationHelper::mustReadable)
-            .map(hotelConvertor::toDto);
+        return hotelService.read(hotelId).map(hotelConvertor::toDto);
     }
 
     @Operation(summary = "update hotel")
@@ -46,14 +44,11 @@ public class HotelMerchantApi {
     @Operation(summary = "open hotel")
     @PostMapping("/{hotelId:\\d+}/operations/open")
     public void openHotel(@PathVariable("hotelId") Integer hotelId) {
-        hotelService.read(hotelId)
-            .filter(ApplicationHelper::mustWritable)
-            .orElseThrow(WebHelper::notFoundException);
         hotelService.open(hotelId);
     }
 
     @Operation(summary = "close hotel")
-    @PostMapping("/{hotelId::\\d+]}/operations/close")
+    @PostMapping("/{hotelId:\\d+]}/operations/close")
     public void closeHotel(@PathVariable("hotelId") Integer hotelId) {
         hotelService.read(hotelId)
             .filter(ApplicationHelper::mustWritable)
