@@ -23,11 +23,10 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Getter
+
 @FieldNameConstants
-public class Booking extends AbstractEntity {
-    @Id
-    @Column(name = "booking_id")
-    private String id;
+public class Booking  {
+
     @Column(name = "hotel_id")
     private final Hotel hotel;
     @Column(name = "plan_id")
@@ -46,7 +45,6 @@ public class Booking extends AbstractEntity {
     private Set<String> coupons =new HashSet<>();
 
     public Booking(String id, Hotel hotel, Plan plan, Room room, DateRange stayPeriod, Traveler traveler) {
-        this.id = id;
         this.hotel = hotel;
         this.plan = plan;
         this.room = room;

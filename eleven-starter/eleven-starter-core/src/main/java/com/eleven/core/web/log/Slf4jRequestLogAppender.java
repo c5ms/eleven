@@ -24,7 +24,7 @@ public class Slf4jRequestLogAppender implements RequestLogAppender {
 
     @Override
     public void append(RequestLog requestLog) {
-        if(StringUtils.isBlank(requestLog.getOperate())){
+        if (StringUtils.isBlank(requestLog.getOperate())) {
             return;
         }
         var subject = SecurityContext.getCurrentSubject();
@@ -54,7 +54,11 @@ public class Slf4jRequestLogAppender implements RequestLogAppender {
         if (status.is5xxServerError()) {
             if (logger.isErrorEnabled()) {
                 if (exception.isPresent()) {
-                    logger.error(marker,  "{} execute {} error : {}", subject.getNickName(), requestLog.getOperate(), ExceptionUtils.getRootCauseMessage(exception.get()), exception.get());
+                    logger.error(marker, "response http status {} when {} {} occur exception",
+                            status.value(),
+                            subject.getNickName(),
+                            requestLog.getOperate(),
+                            exception.get());
                     return;
                 }
             }
@@ -63,16 +67,26 @@ public class Slf4jRequestLogAppender implements RequestLogAppender {
         if (status.is4xxClientError()) {
             if (logger.isWarnEnabled()) {
                 if (exception.isPresent()) {
-                    logger.warn(marker,  "{} execute {} fail {}: {}", subject.getNickName(), requestLog.getOperate(), ExceptionUtils.getRootCauseMessage(exception.get()),status.value(),exception.get());
+                    logger.warn(marker, "response http status {} when {} {} fail, because {}",
+                            status.value(),
+                            subject.getNickName(),
+                            requestLog.getOperate(),
+                            ExceptionUtils.getRootCauseMessage(exception.get()));
                     return;
                 }
-                logger.warn(marker,  "{} execute {} fail {}", subject.getNickName(), requestLog.getOperate(),status.value());
+                logger.warn(marker, "response http status {} when {} {} fail with no reason",
+                        status.value(),
+                        subject.getNickName(),
+                        requestLog.getOperate());
                 return;
             }
         }
 
         if (logger.isInfoEnabled()) {
-            logger.info(marker,  "{} execute {} successful", subject.getNickName(), requestLog.getOperate());
+            logger.info(marker, "response http status {} when {} {} successful",
+                    status.value(),
+                    subject.getNickName(),
+                    requestLog.getOperate());
         }
 
     }

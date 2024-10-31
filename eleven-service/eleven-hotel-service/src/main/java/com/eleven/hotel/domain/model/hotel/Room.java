@@ -6,10 +6,7 @@ import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import com.eleven.hotel.domain.core.Saleable;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldNameConstants;
 import org.apache.commons.lang3.Validate;
 
@@ -17,14 +14,10 @@ import org.apache.commons.lang3.Validate;
 @Table(name = "hms_room")
 @Entity
 @Getter
-@FieldNameConstants
+@Setter(AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@FieldNameConstants
 public class Room extends AbstractEntity implements Saleable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.TABLE,generator = "hms_generator")
-    @TableGenerator(name = "hms_generator", table = "hms_sequences")
-    private Integer id;
 
     @Column(name = "hotel_id")
     private Integer hotelId;
@@ -40,24 +33,20 @@ public class Room extends AbstractEntity implements Saleable {
 
     @Setter
     @Embedded
-    private Description description;
+    private RoomBasic basic;
 
     @Setter
     @Embedded
-    private Restriction restriction;
+    private RoomRestriction restriction;
 
     @Version
     @Column(name = "update_version")
-    private Integer version;
+    private Integer version = 0;
 
-    public Room(Integer hotelId, Description description, Restriction restriction, ChargeType chargeType) {
-        Validate.notNull(restriction.maxPerson, "max person must not null");
-        Validate.notNull(restriction.minPerson, "min person must not null");
-        Validate.isTrue(restriction.maxPerson > restriction.minPerson, "max person must be greater than min");
-
-        this.hotelId = hotelId;
-        this.saleState = SaleState.STOPPED;
-        this.setDescription(description);
+    public Room(Integer hotelId, RoomBasic basic, RoomRestriction restriction, ChargeType chargeType) {
+        this.setHotelId(hotelId);
+        this.setSaleState( SaleState.STOPPED);
+        this.setBasic(basic);
         this.setChargeType(chargeType);
         this.setRestriction(restriction);
     }
@@ -86,7 +75,7 @@ public class Room extends AbstractEntity implements Saleable {
     @Embeddable
     @FieldNameConstants
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static final class Description {
+    public static final class RoomBasic {
 
         @Column(name = "room_name")
         private String name;
@@ -100,7 +89,7 @@ public class Room extends AbstractEntity implements Saleable {
         @Column(name = "room_pic_url")
         private String headPicUrl;
 
-        public Description(String name, RoomType type, String desc, String headPicUrl) {
+        public RoomBasic(String name, RoomType type, String desc, String headPicUrl) {
             Validate.notNull(name, "name must not null");
             Validate.notNull(type, "type must not null");
             this.name = name;
@@ -114,7 +103,7 @@ public class Room extends AbstractEntity implements Saleable {
     @Embeddable
     @FieldNameConstants
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static final class Restriction {
+    public static final class RoomRestriction {
 
         @Column(name = "restrict_max_person")
         private Integer maxPerson;
@@ -122,11 +111,13 @@ public class Room extends AbstractEntity implements Saleable {
         @Column(name = "restrict_min_person")
         private Integer minPerson;
 
-        public Restriction(Integer minPerson, Integer maxPerson) {
+        public RoomRestriction(Integer minPerson, Integer maxPerson) {
+    //        Validate.notNull(maxPerson, "max person must not null");
+    //        Validate.notNull(minPerson, "min person must not null");
+    //        Validate.isTrue(maxPerson > minPerson, "max person must be greater than min");
             this.maxPerson = maxPerson;
             this.minPerson = minPerson;
         }
 
     }
-
 }

@@ -1,6 +1,7 @@
 package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.hotel.api.domain.model.SaleState;
+import com.eleven.hotel.domain.core.AbstractEntity;
 import com.eleven.hotel.domain.core.Saleable;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
@@ -10,18 +11,13 @@ import lombok.experimental.FieldNameConstants;
 import java.time.LocalTime;
 import java.util.Optional;
 
-
 @Table(name = "hms_hotel")
 @Entity
 @Getter
-@FieldNameConstants
+@Setter(AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Hotel implements Saleable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "hms_generator")
-    @TableGenerator(name = "hms_generator", table = "hms_sequences")
-    private Integer id;
+@FieldNameConstants
+public class Hotel extends AbstractEntity implements Saleable {
 
     @NonNull
     @Column(name = "sale_state")
@@ -29,15 +25,15 @@ public class Hotel implements Saleable {
     private SaleState saleState = SaleState.STOPPED;
 
     @Embedded
-    private Position position;
+    private HotelPosition position;
 
     @Setter
     @Embedded
-    private Description description;
+    private HotelBasic basic;
 
     public Hotel(Register register) {
-        var description = new Description(register.getHotel().getName());
-        this.setDescription(description);
+        var description = HotelBasic.justName(register.getHotel().getName());
+        this.setBasic(description);
     }
 
     @Override
@@ -55,56 +51,28 @@ public class Hotel implements Saleable {
         return saleState.isOnSale();
     }
 
-    public void relocate(Position position) {
+    public void relocate(HotelPosition position) {
         this.position = position;
     }
 
     @Nonnull
-    public Position getPosition() {
-        return Optional.ofNullable(position).orElse(new Position());
+    public HotelPosition getPosition() {
+        return Optional.ofNullable(position).orElse(new HotelPosition());
     }
 
-    public Description getDescription() {
-        return Optional.ofNullable(description).orElse(new Description());
+    public HotelBasic getBasic() {
+        return Optional.ofNullable(basic).orElse(new HotelBasic());
     }
 
-    @Getter
     @Embeddable
-    @FieldNameConstants
+    @Getter
+    @Setter(AccessLevel.PROTECTED)
     @AllArgsConstructor
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class Position {
-
-        @Column(name = "position_province")
-        private String province;
-
-        @Column(name = "position_city")
-        private String city;
-
-        @Column(name = "position_district")
-        private String district;
-
-        @Column(name = "position_street")
-        private String street;
-
-        @Column(name = "position_address")
-        private String address;
-
-        @Column(name = "position_lat")
-        private Double lat;
-
-        @Column(name = "position_lng")
-        private Double lng;
-    }
-
-    @Getter
-    @Embeddable
-    @AllArgsConstructor
     @FieldNameConstants
-    @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class Description {
+    public static class HotelBasic {
 
-        @Column(name = "hotel_name")
+        @Column(name = "hotel_name", nullable = false)
         private String name;
 
         @Column(name = "hotel_description")
@@ -128,9 +96,41 @@ public class Hotel implements Saleable {
         @Column(name = "contact_tel")
         private String tel;
 
-        public Description(String name) {
-            this.name = name;
+        public static HotelBasic justName(String name) {
+            var basic = new HotelBasic();
+            basic.setName(name);
+            return basic;
         }
 
+    }
+
+    @Embeddable
+    @Getter
+    @Setter(AccessLevel.PROTECTED)
+    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @FieldNameConstants
+    public static class HotelPosition {
+
+        @Column(name = "position_province")
+        private String province;
+
+        @Column(name = "position_city")
+        private String city;
+
+        @Column(name = "position_district")
+        private String district;
+
+        @Column(name = "position_street")
+        private String street;
+
+        @Column(name = "position_address")
+        private String address;
+
+        @Column(name = "position_lat")
+        private Double lat;
+
+        @Column(name = "position_lng")
+        private Double lng;
     }
 }

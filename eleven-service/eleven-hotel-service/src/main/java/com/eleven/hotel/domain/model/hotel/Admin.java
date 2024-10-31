@@ -2,24 +2,18 @@ package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.hotel.domain.core.AbstractEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldNameConstants;
 
 
 @Table(name = "hms_admin")
 @Entity
 @Getter
-@FieldNameConstants
+@Setter(AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@FieldNameConstants
 public class Admin extends AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.TABLE,generator = "hms_generator")
-    @TableGenerator(name = "hms_generator", table = "hms_sequences")
-    private Integer id;
 
     @Column(name = "hotel_id")
     private Integer hotelId;
@@ -28,8 +22,8 @@ public class Admin extends AbstractEntity {
     private Description description;
 
     public Admin(Integer hotelId, Description description) {
-        this.hotelId = hotelId;
-        this.description = description;
+        this.setHotelId(hotelId);
+        this.setDescription(description);
     }
 
     @Getter

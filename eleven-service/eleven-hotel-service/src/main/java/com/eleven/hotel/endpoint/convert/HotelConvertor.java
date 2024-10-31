@@ -31,15 +31,15 @@ public class HotelConvertor {
             .setHotelId(hotel.getId())
             .setState(hotel.getSaleState())
 
-            .setName(hotel.getDescription().getName())
-            .setDescription(hotel.getDescription().getDescription())
-            .setRoomNumber(hotel.getDescription().getTotalRooms())
-            .setHeadPicUrl(hotel.getDescription().getHeadPicUrl())
-            .setCheckIn(hotel.getDescription().getCheckInTime())
-            .setCheckOut(hotel.getDescription().getCheckOutTime())
+            .setName(hotel.getBasic().getName())
+            .setDescription(hotel.getBasic().getDescription())
+            .setRoomNumber(hotel.getBasic().getTotalRooms())
+            .setHeadPicUrl(hotel.getBasic().getHeadPicUrl())
+            .setCheckIn(hotel.getBasic().getCheckInTime())
+            .setCheckOut(hotel.getBasic().getCheckOutTime())
 
-            .setTel(hotel.getDescription().getTel())
-            .setEmail(hotel.getDescription().getEmail())
+            .setTel(hotel.getBasic().getTel())
+            .setEmail(hotel.getBasic().getEmail())
 
             .setProvince(hotel.getPosition().getProvince())
             .setCity(hotel.getPosition().getCity())

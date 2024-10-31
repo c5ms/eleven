@@ -51,8 +51,8 @@ public class RoomMerchantApi {
     @PostMapping
     public RoomDto createRoom(@PathVariable("hotelId") Integer hotelId, @RequestBody @Validated RoomCreateRequest request) {
         var command = RoomCreateCommand.builder()
-                .description(new Room.Description(request.getName(), request.getType(), request.getDesc(), request.getHeadPicUrl()))
-                .restriction(new Room.Restriction(request.getMinPerson(), request.getMaxPerson()))
+                .basic(new Room.RoomBasic(request.getName(), request.getType(), request.getDesc(), request.getHeadPicUrl()))
+                .restriction(new Room.RoomRestriction(request.getMinPerson(), request.getMaxPerson()))
                 .chargeType(request.getChargeType())
                 .build();
         var room = roomService.createRoom(hotelId,command);
@@ -66,8 +66,8 @@ public class RoomMerchantApi {
                               @RequestBody @Validated RoomUpdateRequest request) {
         var command = RoomUpdateCommand.builder()
                 .chargeType(request.getChargeType())
-                .description(new Room.Description(request.getName(), request.getType(), request.getDesc(), request.getHeadPicUrl()))
-                .restriction(new Room.Restriction(request.getMinPerson(), request.getMaxPerson()))
+                .basic(new Room.RoomBasic(request.getName(), request.getType(), request.getDesc(), request.getHeadPicUrl()))
+                .restriction(new Room.RoomRestriction(request.getMinPerson(), request.getMaxPerson()))
                 .build();
         var room = roomService.updateRoom(hotelId,roomId,command);
         return roomConvertor.toDto(room);

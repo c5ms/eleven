@@ -5,23 +5,18 @@ import com.eleven.hotel.api.domain.error.HotelErrors;
 import com.eleven.hotel.api.domain.model.RegisterState;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldNameConstants;
 
 @Table(name = "hms_register")
 @Entity
 @Getter
-@FieldNameConstants
+@Setter(AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@FieldNameConstants
 public class Register extends AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.TABLE,generator = "hms_generator")
-    @TableGenerator(name = "hms_generator", table = "hms_sequences")
-    private Integer id;
+
 
     @Column(name = "hotel_id")
     private Integer hotelId;
@@ -37,9 +32,9 @@ public class Register extends AbstractEntity {
     private RegisterState state;
 
     public Register(HotelInformation hotel, AdminInformation admin) {
-        this.hotel = hotel;
-        this.admin = admin;
-        this.state = RegisterState.UNDER_REVIEW;
+        this.setHotel(hotel);
+        this.setAdmin(admin);
+        this.setState(RegisterState.UNDER_REVIEW);
     }
 
     public void reject() {
@@ -57,7 +52,7 @@ public class Register extends AbstractEntity {
     }
 
     public void belongTo(Hotel hotel) {
-        this.hotelId = hotel.getId();
+        this.setHotelId(hotel.getId());
     }
 
     @Getter

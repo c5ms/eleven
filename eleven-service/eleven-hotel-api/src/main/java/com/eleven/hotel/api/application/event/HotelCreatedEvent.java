@@ -1,5 +1,6 @@
 package com.eleven.hotel.api.application.event;
 
+import com.eleven.core.application.event.IntegrationEvent;
 import com.eleven.core.application.event.support.AbstractApplicationEvent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@IntegrationEvent
 public class HotelCreatedEvent extends AbstractApplicationEvent {
 
     private Integer hotelId;

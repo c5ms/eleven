@@ -2,13 +2,13 @@ package com.eleven.hotel.endpoint.web.hotel;
 
 import com.eleven.core.application.ApplicationHelper;
 import com.eleven.core.web.WebHelper;
+import com.eleven.hotel.domain.model.hotel.Hotel;
 import com.eleven.hotel.endpoint.configure.AsMerchantApi;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.model.HotelDto;
 import com.eleven.hotel.api.endpoint.request.HotelUpdateRequest;
 import com.eleven.hotel.application.command.HotelUpdateCommand;
 import com.eleven.hotel.application.service.HotelService;
-import com.eleven.hotel.domain.model.hotel.Hotel;
 import com.eleven.hotel.endpoint.convert.HotelConvertor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -46,7 +46,7 @@ public class HotelMerchantApi {
                 .orElseThrow(WebHelper::notFoundException);
 
         var command = HotelUpdateCommand.builder()
-            .description(new Hotel.Description(
+            .description(new Hotel.HotelBasic(
                 request.getName(),
                 request.getDescription(),
                 request.getHeadPicUrl(),
@@ -56,7 +56,7 @@ public class HotelMerchantApi {
                 request.getEmail(),
                 request.getTel())
             )
-            .position(new Hotel.Position(
+            .position(new Hotel.HotelPosition(
                 request.getProvince(),
                 request.getCity(),
                 request.getDistrict(),

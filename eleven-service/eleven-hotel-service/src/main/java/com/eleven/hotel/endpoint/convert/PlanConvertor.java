@@ -2,7 +2,6 @@ package com.eleven.hotel.endpoint.convert;
 
 import com.eleven.hotel.api.endpoint.model.PlanDto;
 import com.eleven.hotel.domain.model.hotel.Plan;
-import com.eleven.hotel.domain.model.hotel.PlanRoom;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -19,8 +18,8 @@ public class PlanConvertor {
         return new PlanDto()
             .setPlanId(plan.getId())
             .setHotelId(plan.getHotelId())
-            .setName(plan.getDescription().getName())
-            .setDesc(plan.getDescription().getDesc())
+            .setName(plan.getBasic().getName())
+            .setDesc(plan.getBasic().getDesc())
             .setStock(plan.getStock().getCount())
             .setType(plan.getSaleType())
             .setState(plan.getSaleState())
@@ -41,7 +40,7 @@ public class PlanConvertor {
             ;
     }
 
-    private PlanDto.PlanRoom toDto(PlanRoom planRoom) {
+    private PlanDto.PlanRoom toDto(Plan.PlanRoom planRoom) {
         return new PlanDto.PlanRoom()
             .setRoomId(planRoom.getRoomId())
             .setStock(planRoom.getStock().getCount())

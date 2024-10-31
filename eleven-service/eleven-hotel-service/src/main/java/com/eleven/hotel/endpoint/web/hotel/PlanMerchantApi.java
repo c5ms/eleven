@@ -1,8 +1,6 @@
 package com.eleven.hotel.endpoint.web.hotel;
 
-import com.eleven.core.application.ApplicationHelper;
 import com.eleven.core.application.query.PageResult;
-import com.eleven.core.web.WebHelper;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.model.PlanDto;
 import com.eleven.hotel.api.endpoint.request.PlanAddRoomRequest;
@@ -61,7 +59,7 @@ public class PlanMerchantApi {
     @PostMapping
     public PlanDto createPlan(@PathVariable("hotelId") Integer hotelId, @RequestBody @Validated PlanCreateRequest request) {
         var command = PlanCreateCommand.builder()
-                .description(new Plan.Description(request.getName(), request.getDesc()))
+                .planBasic(new Plan.PlanBasic(request.getName(), request.getDesc()))
                 .stock(Stock.of(request.getStock()))
                 .preSellPeriod(new DateTimeRange(request.getPreSellStartDate(), request.getPreSellEndDate()))
                 .stayPeriod(new DateRange(request.getStayStartDate(), request.getStayEndDate()))

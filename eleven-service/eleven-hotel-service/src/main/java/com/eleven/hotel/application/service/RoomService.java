@@ -36,7 +36,7 @@ public class RoomService {
     @Transactional(rollbackFor = Exception.class)
     public Room createRoom(Integer hotelId, RoomCreateCommand command) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(NoPrincipalException::new);
-        var room = new Room(hotel.getId(), command.getDescription(), command.getRestriction(), command.getChargeType());
+        var room = new Room(hotel.getId(), command.getBasic(), command.getRestriction(), command.getChargeType());
         roomManager.validate(room);
         roomRepository.save(room);
         return room;
@@ -54,7 +54,7 @@ public class RoomService {
         var room = roomRepository.findByHotelIdAndId(hotelId, roomId).orElseThrow(ApplicationHelper::noPrincipalException);
 
         Optional.ofNullable(command.getChargeType()).ifPresent(room::setChargeType);
-        Optional.ofNullable(command.getDescription()).ifPresent(room::setDescription);
+        Optional.ofNullable(command.getBasic()).ifPresent(room::setBasic);
         Optional.ofNullable(command.getRestriction()).ifPresent(room::setRestriction);
         roomManager.validate(room);
         roomRepository.save(room);

@@ -9,7 +9,7 @@ import lombok.Getter;
 @Builder
 public class RoomCreateCommand {
     private ChargeType chargeType;
-    private Room.Description description;
-    private Room.Restriction restriction;
+    private Room.RoomBasic basic;
+    private Room.RoomRestriction restriction;
 
 }

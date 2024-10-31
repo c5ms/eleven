@@ -37,7 +37,7 @@ public class HotelService {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(ApplicationHelper::noPrincipalException);
 
         Optional.ofNullable(command.getPosition()).ifPresent(hotel::relocate);
-        Optional.ofNullable(command.getDescription()).ifPresent(hotel::setDescription);
+        Optional.ofNullable(command.getDescription()).ifPresent(hotel::setBasic);
 
         hotelManager.validate(hotel);
         hotelRepository.save(hotel);

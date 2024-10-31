@@ -5,9 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.annotation.*;
 
-/**
- * use to mark an endpoint as an admin API
- */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

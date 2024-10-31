@@ -10,7 +10,6 @@ import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
 import com.eleven.hotel.domain.values.Price;
 import com.eleven.hotel.domain.values.Stock;
-import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,16 +23,11 @@ import java.util.Set;
 @Table(name = "hms_plan")
 @Entity
 @Getter
-@FieldNameConstants
 @Setter(AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@FieldNameConstants
 public class Plan extends AbstractEntity implements Saleable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.TABLE,generator = "hms_generator")
-    @TableGenerator(name = "hms_generator", table = "hms_sequences")
-    @Column(name = "plan_id")
-    private Integer id;
 
     @NonNull
     @Column(name = "hotel_id")
@@ -74,7 +68,7 @@ public class Plan extends AbstractEntity implements Saleable {
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = DateRange.Fields.start, column = @Column(name = "stay_period_start")),
-            @AttributeOverride(name =  DateRange.Fields.end, column = @Column(name = "stay_period_end"))
+            @AttributeOverride(name = DateRange.Fields.end, column = @Column(name = "stay_period_end"))
     })
     private DateRange stayPeriod;
 
@@ -87,7 +81,7 @@ public class Plan extends AbstractEntity implements Saleable {
 
     @Nullable
     @Embedded
-    private Description description;
+    private PlanBasic basic;
 
     private Plan(@NonNull Integer hotelId) {
         this.hotelId = hotelId;
@@ -99,29 +93,29 @@ public class Plan extends AbstractEntity implements Saleable {
     public static Plan createNormal(Integer hotelId,
                                     Stock stock,
                                     DateRange stayPeriod,
-                                    DateTimeRange sellPeriod,
+                                    DateTimeRange salePeriod,
                                     DateTimeRange preSellPeriod,
-                                    Description description) {
+                                    PlanBasic basic) {
 
         Validate.notNull(hotelId, "hotelId must not be null");
         Validate.notNull(stock, "stock must not be null");
         Validate.isTrue(stock.greaterTan(Stock.ZERO), "total must gather than zero");
 
         var plan = new Plan(hotelId);
-        plan.stock = stock;
-        plan.salePeriod = sellPeriod;
-        plan.stayPeriod = stayPeriod;
-        plan.preSalePeriod = preSellPeriod;
-        plan.saleType = SaleType.NORMAL;
-        plan.saleState = SaleState.STOPPED;
-        plan.description = description;
+        plan.setStock(stock);
+        plan.setSalePeriod(salePeriod);
+        plan.setStayPeriod(stayPeriod);
+        plan.setPreSalePeriod(preSellPeriod);
+        plan.setSaleType(SaleType.NORMAL);
+        plan.setSaleState(SaleState.STOPPED);
+        plan.basic = basic;
         return plan;
     }
 
     @Override
     public void startSale() {
         DomainHelper.must(hasRoom(), HotelErrors.PLAN_NO_ROOM);
-        this.saleState = SaleState.STARTED;
+        this.setSaleState(SaleState.STARTED);
     }
 
     @Override
@@ -146,7 +140,7 @@ public class Plan extends AbstractEntity implements Saleable {
     public void preSale(DateTimeRange preSellPeriod) {
         DomainHelper.must(preSellPeriod.isBefore(this.salePeriod), HotelErrors.PLAN_PRE_SALE_NOT_BEFORE_SALE);
 
-        this.preSalePeriod = preSellPeriod;
+        this.setPreSalePeriod(preSellPeriod);
     }
 
     public void addRoom(Room room, Stock stock, Price price) {
@@ -169,7 +163,6 @@ public class Plan extends AbstractEntity implements Saleable {
         return this.getRooms().isEmpty();
     }
 
-
     public DateRange getStayPeriod() {
         return Optional.ofNullable(stayPeriod).orElseGet(DateRange::new);
     }
@@ -182,21 +175,61 @@ public class Plan extends AbstractEntity implements Saleable {
         return Optional.ofNullable(salePeriod).orElseGet(DateTimeRange::new);
     }
 
-    public Description getDescription() {
-        return Optional.ofNullable(description).orElseGet(Description::new);
+    public PlanBasic getBasic() {
+        return Optional.ofNullable(basic).orElseGet(PlanBasic::new);
     }
 
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
     @FieldNameConstants
-    public static class Description {
+    public static class PlanBasic {
 
         @Column(name = "plan_name")
         private String name;
 
         @Column(name = "plan_desc")
         private String desc;
+
+    }
+
+    @Table(name = "hms_plan_room")
+    @Entity
+    @Getter
+    @Setter(AccessLevel.PROTECTED)
+    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @FieldNameConstants
+    public static class PlanRoom extends AbstractEntity {
+
+        @Column(name = "hotel_id")
+        private Integer hotelId;
+
+        @Column(name = "plan_id", insertable = false, updatable = false)
+        private Integer planId;
+
+        @Column(name = "room_id")
+        private Integer roomId;
+
+        @Embedded
+        @AttributeOverrides({
+                @AttributeOverride(name = Stock.Fields.count, column = @Column(name = "stock_count")),
+        })
+        private Stock stock;
+
+        @Embedded
+        @AttributeOverrides({
+                @AttributeOverride(name = Price.Fields.amount, column = @Column(name = "price")),
+        })
+        private Price price;
+
+        public PlanRoom(Plan plan, Room room, Stock stock, Price price) {
+            this.planId = plan.getId();
+            this.hotelId = plan.getHotelId();
+            this.roomId = room.getId();
+            this.stock = stock;
+            this.price = price;
+        }
 
     }
 }

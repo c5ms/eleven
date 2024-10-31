@@ -1,6 +1,5 @@
 package com.eleven.hotel.domain.values;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;

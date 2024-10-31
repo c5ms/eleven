@@ -20,7 +20,7 @@ public class HotelWebConfiguration implements WebMvcConfigurer {
     private final MerchantInterceptor merchantInterceptor;
 
     @Override
-    public void configurePathMatch(PathMatchConfigurer configurer) {
+    public void configurePathMatch(@Nonnull PathMatchConfigurer configurer) {
         configurer.addPathPrefix(API_PREFIX_MERCHANT, new AnnotationPredicate(AsMerchantApi.class));
     }
 

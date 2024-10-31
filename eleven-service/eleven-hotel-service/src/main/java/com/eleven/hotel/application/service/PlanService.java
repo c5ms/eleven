@@ -3,15 +3,11 @@ package com.eleven.hotel.application.service;
 import com.alibaba.cloud.commons.lang.StringUtils;
 import com.eleven.core.application.ApplicationHelper;
 import com.eleven.core.application.query.PageResult;
-import com.eleven.core.web.WebHelper;
 import com.eleven.hotel.application.command.PlanAddRoomCommand;
 import com.eleven.hotel.application.command.PlanCreateCommand;
 import com.eleven.hotel.application.query.PlanQuery;
 import com.eleven.hotel.domain.manager.PlanManager;
-import com.eleven.hotel.domain.model.hotel.HotelRepository;
-import com.eleven.hotel.domain.model.hotel.Plan;
-import com.eleven.hotel.domain.model.hotel.PlanRepository;
-import com.eleven.hotel.domain.model.hotel.RoomRepository;
+import com.eleven.hotel.domain.model.hotel.*;
 import com.github.wenhao.jpa.Specifications;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +38,7 @@ public class PlanService {
         hotelRepository.findById(hotelId).orElseThrow(ApplicationHelper::noPrincipalException);
 
         Specification<Plan> specification = Specifications.<Plan>and()
-                .like(StringUtils.isNotBlank(query.getPlanName()), Plan.Fields.description+"."+Plan.Description.Fields.name, "%"+query.getPlanName()+"%")
+                .like(StringUtils.isNotBlank(query.getPlanName()), Plan.Fields.basic +"."+ Plan.PlanBasic.Fields.name, "%"+query.getPlanName()+"%")
                 .build();
 
         var result = planRepository.findAll(specification, PageRequest.of(query.getPage(), query.getSize() - 1));
@@ -55,10 +51,10 @@ public class PlanService {
 
         var plan = Plan.normal()
                 .hotelId(hotel.getId())
-                .sellPeriod(command.getSellPeriod())
+                .salePeriod(command.getSellPeriod())
                 .preSellPeriod(command.getPreSellPeriod())
                 .stayPeriod(command.getStayPeriod())
-                .description(command.getDescription())
+                .basic(command.getPlanBasic())
                 .stock(command.getStock())
                 .create();
         planManager.validate(plan);
