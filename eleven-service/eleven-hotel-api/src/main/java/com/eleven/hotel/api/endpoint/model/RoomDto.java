@@ -1,7 +1,7 @@
 package com.eleven.hotel.api.endpoint.model;
 
 import com.eleven.hotel.api.domain.model.ChargeType;
-import com.eleven.hotel.api.domain.model.RoomType;
+import com.eleven.hotel.api.domain.model.RoomLevel;
 import com.eleven.hotel.api.domain.model.SaleState;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -16,7 +16,7 @@ public class RoomDto {
     private Integer hotelId;
     private Integer roomId;
     private String name;
-    private RoomType type;
+    private RoomLevel type;
     private SaleState saleState;
     private ChargeType chargeType;
     private String headPicUrl;

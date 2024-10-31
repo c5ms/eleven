@@ -44,8 +44,7 @@ public class RoomService {
 
     @Transactional(rollbackFor = Exception.class)
     public void deleteRoom(Integer hotelId, Integer roomId) {
-        var room = roomRepository.findByHotelIdAndId(hotelId,roomId).orElseThrow(ApplicationHelper::noPrincipalException);
-
+        var room = roomRepository.findByHotelIdAndId(hotelId, roomId).orElseThrow(ApplicationHelper::noPrincipalException);
         roomRepository.delete(room);
     }
 

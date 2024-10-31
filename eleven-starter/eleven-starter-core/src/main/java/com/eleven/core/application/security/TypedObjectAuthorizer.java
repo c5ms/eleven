@@ -13,7 +13,7 @@ public abstract class TypedObjectAuthorizer<C> implements ObjectAuthorizer {
     }
 
     @SuppressWarnings("unchecked")
-    public C cast(Object target) {
+    private C cast(Object target) {
         return (C) target;
     }
 
@@ -30,7 +30,7 @@ public abstract class TypedObjectAuthorizer<C> implements ObjectAuthorizer {
         return checkIsWritable(c);
     }
 
-    public abstract boolean checkIsReadable(C c);
+    protected abstract boolean checkIsReadable(C c);
 
-    public abstract boolean checkIsWritable(C c);
+    protected  abstract boolean checkIsWritable(C c);
 }

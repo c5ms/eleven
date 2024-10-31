@@ -7,6 +7,7 @@ import com.eleven.hotel.domain.core.AbstractEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldNameConstants;
+import org.springframework.data.redis.core.RedisHash;
 
 @Table(name = "hms_register")
 @Entity
@@ -15,8 +16,6 @@ import lombok.experimental.FieldNameConstants;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @FieldNameConstants
 public class Register extends AbstractEntity {
-
-
 
     @Column(name = "hotel_id")
     private Integer hotelId;

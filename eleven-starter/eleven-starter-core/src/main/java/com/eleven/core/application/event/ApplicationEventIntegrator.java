@@ -20,7 +20,6 @@ public class ApplicationEventIntegrator {
 
     public void send(ApplicationEvent event) throws ApplicationEventSerializeException {
         SecurityContext.getPrincipal().ifPresent(event.getHeader()::setTrigger);
-
         if (log.isDebugEnabled()) {
             log.debug("send {} to outbound :{}", event.getClass().getSimpleName(), JSONUtil.toJsonStr(event));
         }

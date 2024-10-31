@@ -30,12 +30,7 @@ spring:
   jpa:
     generate-ddl: true
 
-
-
 eleven:
-  cache:
-    duration: PT8H
-    serializer: jackson
   open-api:
     title: Hotel Admin
     description: ross hotel management tool

@@ -9,10 +9,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 public class HotelRelocatedEvent implements DomainEvent {
 
-    private String hotelId;
+    private Integer hotelId;
 
 }
 

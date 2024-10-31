@@ -31,10 +31,7 @@ public class RegisterMerchantApi {
     @Operation(summary = "register hotel")
     @PostMapping
     public RegisterDto register(@RequestBody @Validated HotelRegisterRequest request) {
-        var command = HotelRegisterCommand.builder()
-            .admin(new Register.AdminInformation(request.getAdminName(), request.getAdminEmail(), request.getAdminTel()))
-            .hotel(new Register.HotelInformation(request.getHotelName(),request.getHotelAddress() ))
-            .build();
+        var command = hotelConvertor.toCommand(request);
         var register = registerService.register(command);
         return hotelConvertor.toDto(register);
     }

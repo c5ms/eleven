@@ -9,13 +9,14 @@ import org.springframework.data.domain.AfterDomainEventPublication;
 import org.springframework.data.domain.DomainEvents;
 import org.springframework.util.Assert;
 
+import java.io.Serializable;
 import java.util.*;
 
 @Getter
 @EntityListeners(AbstractEntityListener.class)
 @FieldNameConstants
 @MappedSuperclass
-public abstract class AbstractEntity {
+public abstract class AbstractEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "hms_generator")
@@ -36,6 +37,9 @@ public abstract class AbstractEntity {
 
     @DomainEvents
     protected Collection<DomainEvent> domainEvents() {
+        if(null==domainEvents){
+            return Collections.emptyList();
+        }
         return Collections.unmodifiableList(domainEvents);
     }
 

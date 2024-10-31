@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class HotelUpdateCommand {
+public class HotelCreateCommand {
     private Hotel.HotelBasic basic;
     private Hotel.HotelPosition position;
 }

@@ -12,7 +12,7 @@ public class RequestLog implements Serializable {
 
     private String userId;
     private String traceId;
-    private String operate;
+    private String operation;
     private Long duration;
     private String clientIp;
     private String serverIp;

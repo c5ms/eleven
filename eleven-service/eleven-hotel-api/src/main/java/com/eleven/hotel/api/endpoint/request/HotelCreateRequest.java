@@ -8,7 +8,7 @@ import java.time.LocalTime;
 
 @Getter
 @Setter
-public class HotelUpdateRequest {
+public class HotelCreateRequest {
 
     @Schema(example = "ross hotel")
     private String name;

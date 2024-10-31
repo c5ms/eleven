@@ -1,4 +1,4 @@
-package com.eleven.core.data.support;
+package com.eleven.core.domain;
 
 import com.eleven.core.authorization.Principal;
 import com.eleven.core.authorization.SecurityContext;
@@ -14,7 +14,7 @@ import java.time.temporal.TemporalAccessor;
 import java.util.Optional;
 
 @Component
-public class DefaultAuditorAware implements AuditorAware<String>, DateTimeProvider {
+public class DomainAuditorAware implements AuditorAware<String>, DateTimeProvider {
 
     @Override
     @NonNull

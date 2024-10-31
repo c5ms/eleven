@@ -10,6 +10,7 @@ import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
 import com.eleven.hotel.domain.values.Price;
 import com.eleven.hotel.domain.values.Stock;
+import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
@@ -28,27 +29,21 @@ import java.util.Set;
 @FieldNameConstants
 public class Plan extends AbstractEntity implements Saleable {
 
-
-    @NonNull
     @Column(name = "hotel_id")
     private Integer hotelId;
 
-    @NonNull
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "plan_id", nullable = false)
     private Set<PlanRoom> rooms = new HashSet<>();
 
-    @NonNull
     @Enumerated(EnumType.STRING)
     @Column(name = "sale_type")
     private SaleType saleType;
 
-    @NonNull
     @Enumerated(EnumType.STRING)
     @Column(name = "sale_state")
     private SaleState saleState;
 
-    @Nullable
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = DateTimeRange.Fields.start, column = @Column(name = "sale_period_start")),
@@ -56,7 +51,6 @@ public class Plan extends AbstractEntity implements Saleable {
     })
     private DateTimeRange salePeriod;
 
-    @Nullable
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = DateTimeRange.Fields.start, column = @Column(name = "pre_sale_period_start")),
@@ -64,7 +58,6 @@ public class Plan extends AbstractEntity implements Saleable {
     })
     private DateTimeRange preSalePeriod;
 
-    @Nullable
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = DateRange.Fields.start, column = @Column(name = "stay_period_start")),
@@ -72,14 +65,12 @@ public class Plan extends AbstractEntity implements Saleable {
     })
     private DateRange stayPeriod;
 
-    @Nullable
     @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = Stock.Fields.count, column = @Column(name = "stock_count")),
     })
     private Stock stock;
 
-    @Nullable
     @Embedded
     private PlanBasic basic;
 
@@ -163,18 +154,22 @@ public class Plan extends AbstractEntity implements Saleable {
         return this.getRooms().isEmpty();
     }
 
+    @Nonnull
     public DateRange getStayPeriod() {
         return Optional.ofNullable(stayPeriod).orElseGet(DateRange::new);
     }
 
+    @Nonnull
     public DateTimeRange getPreSalePeriod() {
         return Optional.ofNullable(preSalePeriod).orElseGet(DateTimeRange::new);
     }
 
+    @Nonnull
     public DateTimeRange getSalePeriod() {
         return Optional.ofNullable(salePeriod).orElseGet(DateTimeRange::new);
     }
 
+    @Nonnull
     public PlanBasic getBasic() {
         return Optional.ofNullable(basic).orElseGet(PlanBasic::new);
     }

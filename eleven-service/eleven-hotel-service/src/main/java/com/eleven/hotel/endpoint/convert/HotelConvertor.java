@@ -2,6 +2,14 @@ package com.eleven.hotel.endpoint.convert;
 
 import com.eleven.hotel.api.endpoint.model.HotelDto;
 import com.eleven.hotel.api.endpoint.model.RegisterDto;
+import com.eleven.hotel.api.endpoint.request.HotelCreateRequest;
+import com.eleven.hotel.api.endpoint.request.HotelQueryRequest;
+import com.eleven.hotel.api.endpoint.request.HotelRegisterRequest;
+import com.eleven.hotel.api.endpoint.request.HotelUpdateRequest;
+import com.eleven.hotel.application.command.HotelCreateCommand;
+import com.eleven.hotel.application.command.HotelRegisterCommand;
+import com.eleven.hotel.application.command.HotelUpdateCommand;
+import com.eleven.hotel.application.query.HotelQuery;
 import com.eleven.hotel.domain.model.hotel.Hotel;
 import com.eleven.hotel.domain.model.hotel.Register;
 import lombok.RequiredArgsConstructor;
@@ -51,5 +59,64 @@ public class HotelConvertor {
             ;
     }
 
+    public HotelCreateCommand toCommand(HotelCreateRequest request) {
+        return HotelCreateCommand.builder()
+            .basic(new Hotel.HotelBasic(
+                request.getName(),
+                request.getDescription(),
+                request.getHeadPicUrl(),
+                request.getTotalRooms(),
+                request.getCheckIn(),
+                request.getCheckOut(),
+                request.getEmail(),
+                request.getTel())
+            )
+            .position(new Hotel.HotelPosition(
+                request.getProvince(),
+                request.getCity(),
+                request.getDistrict(),
+                request.getStreet(),
+                request.getAddress(),
+                request.getLat(),
+                request.getLng()
+            ))
+            .build();
+    }
 
+    public HotelUpdateCommand toCommand(HotelUpdateRequest request) {
+        return HotelUpdateCommand.builder()
+            .basic(new Hotel.HotelBasic(
+                request.getName(),
+                request.getDescription(),
+                request.getHeadPicUrl(),
+                request.getTotalRooms(),
+                request.getCheckIn(),
+                request.getCheckOut(),
+                request.getEmail(),
+                request.getTel())
+            )
+            .position(new Hotel.HotelPosition(
+                request.getProvince(),
+                request.getCity(),
+                request.getDistrict(),
+                request.getStreet(),
+                request.getAddress(),
+                request.getLat(),
+                request.getLng()
+            ))
+            .build();
+    }
+
+    public HotelQuery toCommand(HotelQueryRequest request) {
+        return HotelQuery.builder()
+            .hotelName(request.getHotelName())
+            .build();
+    }
+
+    public HotelRegisterCommand toCommand(HotelRegisterRequest request) {
+        return HotelRegisterCommand.builder()
+            .admin(new Register.AdminInformation(request.getAdminName(), request.getAdminEmail(), request.getAdminTel()))
+            .hotel(new Register.HotelInformation(request.getHotelName(), request.getHotelAddress()))
+            .build();
+    }
 }

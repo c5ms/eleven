@@ -3,11 +3,14 @@ package com.eleven.hotel.domain.model.hotel;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import com.eleven.hotel.domain.core.Saleable;
+import com.eleven.hotel.domain.model.hotel.event.HotelClosedEvent;
+import com.eleven.hotel.domain.model.hotel.event.HotelOpenedEvent;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldNameConstants;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.Optional;
 
@@ -19,7 +22,7 @@ import java.util.Optional;
 @FieldNameConstants
 public class Hotel extends AbstractEntity implements Saleable {
 
-    @NonNull
+    @Nonnull
     @Column(name = "sale_state")
     @Enumerated(EnumType.STRING)
     private SaleState saleState = SaleState.STOPPED;
@@ -36,14 +39,22 @@ public class Hotel extends AbstractEntity implements Saleable {
         this.setBasic(description);
     }
 
+    public Hotel(HotelBasic basic, HotelPosition position) {
+        this.setBasic(basic);
+    }
+
     @Override
     public void startSale() {
-        this.saleState = SaleState.STARTED;
+        if(this.saleState!=SaleState.STARTED){
+            this.saleState = SaleState.STARTED;
+            addEvent(new HotelOpenedEvent(getId()));
+        }
     }
 
     @Override
     public void stopSale() {
         this.saleState = SaleState.STOPPED;
+        addEvent(new HotelClosedEvent(getId()));
     }
 
     @Override
@@ -70,7 +81,7 @@ public class Hotel extends AbstractEntity implements Saleable {
     @AllArgsConstructor
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @FieldNameConstants
-    public static class HotelBasic {
+    public static class HotelBasic implements Serializable{
 
         @Column(name = "hotel_name", nullable = false)
         private String name;
@@ -110,7 +121,7 @@ public class Hotel extends AbstractEntity implements Saleable {
     @AllArgsConstructor
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @FieldNameConstants
-    public static class HotelPosition {
+    public static class HotelPosition implements Serializable {
 
         @Column(name = "position_province")
         private String province;

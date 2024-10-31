@@ -11,5 +11,4 @@ import java.time.Duration;
 @ConfigurationProperties(prefix = "eleven.cache")
 public class ElevenCacheProperties {
     private Duration duration = Duration.parse("PT8H");
-    private SerializerType serializer = SerializerType.JACKSON;
 }

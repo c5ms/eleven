@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
@@ -19,83 +21,42 @@ import java.util.Optional;
 public class AuthorizationConfigure {
 
     @Bean
-    @ConditionalOnBean(RedisTemplate.class)
+    @Order(1)
     @ConditionalOnMissingBean(TokenStore.class)
     TokenStore tokenStore(RedisTemplate<String, String> redisTemplate) {
         return new RedisTokenStore(redisTemplate);
     }
 
     @Bean
-    @ConditionalOnBean(RedisTemplate.class)
+    @Order(1)
     @ConditionalOnMissingBean(SubjectStore.class)
     SubjectStore subjectStore(RedisTemplate<String, String> redisTemplate) {
         return new RedisSubjectStore(redisTemplate);
     }
 
     @Bean
+    @Order(1)
     @ConditionalOnMissingBean(TokenCreator.class)
     TokenCreator tokenCreator() {
         return new OpaqueTokenCreator();
     }
 
     @Bean
+    @Order(1)
     @ConditionalOnMissingBean(Authorizer.class)
     Authorizer authorizer() {
         return principal -> List.of();
     }
 
     @Bean
+    @Order(1)
     @ConditionalOnMissingBean(SubjectCreator.class)
     SubjectCreator subjectCreator() {
         return principal -> Subject.ANONYMOUS_INSTANCE;
     }
 
-
     @Bean
-    @ConditionalOnMissingBean(TokenStore.class)
-    TokenStore noTokenStore() {
-        return  new TokenStore() {
-            @Override
-            public void save(Token token) {
-
-            }
-
-            @Override
-            public void remove(String tokenValue) {
-
-            }
-
-            @Override
-            public Optional<Token> retrieval(String tokenValue) {
-                return Optional.empty();
-            }
-        };
-    }
-
-    @Bean
-    @ConditionalOnMissingBean(SubjectStore.class)
-    SubjectStore noSubjectStore() {
-        return new SubjectStore() {
-            @Override
-            public void save(Principal principal, Subject subject) {
-
-            }
-
-            @Override
-            public void remove(Principal principal) {
-
-            }
-
-            @Override
-            public Optional<Subject> retrieval(Principal principal) {
-                return Optional.empty();
-            }
-        };
-    }
-
-
-
-    @Bean
+    @Order(2)
     SecurityManager securityManager(TokenCreator tokenCreator,
                                     SubjectCreator subjectCreator,
                                     TokenStore tokenStore,

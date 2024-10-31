@@ -24,7 +24,7 @@ public class Slf4jRequestLogAppender implements RequestLogAppender {
 
     @Override
     public void append(RequestLog requestLog) {
-        if (StringUtils.isBlank(requestLog.getOperate())) {
+        if (StringUtils.isBlank(requestLog.getOperation())) {
             return;
         }
         var subject = SecurityContext.getCurrentSubject();
@@ -36,7 +36,7 @@ public class Slf4jRequestLogAppender implements RequestLogAppender {
                 generator.writePOJOField("request", requestLog.getRequest());
                 generator.writePOJOField("response", requestLog.getResponse());
                 generator.writeNumberField("duration", requestLog.getDuration());
-                generator.writeStringField("operate", requestLog.getOperate());
+                generator.writeStringField("operate", requestLog.getOperation());
                 generator.writeStringField("client_ip", requestLog.getClientIp());
                 generator.writeStringField("user_id", requestLog.getUserId());
                 generator.writePOJOField("principal", subject.getPrincipal());
@@ -44,7 +44,7 @@ public class Slf4jRequestLogAppender implements RequestLogAppender {
         };
 
         // 找到合适的 logger
-        org.slf4j.Logger logger = requestLogger;
+        var logger = requestLogger;
         if (null != RequestLogContext.getHandler()) {
             logger = LoggerFactory.getLogger(RequestLogContext.getHandler());
         }
@@ -55,10 +55,10 @@ public class Slf4jRequestLogAppender implements RequestLogAppender {
             if (logger.isErrorEnabled()) {
                 if (exception.isPresent()) {
                     logger.error(marker, "response http status {} when {} {} occur exception",
-                            status.value(),
-                            subject.getNickName(),
-                            requestLog.getOperate(),
-                            exception.get());
+                        status.value(),
+                        subject.getNickName(),
+                        requestLog.getOperation(),
+                        exception.get());
                     return;
                 }
             }
@@ -68,25 +68,26 @@ public class Slf4jRequestLogAppender implements RequestLogAppender {
             if (logger.isWarnEnabled()) {
                 if (exception.isPresent()) {
                     logger.warn(marker, "response http status {} when {} {} fail, because {}",
-                            status.value(),
-                            subject.getNickName(),
-                            requestLog.getOperate(),
-                            ExceptionUtils.getRootCauseMessage(exception.get()));
+                        status.value(),
+                        subject.getNickName(),
+                        requestLog.getOperation(),
+                        ExceptionUtils.getRootCauseMessage(exception.get()));
                     return;
                 }
                 logger.warn(marker, "response http status {} when {} {} fail with no reason",
-                        status.value(),
-                        subject.getNickName(),
-                        requestLog.getOperate());
+                    status.value(),
+                    subject.getNickName(),
+                    requestLog.getOperation()
+                );
                 return;
             }
         }
 
         if (logger.isInfoEnabled()) {
             logger.info(marker, "response http status {} when {} {} successful",
-                    status.value(),
-                    subject.getNickName(),
-                    requestLog.getOperate());
+                status.value(),
+                subject.getNickName(),
+                requestLog.getOperation());
         }
 
     }

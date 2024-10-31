@@ -37,15 +37,12 @@ import java.util.Optional;
 public class PlanMerchantApi {
 
     private final PlanService planService;
-    private final HotelService hotelService;
     private final PlanConvertor planConvertor;
 
     @Operation(summary = "query plan")
     @GetMapping
     public PageResult<PlanDto> queryPlan(@PathVariable("hotelId") Integer hotelId, @ParameterObject @Validated PlanQueryRequest request) {
-        var query = PlanQuery.builder()
-                .planName(request.getPlanName())
-                .build();
+        var query = planConvertor.toQuery(request);
         return planService.queryPage(hotelId, query).map(planConvertor::toDto);
     }
 
@@ -59,7 +56,7 @@ public class PlanMerchantApi {
     @PostMapping
     public PlanDto createPlan(@PathVariable("hotelId") Integer hotelId, @RequestBody @Validated PlanCreateRequest request) {
         var command = PlanCreateCommand.builder()
-                .planBasic(new Plan.PlanBasic(request.getName(), request.getDesc()))
+                .basic(new Plan.PlanBasic(request.getName(), request.getDesc()))
                 .stock(Stock.of(request.getStock()))
                 .preSellPeriod(new DateTimeRange(request.getPreSellStartDate(), request.getPreSellEndDate()))
                 .stayPeriod(new DateRange(request.getStayStartDate(), request.getStayEndDate()))

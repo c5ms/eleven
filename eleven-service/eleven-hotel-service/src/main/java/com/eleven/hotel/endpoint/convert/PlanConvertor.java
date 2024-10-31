@@ -1,6 +1,8 @@
 package com.eleven.hotel.endpoint.convert;
 
 import com.eleven.hotel.api.endpoint.model.PlanDto;
+import com.eleven.hotel.api.endpoint.request.PlanQueryRequest;
+import com.eleven.hotel.application.query.PlanQuery;
 import com.eleven.hotel.domain.model.hotel.Plan;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,4 +49,9 @@ public class PlanConvertor {
             .setPrice(planRoom.getPrice().getAmount().doubleValue());
     }
 
+    public PlanQuery toQuery(PlanQueryRequest request) {
+    return     PlanQuery.builder()
+            .planName(request.getPlanName())
+            .build();
+    }
 }

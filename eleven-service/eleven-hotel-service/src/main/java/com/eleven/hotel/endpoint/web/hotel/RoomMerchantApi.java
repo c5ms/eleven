@@ -35,27 +35,23 @@ public class RoomMerchantApi {
     @GetMapping
     public List<RoomDto> listRoom(@PathVariable("hotelId") Integer hotelId) {
         return roomService.listRoom(hotelId)
-                .stream()
-                .map(roomConvertor::toDto)
-                .collect(Collectors.toList());
+            .stream()
+            .map(roomConvertor::toDto)
+            .collect(Collectors.toList());
     }
 
     @Operation(summary = "read room")
     @GetMapping("/{roomId}")
     public Optional<RoomDto> readRoom(@PathVariable("hotelId") Integer hotelId, @PathVariable("roomId") Integer roomId) {
         return roomService.readRoom(hotelId, roomId)
-                .map(roomConvertor::toDto);
+            .map(roomConvertor::toDto);
     }
 
     @Operation(summary = "create room")
     @PostMapping
     public RoomDto createRoom(@PathVariable("hotelId") Integer hotelId, @RequestBody @Validated RoomCreateRequest request) {
-        var command = RoomCreateCommand.builder()
-                .basic(new Room.RoomBasic(request.getName(), request.getType(), request.getDesc(), request.getHeadPicUrl()))
-                .restriction(new Room.RoomRestriction(request.getMinPerson(), request.getMaxPerson()))
-                .chargeType(request.getChargeType())
-                .build();
-        var room = roomService.createRoom(hotelId,command);
+        var command = roomConvertor.toCommand(request);
+        var room = roomService.createRoom(hotelId, command);
         return roomConvertor.toDto(room);
     }
 
@@ -64,19 +60,15 @@ public class RoomMerchantApi {
     public RoomDto updateRoom(@PathVariable("hotelId") Integer hotelId,
                               @PathVariable("roomId") Integer roomId,
                               @RequestBody @Validated RoomUpdateRequest request) {
-        var command = RoomUpdateCommand.builder()
-                .chargeType(request.getChargeType())
-                .basic(new Room.RoomBasic(request.getName(), request.getType(), request.getDesc(), request.getHeadPicUrl()))
-                .restriction(new Room.RoomRestriction(request.getMinPerson(), request.getMaxPerson()))
-                .build();
-        var room = roomService.updateRoom(hotelId,roomId,command);
+        var command = roomConvertor.toCommand(request);
+        var room = roomService.updateRoom(hotelId, roomId, command);
         return roomConvertor.toDto(room);
     }
 
     @Operation(summary = "delete room")
     @DeleteMapping("/{roomId}")
     public void deleteRoom(@PathVariable("hotelId") Integer hotelId, @PathVariable("roomId") Integer roomId) {
-        roomService.deleteRoom(hotelId,roomId);
+        roomService.deleteRoom(hotelId, roomId);
     }
 
 }

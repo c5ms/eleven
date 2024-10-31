@@ -48,13 +48,12 @@ public class PlanService {
     @Transactional(rollbackFor = Exception.class)
     public Plan createPlan(Integer hotelId, PlanCreateCommand command) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(ApplicationHelper::noPrincipalException);
-
         var plan = Plan.normal()
                 .hotelId(hotel.getId())
                 .salePeriod(command.getSellPeriod())
                 .preSellPeriod(command.getPreSellPeriod())
                 .stayPeriod(command.getStayPeriod())
-                .basic(command.getPlanBasic())
+                .basic(command.getBasic())
                 .stock(command.getStock())
                 .create();
         planManager.validate(plan);

@@ -33,5 +33,4 @@ public class RegisterAdminApi {
         registerService.review(registerId,command);
     }
 
-
 }

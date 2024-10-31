@@ -12,6 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class HotelOpenedEvent implements DomainEvent {
 
-    private String hotelId;
+    private Integer hotelId;
 
 }

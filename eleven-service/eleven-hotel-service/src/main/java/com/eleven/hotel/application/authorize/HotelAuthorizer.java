@@ -13,12 +13,12 @@ import org.springframework.stereotype.Component;
 public class HotelAuthorizer extends TypedObjectAuthorizer<Hotel> {
 
     @Override
-    public boolean checkIsReadable(Hotel hotel) {
+    protected boolean checkIsReadable(Hotel hotel) {
         return true;
     }
 
     @Override
-    public boolean checkIsWritable(Hotel hotel) {
+    protected boolean checkIsWritable(Hotel hotel) {
         return true;
     }
 }

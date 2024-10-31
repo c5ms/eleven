@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class HotelService {
+public class HotelEventHandler {
     private final HotelClient hotelClient;
 
     @EventListener

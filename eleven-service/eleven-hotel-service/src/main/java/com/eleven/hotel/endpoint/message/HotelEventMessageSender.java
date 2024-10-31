@@ -16,7 +16,6 @@ public class HotelEventMessageSender implements ApplicationEventMessageSender {
 
     @Override
     public void send(ApplicationEventMessage message) {
-     log.info("send hotel event message {}",message);
 //        amqpTemplate.convertAndSend(HotelEventMessageSender.QUEUE_HOTEL_EVENT, message);
     }
 }
