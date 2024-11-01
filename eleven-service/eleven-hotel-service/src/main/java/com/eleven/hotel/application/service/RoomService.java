@@ -1,6 +1,6 @@
 package com.eleven.hotel.application.service;
 
-import com.eleven.core.application.authorization.NoPrincipalException;
+import com.eleven.core.application.authorize.NoPrincipalException;
 import com.eleven.hotel.application.command.RoomCreateCommand;
 import com.eleven.hotel.application.command.RoomUpdateCommand;
 import com.eleven.hotel.application.support.HotelContext;

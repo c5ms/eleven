@@ -1,7 +1,6 @@
 package com.eleven.core.application.event;
 
 import cn.hutool.json.JSONUtil;
-import com.eleven.core.application.ApplicationHelper;
 import com.eleven.core.application.event.support.JacksonApplicationEventSerializer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

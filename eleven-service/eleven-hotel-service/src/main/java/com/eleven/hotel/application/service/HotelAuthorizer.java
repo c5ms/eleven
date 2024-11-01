@@ -1,6 +1,6 @@
 package com.eleven.hotel.application.service;
 
-import com.eleven.core.application.authorization.TypedObjectAuthorizer;
+import com.eleven.core.application.authorize.TypedObjectAuthorizer;
 import com.eleven.hotel.domain.model.hotel.Hotel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

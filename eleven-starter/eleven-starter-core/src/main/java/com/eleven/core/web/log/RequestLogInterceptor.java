@@ -1,6 +1,6 @@
 package com.eleven.core.web.log;
 
-import com.eleven.core.application.authentication.AuthenticContext;
+import com.eleven.core.authenticate.AuthenticContext;
 import com.eleven.core.web.log.annonation.UseRequestLog;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Nonnull;

@@ -2,6 +2,7 @@ package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.core.domain.DomainContext;
 import com.eleven.hotel.api.domain.error.HotelErrors;
+import com.eleven.hotel.api.domain.model.PriceType;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
 import com.eleven.hotel.domain.core.AbstractEntity;
@@ -16,9 +17,8 @@ import lombok.*;
 import lombok.experimental.FieldNameConstants;
 import org.apache.commons.lang3.Validate;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Table(name = "hms_plan")
 @Entity
@@ -89,7 +89,7 @@ public class Plan extends AbstractEntity implements Saleable {
 
         Validate.notNull(hotelId, "hotelId must not be null");
         Validate.notNull(stock, "stock must not be null");
-        Validate.isTrue(stock.greaterTan(Stock.ZERO), "total must gather than zero");
+        Validate.isTrue(stock.greaterThanZero(), "total must gather than zero");
 
         var plan = new Plan(hotelId);
         plan.setStock(stock);
@@ -133,11 +133,15 @@ public class Plan extends AbstractEntity implements Saleable {
         this.setPreSalePeriod(preSellPeriod);
     }
 
-    public void addRoom(Room room, Stock stock, Price price) {
-        var planRoom = new PlanRoom(this, room, stock, price);
+    public void addRoom(Room room, Stock stock) {
+        var planRoom = new PlanRoom(this, room, stock);
         this.rooms.add(planRoom);
     }
 
+    public void addRoom(Room room) {
+        var planRoom = new PlanRoom(this, room, Stock.zero());
+        this.rooms.add(planRoom);
+    }
 
     public Optional<PlanRoom> findRoom(Integer roomId) {
         return this.rooms.stream()
@@ -146,7 +150,12 @@ public class Plan extends AbstractEntity implements Saleable {
     }
 
     public Optional<Price> chargeRoom(Room room) {
-        return findRoom(room.getId()).map(PlanRoom::getPrice);
+//        return findRoom(room.getId()).map(PlanRoom::getPrice);
+        return null;
+    }
+
+    public void setPrice(Integer roomId, PriceType type, BigDecimal amount) {
+        findRoom(roomId).ifPresent(planRoom -> planRoom.addPrice(type, amount));
     }
 
     private boolean hasRoom() {
@@ -172,6 +181,7 @@ public class Plan extends AbstractEntity implements Saleable {
     public PlanBasic getBasic() {
         return Optional.ofNullable(basic).orElseGet(PlanBasic::new);
     }
+
 
     @Getter
     @NoArgsConstructor
@@ -211,19 +221,40 @@ public class Plan extends AbstractEntity implements Saleable {
         })
         private Stock stock;
 
-        @Embedded
-        @AttributeOverrides({
-                @AttributeOverride(name = Price.Fields.amount, column = @Column(name = "price")),
+        @ElementCollection
+        @MapKeyEnumerated(EnumType.STRING)
+        @MapKeyColumn(name = "price_type")
+        @CollectionTable(name = "hms_plan_price", joinColumns = {
+                @JoinColumn(name = "plan_room_id", referencedColumnName = "id", nullable = false),
         })
-        private Price price;
+        @AttributeOverrides({
+                @AttributeOverride(name = "value.amount", column = @Column(name = "price_amount")),
+        })
+        private Map<PriceType, PlanPrice> prices = new HashMap<>();
 
-        public PlanRoom(Plan plan, Room room, Stock stock, Price price) {
+        public PlanRoom(Plan plan, Room room, Stock stock) {
             this.planId = plan.getId();
             this.hotelId = plan.getHotelId();
             this.roomId = room.getId();
             this.stock = stock;
-            this.price = price;
         }
 
+        public void addPrice(PriceType type, BigDecimal amount) {
+            this.prices.put(type, new PlanPrice(amount));
+        }
+    }
+
+    @Embeddable
+    @Getter
+    @Setter(AccessLevel.PROTECTED)
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @FieldNameConstants
+    public static class PlanPrice {
+
+        private BigDecimal amount;
+
+        public PlanPrice(BigDecimal amount) {
+            this.amount = amount;
+        }
     }
 }

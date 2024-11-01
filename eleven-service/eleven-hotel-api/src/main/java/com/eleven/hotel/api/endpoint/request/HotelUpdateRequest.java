@@ -54,5 +54,4 @@ public class HotelUpdateRequest {
 
     @Schema(example = "110.9876")
     private Double lng;
-
 }

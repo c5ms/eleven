@@ -10,6 +10,7 @@ import com.eleven.hotel.application.support.HotelContext;
 import com.eleven.hotel.domain.manager.HotelManager;
 import com.eleven.hotel.domain.model.hotel.Hotel;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
+import com.eleven.hotel.domain.model.inventory.Inventory;
 import com.github.wenhao.jpa.Specifications;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -50,8 +51,8 @@ public class HotelService {
     public void update(Integer hotelId, HotelUpdateCommand command) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
 
-        Optional.ofNullable(command.getPosition()).ifPresent(hotel::relocate);
         Optional.ofNullable(command.getBasic()).ifPresent(hotel::setBasic);
+        Optional.ofNullable(command.getPosition()).ifPresent(hotel::relocate);
 
         hotelManager.validate(hotel);
         hotelRepository.save(hotel);

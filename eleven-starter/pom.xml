@@ -15,7 +15,6 @@
 
     <modules>
         <module>eleven-starter-core</module>
-        <module>eleven-starter-data</module>
         <module>eleven-starter-test</module>
         <module>eleven-starter-tools</module>
     </modules>

@@ -1,7 +1,7 @@
 package com.eleven.core.application.event;
 
-import com.eleven.core.application.authentication.Principal;
-import com.eleven.core.application.authentication.AuthenticContext;
+import com.eleven.core.authenticate.Principal;
+import com.eleven.core.authenticate.AuthenticContext;
 import com.eleven.core.time.TimeContext;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

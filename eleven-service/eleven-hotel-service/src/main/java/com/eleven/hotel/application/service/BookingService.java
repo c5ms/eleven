@@ -3,7 +3,7 @@ package com.eleven.hotel.application.service;
 import com.eleven.hotel.application.command.BookingCommand;
 import com.eleven.hotel.domain.model.booking.Booking;
 import com.eleven.hotel.domain.manager.BookingManager;
-import com.eleven.hotel.domain.model.booking.BookingRepository;
+//import com.eleven.hotel.domain.model.booking.BookingRepository;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.domain.model.hotel.RoomRepository;
 import com.eleven.hotel.domain.model.hotel.PlanRepository;
@@ -19,7 +19,7 @@ public class BookingService {
 
     private final PlanRepository planRepository;
     private final HotelRepository hotelRepository;
-    private final BookingRepository bookingRepository;
+//    private final BookingRepository bookingRepository;
     private final RoomRepository roomRepository;
 
     private final BookingManager bookingManager;

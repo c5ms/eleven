@@ -1,16 +1,12 @@
 package com.eleven.hotel.endpoint.web.admin;
 
 import com.eleven.core.application.query.PageResult;
-import com.eleven.core.web.annonation.AsAdminApi;
+import com.eleven.hotel.endpoint.support.AsAdminApi;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.model.HotelDto;
 import com.eleven.hotel.api.endpoint.request.HotelCreateRequest;
 import com.eleven.hotel.api.endpoint.request.HotelQueryRequest;
-import com.eleven.hotel.application.command.HotelCreateCommand;
-import com.eleven.hotel.application.query.HotelQuery;
 import com.eleven.hotel.application.service.HotelService;
-import com.eleven.hotel.domain.model.hotel.Hotel;
-import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.endpoint.convert.HotelConvertor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,7 +29,7 @@ public class HotelAdminApi {
     private final HotelConvertor hotelConvertor;
 
     @Operation(summary = "read hotel")
-    @GetMapping("/{hotelId}")
+    @GetMapping("/{hotelId:[0-9]+}")
     public Optional<HotelDto> readHotel(@PathVariable("hotelId") Integer hotelId) {
         return hotelService.read(hotelId).map(hotelConvertor::toDto);
     }

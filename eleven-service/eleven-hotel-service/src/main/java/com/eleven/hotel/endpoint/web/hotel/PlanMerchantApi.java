@@ -45,7 +45,7 @@ public class PlanMerchantApi {
     }
 
     @Operation(summary = "read plan")
-    @GetMapping("/{planId}")
+    @GetMapping("/{planId:[0-9]+}")
     public Optional<PlanDto> readPlan(@PathVariable("hotelId") Integer hotelId, @PathVariable("planId") Integer planId) {
         return planService.readPlan(hotelId, planId).map(planConvertor::toDto);
     }
@@ -53,25 +53,15 @@ public class PlanMerchantApi {
     @Operation(summary = "create plan")
     @PostMapping
     public PlanDto createPlan(@PathVariable("hotelId") Integer hotelId, @RequestBody @Validated PlanCreateRequest request) {
-        var command = PlanCreateCommand.builder()
-                .basic(new Plan.PlanBasic(request.getName(), request.getDesc()))
-                .stock(Stock.of(request.getStock()))
-                .preSellPeriod(new DateTimeRange(request.getPreSellStartDate(), request.getPreSellEndDate()))
-                .stayPeriod(new DateRange(request.getStayStartDate(), request.getStayEndDate()))
-                .sellPeriod(new DateTimeRange(request.getSellStartDate(), request.getSellEndDate()))
-                .build();
+        var command = planConvertor.toCommand(request);
         var plan = planService.createPlan(hotelId, command);
         return planConvertor.toDto(plan);
     }
 
     @Operation(summary = "add room")
-    @PostMapping("/{planId}/rooms")
+    @PostMapping("/{planId:[0-9]+}/rooms")
     public void addRoom(@PathVariable("hotelId") Integer hotelId, @PathVariable("planId") Integer planId, @RequestBody @Validated PlanAddRoomRequest request) {
-        var command = PlanAddRoomCommand.builder()
-                .roomId(request.getRoomId())
-                .stock(new Stock(request.getStock()))
-                .price(new Price(request.getPrice()))
-                .build();
+        var command = planConvertor.toCommand(request);
         planService.addRoom(hotelId, planId, command);
     }
 

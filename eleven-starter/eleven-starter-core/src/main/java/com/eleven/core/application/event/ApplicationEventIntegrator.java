@@ -1,7 +1,7 @@
 package com.eleven.core.application.event;
 
 import cn.hutool.json.JSONUtil;
-import com.eleven.core.application.authentication.AuthenticContext;
+import com.eleven.core.authenticate.AuthenticContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;

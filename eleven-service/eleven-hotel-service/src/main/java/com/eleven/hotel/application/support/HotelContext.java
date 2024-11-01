@@ -2,7 +2,7 @@ package com.eleven.hotel.application.support;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.eleven.core.application.event.ApplicationEvent;
-import com.eleven.core.application.authorization.*;
+import com.eleven.core.application.authorize.*;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

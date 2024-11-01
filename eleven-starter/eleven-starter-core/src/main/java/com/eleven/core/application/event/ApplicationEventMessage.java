@@ -1,6 +1,6 @@
 package com.eleven.core.application.event;
 
-import com.eleven.core.application.authentication.Principal;
+import com.eleven.core.authenticate.Principal;
 import lombok.Data;
 
 import java.io.Serializable;

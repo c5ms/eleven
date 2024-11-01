@@ -41,7 +41,7 @@ public class HotelConvertor {
 
             .setName(hotel.getBasic().getName())
             .setDescription(hotel.getBasic().getDescription())
-            .setRoomNumber(hotel.getBasic().getTotalRooms())
+            .setTotalRooms(hotel.getBasic().getTotalRooms())
             .setHeadPicUrl(hotel.getBasic().getHeadPicUrl())
             .setCheckIn(hotel.getBasic().getCheckInTime())
             .setCheckOut(hotel.getBasic().getCheckOutTime())

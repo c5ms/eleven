@@ -7,6 +7,9 @@ import com.eleven.hotel.domain.values.Stock;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Builder
 public class PlanCreateCommand {
@@ -15,4 +18,5 @@ public class PlanCreateCommand {
     private DateTimeRange preSellPeriod;
     private DateRange stayPeriod;
     private Plan.PlanBasic basic;
+    private List<Integer> rooms;
 }

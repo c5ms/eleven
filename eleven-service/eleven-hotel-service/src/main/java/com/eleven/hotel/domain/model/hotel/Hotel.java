@@ -41,6 +41,7 @@ public class Hotel extends AbstractEntity implements Saleable {
 
     public Hotel(HotelBasic basic, HotelPosition position) {
         this.setBasic(basic);
+        this.setPosition(position);
     }
 
     @Override
@@ -112,7 +113,6 @@ public class Hotel extends AbstractEntity implements Saleable {
             basic.setName(name);
             return basic;
         }
-
     }
 
     @Embeddable

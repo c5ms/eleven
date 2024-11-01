@@ -29,26 +29,26 @@ public class HotelMerchantApi {
     private final HotelConvertor hotelConvertor;
 
     @Operation(summary = "read hotel")
-    @GetMapping("/{hotelId:\\d+}")
+    @GetMapping("/{hotelId:[0-9]+}")
     public Optional<HotelDto> readHotel(@PathVariable("hotelId") Integer hotelId) {
         return hotelService.read(hotelId).map(hotelConvertor::toDto);
     }
 
     @Operation(summary = "update hotel")
-    @PostMapping("/{hotelId:\\d+}")
+    @PostMapping("/{hotelId:[0-9]+}")
     public void update(@PathVariable("hotelId") Integer hotelId, @RequestBody @Validated HotelUpdateRequest request) {
         var command = hotelConvertor.toCommand(request);
         hotelService.update(hotelId, command);
     }
 
     @Operation(summary = "open hotel")
-    @PostMapping("/{hotelId:\\d+}/operations/open")
+    @PostMapping("/{hotelId:[0-9]+}/operations/open")
     public void openHotel(@PathVariable("hotelId") Integer hotelId) {
         hotelService.open(hotelId);
     }
 
     @Operation(summary = "close hotel")
-    @PostMapping("/{hotelId:\\d+]}/operations/close")
+    @PostMapping("/{hotelId:[0-9]+]}/operations/close")
     public void closeHotel(@PathVariable("hotelId") Integer hotelId) {
         hotelService.read(hotelId)
             .filter(HotelContext::mustWritable)

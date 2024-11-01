@@ -1,6 +1,6 @@
 package com.eleven.core.web.log;
 
-import com.eleven.core.application.authentication.AuthenticContext;
+import com.eleven.core.authenticate.AuthenticContext;
 import com.fasterxml.jackson.core.JsonGenerator;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;

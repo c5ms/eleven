@@ -2,6 +2,7 @@ package com.eleven.hotel.application.service;
 
 import com.alibaba.cloud.commons.lang.StringUtils;
 import com.eleven.core.application.query.PageResult;
+import com.eleven.hotel.api.domain.model.PriceType;
 import com.eleven.hotel.application.command.PlanAddRoomCommand;
 import com.eleven.hotel.application.command.PlanCreateCommand;
 import com.eleven.hotel.application.query.PlanQuery;
@@ -16,6 +17,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Slf4j
@@ -38,7 +40,7 @@ public class PlanService {
         hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
 
         Specification<Plan> specification = Specifications.<Plan>and()
-                .like(StringUtils.isNotBlank(query.getPlanName()), Plan.Fields.basic +"."+ Plan.PlanBasic.Fields.name, "%"+query.getPlanName()+"%")
+                .like(StringUtils.isNotBlank(query.getPlanName()), Plan.Fields.basic + "." + Plan.PlanBasic.Fields.name, "%" + query.getPlanName() + "%")
                 .build();
 
         var result = planRepository.findAll(specification, PageRequest.of(query.getPage(), query.getSize() - 1));
@@ -56,7 +58,18 @@ public class PlanService {
                 .basic(command.getBasic())
                 .stock(command.getStock())
                 .create();
+
+        if (null != command.getRooms()) {
+            var rooms = roomRepository.findAllById(command.getRooms());
+            for (Room room : rooms) {
+                plan.addRoom(room);
+            }
+        }
+
         planManager.validate(plan);
+
+        roomRepository.findById(1).ifPresent(plan::addRoom);
+        plan.setPrice(1, PriceType.one_person, BigDecimal.valueOf(200));
         planRepository.save(plan);
         return plan;
     }
@@ -66,8 +79,7 @@ public class PlanService {
         var plan = planRepository.findByHotelIdAndId(hotelId, planId).orElseThrow(HotelContext::noPrincipalException);
         var room = roomRepository.findByHotelIdAndId(hotelId, command.getRoomId()).orElseThrow(HotelContext::noEntityException);
         var stock = command.getStock();
-        var price = command.getPrice();
-        plan.addRoom(room, stock, price);
+        plan.addRoom(room, stock);
         planRepository.save(plan);
     }
 

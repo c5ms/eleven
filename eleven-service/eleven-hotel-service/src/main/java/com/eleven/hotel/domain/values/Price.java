@@ -6,17 +6,16 @@ import lombok.experimental.FieldNameConstants;
 
 import java.math.BigDecimal;
 
+@Deprecated
 @Getter
 @Embeddable
 @FieldNameConstants
 public class Price {
 
-    public static Price ZERO = new Price(0);
-    public static Price ONE = new Price(1);
-
     private BigDecimal amount;
 
     protected Price() {
+        this.amount = BigDecimal.ZERO;
     }
 
     public Price(BigDecimal amount) {
@@ -27,15 +26,19 @@ public class Price {
         this.amount = BigDecimal.valueOf(amount);
     }
 
+    public static Price zero() {
+        return new Price();
+    }
+
     public boolean isZero() {
         return this.amount.compareTo(BigDecimal.ZERO) == 0;
     }
 
-    public boolean greaterTan(Price price) {
+    public boolean greaterThan(Price price) {
         return this.amount.compareTo(price.amount) > 0;
     }
 
-    public boolean lessTan(Price price) {
+    public boolean lessThan(Price price) {
         return this.amount.compareTo(price.amount) < 0;
     }
 

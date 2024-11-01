@@ -23,18 +23,21 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Getter
-
 @FieldNameConstants
 public class Booking  {
 
     @Column(name = "hotel_id")
     private final Hotel hotel;
+
     @Column(name = "plan_id")
     private final Plan plan;
+
     @Column(name = "room_id")
     private final Room room;
+
     @Column(name = "traveler_id")
     private final Traveler traveler;
+
     @Embedded
     private final DateRange stayPeriod;
 

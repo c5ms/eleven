@@ -2,6 +2,7 @@ package com.eleven.hotel.domain.core;
 
 import com.eleven.core.domain.DomainEvent;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
 import org.springframework.data.annotation.Transient;
@@ -21,8 +22,9 @@ public abstract class AbstractEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "hms_generator")
     @TableGenerator(name = "hms_generator", table = "hms_sequences")
-    private String id;
+    private Integer id;
 
+    @Getter(AccessLevel.PROTECTED)
     private transient final @Transient List<DomainEvent> domainEvents = new ArrayList<>();
 
     protected <T extends DomainEvent> void addEvent(T event) {
@@ -37,7 +39,7 @@ public abstract class AbstractEntity implements Serializable {
 
     @DomainEvents
     protected Collection<DomainEvent> domainEvents() {
-        if(null==domainEvents){
+        if (null == domainEvents) {
             return Collections.emptyList();
         }
         return Collections.unmodifiableList(domainEvents);

@@ -10,10 +10,11 @@ public interface HotelEndpoints {
     }
 
     interface Paths {
-        String REGISTER = "/register";
+        String REGISTER = "/registers";
+
         String HOTEL = "/hotels";
-        String ROOM = HOTEL + "/{hotelId}/rooms";
-        String PLAN = HOTEL + "/{hotelId}/plans";
+        String ROOM =   "/hotels/{hotelId:\\d+}/rooms";
+        String PLAN =  "/hotels/{hotelId:\\d+}/plans";
     }
 
 

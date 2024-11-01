@@ -38,7 +38,7 @@ public class RoomMerchantApi {
     }
 
     @Operation(summary = "read room")
-    @GetMapping("/{roomId}")
+    @GetMapping("/{roomId:[0-9]+}")
     public Optional<RoomDto> readRoom(@PathVariable("hotelId") Integer hotelId, @PathVariable("roomId") Integer roomId) {
         return roomService.readRoom(hotelId, roomId)
             .map(roomConvertor::toDto);
@@ -53,7 +53,7 @@ public class RoomMerchantApi {
     }
 
     @Operation(summary = "update room")
-    @PutMapping("/{roomId}")
+    @PutMapping("/{roomId:[0-9]+}")
     public RoomDto updateRoom(@PathVariable("hotelId") Integer hotelId,
                               @PathVariable("roomId") Integer roomId,
                               @RequestBody @Validated RoomUpdateRequest request) {
@@ -63,7 +63,7 @@ public class RoomMerchantApi {
     }
 
     @Operation(summary = "delete room")
-    @DeleteMapping("/{roomId}")
+    @DeleteMapping("/{roomId:[0-9]+}")
     public void deleteRoom(@PathVariable("hotelId") Integer hotelId, @PathVariable("roomId") Integer roomId) {
         roomService.deleteRoom(hotelId, roomId);
     }

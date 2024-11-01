@@ -2,8 +2,8 @@ package com.eleven.core.web;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
 import com.eleven.core.application.command.CommandInvalidException;
-import com.eleven.core.application.authorization.NoAuthorityException;
-import com.eleven.core.application.authorization.NoPrincipalException;
+import com.eleven.core.application.authorize.NoAuthorityException;
+import com.eleven.core.application.authorize.NoPrincipalException;
 import com.eleven.core.domain.DomainException;
 import com.eleven.core.web.problem.Problem;
 import com.eleven.core.web.problem.ValidationProblem;
@@ -29,7 +29,6 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 @Slf4j
 @ControllerAdvice
 public class ElevenExceptionAdvice {
-
 
     @ResponseBody
     @ApiResponse(description = "Bad Request", responseCode = "400")
@@ -105,9 +104,9 @@ public class ElevenExceptionAdvice {
         else {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
             var problem = Problem.of("system_internal", ExceptionUtils.getRootCauseMessage(e));
-            if(log.isErrorEnabled()){
-                log.error(ExceptionUtil.getMessage(e), e);
-            }
+//            if(log.isErrorEnabled()){
+//                log.error(ExceptionUtil.getMessage(e), e);
+//            }
             if (log.isDebugEnabled()) {
                 return ResponseEntity.status(status).body(problem);
             }

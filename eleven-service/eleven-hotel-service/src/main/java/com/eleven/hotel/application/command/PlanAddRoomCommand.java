@@ -10,5 +10,4 @@ import lombok.Getter;
 public class PlanAddRoomCommand {
     private Integer roomId;
     private Stock stock;
-    private Price price;
 }

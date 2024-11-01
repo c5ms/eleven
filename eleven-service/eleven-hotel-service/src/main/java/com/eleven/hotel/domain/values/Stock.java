@@ -10,12 +10,10 @@ import lombok.experimental.FieldNameConstants;
 @FieldNameConstants
 public class Stock {
 
-    public static Stock ZERO = Stock.of(0);
-    public static Stock ONE = Stock.of(1);
-
     private Integer count;
 
     protected Stock() {
+        this.count = 0;
     }
 
     public Stock(Integer count) {
@@ -26,6 +24,10 @@ public class Stock {
         return new Stock(amount);
     }
 
+    public static Stock zero() {
+        return new Stock();
+    }
+
     public boolean isEmpty() {
         return count == null;
     }
@@ -34,11 +36,15 @@ public class Stock {
         return this.count == 0;
     }
 
-    public boolean greaterTan(Stock stock) {
+    public boolean greaterThan(Stock stock) {
         return this.count > stock.count;
     }
 
-    public boolean lessTan(Stock stock) {
+    public boolean greaterThanZero() {
+        return this.count > 0;
+    }
+
+    public boolean lessThan(Stock stock) {
         return this.count < stock.count;
     }
 

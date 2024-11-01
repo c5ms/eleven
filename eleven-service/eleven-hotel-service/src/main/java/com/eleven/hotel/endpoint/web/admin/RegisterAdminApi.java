@@ -1,6 +1,6 @@
 package com.eleven.hotel.endpoint.web.admin;
 
-import com.eleven.core.web.annonation.AsAdminApi;
+import com.eleven.hotel.endpoint.support.AsAdminApi;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.request.RegisterReviewRequest;
 import com.eleven.hotel.application.command.RegisterReviewCommand;
@@ -25,7 +25,7 @@ public class RegisterAdminApi {
     private final RegisterService registerService;
 
     @Operation(summary = "review the register")
-    @PostMapping("/{registerId}/reviews")
+    @PostMapping("/{registerId:[0-9]+}/reviews")
     public void reviewRegister(@PathVariable("registerId") Integer registerId, @RequestBody @Validated RegisterReviewRequest request)  {
         var command = RegisterReviewCommand.builder()
             .pass(request.getPass())

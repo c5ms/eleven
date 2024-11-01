@@ -17,13 +17,13 @@ public class HotelDto {
     private String name;
     private String description;
     private String headPicUrl;
-    private Integer roomNumber;
-    private String tel;
-    private String email;
+    private Integer totalRooms;
 
     private LocalTime checkIn;
     private LocalTime checkOut;
     private SaleState state;
+    private String tel;
+    private String email;
 
     private String province;
     private String city;
@@ -32,6 +32,5 @@ public class HotelDto {
     private String address;
     private Double lat;
     private Double lng;
-
 
 }

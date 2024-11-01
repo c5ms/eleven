@@ -1,9 +1,7 @@
 package com.eleven.core.web.config;
 
-import com.eleven.core.application.authentication.Subject;
-import com.eleven.core.application.authentication.support.ElevenTokenResolver;
+import com.eleven.core.authenticate.Subject;
 import com.eleven.core.web.WebConstants;
-import com.eleven.core.web.annonation.AsAdminApi;
 import com.eleven.core.web.annonation.AsInternalApi;
 import com.eleven.core.web.utils.AnnotationPredicate;
 import com.fasterxml.jackson.core.JsonParser;
@@ -23,6 +21,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
+import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.beans.factory.ObjectProvider;
@@ -32,11 +31,9 @@ import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilde
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -59,12 +56,11 @@ import java.util.stream.Collectors;
 @EnableMethodSecurity(jsr250Enabled = true, securedEnabled = true)
 @Configuration(proxyBeanMethods = false)
 @RequiredArgsConstructor
-@EnableConfigurationProperties({ElevenWebProperties.class, ElevenOpenapiProperties.class})
-@PropertySource("classpath:/config/application-core.properties")
+@EnableConfigurationProperties({ElevenWebProperties.class})
 public class ElevenWebConfiguration implements WebMvcConfigurer {
 
     private final ElevenWebProperties properties;
-    private final AuthenticationManager authenticationManager;
+//    private final AuthenticationManager authenticationManager;
 
     @Bean
     @ConditionalOnMissingBean
@@ -73,8 +69,7 @@ public class ElevenWebConfiguration implements WebMvcConfigurer {
     }
 
     @Override
-    public void configurePathMatch(PathMatchConfigurer configurer) {
-        configurer.addPathPrefix(WebConstants.API_PREFIX_ADMIN, new AnnotationPredicate(AsAdminApi.class));
+    public void configurePathMatch(@Nonnull PathMatchConfigurer configurer) {
         configurer.addPathPrefix(WebConstants.API_PREFIX_INTERNAL, new AnnotationPredicate(AsInternalApi.class));
     }
 
@@ -127,26 +122,15 @@ public class ElevenWebConfiguration implements WebMvcConfigurer {
                 .anonymous(c -> c.principal(Subject.ANONYMOUS_INSTANCE))
                 .authorizeHttpRequests(c -> c.anyRequest().permitAll())
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.NEVER))
-                .oauth2ResourceServer(oauth2 -> {
-                    oauth2.bearerTokenResolver(new ElevenTokenResolver())
-                            .opaqueToken(c -> c.authenticationManager(authenticationManager));
-                })
+//                .oauth2ResourceServer(oauth2 -> {
+//                    oauth2.bearerTokenResolver(new ElevenTokenResolver()).opaqueToken(c -> c.authenticationManager(authenticationManager));
+//                })
                 .exceptionHandling((exceptions) -> exceptions
                         .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
                         .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
                 )
                 .build();
     }
-
-    @Bean
-    public GroupedOpenApi adminApi() {
-        return GroupedOpenApi.builder()
-                .group("admin-api")
-                .displayName("admin")
-                .pathsToMatch(WebConstants.API_PREFIX_ADMIN + "/**")
-                .build();
-    }
-
 
     @Bean
     public GroupedOpenApi innerApi() {
@@ -157,22 +141,22 @@ public class ElevenWebConfiguration implements WebMvcConfigurer {
                 .build();
     }
 
-
     @Bean
-    public OpenAPI openAPI(ElevenOpenapiProperties properties) {
+    public OpenAPI openAPI(ElevenWebProperties properties) {
+        var openApiProperties = properties.getOpenapi();
         return new OpenAPI()
                 .info(new Info()
-                        .version(properties.getVersion())
-                        .title(properties.getTitle())
-                        .description(properties.getDescription())
-                        .termsOfService(properties.getTermsOfService())
+                        .version(openApiProperties.getVersion())
+                        .title(openApiProperties.getTitle())
+                        .description(openApiProperties.getDescription())
+                        .termsOfService(openApiProperties.getTermsOfService())
                         .contact(new Contact()
-                                .name(properties.getContact().getName())
-                                .url(properties.getContact().getUrl())
-                                .email(properties.getContact().getEmail()))
+                                .name(openApiProperties.getContact().getName())
+                                .url(openApiProperties.getContact().getUrl())
+                                .email(openApiProperties.getContact().getEmail()))
                         .license(new License()
-                                .name(properties.getLicense().getName())
-                                .url(properties.getLicense().getUrl()))
+                                .name(openApiProperties.getLicense().getName())
+                                .url(openApiProperties.getLicense().getUrl()))
                 );
     }
 }
