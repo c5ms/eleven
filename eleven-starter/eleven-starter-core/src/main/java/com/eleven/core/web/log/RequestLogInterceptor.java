@@ -1,6 +1,6 @@
 package com.eleven.core.web.log;
 
-import com.eleven.core.authorization.SecurityContext;
+import com.eleven.core.application.authentication.AuthenticContext;
 import com.eleven.core.web.log.annonation.UseRequestLog;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Nonnull;
@@ -42,7 +42,7 @@ public class RequestLogInterceptor implements HandlerInterceptor {
         }
 
         if(null!=RequestLogContext.getHandler()){
-            var subject = SecurityContext.getCurrentSubject();
+            var subject = AuthenticContext.getCurrentSubject();
             var logger = LoggerFactory.getLogger(RequestLogContext.getHandler());
             logger.debug("request {} begin by {}",
                 RequestLogContext.getLog().getOperation(),

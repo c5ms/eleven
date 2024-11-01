@@ -1,7 +1,7 @@
 package com.eleven.core.application.event;
 
 import cn.hutool.json.JSONUtil;
-import com.eleven.core.authorization.SecurityContext;
+import com.eleven.core.application.authentication.AuthenticContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -19,7 +19,7 @@ public class ApplicationEventIntegrator {
     private final ApplicationEventPublisher applicationEventPublisher;
 
     public void send(ApplicationEvent event) throws ApplicationEventSerializeException {
-        SecurityContext.getPrincipal().ifPresent(event.getHeader()::setTrigger);
+        AuthenticContext.getPrincipal().ifPresent(event.getHeader()::setTrigger);
         if (log.isDebugEnabled()) {
             log.debug("send {} to outbound :{}", event.getClass().getSimpleName(), JSONUtil.toJsonStr(event));
         }
@@ -41,7 +41,7 @@ public class ApplicationEventIntegrator {
         eventOpt.ifPresent(event -> {
             event.getHeader().setFrom(ApplicationEventOrigin.EXTERNAL);
             if (log.isDebugEnabled()) {
-                log.debug("receive {} from {} :{}", event.getClass().getSimpleName(), message.getService(), JSONUtil.toJsonStr(event));
+                log.debug("receive {} :{}", event.getClass().getSimpleName(), JSONUtil.toJsonStr(event));
             }
             applicationEventPublisher.publishEvent(event);
         });

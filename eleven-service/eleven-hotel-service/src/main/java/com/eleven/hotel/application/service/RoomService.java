@@ -1,9 +1,9 @@
 package com.eleven.hotel.application.service;
 
-import com.eleven.core.application.ApplicationHelper;
-import com.eleven.core.application.security.NoPrincipalException;
+import com.eleven.core.application.authorization.NoPrincipalException;
 import com.eleven.hotel.application.command.RoomCreateCommand;
 import com.eleven.hotel.application.command.RoomUpdateCommand;
+import com.eleven.hotel.application.support.HotelContext;
 import com.eleven.hotel.domain.manager.RoomManager;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.domain.model.hotel.Room;
@@ -44,13 +44,13 @@ public class RoomService {
 
     @Transactional(rollbackFor = Exception.class)
     public void deleteRoom(Integer hotelId, Integer roomId) {
-        var room = roomRepository.findByHotelIdAndId(hotelId, roomId).orElseThrow(ApplicationHelper::noPrincipalException);
+        var room = roomRepository.findByHotelIdAndId(hotelId, roomId).orElseThrow(HotelContext::noPrincipalException);
         roomRepository.delete(room);
     }
 
     @Transactional(rollbackFor = Exception.class)
     public Room updateRoom(Integer hotelId, Integer roomId, RoomUpdateCommand command) {
-        var room = roomRepository.findByHotelIdAndId(hotelId, roomId).orElseThrow(ApplicationHelper::noPrincipalException);
+        var room = roomRepository.findByHotelIdAndId(hotelId, roomId).orElseThrow(HotelContext::noPrincipalException);
 
         Optional.ofNullable(command.getChargeType()).ifPresent(room::setChargeType);
         Optional.ofNullable(command.getBasic()).ifPresent(room::setBasic);

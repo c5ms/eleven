@@ -1,7 +1,8 @@
 package com.eleven.hotel.endpoint.configure;
 
 import com.eleven.core.web.utils.AnnotationPredicate;
-import com.eleven.hotel.endpoint.secure.MerchantInterceptor;
+import com.eleven.hotel.endpoint.support.AsMerchantApi;
+import com.eleven.hotel.endpoint.support.MerchantSecurityInterceptor;
 import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.models.GroupedOpenApi;
@@ -17,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class HotelWebConfiguration implements WebMvcConfigurer {
     private final  static String API_PREFIX_MERCHANT = "/api/merchant";
 
-    private final MerchantInterceptor merchantInterceptor;
+    private final MerchantSecurityInterceptor merchantSecurityInterceptor;
 
     @Override
     public void configurePathMatch(@Nonnull PathMatchConfigurer configurer) {
@@ -35,8 +36,7 @@ public class HotelWebConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(@Nonnull InterceptorRegistry registry) {
-        registry.addInterceptor(merchantInterceptor).addPathPatterns(API_PREFIX_MERCHANT + "/**");
+        registry.addInterceptor(merchantSecurityInterceptor).addPathPatterns(API_PREFIX_MERCHANT + "/**");
     }
-
 
 }

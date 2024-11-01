@@ -1,7 +1,7 @@
 package com.eleven.core.web.config;
 
-import com.eleven.core.authorization.Subject;
-import com.eleven.core.authorization.support.ElevenTokenResolver;
+import com.eleven.core.application.authentication.Subject;
+import com.eleven.core.application.authentication.support.ElevenTokenResolver;
 import com.eleven.core.web.WebConstants;
 import com.eleven.core.web.annonation.AsAdminApi;
 import com.eleven.core.web.annonation.AsInternalApi;

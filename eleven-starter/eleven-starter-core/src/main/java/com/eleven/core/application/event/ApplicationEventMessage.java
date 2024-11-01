@@ -1,6 +1,6 @@
 package com.eleven.core.application.event;
 
-import com.eleven.core.authorization.Principal;
+import com.eleven.core.application.authentication.Principal;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -17,12 +17,9 @@ public class ApplicationEventMessage implements Serializable {
 
     private Principal trigger;
 
-    private String service ;
-
     private String body;
 
     public void writeHeaderTo(ApplicationEvent event) {
-        event.getHeader().setService(this.getService());
         event.getHeader().setTrigger(this.getTrigger());
         event.getHeader().setTime(this.getTime());
     }

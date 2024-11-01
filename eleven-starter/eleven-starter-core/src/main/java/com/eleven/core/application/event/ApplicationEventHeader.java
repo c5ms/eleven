@@ -1,9 +1,8 @@
 package com.eleven.core.application.event;
 
-import com.eleven.core.application.ApplicationHelper;
-import com.eleven.core.authorization.Principal;
-import com.eleven.core.authorization.SecurityContext;
-import com.eleven.core.time.TimeHelper;
+import com.eleven.core.application.authentication.Principal;
+import com.eleven.core.application.authentication.AuthenticContext;
+import com.eleven.core.time.TimeContext;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import lombok.AccessLevel;
@@ -20,12 +19,9 @@ public class ApplicationEventHeader {
     private transient ApplicationEventOrigin from = ApplicationEventOrigin.INTERNAL;
 
     @Nonnull
-    private LocalDateTime time = TimeHelper.localDateTime();
+    private LocalDateTime time = TimeContext.localDateTime();
 
     @Nullable
-    private Principal trigger = SecurityContext.getPrincipal().orElse(null);
-
-    @Nullable
-    private String service = ApplicationHelper.getServiceName();
+    private Principal trigger = AuthenticContext.getPrincipal().orElse(null);
 
 }

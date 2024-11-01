@@ -1,13 +1,12 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import com.eleven.core.domain.DomainHelper;
+import com.eleven.core.domain.DomainContext;
 import com.eleven.hotel.api.domain.error.HotelErrors;
 import com.eleven.hotel.api.domain.model.RegisterState;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldNameConstants;
-import org.springframework.data.redis.core.RedisHash;
 
 @Table(name = "hms_register")
 @Entity
@@ -47,7 +46,7 @@ public class Register extends AbstractEntity {
     }
 
     private void checkBeforeReview() {
-        DomainHelper.must(this.state == RegisterState.UNDER_REVIEW, HotelErrors.REGISTRATION_NOT_REVIEWABLE);
+        DomainContext.must(this.state == RegisterState.UNDER_REVIEW, HotelErrors.REGISTRATION_NOT_REVIEWABLE);
     }
 
     public void belongTo(Hotel hotel) {

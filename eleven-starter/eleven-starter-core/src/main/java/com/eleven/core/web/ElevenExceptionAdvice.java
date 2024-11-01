@@ -2,8 +2,8 @@ package com.eleven.core.web;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
 import com.eleven.core.application.command.CommandInvalidException;
-import com.eleven.core.application.security.NoAuthorityException;
-import com.eleven.core.application.security.NoPrincipalException;
+import com.eleven.core.application.authorization.NoAuthorityException;
+import com.eleven.core.application.authorization.NoPrincipalException;
 import com.eleven.core.domain.DomainException;
 import com.eleven.core.web.problem.Problem;
 import com.eleven.core.web.problem.ValidationProblem;

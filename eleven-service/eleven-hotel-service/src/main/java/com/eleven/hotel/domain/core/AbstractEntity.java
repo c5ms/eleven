@@ -21,7 +21,7 @@ public abstract class AbstractEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "hms_generator")
     @TableGenerator(name = "hms_generator", table = "hms_sequences")
-    private Integer id;
+    private String id;
 
     private transient final @Transient List<DomainEvent> domainEvents = new ArrayList<>();
 

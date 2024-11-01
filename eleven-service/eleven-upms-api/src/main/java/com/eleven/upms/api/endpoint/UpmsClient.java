@@ -1,7 +1,7 @@
 package com.eleven.upms.api.endpoint;
 
-import com.eleven.core.authorization.Subject;
-import com.eleven.core.authorization.Token;
+import com.eleven.core.authentic.Subject;
+import com.eleven.core.authentic.Token;
 import com.eleven.core.web.WebConstants;
 import com.eleven.upms.api.application.model.UserDetail;
 import com.eleven.upms.api.domain.core.UpmsConstants;

@@ -1,7 +1,7 @@
 package com.eleven.upms.application.support;
 
-import com.eleven.core.authorization.SubjectStore;
-import com.eleven.core.authorization.TokenStore;
+import com.eleven.core.authentic.SubjectStore;
+import com.eleven.core.authentic.TokenStore;
 import com.eleven.core.time.TimeHelper;
 import com.eleven.upms.api.domain.event.UserDeletedEvent;
 import com.eleven.upms.domain.model.AccessToken;

@@ -1,7 +1,7 @@
 package com.eleven.hotel.domain.core;
 
 import com.eleven.core.domain.DomainEvent;
-import com.eleven.core.domain.DomainHelper;
+import com.eleven.core.domain.DomainContext;
 import jakarta.persistence.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,7 +20,7 @@ public class AbstractEntityListener {
     @PostRemove
     private void afterAnyUpdate(AbstractEntity entity) {
         for (DomainEvent domainEvent : entity.domainEvents()) {
-            DomainHelper.publishEvent(domainEvent);
+            DomainContext.publishEvent(domainEvent);
         }
         entity.clearDomainEvents();
     }

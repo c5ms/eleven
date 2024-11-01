@@ -1,11 +1,11 @@
 package com.eleven.hotel.application.service;
 
 import com.alibaba.cloud.commons.lang.StringUtils;
-import com.eleven.core.application.ApplicationHelper;
 import com.eleven.core.application.query.PageResult;
 import com.eleven.hotel.application.command.PlanAddRoomCommand;
 import com.eleven.hotel.application.command.PlanCreateCommand;
 import com.eleven.hotel.application.query.PlanQuery;
+import com.eleven.hotel.application.support.HotelContext;
 import com.eleven.hotel.domain.manager.PlanManager;
 import com.eleven.hotel.domain.model.hotel.*;
 import com.github.wenhao.jpa.Specifications;
@@ -30,12 +30,12 @@ public class PlanService {
 
     public Optional<Plan> readPlan(Integer hotelId, Integer planId) {
         return planRepository.findByHotelIdAndId(hotelId, planId)
-                .filter(ApplicationHelper::mustReadable);
+                .filter(HotelContext::mustReadable);
     }
 
     @Transactional(readOnly = true)
     public PageResult<Plan> queryPage(Integer hotelId, PlanQuery query) {
-        hotelRepository.findById(hotelId).orElseThrow(ApplicationHelper::noPrincipalException);
+        hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
 
         Specification<Plan> specification = Specifications.<Plan>and()
                 .like(StringUtils.isNotBlank(query.getPlanName()), Plan.Fields.basic +"."+ Plan.PlanBasic.Fields.name, "%"+query.getPlanName()+"%")
@@ -47,7 +47,7 @@ public class PlanService {
 
     @Transactional(rollbackFor = Exception.class)
     public Plan createPlan(Integer hotelId, PlanCreateCommand command) {
-        var hotel = hotelRepository.findById(hotelId).orElseThrow(ApplicationHelper::noPrincipalException);
+        var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
         var plan = Plan.normal()
                 .hotelId(hotel.getId())
                 .salePeriod(command.getSellPeriod())
@@ -63,8 +63,8 @@ public class PlanService {
 
     @Transactional(rollbackFor = Exception.class)
     public void addRoom(Integer hotelId, Integer planId, PlanAddRoomCommand command) {
-        var plan = planRepository.findByHotelIdAndId(hotelId, planId).orElseThrow(ApplicationHelper::noPrincipalException);
-        var room = roomRepository.findByHotelIdAndId(hotelId, command.getRoomId()).orElseThrow(ApplicationHelper::noEntityException);
+        var plan = planRepository.findByHotelIdAndId(hotelId, planId).orElseThrow(HotelContext::noPrincipalException);
+        var room = roomRepository.findByHotelIdAndId(hotelId, command.getRoomId()).orElseThrow(HotelContext::noEntityException);
         var stock = command.getStock();
         var price = command.getPrice();
         plan.addRoom(room, stock, price);

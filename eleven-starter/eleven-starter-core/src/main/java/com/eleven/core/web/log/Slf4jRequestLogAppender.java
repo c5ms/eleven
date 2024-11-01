@@ -1,6 +1,6 @@
 package com.eleven.core.web.log;
 
-import com.eleven.core.authorization.SecurityContext;
+import com.eleven.core.application.authentication.AuthenticContext;
 import com.fasterxml.jackson.core.JsonGenerator;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class Slf4jRequestLogAppender implements RequestLogAppender {
         if (StringUtils.isBlank(requestLog.getOperation())) {
             return;
         }
-        var subject = SecurityContext.getCurrentSubject();
+        var subject = AuthenticContext.getCurrentSubject();
         requestLog.setUserId(subject.getUserId());
         var exception = RequestLogContext.getCurrentError();
         var marker = new LogstashMarker("requestLog") {

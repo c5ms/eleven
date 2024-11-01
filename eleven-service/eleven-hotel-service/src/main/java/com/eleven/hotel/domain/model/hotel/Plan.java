@@ -1,6 +1,6 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import com.eleven.core.domain.DomainHelper;
+import com.eleven.core.domain.DomainContext;
 import com.eleven.hotel.api.domain.error.HotelErrors;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
@@ -11,7 +11,6 @@ import com.eleven.hotel.domain.values.DateTimeRange;
 import com.eleven.hotel.domain.values.Price;
 import com.eleven.hotel.domain.values.Stock;
 import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldNameConstants;
@@ -105,7 +104,7 @@ public class Plan extends AbstractEntity implements Saleable {
 
     @Override
     public void startSale() {
-        DomainHelper.must(hasRoom(), HotelErrors.PLAN_NO_ROOM);
+        DomainContext.must(hasRoom(), HotelErrors.PLAN_NO_ROOM);
         this.setSaleState(SaleState.STARTED);
     }
 
@@ -129,7 +128,7 @@ public class Plan extends AbstractEntity implements Saleable {
     }
 
     public void preSale(DateTimeRange preSellPeriod) {
-        DomainHelper.must(preSellPeriod.isBefore(this.salePeriod), HotelErrors.PLAN_PRE_SALE_NOT_BEFORE_SALE);
+        DomainContext.must(preSellPeriod.isBefore(this.salePeriod), HotelErrors.PLAN_PRE_SALE_NOT_BEFORE_SALE);
 
         this.setPreSalePeriod(preSellPeriod);
     }

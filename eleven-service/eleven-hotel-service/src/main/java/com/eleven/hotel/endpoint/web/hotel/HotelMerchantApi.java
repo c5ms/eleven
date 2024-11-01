@@ -1,12 +1,12 @@
 package com.eleven.hotel.endpoint.web.hotel;
 
-import com.eleven.core.application.ApplicationHelper;
-import com.eleven.core.web.WebHelper;
+import com.eleven.hotel.application.support.HotelContext;
+import com.eleven.core.web.WebContext;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.model.HotelDto;
 import com.eleven.hotel.api.endpoint.request.HotelUpdateRequest;
 import com.eleven.hotel.application.service.HotelService;
-import com.eleven.hotel.endpoint.configure.AsMerchantApi;
+import com.eleven.hotel.endpoint.support.AsMerchantApi;
 import com.eleven.hotel.endpoint.convert.HotelConvertor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -51,8 +51,8 @@ public class HotelMerchantApi {
     @PostMapping("/{hotelId:\\d+]}/operations/close")
     public void closeHotel(@PathVariable("hotelId") Integer hotelId) {
         hotelService.read(hotelId)
-            .filter(ApplicationHelper::mustWritable)
-            .orElseThrow(WebHelper::notFoundException);
+            .filter(HotelContext::mustWritable)
+            .orElseThrow(WebContext::notFoundException);
         hotelService.close(hotelId);
     }
 

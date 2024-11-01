@@ -52,7 +52,6 @@ public class JacksonApplicationEventSerializer implements ApplicationEventSerial
             ApplicationEventMessage message = new ApplicationEventMessage();
             message.setCls(event.getClass().getName());
             message.setTime(event.getHeader().getTime());
-            message.setService(event.getHeader().getService());
             message.setTrigger(event.getHeader().getTrigger());
             message.setEvent(eventNames.computeIfAbsent(event.getClass(), this::getEventName));
             message.setBody(objectMapper.writeValueAsString(event));

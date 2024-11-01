@@ -69,7 +69,6 @@ class ApplicationEventIntegratorTest {
 
         Assertions.assertEquals(1, eventListener.getEvents().size());
         Assertions.assertEquals(ApplicationEventOrigin.EXTERNAL, eventListener.getEvents().get(0).getHeader().getFrom());
-        Assertions.assertEquals(ApplicationHelper.getServiceName(), eventListener.getEvents().get(0).getHeader().getService());
     }
 
 

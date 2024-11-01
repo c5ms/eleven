@@ -3,9 +3,9 @@ package com.eleven.core.web.log;
 import cn.hutool.core.net.NetUtil;
 import cn.hutool.extra.servlet.JakartaServletUtil;
 import cn.hutool.extra.spring.SpringUtil;
-import com.eleven.core.authorization.SecurityContext;
-import com.eleven.core.authorization.Subject;
-import com.eleven.core.time.TimeHelper;
+import com.eleven.core.application.authentication.AuthenticContext;
+import com.eleven.core.application.authentication.Subject;
+import com.eleven.core.time.TimeContext;
 import io.micrometer.tracing.Tracer;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.annotation.WebFilter;
@@ -17,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -64,11 +63,11 @@ public class RequestLogFilter extends OncePerRequestFilter {
             exception = e;
         } finally {
             try {
-                requestLog.setResponseTime(TimeHelper.localDateTime());
+                requestLog.setResponseTime(TimeContext.localDateTime());
                 requestLog.setDuration(Duration.between(requestLog.getRequestTime(), requestLog.getResponseTime()).toMillis());
                 requestLog.getResponse().setStatus(response.getStatus());
 
-                Subject subject = SecurityContext.getCurrentSubject();
+                Subject subject = AuthenticContext.getCurrentSubject();
                 requestLog.setUserId(subject.getUserId());
 
                 var se = (Throwable) request.getAttribute(DispatcherServlet.EXCEPTION_ATTRIBUTE);
@@ -103,7 +102,7 @@ public class RequestLogFilter extends OncePerRequestFilter {
         RequestLog requestLog = new RequestLog();
         requestLog.setServerIp(serverIp);
         requestLog.setServiceName(SpringUtil.getApplicationName());
-        requestLog.setRequestTime(TimeHelper.localDateTime());
+        requestLog.setRequestTime(TimeContext.localDateTime());
         requestLog.setClientIp(JakartaServletUtil.getClientIP(request));
         requestLog.getRequest().setPath(request.getServletPath());
         requestLog.getRequest().setUrl(request.getRequestURL().toString());
@@ -113,7 +112,7 @@ public class RequestLogFilter extends OncePerRequestFilter {
         requestLog.getRequest().setUpload(StringUtils.contains(request.getContentType(), MediaType.MULTIPART_FORM_DATA_VALUE));
 
         // 用户
-        Subject subject = SecurityContext.getCurrentSubject();
+        Subject subject = AuthenticContext.getCurrentSubject();
         requestLog.setUserId(subject.getUserId());
 
         // 追踪 + 身份
