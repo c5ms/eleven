@@ -1,20 +1,20 @@
 package com.eleven.hotel.domain.model.booking;
 
 import com.eleven.hotel.api.domain.error.HotelErrors;
-import com.eleven.hotel.domain.core.AbstractEntity;
+import com.eleven.hotel.api.domain.model.PriceType;
 import com.eleven.hotel.domain.model.coupon.Coupon;
 import com.eleven.hotel.domain.model.coupon.CouponCalculator;
 import com.eleven.hotel.domain.model.hotel.Hotel;
-import com.eleven.hotel.domain.model.hotel.Plan;
+import com.eleven.hotel.domain.model.plan.Plan;
 import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.model.traveler.Traveler;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.Price;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.annotation.Id;
 
 import java.util.HashSet;
 import java.util.List;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Getter
 @FieldNameConstants
-public class Booking  {
+public class Booking {
 
     @Column(name = "hotel_id")
     private final Hotel hotel;
@@ -45,7 +45,7 @@ public class Booking  {
     private Price price;
 
     @Column(name = "traveler_id")
-    private Set<String> coupons =new HashSet<>();
+    private Set<String> coupons = new HashSet<>();
 
     public Booking(String id, Hotel hotel, Plan plan, Room room, DateRange stayPeriod, Traveler traveler) {
         this.hotel = hotel;
@@ -53,9 +53,9 @@ public class Booking  {
         this.room = room;
         this.traveler = traveler;
         this.stayPeriod = stayPeriod;
-        this.price = plan.chargeRoom(room)
-                .map(price -> price.multiply(stayPeriod))
-                .orElseThrow(HotelErrors.BOOKING_NO_SUCH_ROOM::toException);
+        this.price = plan.charge(room.getId(), PriceType.four_person, 20)
+            .map(price -> price.multiply(stayPeriod))
+            .orElseThrow(HotelErrors.BOOKING_NO_SUCH_ROOM::toException);
     }
 
     public void applyCoupon(List<Coupon> coupons) {

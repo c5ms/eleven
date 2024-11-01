@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
 
 import java.math.BigDecimal;
+import java.time.Period;
 
-@Deprecated
 @Getter
 @Embeddable
 @FieldNameConstants
@@ -48,6 +48,11 @@ public class Price {
 
     public Price multiply(DateRange stayPeriod) {
         var amount = this.amount.multiply(BigDecimal.valueOf(stayPeriod.days()));
+        return new Price(amount);
+    }
+
+    public Price multiply(Period period) {
+        var amount = this.amount.multiply(BigDecimal.valueOf(period.getDays()));
         return new Price(amount);
     }
 }

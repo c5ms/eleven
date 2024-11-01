@@ -1,9 +1,9 @@
-package com.eleven.hotel.domain.model.hotel.validate;
+package com.eleven.hotel.domain.model.plan.validate;
 
 import com.eleven.core.domain.DomainError;
-import com.eleven.hotel.domain.model.hotel.Plan;
-import com.eleven.hotel.domain.model.hotel.PlanRepository;
-import com.eleven.hotel.domain.model.hotel.PlanValidator;
+import com.eleven.hotel.domain.model.plan.Plan;
+import com.eleven.hotel.domain.model.plan.PlanRepository;
+import com.eleven.hotel.domain.model.plan.PlanValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
