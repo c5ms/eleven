@@ -80,7 +80,7 @@ public class PlanService {
         planRepository.save(plan);
 
 
-        plan.charge(1, PriceType.four_person, 2);
+        plan.charge(1, PriceType.FOUR_PERSON, 2);
 
 
         return plan;

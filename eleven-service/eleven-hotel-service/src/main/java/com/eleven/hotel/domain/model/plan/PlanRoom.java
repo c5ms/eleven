@@ -28,11 +28,9 @@ public class PlanRoom {
     private Id id;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumns({
-        @JoinColumn(name = "hotel_id", referencedColumnName = "hotel_id", insertable = false, updatable = false),
-        @JoinColumn(name = "plan_id", referencedColumnName = "plan_id", insertable = false, updatable = false),
-        @JoinColumn(name = "room_id", referencedColumnName = "room_id", insertable = false, updatable = false)
-    })
+    @JoinColumn(name = "hotel_id", referencedColumnName = "hotel_id", insertable = false, updatable = false)
+    @JoinColumn(name = "plan_id", referencedColumnName = "plan_id", insertable = false, updatable = false)
+    @JoinColumn(name = "room_id", referencedColumnName = "room_id", insertable = false, updatable = false)
     private Set<PlanPrice> prices = new HashSet<>();
 
     @AttributeOverride(name = Stock.Fields.count, column = @Column(name = "stock_count"))

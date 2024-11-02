@@ -53,7 +53,7 @@ public class Booking {
         this.room = room;
         this.traveler = traveler;
         this.stayPeriod = stayPeriod;
-        this.price = plan.charge(room.getId(), PriceType.four_person, 20)
+        this.price = plan.charge(room.getId(), PriceType.FOUR_PERSON, 20)
             .map(price -> price.multiply(stayPeriod))
             .orElseThrow(HotelErrors.BOOKING_NO_SUCH_ROOM::toException);
     }

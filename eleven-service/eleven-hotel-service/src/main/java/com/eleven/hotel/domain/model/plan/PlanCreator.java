@@ -12,6 +12,7 @@ import org.apache.commons.lang3.Validate;
 @UtilityClass
 public class PlanCreator {
 
+    @SuppressWarnings("unused")
     @Builder(builderClassName = "normalBuilder", builderMethodName = "normal", buildMethodName = "create")
     public static Plan createNormal(Integer hotelId,
                                     Stock stock,

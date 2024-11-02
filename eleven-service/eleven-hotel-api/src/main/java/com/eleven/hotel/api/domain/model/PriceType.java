@@ -1,10 +1,10 @@
 package com.eleven.hotel.api.domain.model;
 
 public enum PriceType {
-    whole_room,
-    one_person,
-    two_person,
-    three_person,
-    four_person,
-    five_person
+    WHOLE_ROOM,
+    ONE_PERSON,
+    TWO_PERSON,
+    THREE_PERSON,
+    FOUR_PERSON,
+    FIVE_PERSON
 }
