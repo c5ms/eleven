@@ -1,6 +1,7 @@
 package com.eleven.hotel.domain.model.plan;
 
 import com.eleven.hotel.api.domain.model.ChargeType;
+import com.eleven.hotel.api.domain.model.SaleChannel;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldNameConstants;
@@ -21,7 +22,8 @@ public class Price {
     private PriceId id;
 
     @Column(name = "price_type")
-    private ChargeType type;
+    @Enumerated(EnumType.STRING)
+    private ChargeType priceType;
 
     @Column(name = "whole_room_price")
     private BigDecimal wholeRoomPrice;
@@ -41,5 +43,8 @@ public class Price {
     @Column(name = "five_person_price")
     private BigDecimal fivePersonPrice;
 
+    public boolean is(SaleChannel saleChannel) {
+        return id.getSaleChannel() == saleChannel;
+    }
 
 }

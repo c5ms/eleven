@@ -42,7 +42,6 @@ public class PlanDto {
     private List<Room> rooms = new ArrayList<>();
 
 
-
     @Getter
     @Setter
     @Accessors(chain = true)
@@ -56,8 +55,6 @@ public class PlanDto {
     }
 
 
-
-
     @Getter
     @Setter
     @Accessors(chain = true)
@@ -65,9 +62,16 @@ public class PlanDto {
         private Integer roomId;
         private Integer stock;
         private ChargeType chargeType;
-        private Price dhPrice;
+        private RoomPrices prices = new RoomPrices();
     }
 
+    @Getter
+    @Setter
+    @Accessors(chain = true)
+    public static class RoomPrices {
+        private Price dh;
+        private Price dp;
+    }
 
 
 }

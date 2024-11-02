@@ -15,6 +15,11 @@ public class AbstractEntityListener {
 
     }
 
+    @PostLoad
+    private void beforeAnyLoad(AbstractEntity entity) {
+
+    }
+
     @PostPersist
     @PostUpdate
     @PostRemove

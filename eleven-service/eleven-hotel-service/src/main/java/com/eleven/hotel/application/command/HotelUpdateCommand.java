@@ -1,12 +1,13 @@
 package com.eleven.hotel.application.command;
 
-import com.eleven.hotel.domain.model.hotel.Hotel;
+import com.eleven.hotel.domain.model.hotel.HotelBasic;
+import com.eleven.hotel.domain.model.hotel.HotelPosition;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @Builder
 public class HotelUpdateCommand {
-    private Hotel.HotelBasic basic;
-    private Hotel.HotelPosition position;
+    private HotelBasic basic;
+    private HotelPosition position;
 }

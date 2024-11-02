@@ -6,19 +6,22 @@ import com.eleven.hotel.api.domain.model.SaleChannel;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
 import com.eleven.hotel.domain.core.AbstractEntity;
+import com.eleven.hotel.domain.core.ImmutableValues;
 import com.eleven.hotel.domain.core.Saleable;
 import com.eleven.hotel.domain.model.hotel.Room;
+import com.eleven.hotel.domain.model.plan.event.PlanStartedSale;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
-import com.eleven.hotel.domain.core.ImmutableValues;
 import com.eleven.hotel.domain.values.StockAmount;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
+import org.apache.commons.collections4.MapUtils;
 import org.hibernate.annotations.Type;
-import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
@@ -26,7 +29,6 @@ import java.util.*;
 @Entity
 @Getter
 @Setter(AccessLevel.PROTECTED)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @FieldNameConstants
 public class Plan extends AbstractEntity implements Saleable {
 
@@ -41,7 +43,7 @@ public class Plan extends AbstractEntity implements Saleable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "plan_id", referencedColumnName = "plan_id", insertable = false, updatable = false)
     @JoinColumn(name = "hotel_id", referencedColumnName = "hotel_id", insertable = false, updatable = false)
-    private List<PlanRoom> rooms = new ArrayList<>();
+    private Map<PlanRoomId, PlanRoom> rooms;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "sale_type")
@@ -78,9 +80,8 @@ public class Plan extends AbstractEntity implements Saleable {
     @Embedded
     private PlanBasic basic;
 
-    protected Plan(@NonNull Integer hotelId) {
-        this.hotelId = hotelId;
-        this.rooms = new ArrayList<>();
+    protected Plan() {
+        this.rooms = new HashMap<>();
         this.saleChannels = new HashSet<>();
     }
 
@@ -89,7 +90,7 @@ public class Plan extends AbstractEntity implements Saleable {
         for (PlanRoom room : this.getRooms()) {
             room.getId().setPlanId(this.getPlanId());
             room.setSaleChannels(this.saleChannels);
-            for (Price price : room.getPrices().values()) {
+            for (Price price : room.getPrices()) {
                 price.getId().setPlanId(this.getPlanId());
             }
         }
@@ -98,7 +99,10 @@ public class Plan extends AbstractEntity implements Saleable {
     @Override
     public void startSale() {
         DomainContext.must(hasRoom(), HotelErrors.PLAN_NO_ROOM);
+        DomainContext.must(this.getRooms().stream().anyMatch(PlanRoom::hasPrice), HotelErrors.PLAN_NO_PRICE);
+
         this.setSaleState(SaleState.STARTED);
+        addEvent(new PlanStartedSale(this));
     }
 
     @Override
@@ -123,7 +127,7 @@ public class Plan extends AbstractEntity implements Saleable {
     public PlanRoom addRoom(Room room, StockAmount stock) {
         var planRoom = new PlanRoom(this, room, stock);
         planRoom.setSaleChannels(this.saleChannels);
-        this.rooms.add(planRoom);
+        this.rooms.put(planRoom.getId(), planRoom);
         return planRoom;
     }
 
@@ -132,12 +136,12 @@ public class Plan extends AbstractEntity implements Saleable {
     }
 
     private boolean hasRoom() {
-        return !CollectionUtils.isEmpty(this.rooms);
+        return MapUtils.isNotEmpty(this.rooms);
     }
 
-    public void openChannel(SaleChannel saleChannel) {
-        this.saleChannels.add(saleChannel);
-        this.rooms.forEach(planRoom -> planRoom.openChannel(saleChannel));
+    public void openChannel(SaleChannel... saleChannel) {
+        this.saleChannels.addAll(Arrays.asList(saleChannel));
+        this.getRooms().forEach(planRoom -> planRoom.setSaleChannels(this.saleChannels));
     }
 
     @Nonnull
@@ -159,10 +163,12 @@ public class Plan extends AbstractEntity implements Saleable {
     public PlanBasic getBasic() {
         return Optional.ofNullable(basic).orElseGet(PlanBasic::new);
     }
+
     @Nonnull
     public ImmutableValues<PlanRoom> getRooms() {
-        return ImmutableValues.of(rooms);
+        return ImmutableValues.of(rooms.values());
     }
+
     @Nonnull
     public ImmutableValues<SaleChannel> getSaleChannels() {
         return ImmutableValues.of(saleChannels);

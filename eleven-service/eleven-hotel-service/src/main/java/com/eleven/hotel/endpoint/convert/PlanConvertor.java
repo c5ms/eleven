@@ -1,5 +1,6 @@
 package com.eleven.hotel.endpoint.convert;
 
+import com.eleven.hotel.api.domain.model.SaleChannel;
 import com.eleven.hotel.api.endpoint.model.PlanDto;
 import com.eleven.hotel.api.endpoint.request.PlanAddRoomRequest;
 import com.eleven.hotel.api.endpoint.request.PlanCreateRequest;
@@ -59,8 +60,10 @@ public class PlanConvertor {
             .setRoomId(planRoom.getId().getRoomId())
             .setStock(planRoom.getStockAmount().getCount())
             .setChargeType(planRoom.getChargeType())
-            .setDhPrice(planRoom.findPrice().map(price -> modelMapper.map(price, PlanDto.Price.class)).orElse(null))
-            ;
+            .setPrices(new PlanDto.RoomPrices()
+                .setDh(planRoom.findPrice(SaleChannel.DH).map(price -> modelMapper.map(price, PlanDto.Price.class)).orElse(null))
+                .setDp(planRoom.findPrice(SaleChannel.DP).map(price -> modelMapper.map(price, PlanDto.Price.class)).orElse(null))
+            );
     }
 
     public PlanQuery toQuery(PlanQueryRequest request) {

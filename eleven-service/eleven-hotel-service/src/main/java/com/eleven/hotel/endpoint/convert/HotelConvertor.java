@@ -11,6 +11,8 @@ import com.eleven.hotel.application.command.HotelRegisterCommand;
 import com.eleven.hotel.application.command.HotelUpdateCommand;
 import com.eleven.hotel.application.query.HotelQuery;
 import com.eleven.hotel.domain.model.hotel.Hotel;
+import com.eleven.hotel.domain.model.hotel.HotelBasic;
+import com.eleven.hotel.domain.model.hotel.HotelPosition;
 import com.eleven.hotel.domain.model.hotel.Register;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -61,7 +63,7 @@ public class HotelConvertor {
 
     public HotelCreateCommand toCommand(HotelCreateRequest request) {
         return HotelCreateCommand.builder()
-            .basic(new Hotel.HotelBasic(
+            .basic(new HotelBasic(
                 request.getName(),
                 request.getDescription(),
                 request.getHeadPicUrl(),
@@ -71,7 +73,7 @@ public class HotelConvertor {
                 request.getEmail(),
                 request.getTel())
             )
-            .position(new Hotel.HotelPosition(
+            .position(new HotelPosition(
                 request.getProvince(),
                 request.getCity(),
                 request.getDistrict(),
@@ -85,7 +87,7 @@ public class HotelConvertor {
 
     public HotelUpdateCommand toCommand(HotelUpdateRequest request) {
         return HotelUpdateCommand.builder()
-            .basic(new Hotel.HotelBasic(
+            .basic(new HotelBasic(
                 request.getName(),
                 request.getDescription(),
                 request.getHeadPicUrl(),
@@ -95,7 +97,7 @@ public class HotelConvertor {
                 request.getEmail(),
                 request.getTel())
             )
-            .position(new Hotel.HotelPosition(
+            .position(new HotelPosition(
                 request.getProvince(),
                 request.getCity(),
                 request.getDistrict(),

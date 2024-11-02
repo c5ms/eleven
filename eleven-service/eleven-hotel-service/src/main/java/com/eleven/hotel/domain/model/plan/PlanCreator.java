@@ -25,7 +25,8 @@ public class PlanCreator {
         Validate.notNull(stock, "stock must not be null");
         Validate.isTrue(stock.greaterThanZero(), "total must gather than zero");
 
-        var plan = new Plan(hotelId);
+        var plan = new Plan();
+        plan.setHotelId(hotelId);
         plan.setStockAmount(stock);
         plan.setSalePeriod(salePeriod);
         plan.setStayPeriod(stayPeriod);

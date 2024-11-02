@@ -11,4 +11,5 @@ public interface Saleable {
     SaleState getSaleState();
 
     boolean isOnSale();
+
 }

@@ -1,16 +1,16 @@
 package com.eleven.hotel.domain.model.hotel.event;
 
 import com.eleven.core.domain.DomainEvent;
+import com.eleven.hotel.domain.model.hotel.Hotel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Value;
 
-@Getter
-@Setter
+@Value
 @AllArgsConstructor
-public class HotelClosedEvent implements DomainEvent {
+public class HotelRelocated implements DomainEvent {
 
-    private Integer hotelId;
+      Hotel hotel;
 
 }
+

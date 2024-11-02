@@ -54,7 +54,7 @@ public class HotelService {
         Optional.ofNullable(command.getPosition()).ifPresent(hotel::relocate);
 
         hotelManager.validate(hotel);
-        hotelRepository.persist(hotel);
+        hotelRepository.update(hotel);
         HotelContext.publishEvent(HotelUpdatedEvent.of(hotel.getHotelId()));
     }
 
@@ -62,14 +62,14 @@ public class HotelService {
     public void open(Integer hotelId) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
         hotel.startSale();
-        hotelRepository.persist(hotel);
+        hotelRepository.update(hotel);
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void close(Integer hotelId) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
         hotel.stopSale();
-        hotelRepository.persist(hotel);
+        hotelRepository.update(hotel);
     }
 
 

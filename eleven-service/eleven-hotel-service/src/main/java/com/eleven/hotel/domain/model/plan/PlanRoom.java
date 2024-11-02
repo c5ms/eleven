@@ -1,14 +1,19 @@
 package com.eleven.hotel.domain.model.plan;
 
+import cn.hutool.core.map.MapUtil;
+import com.eleven.core.domain.DomainContext;
+import com.eleven.hotel.api.domain.error.HotelErrors;
 import com.eleven.hotel.api.domain.model.ChargeType;
 import com.eleven.hotel.api.domain.model.SaleChannel;
-import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.core.ImmutableValues;
+import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.values.StockAmount;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldNameConstants;
+import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.Validate;
 import org.hibernate.annotations.Type;
 
 import java.math.BigDecimal;
@@ -51,39 +56,54 @@ public class PlanRoom {
         this.saleChannels = new HashSet<>();
     }
 
-    public void setPrice(BigDecimal wholeRoomPrice) {
-        Price price = PriceCreator.wholeRoom(this.getId(), wholeRoomPrice);
+    public void setPrice(SaleChannel saleChannel, BigDecimal wholeRoomPrice) {
+        Validate.isTrue(this.saleChannels.contains(saleChannel), "the plan has no such sale channel");
+
+        var price = PriceCreator.wholeRoom(this.getId(), saleChannel, wholeRoomPrice);
         this.prices.put(price.getId(), price);
-        this.setChargeType(price.getType());
+        this.setChargeType(price.getPriceType());
     }
 
-    public Optional<Price> findPrice() {
-        // todo no price type
-        return prices.values().stream()
-            .findFirst();
-    }
-
-    public void setPrice(BigDecimal onePersonPrice,
+    public void setPrice(SaleChannel saleChannel,
+                         BigDecimal onePersonPrice,
                          BigDecimal twoPersonPrice,
                          BigDecimal threePersonPrice,
                          BigDecimal fourPersonPrice,
                          BigDecimal fivePersonPrice) {
-        Price price = PriceCreator.byPerson(this.getId(),
+        Validate.isTrue(this.saleChannels.contains(saleChannel), "the plan has no such sale channel");
+
+        var price = PriceCreator.byPerson(this.getId(),
+            saleChannel,
             onePersonPrice,
             twoPersonPrice,
             threePersonPrice,
             fourPersonPrice,
             fivePersonPrice);
         this.prices.put(price.getId(), price);
-        this.setChargeType(price.getType());
+        this.setChargeType(price.getPriceType());
     }
 
+    public Optional<Price> findPrice(SaleChannel channel) {
+        var matcher = new PriceMatcher()
+            .should(price -> price.is(channel));
+        return prices.values().stream()
+            .filter(matcher::match)
+            .findFirst();
+    }
 
     public void openChannel(SaleChannel saleChannel) {
-
+        this.saleChannels.add(saleChannel);
     }
 
     public ImmutableValues<SaleChannel> getSaleChannels() {
         return ImmutableValues.of(this.saleChannels);
+    }
+
+    public ImmutableValues<Price> getPrices() {
+        return ImmutableValues.of(prices.values());
+    }
+
+    public boolean hasPrice() {
+        return MapUtils.isNotEmpty(this.prices);
     }
 }
