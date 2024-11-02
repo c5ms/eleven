@@ -25,7 +25,7 @@ public class HotelConvertor {
 
     public RegisterDto toDto(Register register) {
         return new RegisterDto()
-            .setRegisterID(register.getId())
+            .setRegisterID(register.getRegisterId())
             .setHotelName(register.getHotel().getName())
             .setHotelAddress(register.getHotel().getAddress())
             .setAdminName(register.getAdmin().getName())
@@ -36,7 +36,7 @@ public class HotelConvertor {
 
     public HotelDto toDto(Hotel hotel) {
         return new HotelDto()
-            .setHotelId(hotel.getId())
+            .setHotelId(hotel.getHotelId())
             .setState(hotel.getSaleState())
 
             .setName(hotel.getBasic().getName())

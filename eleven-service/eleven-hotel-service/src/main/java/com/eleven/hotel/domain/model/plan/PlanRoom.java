@@ -1,19 +1,18 @@
 package com.eleven.hotel.domain.model.plan;
 
-import com.eleven.hotel.api.domain.model.PriceType;
+import com.eleven.hotel.api.domain.model.ChargeType;
+import com.eleven.hotel.api.domain.model.SaleChannel;
 import com.eleven.hotel.domain.model.hotel.Room;
-import com.eleven.hotel.domain.values.Price;
-import com.eleven.hotel.domain.values.Stock;
+import com.eleven.hotel.domain.core.ImmutableValues;
+import com.eleven.hotel.domain.values.StockAmount;
+import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldNameConstants;
+import org.hibernate.annotations.Type;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.Period;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Table(name = "hms_plan_room")
 @Entity
@@ -25,64 +24,66 @@ import java.util.Set;
 public class PlanRoom {
 
     @EmbeddedId
-    private Id id;
+    private PlanRoomId id;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "hotel_id", referencedColumnName = "hotel_id", insertable = false, updatable = false)
     @JoinColumn(name = "plan_id", referencedColumnName = "plan_id", insertable = false, updatable = false)
     @JoinColumn(name = "room_id", referencedColumnName = "room_id", insertable = false, updatable = false)
-    private Set<PlanPrice> prices = new HashSet<>();
+    private Map<PriceId, Price> prices = new HashMap<>();
+
+    @Column(name = "charge_type")
+    @Enumerated(EnumType.STRING)
+    private ChargeType chargeType;
+
+    @Type(JsonType.class)
+    @Column(name = "sale_channels", columnDefinition = "json")
+    @Enumerated(EnumType.STRING)
+    private Set<SaleChannel> saleChannels;
 
     @Embedded
-    @AttributeOverride(name = "count", column = @Column(name = "stock_count"))
-    private Stock stock;
+    @AttributeOverride(name = "count", column = @Column(name = "stock_amount"))
+    private StockAmount stockAmount;
 
-    PlanRoom(Plan plan, Room room, Stock stock) {
-        this.id = new Id(plan.getHotelId(), plan.getId(), room.getId());
-        this.stock = stock;
+    protected PlanRoom(Plan plan, Room room, StockAmount stockAmount) {
+        this.id = new PlanRoomId(plan.getHotelId(), plan.getPlanId(), room.getRoomId());
+        this.stockAmount = stockAmount;
+        this.saleChannels = new HashSet<>();
     }
 
-    public void setPrice(PriceType type, BigDecimal amount) {
-        this.prices.add(new PlanPrice(id, type, new Price(amount)));
+    public void setPrice(BigDecimal wholeRoomPrice) {
+        Price price = PriceCreator.wholeRoom(this.getId(), wholeRoomPrice);
+        this.prices.put(price.getId(), price);
+        this.setChargeType(price.getType());
     }
 
-    public Optional<PlanPrice> findPrice(PriceType type) {
-        return this.prices.stream()
-            .filter(planPrice -> planPrice.isType(type))
+    public Optional<Price> findPrice() {
+        // todo no price type
+        return prices.values().stream()
             .findFirst();
     }
 
-    public Optional<Price> charge(PriceType type, int nights) {
-        return findPrice(type)
-            .map(PlanPrice::getPrice)
-            .map(aPrice -> aPrice.multiply(Period.ofDays(nights)));
+    public void setPrice(BigDecimal onePersonPrice,
+                         BigDecimal twoPersonPrice,
+                         BigDecimal threePersonPrice,
+                         BigDecimal fourPersonPrice,
+                         BigDecimal fivePersonPrice) {
+        Price price = PriceCreator.byPerson(this.getId(),
+            onePersonPrice,
+            twoPersonPrice,
+            threePersonPrice,
+            fourPersonPrice,
+            fivePersonPrice);
+        this.prices.put(price.getId(), price);
+        this.setChargeType(price.getType());
     }
 
-    void setPlanId(Integer planId) {
-        this.id.planId = planId;
+
+    public void openChannel(SaleChannel saleChannel) {
+
     }
 
-    @PostPersist
-    void afterSave() {
-        for (PlanPrice price : this.getPrices()) {
-            price.setPlanId(this.getId().getPlanId());
-        }
-    }
-
-    @Getter
-    @Embeddable
-    @AllArgsConstructor
-    @NoArgsConstructor
-    public static class Id implements Serializable {
-
-        @Column(name = "hotel_id")
-        private Integer hotelId;
-
-        @Column(name = "plan_id")
-        private Integer planId;
-
-        @Column(name = "room_id")
-        private Integer roomId;
-
+    public ImmutableValues<SaleChannel> getSaleChannels() {
+        return ImmutableValues.of(this.saleChannels);
     }
 }

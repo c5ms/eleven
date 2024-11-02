@@ -1,15 +1,14 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import io.hypersistence.utils.spring.repository.BaseJpaRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Collection;
 import java.util.Optional;
 
-public interface RoomRepository extends JpaRepository<Room, Integer>{
+public interface RoomRepository extends BaseJpaRepository<Room, Integer> {
 
     Collection<Room> findRoomsByHotelId(Integer hotelId);
 
-    Optional<Room> findByHotelIdAndId(@Param("hotelId") Integer hotelId, @Param("Id") Integer roomId);
+    Optional<Room> findByHotelIdAndRoomId(@Param("hotelId") Integer hotelId, @Param("roomId") Integer roomId);
 }

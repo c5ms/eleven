@@ -22,6 +22,11 @@ import java.util.Optional;
 @FieldNameConstants
 public class Hotel extends AbstractEntity implements Saleable {
 
+    @Id
+    @Column(name = "hotel_id")
+    @GeneratedValue(strategy = GenerationType.TABLE,generator = GENERATOR_NAME)
+    private Integer hotelId;
+
     @Nonnull
     @Column(name = "sale_state")
     @Enumerated(EnumType.STRING)
@@ -48,14 +53,14 @@ public class Hotel extends AbstractEntity implements Saleable {
     public void startSale() {
         if(this.saleState!=SaleState.STARTED){
             this.saleState = SaleState.STARTED;
-            addEvent(new HotelOpenedEvent(getId()));
+            addEvent(new HotelOpenedEvent(getHotelId()));
         }
     }
 
     @Override
     public void stopSale() {
         this.saleState = SaleState.STOPPED;
-        addEvent(new HotelClosedEvent(getId()));
+        addEvent(new HotelClosedEvent(getHotelId()));
     }
 
     @Override

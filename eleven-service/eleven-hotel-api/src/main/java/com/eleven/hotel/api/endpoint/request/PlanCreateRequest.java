@@ -51,5 +51,5 @@ public class PlanCreateRequest {
     @Schema(example = "2024-05-30")
     private LocalDate stayEndDate;
 
-    private List<String> rooms = new ArrayList<>();
+    private List<Integer> rooms = new ArrayList<>();
 }

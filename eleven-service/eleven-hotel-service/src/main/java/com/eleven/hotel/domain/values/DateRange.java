@@ -1,25 +1,23 @@
 package com.eleven.hotel.domain.values;
 
 import com.eleven.core.time.TimeContext;
-import jakarta.persistence.Embeddable;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.experimental.FieldNameConstants;
+import lombok.Value;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
 
-@Getter
+@Value
 @EqualsAndHashCode
 public class DateRange {
 
-    private final LocalDate start;
-    private final LocalDate end;
+    LocalDate start;
+    LocalDate end;
 
-    public DateRange() {
-        this.start=null;
-        this.end=null;
+    DateRange() {
+        this.start = null;
+        this.end = null;
     }
 
     public DateRange(LocalDate start, LocalDate end) {

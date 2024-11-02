@@ -1,7 +1,6 @@
 package com.eleven.hotel.application.command;
 
-import com.eleven.hotel.domain.values.Price;
-import com.eleven.hotel.domain.values.Stock;
+import com.eleven.hotel.domain.values.StockAmount;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -9,5 +8,5 @@ import lombok.Getter;
 @Builder
 public class PlanAddRoomCommand {
     private Integer roomId;
-    private Stock stock;
+    private StockAmount stock;
 }

@@ -16,6 +16,11 @@ import lombok.experimental.FieldNameConstants;
 @FieldNameConstants
 public class Register extends AbstractEntity {
 
+    @Id
+    @Column(name = "register_id")
+    @GeneratedValue(strategy = GenerationType.TABLE,generator = GENERATOR_NAME)
+    private Integer registerId;
+
     @Column(name = "hotel_id")
     private Integer hotelId;
 
@@ -50,7 +55,7 @@ public class Register extends AbstractEntity {
     }
 
     public void belongTo(Hotel hotel) {
-        this.setHotelId(hotel.getId());
+        this.setHotelId(hotel.getHotelId());
     }
 
     @Getter

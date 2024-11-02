@@ -25,7 +25,7 @@ public class RegisterService {
     public Register register(HotelRegisterCommand command) {
         var register = new Register(command.getHotel(), command.getAdmin());
         registerManager.validate(register);
-        registerRepository.save(register);
+        registerRepository.persist(register);
         return register;
     }
 
@@ -35,24 +35,24 @@ public class RegisterService {
         if (command.isPass()) {
 
             var hotel = new Hotel(register);
-            hotelRepository.save(hotel);
+            hotelRepository.persist(hotel);
 
             var description = new Admin.Description(
                     register.getAdmin().getName(),
                     register.getAdmin().getEmail(),
                     register.getAdmin().getTel()
             );
-            var admin = new Admin(hotel.getId(), description);
-            adminRepository.save(admin);
+            var admin = new Admin(hotel.getHotelId(), description);
+            adminRepository.persist(admin);
 
             register.accept();
             register.belongTo(hotel);
-            registerRepository.save(register);
+            registerRepository.persist(register);
 
-            HotelContext.publishEvent(new HotelCreatedEvent(hotel.getId()));
+            HotelContext.publishEvent(new HotelCreatedEvent(hotel.getHotelId()));
         } else {
             register.reject();
-            registerRepository.save(register);
+            registerRepository.persist(register);
         }
     }
 

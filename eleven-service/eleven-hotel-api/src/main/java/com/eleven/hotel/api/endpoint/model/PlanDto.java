@@ -1,11 +1,13 @@
 package com.eleven.hotel.api.endpoint.model;
 
+import com.eleven.hotel.api.domain.model.ChargeType;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -37,15 +39,35 @@ public class PlanDto {
     private LocalDate stayStartDate;
     private LocalDate stayEndDate;
 
-    private List<PlanRoom> rooms = new ArrayList<>();
+    private List<Room> rooms = new ArrayList<>();
+
 
 
     @Getter
     @Setter
     @Accessors(chain = true)
-    public static class PlanRoom {
+    public static class Price {
+        private BigDecimal wholeRoomPrice;
+        private BigDecimal onePersonPrice;
+        private BigDecimal twoPersonPrice;
+        private BigDecimal threePersonPrice;
+        private BigDecimal fourPersonPrice;
+        private BigDecimal fivePersonPrice;
+    }
+
+
+
+
+    @Getter
+    @Setter
+    @Accessors(chain = true)
+    public static class Room {
         private Integer roomId;
         private Integer stock;
-        private Double price;
+        private ChargeType chargeType;
+        private Price dhPrice;
     }
+
+
+
 }

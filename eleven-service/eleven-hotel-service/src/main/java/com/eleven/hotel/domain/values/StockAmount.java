@@ -1,29 +1,29 @@
 package com.eleven.hotel.domain.values;
 
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.Value;
 
 
-@Getter
+@Value
 @EqualsAndHashCode
-public class Stock {
+public class StockAmount {
 
-    private final Integer count;
+    Integer count;
 
-    protected Stock() {
+    StockAmount() {
         this.count = 0;
     }
 
-    public Stock(Integer count) {
+    public StockAmount(Integer count) {
         this.count = count;
     }
 
-    public static Stock of(Integer amount) {
-        return new Stock(amount);
+    public static StockAmount of(Integer amount) {
+        return new StockAmount(amount);
     }
 
-    public static Stock zero() {
-        return new Stock();
+    public static StockAmount zero() {
+        return new StockAmount();
     }
 
     public boolean isEmpty() {
@@ -34,7 +34,7 @@ public class Stock {
         return this.count == 0;
     }
 
-    public boolean greaterThan(Stock stock) {
+    public boolean greaterThan(StockAmount stock) {
         return this.count > stock.count;
     }
 
@@ -42,11 +42,11 @@ public class Stock {
         return this.count > 0;
     }
 
-    public boolean lessThan(Stock stock) {
+    public boolean lessThan(StockAmount stock) {
         return this.count < stock.count;
     }
 
-    public boolean equalsTo(Stock stock) {
+    public boolean equalsTo(StockAmount stock) {
         return this.count < stock.count;
     }
 

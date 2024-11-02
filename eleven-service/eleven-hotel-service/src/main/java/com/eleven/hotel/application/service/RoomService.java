@@ -30,33 +30,32 @@ public class RoomService {
 
     @Transactional(readOnly = true)
     public Optional<Room> readRoom(Integer hotelId, Integer roomId) {
-        return roomRepository.findByHotelIdAndId(hotelId, roomId);
+        return roomRepository.findByHotelIdAndRoomId(hotelId, roomId);
     }
 
     @Transactional(rollbackFor = Exception.class)
     public Room createRoom(Integer hotelId, RoomCreateCommand command) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(NoPrincipalException::new);
-        var room = new Room(hotel.getId(), command.getBasic(), command.getRestriction(), command.getChargeType());
+        var room = new Room(hotel.getHotelId(), command.getBasic(), command.getRestriction());
         roomManager.validate(room);
-        roomRepository.save(room);
+        roomRepository.persist(room);
         return room;
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void deleteRoom(Integer hotelId, Integer roomId) {
-        var room = roomRepository.findByHotelIdAndId(hotelId, roomId).orElseThrow(HotelContext::noPrincipalException);
+        var room = roomRepository.findByHotelIdAndRoomId(hotelId, roomId).orElseThrow(HotelContext::noPrincipalException);
         roomRepository.delete(room);
     }
 
     @Transactional(rollbackFor = Exception.class)
     public Room updateRoom(Integer hotelId, Integer roomId, RoomUpdateCommand command) {
-        var room = roomRepository.findByHotelIdAndId(hotelId, roomId).orElseThrow(HotelContext::noPrincipalException);
+        var room = roomRepository.findByHotelIdAndRoomId(hotelId, roomId).orElseThrow(HotelContext::noPrincipalException);
 
-        Optional.ofNullable(command.getChargeType()).ifPresent(room::setChargeType);
         Optional.ofNullable(command.getBasic()).ifPresent(room::setBasic);
         Optional.ofNullable(command.getRestriction()).ifPresent(room::setRestriction);
         roomManager.validate(room);
-        roomRepository.save(room);
+        roomRepository.persist(room);
         return room;
     }
 

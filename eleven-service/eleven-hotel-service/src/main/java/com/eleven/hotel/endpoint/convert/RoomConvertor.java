@@ -21,9 +21,8 @@ public class RoomConvertor {
 
     public RoomDto toDto(Room room) {
         return new RoomDto()
-            .setRoomId(room.getId())
+            .setRoomId(room.getRoomId())
             .setHotelId(room.getHotelId())
-            .setChargeType(room.getChargeType())
             .setSaleState(room.getSaleState())
             .setName(room.getBasic().getName())
             .setType(room.getBasic().getLevel())
@@ -41,10 +40,9 @@ public class RoomConvertor {
     }
 
     public RoomCreateCommand toCommand(RoomCreateRequest request) {
-     return    RoomCreateCommand.builder()
+        return RoomCreateCommand.builder()
             .basic(new Room.RoomBasic(request.getName(), request.getLevel(), request.getDesc(), request.getHeadPicUrl()))
             .restriction(new Room.RoomRestriction(request.getMinPerson(), request.getMaxPerson()))
-            .chargeType(request.getChargeType())
             .build();
     }
 

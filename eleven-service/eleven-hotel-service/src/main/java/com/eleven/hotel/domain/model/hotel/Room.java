@@ -1,6 +1,5 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import com.eleven.hotel.api.domain.model.ChargeType;
 import com.eleven.hotel.api.domain.model.RoomLevel;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.domain.core.AbstractEntity;
@@ -22,17 +21,17 @@ import org.apache.commons.lang3.Validate;
 @FieldNameConstants
 public class Room extends AbstractEntity implements Saleable {
 
+    @Id
+    @Column(name = "room_id")
+    @GeneratedValue(strategy = GenerationType.TABLE,generator = GENERATOR_NAME)
+    private Integer roomId;
+
     @Column(name = "hotel_id")
     private Integer hotelId;
 
     @Column(name = "sale_state")
     @Enumerated(EnumType.STRING)
     private SaleState saleState;
-
-    @Setter
-    @Column(name = "charge_type")
-    @Enumerated(EnumType.STRING)
-    private ChargeType chargeType;
 
     @Setter
     @Embedded
@@ -46,11 +45,10 @@ public class Room extends AbstractEntity implements Saleable {
     @Column(name = "update_version")
     private Integer version;
 
-    public Room(Integer hotelId, RoomBasic basic, RoomRestriction restriction, ChargeType chargeType) {
+    public Room(Integer hotelId, RoomBasic basic, RoomRestriction restriction) {
         this.setHotelId(hotelId);
         this.setSaleState(SaleState.STOPPED);
         this.setBasic(basic);
-        this.setChargeType(chargeType);
         this.setRestriction(restriction);
     }
 

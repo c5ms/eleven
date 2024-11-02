@@ -1,6 +1,5 @@
 package com.eleven.hotel.endpoint.convert;
 
-import cn.hutool.json.JSONUtil;
 import com.eleven.hotel.api.endpoint.model.PlanDto;
 import com.eleven.hotel.api.endpoint.request.PlanAddRoomRequest;
 import com.eleven.hotel.api.endpoint.request.PlanCreateRequest;
@@ -13,9 +12,10 @@ import com.eleven.hotel.domain.model.plan.PlanBasic;
 import com.eleven.hotel.domain.model.plan.PlanRoom;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
-import com.eleven.hotel.domain.values.Stock;
+import com.eleven.hotel.domain.values.StockAmount;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -23,15 +23,15 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class PlanConvertor {
     public final ValuesConvertor values;
+    private final ModelMapper modelMapper;
 
     public PlanDto toDto(Plan plan) {
-        System.out.println(JSONUtil.toJsonStr(plan));
         return new PlanDto()
-            .setPlanId(plan.getId())
+            .setPlanId(plan.getPlanId())
             .setHotelId(plan.getHotelId())
             .setName(plan.getBasic().getName())
             .setDesc(plan.getBasic().getDesc())
-            .setStock(plan.getStock().getCount())
+            .setStock(plan.getStockAmount().getCount())
             .setType(plan.getSaleType())
             .setState(plan.getSaleState())
 
@@ -54,10 +54,12 @@ public class PlanConvertor {
             ;
     }
 
-    private PlanDto.PlanRoom toDto(PlanRoom planRoom) {
-        return new PlanDto.PlanRoom()
+    private PlanDto.Room toDto(PlanRoom planRoom) {
+        return new PlanDto.Room()
             .setRoomId(planRoom.getId().getRoomId())
-            .setStock(planRoom.getStock().getCount())
+            .setStock(planRoom.getStockAmount().getCount())
+            .setChargeType(planRoom.getChargeType())
+            .setDhPrice(planRoom.findPrice().map(price -> modelMapper.map(price, PlanDto.Price.class)).orElse(null))
             ;
     }
 
@@ -70,17 +72,18 @@ public class PlanConvertor {
     public PlanCreateCommand toCommand(PlanCreateRequest request) {
         return PlanCreateCommand.builder()
             .basic(new PlanBasic(request.getName(), request.getDesc()))
-            .stock(Stock.of(request.getStock()))
+            .stock(StockAmount.of(request.getStock()))
             .preSellPeriod(new DateTimeRange(request.getPreSellStartDate(), request.getPreSellEndDate()))
             .stayPeriod(new DateRange(request.getStayStartDate(), request.getStayEndDate()))
             .sellPeriod(new DateTimeRange(request.getSellStartDate(), request.getSellEndDate()))
+            .rooms(request.getRooms())
             .build();
     }
 
     public PlanAddRoomCommand toCommand(PlanAddRoomRequest request) {
         return PlanAddRoomCommand.builder()
             .roomId(request.getRoomId())
-            .stock(new Stock(request.getStock()))
+            .stock(new StockAmount(request.getStock()))
             .build();
     }
 }

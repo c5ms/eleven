@@ -14,6 +14,10 @@ import lombok.experimental.FieldNameConstants;
 @FieldNameConstants
 public class Admin extends AbstractEntity {
 
+    @Id
+    @Column(name = "admin_id")
+    @GeneratedValue(strategy = GenerationType.TABLE,generator = GENERATOR_NAME)
+    private Integer adminId;
 
     @Column(name = "hotel_id")
     private Integer hotelId;

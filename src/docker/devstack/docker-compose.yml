@@ -39,7 +39,7 @@ services:
     volumes:
       - ${DATA_STORAGE}/mysql:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: 111111
+      MYSQL_ROOT_PASSWORD: 11111111
       MYSQL_ALLOW_EMPTY_PASSWORD: yes
       MYSQL_RANDOM_ROOT_PASSWORD: no
     ports:

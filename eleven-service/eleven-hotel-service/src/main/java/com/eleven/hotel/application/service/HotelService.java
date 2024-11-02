@@ -10,7 +10,6 @@ import com.eleven.hotel.application.support.HotelContext;
 import com.eleven.hotel.domain.manager.HotelManager;
 import com.eleven.hotel.domain.model.hotel.Hotel;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
-import com.eleven.hotel.domain.model.inventory.Inventory;
 import com.github.wenhao.jpa.Specifications;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -42,8 +41,8 @@ public class HotelService {
     public Hotel create(HotelCreateCommand command) {
         var hotel = new Hotel(command.getBasic(), command.getPosition());
         hotelManager.validate(hotel);
-        hotelRepository.save(hotel);
-        HotelContext.publishEvent(HotelCreatedEvent.of(hotel.getId()));
+        hotelRepository.persist(hotel);
+        HotelContext.publishEvent(HotelCreatedEvent.of(hotel.getHotelId()));
         return hotel;
     }
 
@@ -55,22 +54,22 @@ public class HotelService {
         Optional.ofNullable(command.getPosition()).ifPresent(hotel::relocate);
 
         hotelManager.validate(hotel);
-        hotelRepository.save(hotel);
-        HotelContext.publishEvent(HotelUpdatedEvent.of(hotel.getId()));
+        hotelRepository.persist(hotel);
+        HotelContext.publishEvent(HotelUpdatedEvent.of(hotel.getHotelId()));
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void open(Integer hotelId) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
         hotel.startSale();
-        hotelRepository.save(hotel);
+        hotelRepository.persist(hotel);
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void close(Integer hotelId) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
         hotel.stopSale();
-        hotelRepository.save(hotel);
+        hotelRepository.persist(hotel);
     }
 
 

@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
 
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
 @FieldNameConstants
 public class PlanBasic {
@@ -18,4 +17,6 @@ public class PlanBasic {
     @Column(name = "plan_desc")
     private String desc;
 
+    protected PlanBasic() {
+    }
 }

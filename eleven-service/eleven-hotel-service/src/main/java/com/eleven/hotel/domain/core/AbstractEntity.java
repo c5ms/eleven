@@ -1,29 +1,30 @@
 package com.eleven.hotel.domain.core;
 
 import com.eleven.core.domain.DomainEvent;
-import jakarta.persistence.*;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.TableGenerator;
 import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.AfterDomainEventPublication;
 import org.springframework.data.domain.DomainEvents;
 import org.springframework.util.Assert;
 
-import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @Getter
 @EntityListeners(AbstractEntityListener.class)
 @FieldNameConstants
 @MappedSuperclass
-public abstract class AbstractEntity implements Serializable {
+@TableGenerator(table = "hms_sequences", name = AbstractEntity.GENERATOR_NAME)
+public abstract class AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "hms_generator")
-    @TableGenerator(name = "hms_generator", table = "hms_sequences")
-    private Integer id;
+    public static final String GENERATOR_NAME = "hms_generator";
 
     @Getter(AccessLevel.PROTECTED)
     private transient final @Transient List<DomainEvent> domainEvents = new ArrayList<>();
@@ -44,13 +45,6 @@ public abstract class AbstractEntity implements Serializable {
             return Collections.emptyList();
         }
         return Collections.unmodifiableList(domainEvents);
-    }
-
-    public <T extends AbstractEntity> boolean is(T target) {
-        if (target.getClass().isAssignableFrom(this.getClass())) {
-            return false;
-        }
-        return Objects.equals(target.getId(), this.getId());
     }
 
 }
