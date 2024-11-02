@@ -4,6 +4,7 @@ import com.eleven.core.time.TimeContext;
 import jakarta.persistence.Embeddable;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.util.Assert;
@@ -11,16 +12,16 @@ import org.springframework.util.Assert;
 import java.time.LocalDateTime;
 
 @Getter
-@Embeddable
 @EqualsAndHashCode
-@FieldNameConstants
 public class DateTimeRange {
 
-    private LocalDateTime start;
-    private LocalDateTime end;
+    private final LocalDateTime start;
+    private final LocalDateTime end;
+
 
     public DateTimeRange() {
-
+        this.start=null;
+        this.end=null;
     }
 
     public DateTimeRange(LocalDateTime start, LocalDateTime end) {

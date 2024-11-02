@@ -33,7 +33,8 @@ public class PlanRoom {
     @JoinColumn(name = "room_id", referencedColumnName = "room_id", insertable = false, updatable = false)
     private Set<PlanPrice> prices = new HashSet<>();
 
-    @AttributeOverride(name = Stock.Fields.count, column = @Column(name = "stock_count"))
+    @Embedded
+    @AttributeOverride(name = "count", column = @Column(name = "stock_count"))
     private Stock stock;
 
     PlanRoom(Plan plan, Room room, Stock stock) {

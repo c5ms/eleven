@@ -46,19 +46,23 @@ public class Plan extends AbstractEntity implements Saleable {
     @Column(name = "sale_state")
     private SaleState saleState;
 
-    @AttributeOverride(name = DateTimeRange.Fields.start, column = @Column(name = "sale_period_start"))
-    @AttributeOverride(name = DateTimeRange.Fields.end, column = @Column(name = "sale_period_end"))
+    @Embedded
+    @AttributeOverride(name = "start", column = @Column(name = "sale_period_start"))
+    @AttributeOverride(name = "end", column = @Column(name = "sale_period_end"))
     private DateTimeRange salePeriod;
 
-    @AttributeOverride(name = DateTimeRange.Fields.start, column = @Column(name = "pre_sale_period_start"))
-    @AttributeOverride(name = DateTimeRange.Fields.end, column = @Column(name = "pre_sale_period_end"))
+    @Embedded
+    @AttributeOverride(name = "start", column = @Column(name = "pre_sale_period_start"))
+    @AttributeOverride(name = "end", column = @Column(name = "pre_sale_period_end"))
     private DateTimeRange preSalePeriod;
 
-    @AttributeOverride(name = DateRange.Fields.start, column = @Column(name = "stay_period_start"))
-    @AttributeOverride(name = DateRange.Fields.end, column = @Column(name = "stay_period_end"))
+    @Embedded
+    @AttributeOverride(name = "start", column = @Column(name = "stay_period_start"))
+    @AttributeOverride(name = "end", column = @Column(name = "stay_period_end"))
     private DateRange stayPeriod;
 
-    @AttributeOverrides({@AttributeOverride(name = Stock.Fields.count, column = @Column(name = "stock_count")),})
+    @Embedded
+    @AttributeOverrides({@AttributeOverride(name = "count", column = @Column(name = "stock_count")),})
     private Stock stock;
 
     @Embedded

@@ -11,15 +11,15 @@ import org.springframework.util.Assert;
 import java.time.LocalDate;
 
 @Getter
-@Embeddable
 @EqualsAndHashCode
-@FieldNameConstants
 public class DateRange {
 
-    private LocalDate start;
-    private LocalDate end;
+    private final LocalDate start;
+    private final LocalDate end;
 
     public DateRange() {
+        this.start=null;
+        this.end=null;
     }
 
     public DateRange(LocalDate start, LocalDate end) {

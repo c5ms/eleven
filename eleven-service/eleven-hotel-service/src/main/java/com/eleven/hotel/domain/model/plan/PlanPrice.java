@@ -20,6 +20,7 @@ public class PlanPrice {
     @EmbeddedId
     private Id id;
 
+    @Embedded
     @AttributeOverride(name = "amount", column = @Column(name = "price_amount"))
     private Price price;
 

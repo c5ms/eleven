@@ -1,6 +1,7 @@
 package com.eleven.hotel.domain.values;
 
 import jakarta.persistence.Embeddable;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
 
@@ -8,11 +9,10 @@ import java.math.BigDecimal;
 import java.time.Period;
 
 @Getter
-@Embeddable
-@FieldNameConstants
+@EqualsAndHashCode
 public class Price {
 
-    private BigDecimal amount;
+    private final BigDecimal amount;
 
     protected Price() {
         this.amount = BigDecimal.ZERO;

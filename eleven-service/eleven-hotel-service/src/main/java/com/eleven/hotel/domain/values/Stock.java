@@ -1,16 +1,14 @@
 package com.eleven.hotel.domain.values;
 
-import jakarta.persistence.Embeddable;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.experimental.FieldNameConstants;
 
 
 @Getter
-@Embeddable
-@FieldNameConstants
+@EqualsAndHashCode
 public class Stock {
 
-    private Integer count;
+    private final Integer count;
 
     protected Stock() {
         this.count = 0;
