@@ -1,5 +1,6 @@
 package com.eleven.hotel.application.command;
 
+import com.eleven.hotel.api.domain.model.SaleChannel;
 import com.eleven.hotel.domain.model.plan.PlanBasic;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
@@ -8,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Builder
@@ -18,4 +20,5 @@ public class PlanCreateCommand {
     private DateRange stayPeriod;
     private PlanBasic basic;
     private List<Integer> rooms;
+    private Set<SaleChannel> channels;
 }

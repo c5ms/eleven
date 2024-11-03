@@ -10,7 +10,7 @@ import com.eleven.hotel.application.command.PlanCreateCommand;
 import com.eleven.hotel.application.query.PlanQuery;
 import com.eleven.hotel.domain.model.plan.Plan;
 import com.eleven.hotel.domain.model.plan.PlanBasic;
-import com.eleven.hotel.domain.model.plan.PlanRoom;
+import com.eleven.hotel.domain.model.plan.Product;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
 import com.eleven.hotel.domain.values.StockAmount;
@@ -27,7 +27,15 @@ public class PlanConvertor {
     private final ModelMapper modelMapper;
 
     public PlanDto toDto(Plan plan) {
-        return new PlanDto()
+        return toDto(plan,false);
+    }
+
+    public PlanDto toDetail(Plan plan) {
+        return toDto(plan,true);
+    }
+
+    private PlanDto toDto(Plan plan, boolean withDetail) {
+        var dto = new PlanDto()
             .setPlanId(plan.getPlanId())
             .setHotelId(plan.getHotelId())
             .setName(plan.getBasic().getName())
@@ -35,34 +43,43 @@ public class PlanConvertor {
             .setStock(plan.getStockAmount().getCount())
             .setType(plan.getSaleType())
             .setState(plan.getSaleState())
+            .setIsOnSale(plan.isOnSale())
 
+            // pre sale
             .setIsPreSale(plan.getPreSalePeriod().isNotEmpty())
-            .setIsPreSaleOngoing(plan.getPreSalePeriod().isCurrent())
+            .setIsPreSalePeriodOngoing(plan.getPreSalePeriod().isCurrent())
             .setPreSellStartDate(plan.getPreSalePeriod().getStart())
             .setPreSellEndDate(plan.getPreSalePeriod().getEnd())
 
-            .setIsSaleOngoing(plan.getPreSalePeriod().isCurrent())
+            // sale period
+            .setIsSalePeriodOngoing(plan.getPreSalePeriod().isCurrent())
             .setSellStartDate(plan.getSalePeriod().getStart())
             .setSellEndDate(plan.getSalePeriod().getEnd())
 
+            // stay period
+            .setIsStayPeriodOngoing(plan.getStayPeriod().isCurrent())
             .setStayStartDate(plan.getStayPeriod().getStart())
             .setStayEndDate(plan.getStayPeriod().getEnd())
 
-            .setRooms(plan.getRooms()
-                .stream()
-                .map(this::toDto)
-                .toList())
-            ;
+            // detail
+            .setRooms(null);
+
+        if (withDetail) {
+            dto.setRooms(plan.getProducts().stream().map(this::toDto).toList());
+        }
+
+        return dto;
     }
 
-    private PlanDto.Room toDto(PlanRoom planRoom) {
+    private PlanDto.Room toDto(Product product) {
         return new PlanDto.Room()
-            .setRoomId(planRoom.getId().getRoomId())
-            .setStock(planRoom.getStockAmount().getCount())
-            .setChargeType(planRoom.getChargeType())
+            .setRoomId(product.getProductId().getRoomId())
+            .setStock(product.getStockAmount().getCount())
+            .setChargeType(product.getChargeType())
+            .setSaleState(product.getSaleState())
             .setPrices(new PlanDto.RoomPrices()
-                .setDh(planRoom.findPrice(SaleChannel.DH).map(price -> modelMapper.map(price, PlanDto.Price.class)).orElse(null))
-                .setDp(planRoom.findPrice(SaleChannel.DP).map(price -> modelMapper.map(price, PlanDto.Price.class)).orElse(null))
+                .setDh(product.findPrice(SaleChannel.DH).map(price -> modelMapper.map(price, PlanDto.Price.class)).orElse(null))
+                .setDp(product.findPrice(SaleChannel.DP).map(price -> modelMapper.map(price, PlanDto.Price.class)).orElse(null))
             );
     }
 
@@ -80,6 +97,7 @@ public class PlanConvertor {
             .stayPeriod(new DateRange(request.getStayStartDate(), request.getStayEndDate()))
             .sellPeriod(new DateTimeRange(request.getSellStartDate(), request.getSellEndDate()))
             .rooms(request.getRooms())
+            .channels(request.getChannels())
             .build();
     }
 

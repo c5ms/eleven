@@ -1,12 +1,11 @@
 package com.eleven.hotel.domain.model.plan;
 
-import cn.hutool.core.map.MapUtil;
-import com.eleven.core.domain.DomainContext;
-import com.eleven.hotel.api.domain.error.HotelErrors;
 import com.eleven.hotel.api.domain.model.ChargeType;
 import com.eleven.hotel.api.domain.model.SaleChannel;
+import com.eleven.hotel.api.domain.model.SaleState;
+import com.eleven.hotel.api.domain.model.SaleType;
 import com.eleven.hotel.domain.core.ImmutableValues;
-import com.eleven.hotel.domain.model.hotel.Room;
+import com.eleven.hotel.domain.core.ObjectMatcher;
 import com.eleven.hotel.domain.values.StockAmount;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
@@ -26,10 +25,10 @@ import java.util.*;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @FieldNameConstants
-public class PlanRoom {
+public class Product {
 
     @EmbeddedId
-    private PlanRoomId id;
+    private ProductId productId;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "hotel_id", referencedColumnName = "hotel_id", insertable = false, updatable = false)
@@ -50,17 +49,41 @@ public class PlanRoom {
     @AttributeOverride(name = "count", column = @Column(name = "stock_amount"))
     private StockAmount stockAmount;
 
-    protected PlanRoom(Plan plan, Room room, StockAmount stockAmount) {
-        this.id = new PlanRoomId(plan.getHotelId(), plan.getPlanId(), room.getRoomId());
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sale_type")
+    private SaleType saleType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sale_state")
+    private SaleState saleState;
+
+    protected Product(Plan plan, Integer roomId, StockAmount stockAmount) {
+        this.productId = ProductId.of(plan.getHotelId(), plan.getPlanId(), roomId);
         this.stockAmount = stockAmount;
         this.saleChannels = new HashSet<>();
+        this.saleType = plan.getSaleType();
+        this.saleState = SaleState.STOPPED;
     }
 
-    public void setPrice(SaleChannel saleChannel, BigDecimal wholeRoomPrice) {
+    protected void startSale() {
+        Validate.isTrue(hasPrice(), "the room has no price");
+        Validate.isTrue(hasStock(), "the room has no stock");
+        this.setSaleState(SaleState.STARTED);
+    }
+
+    protected void stopSale() {
+        this.setSaleState(SaleState.STOPPED);
+    }
+
+    public boolean isOnSale() {
+        return this.saleState.isOnSale();
+    }
+
+    protected void setPrice(SaleChannel saleChannel, BigDecimal wholeRoomPrice) {
         Validate.isTrue(this.saleChannels.contains(saleChannel), "the plan has no such sale channel");
 
-        var price = PriceCreator.wholeRoom(this.getId(), saleChannel, wholeRoomPrice);
-        this.prices.put(price.getId(), price);
+        var price = Price.wholeRoom(this.getProductId(), saleChannel, wholeRoomPrice);
+        this.prices.put(price.getPriceId(), price);
         this.setChargeType(price.getPriceType());
     }
 
@@ -72,27 +95,35 @@ public class PlanRoom {
                          BigDecimal fivePersonPrice) {
         Validate.isTrue(this.saleChannels.contains(saleChannel), "the plan has no such sale channel");
 
-        var price = PriceCreator.byPerson(this.getId(),
+        var price = Price.byPerson(this.getProductId(),
             saleChannel,
             onePersonPrice,
             twoPersonPrice,
             threePersonPrice,
             fourPersonPrice,
             fivePersonPrice);
-        this.prices.put(price.getId(), price);
+        this.prices.put(price.getPriceId(), price);
         this.setChargeType(price.getPriceType());
     }
 
     public Optional<Price> findPrice(SaleChannel channel) {
-        var matcher = new PriceMatcher()
+        var matcher = new ObjectMatcher<Price>()
             .should(price -> price.is(channel));
-        return prices.values().stream()
-            .filter(matcher::match)
+        return getPrices().stream()
+            .filter(matcher)
             .findFirst();
     }
 
-    public void openChannel(SaleChannel saleChannel) {
+    protected void openChannel(SaleChannel saleChannel) {
         this.saleChannels.add(saleChannel);
+    }
+
+    protected void closeChannel(SaleChannel saleChannel, boolean dropPrice) {
+        this.saleChannels.add(saleChannel);
+        if (dropPrice) {
+            var priceId = PriceId.of(productId, saleChannel);
+            this.prices.remove(priceId);
+        }
     }
 
     public ImmutableValues<SaleChannel> getSaleChannels() {
@@ -106,4 +137,10 @@ public class PlanRoom {
     public boolean hasPrice() {
         return MapUtils.isNotEmpty(this.prices);
     }
+
+    public boolean hasStock() {
+        return this.getStockAmount().greaterThanZero();
+    }
+
+
 }

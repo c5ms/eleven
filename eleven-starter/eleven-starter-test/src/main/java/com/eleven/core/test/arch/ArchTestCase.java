@@ -34,8 +34,6 @@ public class ArchTestCase {
         this.containmentCheck();
     }
 
-
-
     public void layerCheck() {
         Architectures.LayeredArchitecture applicationArchitecture = layeredArchitecture()
             .consideringOnlyDependenciesInLayers()
@@ -70,7 +68,6 @@ public class ArchTestCase {
             .should().resideInAPackage(anyPackageFor(domainPackageName))
             .check(importedClasses);
     }
-
 
     public void dependenciesCheck() {
         noClasses().that().resideInAPackage(anyPackageFor(domainPackageName))

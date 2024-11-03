@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.springframework.data.domain.PageRequest;
 
 @Data
 @Accessors(chain = true)
@@ -23,4 +24,8 @@ public class PageQuery {
     @Max(value = 1000, message = "每页条数不能超过1000")
     @Schema(description = "页长", defaultValue = "20")
     private int size = 20;
+
+    public PageRequest toPagerequest(){
+        return PageRequest.of(getPage(), getSize());
+    }
 }

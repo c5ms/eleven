@@ -5,7 +5,7 @@ import com.eleven.core.application.event.ApplicationEvent;
 import com.eleven.core.domain.DomainEvent;
 import com.eleven.hotel.api.application.event.PlanStartedSaleEvent;
 import com.eleven.hotel.application.support.HotelContext;
-import com.eleven.hotel.domain.model.plan.event.PlanStartedSale;
+import com.eleven.hotel.domain.model.plan.event.PlanStarted;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -33,7 +33,7 @@ public class HotelListener {
     public Optional<ApplicationEvent> toApplicationEvent(DomainEvent domainEvent) {
         ApplicationEvent applicationEvent = null;
 
-        if (domainEvent instanceof PlanStartedSale e) {
+        if (domainEvent instanceof PlanStarted e) {
             applicationEvent = new PlanStartedSaleEvent().setPlanId(e.getPlan().getPlanId());
         }
 

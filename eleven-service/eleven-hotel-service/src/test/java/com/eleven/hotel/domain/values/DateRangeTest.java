@@ -1,4 +1,4 @@
-package com.eleven.hotel.domain.model.values;
+package com.eleven.hotel.domain.values;
 
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;

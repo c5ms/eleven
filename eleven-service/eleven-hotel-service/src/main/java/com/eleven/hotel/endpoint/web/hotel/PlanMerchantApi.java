@@ -1,6 +1,5 @@
 package com.eleven.hotel.endpoint.web.hotel;
 
-import cn.hutool.json.JSONUtil;
 import com.eleven.core.application.query.PageResult;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.model.PlanDto;
@@ -8,8 +7,8 @@ import com.eleven.hotel.api.endpoint.request.PlanAddRoomRequest;
 import com.eleven.hotel.api.endpoint.request.PlanCreateRequest;
 import com.eleven.hotel.api.endpoint.request.PlanQueryRequest;
 import com.eleven.hotel.application.service.PlanService;
-import com.eleven.hotel.endpoint.support.AsMerchantApi;
 import com.eleven.hotel.endpoint.convert.PlanConvertor;
+import com.eleven.hotel.endpoint.support.AsMerchantApi;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -35,13 +34,13 @@ public class PlanMerchantApi {
     @GetMapping
     public PageResult<PlanDto> queryPlan(@PathVariable("hotelId") Integer hotelId, @ParameterObject @Validated PlanQueryRequest request) {
         var query = planConvertor.toQuery(request);
-        return planService.queryPage(hotelId, query).map(planConvertor::toDto);
+        return planService.queryPage(hotelId, query, request.toPagerequest()).map(planConvertor::toDto);
     }
 
     @Operation(summary = "read plan")
     @GetMapping("/{planId:[0-9]+}")
     public Optional<PlanDto> readPlan(@PathVariable("hotelId") Integer hotelId, @PathVariable("planId") Integer planId) {
-        return planService.readPlan(hotelId, planId).map(planConvertor::toDto);
+        return planService.readPlan(hotelId, planId).map(planConvertor::toDetail);
     }
 
     @Operation(summary = "create plan")
@@ -49,7 +48,7 @@ public class PlanMerchantApi {
     public PlanDto createPlan(@PathVariable("hotelId") Integer hotelId, @RequestBody @Validated PlanCreateRequest request) {
         var command = planConvertor.toCommand(request);
         var plan = planService.createPlan(hotelId, command);
-        return planConvertor.toDto(plan);
+        return planConvertor.toDetail(plan);
     }
 
     @Operation(summary = "add room")
@@ -58,5 +57,22 @@ public class PlanMerchantApi {
         var command = planConvertor.toCommand(request);
         planService.addRoom(hotelId, planId, command);
     }
+
+    @Operation(summary = "start sale")
+    @PostMapping("/{planId:[0-9]+}/rooms/{roomId:[0-9]+}/commands/startSale")
+    public void startSaleProduct(@PathVariable("hotelId") Integer hotelId,
+                                 @PathVariable("planId") Integer planId,
+                                 @PathVariable("roomId") Integer roomId) {
+        planService.startSale(hotelId, planId, roomId);
+    }
+
+    @Operation(summary = "stop sale")
+    @PostMapping("/{planId:[0-9]+}/rooms/{roomId:[0-9]+}/commands/stopSale")
+    public void stopSaleProduct(@PathVariable("hotelId") Integer hotelId,
+                                @PathVariable("planId") Integer planId,
+                                @PathVariable("roomId") Integer roomId) {
+        planService.stopSale(hotelId, planId, roomId);
+    }
+
 
 }

@@ -1,9 +1,9 @@
 package com.eleven.core.web;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
-import com.eleven.core.application.command.CommandInvalidException;
 import com.eleven.core.application.authorize.NoAuthorityException;
 import com.eleven.core.application.authorize.NoPrincipalException;
+import com.eleven.core.application.command.CommandInvalidException;
 import com.eleven.core.domain.DomainException;
 import com.eleven.core.web.problem.Problem;
 import com.eleven.core.web.problem.ValidationProblem;
@@ -46,7 +46,7 @@ public class ElevenExceptionAdvice {
         if (e instanceof HttpMessageConversionException) {
             var problem = Problem.of(WebErrors.ERROR_REQUEST_BODY_FAILED);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
-        }else if (e instanceof CommandInvalidException){
+        } else if (e instanceof CommandInvalidException) {
             var problem = Problem.of(WebErrors.ERROR_REQUEST_BODY_FAILED);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
         }
@@ -91,7 +91,8 @@ public class ElevenExceptionAdvice {
         // inner error system
         else if (e instanceof DomainException ex) {
             var problem = Problem.of(ex);
-            log.warn(ExceptionUtil.getMessage(ex), ex);
+            // todo with exception or not?
+            log.warn(ExceptionUtil.getMessage(ex));
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
         } else if (e instanceof NoPrincipalException) {
             status = HttpStatus.NOT_FOUND;

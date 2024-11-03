@@ -1,56 +1,45 @@
 package com.eleven.hotel.domain.model.booking;
 
-import com.eleven.hotel.domain.model.hotel.Hotel;
-import com.eleven.hotel.domain.model.hotel.Room;
-import com.eleven.hotel.domain.model.plan.Plan;
-import com.eleven.hotel.domain.model.traveler.Traveler;
+import com.eleven.hotel.domain.core.AbstractEntity;
 import com.eleven.hotel.domain.values.DateRange;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
-import lombok.extern.slf4j.Slf4j;
 
-import javax.money.MonetaryAmount;
-import java.util.HashSet;
-import java.util.Set;
+import java.math.BigDecimal;
 
-@Slf4j
+@Table(name = "hms_booking")
+@Entity
 @Getter
+@Setter(AccessLevel.PROTECTED)
 @FieldNameConstants
-public class Booking {
+public class Booking extends AbstractEntity {
+
+    @Id
+    @Column(name = "booking_id")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = GENERATOR_NAME)
+    private Integer bookingId;
+
+    @Column(name = "traveler_id")
+    private Integer travelerId;
 
     @Column(name = "hotel_id")
-    private final Hotel hotel;
+    private Integer hotelId;
 
     @Column(name = "plan_id")
-    private final Plan plan;
+    private Integer planId;
 
     @Column(name = "room_id")
-    private final Room room;
-
-    @Column(name = "traveler_id")
-    private final Traveler traveler;
+    private Integer roomId;
 
     @Embedded
-    private final DateRange stayPeriod;
+    @AttributeOverride(name = "start", column = @Column(name = "check_in_date"))
+    @AttributeOverride(name = "end", column = @Column(name = "check_out_date"))
+    private DateRange stayPeriod;
 
     @Embedded
-    private MonetaryAmount price;
-
-    @Column(name = "traveler_id")
-    private Set<String> coupons = new HashSet<>();
-
-    public Booking(String id, Hotel hotel, Plan plan, Room room, DateRange stayPeriod, Traveler traveler) {
-        this.hotel = hotel;
-        this.plan = plan;
-        this.room = room;
-        this.traveler = traveler;
-        this.stayPeriod = stayPeriod;
-//        this.price = plan.charge(room.getId(), PriceType.FOUR_PERSON, 20)
-//            .map(price -> price.multiply(stayPeriod.days()))
-//            .orElseThrow(HotelErrors.BOOKING_NO_SUCH_ROOM::toException);
-    }
-
+    private BigDecimal price;
 
 }

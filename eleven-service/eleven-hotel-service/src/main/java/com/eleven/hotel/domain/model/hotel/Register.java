@@ -1,7 +1,7 @@
 package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.core.domain.DomainContext;
-import com.eleven.hotel.api.domain.error.HotelErrors;
+import com.eleven.hotel.api.application.error.HotelErrors;
 import com.eleven.hotel.api.domain.model.RegisterState;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import jakarta.persistence.*;

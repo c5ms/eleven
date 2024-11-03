@@ -1,5 +1,6 @@
 package com.eleven.hotel.api.endpoint.request;
 
+import com.eleven.hotel.api.domain.model.SaleChannel;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -52,4 +54,6 @@ public class PlanCreateRequest {
     private LocalDate stayEndDate;
 
     private List<Integer> rooms = new ArrayList<>();
+
+    private Set<SaleChannel> channels;
 }

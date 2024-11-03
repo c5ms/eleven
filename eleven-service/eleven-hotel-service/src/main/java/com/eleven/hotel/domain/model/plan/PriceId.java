@@ -35,11 +35,11 @@ public class PriceId implements Serializable {
     @Column(name = "sale_channel")
     private SaleChannel saleChannel;
 
-    public static PriceId of(PlanRoomId planRoomId, SaleChannel saleChannel) {
+    public static PriceId of(ProductId productId, SaleChannel saleChannel) {
         PriceId priceId = new PriceId();
-        priceId.hotelId = planRoomId.getHotelId();
-        priceId.planId = planRoomId.getPlanId();
-        priceId.roomId = planRoomId.getRoomId();
+        priceId.hotelId = productId.getHotelId();
+        priceId.planId = productId.getPlanId();
+        priceId.roomId = productId.getRoomId();
         priceId.saleChannel = saleChannel;
         return priceId;
     }

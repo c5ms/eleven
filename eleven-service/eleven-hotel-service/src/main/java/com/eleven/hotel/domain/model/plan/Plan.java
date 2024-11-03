@@ -1,15 +1,16 @@
 package com.eleven.hotel.domain.model.plan;
 
-import com.eleven.core.domain.DomainContext;
-import com.eleven.hotel.api.domain.error.HotelErrors;
+import com.eleven.core.application.event.ApplicationEvent;
 import com.eleven.hotel.api.domain.model.SaleChannel;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
+import com.eleven.hotel.application.service.PlanService;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import com.eleven.hotel.domain.core.ImmutableValues;
 import com.eleven.hotel.domain.core.Saleable;
-import com.eleven.hotel.domain.model.hotel.Room;
-import com.eleven.hotel.domain.model.plan.event.PlanStartedSale;
+import com.eleven.hotel.domain.model.booking.Booking;
+import com.eleven.hotel.domain.model.plan.event.PlanStarted;
+import com.eleven.hotel.domain.model.plan.event.PlanStopped;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
 import com.eleven.hotel.domain.values.StockAmount;
@@ -17,12 +18,15 @@ import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
 import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.Validate;
 import org.hibernate.annotations.Type;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @Table(name = "hms_plan")
@@ -40,10 +44,13 @@ public class Plan extends AbstractEntity implements Saleable {
     @Column(name = "hotel_id")
     private Integer hotelId;
 
+    @Column(name = "is_private")
+    private Boolean isPrivate;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "plan_id", referencedColumnName = "plan_id", insertable = false, updatable = false)
     @JoinColumn(name = "hotel_id", referencedColumnName = "hotel_id", insertable = false, updatable = false)
-    private Map<PlanRoomId, PlanRoom> rooms;
+    private Map<ProductId, Product> products;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "sale_type")
@@ -72,6 +79,13 @@ public class Plan extends AbstractEntity implements Saleable {
     @AttributeOverrides({@AttributeOverride(name = "count", column = @Column(name = "stock_count")),})
     private StockAmount stockAmount;
 
+    /**
+     * <p>
+     * it will affect the privacy
+     * </p>
+     *
+     * @see #isPrivate
+     */
     @Type(JsonType.class)
     @Column(name = "sale_channels", columnDefinition = "json")
     @Enumerated(EnumType.STRING)
@@ -81,33 +95,80 @@ public class Plan extends AbstractEntity implements Saleable {
     private PlanBasic basic;
 
     protected Plan() {
-        this.rooms = new HashMap<>();
+        this.products = new HashMap<>();
         this.saleChannels = new HashSet<>();
+        this.saleType = SaleType.NORMAL;
     }
 
     @PostPersist
-    protected void consistence() {
-        for (PlanRoom room : this.getRooms()) {
-            room.getId().setPlanId(this.getPlanId());
-            room.setSaleChannels(this.saleChannels);
-            for (Price price : room.getPrices()) {
-                price.getId().setPlanId(this.getPlanId());
+    protected void onPostPersist() {
+        for (Product product : this.getProducts()) {
+            product.getProductId().setPlanId(this.getPlanId());
+
+            for (Price price : product.getPrices()) {
+                price.getPriceId().setPlanId(this.getPlanId());
             }
         }
     }
 
+    @SuppressWarnings("unused")
+    @Builder(builderClassName = "normalBuilder", builderMethodName = "normal", buildMethodName = "create")
+    public static Plan createNormal(Integer hotelId,
+                                    StockAmount stockAmount,
+                                    DateRange stayPeriod,
+                                    Set<SaleChannel> saleChannels,
+                                    DateTimeRange salePeriod,
+                                    DateTimeRange preSellPeriod,
+                                    PlanBasic basic) {
+
+        Validate.notNull(hotelId, "hotelId must not be null");
+        Validate.notNull(stockAmount, "stock must not be null");
+        Validate.isTrue(stockAmount.greaterThanZero(), "total must gather than zero");
+
+        var plan = new Plan();
+        plan.setHotelId(hotelId);
+        plan.setStockAmount(stockAmount);
+        plan.setSalePeriod(salePeriod);
+        plan.setStayPeriod(stayPeriod);
+        plan.setPreSalePeriod(preSellPeriod);
+        plan.setSaleType(SaleType.NORMAL);
+        plan.setSaleState(SaleState.STOPPED);
+        plan.setBasic(basic);
+
+        Optional.ofNullable(saleChannels).ifPresent(channels -> channels.forEach(plan::openChannel));
+        return plan;
+    }
+
     @Override
     public void startSale() {
-        DomainContext.must(hasRoom(), HotelErrors.PLAN_NO_ROOM);
-        DomainContext.must(this.getRooms().stream().anyMatch(PlanRoom::hasPrice), HotelErrors.PLAN_NO_PRICE);
+        Validate.isTrue(hasProduct(), "the plan has no room");
+        Validate.isTrue(this.getProducts().stream().anyMatch(Product::hasPrice), "the plan has no price at all");
+        Validate.isTrue(this.getProducts().stream().anyMatch(Product::hasStock), "the plan has no stock at all");
 
         this.setSaleState(SaleState.STARTED);
-        addEvent(new PlanStartedSale(this));
+        this.addEvent(new PlanStarted(this));
     }
 
     @Override
     public void stopSale() {
         this.saleState = SaleState.STOPPED;
+        this.addEvent(new PlanStopped(this));
+    }
+
+
+    public void startSale(Integer roomId) {
+        var product = requireRoom(roomId);
+        product.startSale();
+        this.startSale();
+    }
+
+    public void stopSale(Integer roomId) {
+        var product = requireRoom(roomId);
+        product.stopSale();
+
+        if (!hasOnSaleProduct()) {
+            this.stopSale();
+        }
     }
 
     @Override
@@ -124,24 +185,81 @@ public class Plan extends AbstractEntity implements Saleable {
         return salePeriod.isCurrent();
     }
 
-    public PlanRoom addRoom(Room room, StockAmount stock) {
-        var planRoom = new PlanRoom(this, room, stock);
+    public Product addProduct(Integer roomId, StockAmount stock) {
+        var planRoom = new Product(this, roomId, stock);
         planRoom.setSaleChannels(this.saleChannels);
-        this.rooms.put(planRoom.getId(), planRoom);
+        this.products.put(planRoom.getProductId(), planRoom);
         return planRoom;
     }
 
-    public PlanRoom addRoom(Room room) {
-        return this.addRoom(room, StockAmount.zero());
+
+    public Product addProduct(Integer roomId) {
+        return this.addProduct(roomId, StockAmount.zero());
     }
 
-    private boolean hasRoom() {
-        return MapUtils.isNotEmpty(this.rooms);
+
+    public void setPrice(Integer roomId, SaleChannel saleChannel, BigDecimal wholeRoomPrice) {
+        var product = requireRoom(roomId);
+        product.setPrice(saleChannel, wholeRoomPrice);
     }
 
-    public void openChannel(SaleChannel... saleChannel) {
-        this.saleChannels.addAll(Arrays.asList(saleChannel));
-        this.getRooms().forEach(planRoom -> planRoom.setSaleChannels(this.saleChannels));
+    public void setPrice(Integer roomId,
+                         SaleChannel saleChannel,
+                         BigDecimal onePersonPrice,
+                         BigDecimal twoPersonPrice,
+                         BigDecimal threePersonPrice,
+                         BigDecimal fourPersonPrice,
+                         BigDecimal fivePersonPrice) {
+        var product = requireRoom(roomId);
+        product.setPrice(saleChannel, onePersonPrice, twoPersonPrice, threePersonPrice, fourPersonPrice, fivePersonPrice);
+    }
+
+
+    public Optional<Product> findRoom(Integer roomId) {
+        var id = ProductId.of(hotelId, planId, roomId);
+        return Optional.ofNullable(this.products.get(id));
+    }
+
+    public Product requireRoom(Integer roomId) {
+        return this.findRoom(roomId).orElseThrow(() -> new IllegalArgumentException("the room does not exist"));
+    }
+
+    public boolean hasProduct() {
+        return MapUtils.isNotEmpty(this.products);
+    }
+
+    public boolean hasProduct(Integer roomID) {
+        return this.products.containsKey(ProductId.of(hotelId, planId, roomID));
+    }
+
+    public boolean hasStock(Integer roomID) {
+        return this.requireRoom(roomID).hasStock();
+    }
+
+    public boolean isOnSale(int roomId) {
+        return this.findRoom(roomId)
+            .map(Product::isOnSale)
+            .orElse(false);
+    }
+
+    public boolean hasOnSaleProduct() {
+        return this.getProducts().stream().anyMatch(Product::isOnSale);
+    }
+
+    public void openChannel(SaleChannel saleChannel) {
+        this.saleChannels.add(saleChannel);
+        this.getProducts().forEach(product -> product.openChannel(saleChannel));
+        this.isPrivate = this.saleChannels.isEmpty();
+    }
+
+    public void closChannel(SaleChannel saleChannel, boolean dropPrices) {
+        this.saleChannels.remove(saleChannel);
+
+        for (Product product : this.getProducts()) {
+            product.closeChannel(saleChannel, dropPrices);
+        }
+
+        this.isPrivate = this.saleChannels.isEmpty();
     }
 
     @Nonnull
@@ -165,13 +283,14 @@ public class Plan extends AbstractEntity implements Saleable {
     }
 
     @Nonnull
-    public ImmutableValues<PlanRoom> getRooms() {
-        return ImmutableValues.of(rooms.values());
+    public ImmutableValues<Product> getProducts() {
+        return ImmutableValues.of(products.values());
     }
 
     @Nonnull
     public ImmutableValues<SaleChannel> getSaleChannels() {
         return ImmutableValues.of(saleChannels);
     }
+
 
 }

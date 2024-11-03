@@ -29,6 +29,13 @@ public class DateTimeRange {
         this.end = end;
     }
 
+    public static  DateTimeRange of (LocalDateTime start, LocalDateTime end) {
+        return  new DateTimeRange(start, end);
+    }
+
+    public static  DateTimeRange nextDays (LocalDateTime start,int days) {
+        return  new DateTimeRange(start, start.plusDays(days));
+    }
 
     public static DateTimeRange empty() {
         return new DateTimeRange();

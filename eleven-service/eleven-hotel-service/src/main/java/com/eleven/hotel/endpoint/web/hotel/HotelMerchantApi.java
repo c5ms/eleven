@@ -42,13 +42,13 @@ public class HotelMerchantApi {
     }
 
     @Operation(summary = "open hotel")
-    @PostMapping("/{hotelId:[0-9]+}/operations/open")
+    @PostMapping("/{hotelId:[0-9]+}/commands/open")
     public void openHotel(@PathVariable("hotelId") Integer hotelId) {
         hotelService.open(hotelId);
     }
 
     @Operation(summary = "close hotel")
-    @PostMapping("/{hotelId:[0-9]+]}/operations/close")
+    @PostMapping("/{hotelId:[0-9]+]}/commands/close")
     public void closeHotel(@PathVariable("hotelId") Integer hotelId) {
         hotelService.read(hotelId)
             .filter(HotelContext::mustWritable)

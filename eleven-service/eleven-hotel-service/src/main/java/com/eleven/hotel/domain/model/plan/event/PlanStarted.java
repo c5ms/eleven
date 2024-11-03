@@ -7,6 +7,6 @@ import lombok.Value;
 
 @Value
 @AllArgsConstructor
-public class PlanStartedSale implements DomainEvent {
+public class PlanStarted implements DomainEvent {
     Plan plan;
 }

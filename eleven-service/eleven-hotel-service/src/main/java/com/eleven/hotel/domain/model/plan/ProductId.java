@@ -1,5 +1,6 @@
 package com.eleven.hotel.domain.model.plan;
 
+import com.eleven.hotel.api.domain.model.SaleChannel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.*;
@@ -10,9 +11,8 @@ import java.io.Serializable;
 @Setter(AccessLevel.PROTECTED)
 @Embeddable
 @EqualsAndHashCode
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PlanRoomId implements Serializable {
+public class ProductId implements Serializable {
 
     @Column(name = "hotel_id")
     private Integer hotelId;
@@ -23,4 +23,11 @@ public class PlanRoomId implements Serializable {
     @Column(name = "room_id")
     private Integer roomId;
 
+    public static ProductId of(Integer hotelId, Integer planId, Integer roomId) {
+        ProductId productId = new ProductId();
+        productId.hotelId = hotelId;
+        productId.planId = planId;
+        productId.roomId = roomId;
+        return  productId;
+    }
 }

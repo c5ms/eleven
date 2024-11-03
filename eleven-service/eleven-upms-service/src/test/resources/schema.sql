@@ -86,7 +86,7 @@ create table gate_route
     memo       varchar(100) null,
     method     varchar(100) null,
     name       varchar(100) null,
-    `order`    bigint       null,
+    `booking`    bigint       null,
     path       varchar(100) null,
     create_at  datetime(3)  not null comment '创建时间',
     create_by  varchar(100) not null comment '创建人',
@@ -104,7 +104,7 @@ create table gate_site
 (
     name       varchar(100) null,
     memo       varchar(100) null,
-    `order`    bigint       null,
+    `booking`    bigint       null,
     is_started tinyint(1)   null,
     delete_at  datetime(3)  null comment '删除时间',
     version    bigint       not null comment '版本号',
