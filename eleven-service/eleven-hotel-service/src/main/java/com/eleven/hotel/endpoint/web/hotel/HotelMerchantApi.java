@@ -1,5 +1,9 @@
 package com.eleven.hotel.endpoint.web.hotel;
 
+import cn.hutool.extra.spring.SpringUtil;
+import com.eleven.hotel.api.domain.model.SaleChannel;
+import com.eleven.hotel.application.command.BookingCommand;
+import com.eleven.hotel.application.service.BookingService;
 import com.eleven.hotel.application.support.HotelContext;
 import com.eleven.core.web.WebContext;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
@@ -54,6 +58,17 @@ public class HotelMerchantApi {
             .filter(HotelContext::mustWritable)
             .orElseThrow(WebContext::notFoundException);
         hotelService.close(hotelId);
+    }
+
+    @Operation(summary = "test")
+    @GetMapping("/test")
+    public void test() {
+        SpringUtil.getBean(BookingService.class).book(BookingCommand.builder()
+                .hotelId(2)
+                .planId(3410)
+                .personCount(4)
+                .saleChannel(SaleChannel.DH)
+            .build());
     }
 
 }

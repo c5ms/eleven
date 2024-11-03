@@ -7,6 +7,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
+import java.util.stream.Stream;
 
 @Value
 @EqualsAndHashCode
@@ -36,6 +37,10 @@ public class DateRange {
 
     public int days() {
         return start.until(end).getDays();
+    }
+
+    public Stream<LocalDate> dates() {
+        return start.datesUntil(end);
     }
 
     public boolean isBefore(DateRange range) {

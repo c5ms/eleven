@@ -1,14 +1,11 @@
 package com.eleven.hotel.domain.model.plan;
 
-import com.eleven.core.application.event.ApplicationEvent;
 import com.eleven.hotel.api.domain.model.SaleChannel;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
-import com.eleven.hotel.application.service.PlanService;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import com.eleven.hotel.domain.core.ImmutableValues;
 import com.eleven.hotel.domain.core.Saleable;
-import com.eleven.hotel.domain.model.booking.Booking;
 import com.eleven.hotel.domain.model.plan.event.PlanStarted;
 import com.eleven.hotel.domain.model.plan.event.PlanStopped;
 import com.eleven.hotel.domain.values.DateRange;
@@ -76,7 +73,7 @@ public class Plan extends AbstractEntity implements Saleable {
     private DateRange stayPeriod;
 
     @Embedded
-    @AttributeOverrides({@AttributeOverride(name = "count", column = @Column(name = "stock_count")),})
+    @AttributeOverride(name = "count", column = @Column(name = "stock_count"))
     private StockAmount stockAmount;
 
     /**
@@ -139,6 +136,22 @@ public class Plan extends AbstractEntity implements Saleable {
         return plan;
     }
 
+    public List<Inventory> createInventories() {
+        Validate.notNull(this.planId, "the plan has not been created");
+
+        List<Inventory> inventories = new ArrayList<>();
+        for (Product product : getProducts()) {
+            for (SaleChannel saleChannel : product.getSaleChannels()) {
+                getStayPeriod()
+                    .dates()
+                    .map(localDate -> Inventory.of(product.getProductId(), product.getStockAmount(), saleChannel, localDate))
+                    .forEach(inventories::add);
+            }
+        }
+        return inventories;
+    }
+
+
     @Override
     public void startSale() {
         Validate.isTrue(hasProduct(), "the plan has no room");
@@ -192,12 +205,6 @@ public class Plan extends AbstractEntity implements Saleable {
         return planRoom;
     }
 
-
-    public Product addProduct(Integer roomId) {
-        return this.addProduct(roomId, StockAmount.zero());
-    }
-
-
     public void setPrice(Integer roomId, SaleChannel saleChannel, BigDecimal wholeRoomPrice) {
         var product = requireRoom(roomId);
         product.setPrice(saleChannel, wholeRoomPrice);
@@ -222,6 +229,13 @@ public class Plan extends AbstractEntity implements Saleable {
 
     public Product requireRoom(Integer roomId) {
         return this.findRoom(roomId).orElseThrow(() -> new IllegalArgumentException("the room does not exist"));
+    }
+
+    public BigDecimal charge(Integer roomId, SaleChannel saleChannel, int personCount) {
+        return this.requireRoom(roomId)
+            .findPrice(saleChannel)
+            .orElseThrow(() -> new IllegalArgumentException("the room with such channel not exist"))
+            .charge(personCount);
     }
 
     public boolean hasProduct() {
@@ -291,6 +305,4 @@ public class Plan extends AbstractEntity implements Saleable {
     public ImmutableValues<SaleChannel> getSaleChannels() {
         return ImmutableValues.of(saleChannels);
     }
-
-
 }

@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class HotelCommandServiceTest {
+class HotelInfoCommandServiceTest {
 
     @Autowired
     HotelService hotelService;

@@ -84,7 +84,7 @@ public class Product {
 
         var price = Price.wholeRoom(this.getProductId(), saleChannel, wholeRoomPrice);
         this.prices.put(price.getPriceId(), price);
-        this.setChargeType(price.getPriceType());
+        this.setChargeType(price.getChargeType());
     }
 
     public void setPrice(SaleChannel saleChannel,
@@ -103,7 +103,7 @@ public class Product {
             fourPersonPrice,
             fivePersonPrice);
         this.prices.put(price.getPriceId(), price);
-        this.setChargeType(price.getPriceType());
+        this.setChargeType(price.getChargeType());
     }
 
     public Optional<Price> findPrice(SaleChannel channel) {

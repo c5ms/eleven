@@ -29,6 +29,9 @@ spring:
 
   jpa:
     generate-ddl: true
+    properties:
+      'hibernate.order_updates': true
+      'hibernate.jdbc.batch_size': 50
 
 eleven:
   cache:

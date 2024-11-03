@@ -1,4 +1,4 @@
-package com.eleven.hotel.application.service;
+package com.eleven.hotel.application.listener;
 
 import cn.hutool.json.JSONUtil;
 import com.eleven.core.application.event.ApplicationEvent;
@@ -28,7 +28,6 @@ public class HotelListener {
     public void on(ApplicationEvent event) {
         log.debug("handle application event {}: {}", event.getClass().getSimpleName(), JSONUtil.toJsonStr(event));
     }
-
 
     public Optional<ApplicationEvent> toApplicationEvent(DomainEvent domainEvent) {
         ApplicationEvent applicationEvent = null;

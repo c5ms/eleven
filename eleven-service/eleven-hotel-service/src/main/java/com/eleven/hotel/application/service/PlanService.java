@@ -8,10 +8,11 @@ import com.eleven.hotel.application.command.PlanAddRoomCommand;
 import com.eleven.hotel.application.command.PlanCreateCommand;
 import com.eleven.hotel.application.query.PlanQuery;
 import com.eleven.hotel.application.support.HotelContext;
-import com.eleven.hotel.domain.model.hotel.Hotel;
+import com.eleven.hotel.domain.manager.PlanManager;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.model.hotel.RoomRepository;
+import com.eleven.hotel.domain.model.plan.InventoryRepository;
 import com.eleven.hotel.domain.model.plan.Plan;
 import com.eleven.hotel.domain.model.plan.PlanBasic;
 import com.eleven.hotel.domain.model.plan.PlanRepository;
@@ -40,6 +41,8 @@ public class PlanService {
     private final PlanRepository planRepository;
     private final HotelRepository hotelRepository;
     private final RoomRepository roomRepository;
+    private final PlanManager planManager;
+    private final InventoryRepository inventoryRepository;
 
     public Optional<Plan> readPlan(Integer hotelId, Integer planId) {
         return planRepository.findByHotelIdAndPlanId(hotelId, planId)
@@ -52,7 +55,7 @@ public class PlanService {
         Specification<Plan> specification = Specifications.<Plan>and()
             .like(StringUtils.isNotBlank(query.getPlanName()), Plan.Fields.basic + "." + PlanBasic.Fields.name, "%" + query.getPlanName() + "%")
             .build();
-        var pagination = PageRequest.of(pageable.getPageNumber(),pageable.getPageSize()).withSort(Sort.by(Plan.Fields.planId).descending());
+        var pagination = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()).withSort(Sort.by(Plan.Fields.planId).descending());
         var result = planRepository.findAll(specification, pagination);
         return PageResult.of(result.getContent(), result.getTotalElements());
     }
@@ -101,7 +104,11 @@ public class PlanService {
         }
 
         // persist the plan
-        planRepository.persist(plan);
+        planRepository.persistAndFlush(plan);
+
+        // initialize the inventory
+        var inventories = plan.createInventories();
+        inventoryRepository.persistAll(inventories);
 
         // return back the created plan
         return plan;

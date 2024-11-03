@@ -25,8 +25,12 @@ public class Booking extends AbstractEntity {
     @Column(name = "traveler_id")
     private Integer travelerId;
 
-    @Column(name = "hotel_id")
-    private Integer hotelId;
+    @Column(name = "person_count")
+    private Integer personCount;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "hotel_id")
+    private HotelInfo hotelInfo;
 
     @Column(name = "plan_id")
     private Integer planId;
@@ -39,7 +43,22 @@ public class Booking extends AbstractEntity {
     @AttributeOverride(name = "end", column = @Column(name = "check_out_date"))
     private DateRange stayPeriod;
 
-    @Embedded
-    private BigDecimal price;
+    @Column(name = "amount")
+    private BigDecimal amount;
 
+    public Booking(Integer travelerId,
+                   HotelInfo hotelInfo,
+                   Integer planId,
+                   Integer roomId,
+                   Integer personCount,
+                   DateRange stayPeriod,
+                   BigDecimal amount) {
+        this.travelerId = travelerId;
+        this.personCount = personCount;
+        this.hotelInfo = hotelInfo;
+        this.planId = planId;
+        this.roomId = roomId;
+        this.stayPeriod = stayPeriod;
+        this.amount = amount;
+    }
 }
