@@ -5,13 +5,14 @@ import jakarta.persistence.Embeddable;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Getter
 @Setter(AccessLevel.PROTECTED)
 @Embeddable
 @EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ProductId implements Serializable {
+public class InventoryId implements Serializable {
 
     @Column(name = "hotel_id")
     private Long hotelId;
@@ -22,11 +23,17 @@ public class ProductId implements Serializable {
     @Column(name = "room_id")
     private Long roomId;
 
-    public static ProductId of(Long hotelId, Long planId, Long roomId) {
-        ProductId productId = new ProductId();
-        productId.hotelId = hotelId;
-        productId.planId = planId;
-        productId.roomId = roomId;
-        return productId;
+    @Column(name = "sale_date")
+    private LocalDate date;
+
+
+    public static InventoryId of(ProductId productId, LocalDate date) {
+        InventoryId id = new InventoryId();
+        id.setHotelId(productId.getHotelId());
+        id.setPlanId(productId.getPlanId());
+        id.setRoomId(productId.getRoomId());
+        id.setDate(date);
+        return id;
     }
+
 }

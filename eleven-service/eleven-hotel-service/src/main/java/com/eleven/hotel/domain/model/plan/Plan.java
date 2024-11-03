@@ -97,17 +97,6 @@ public class Plan extends AbstractEntity implements Saleable {
         this.saleType = SaleType.NORMAL;
     }
 
-    @PostPersist
-    protected void onPostPersist() {
-        for (Product product : this.getProducts()) {
-            product.getProductId().setPlanId(this.getPlanId());
-
-            for (Price price : product.getPrices()) {
-                price.getPriceId().setPlanId(this.getPlanId());
-            }
-        }
-    }
-
     @SuppressWarnings("unused")
     @Builder(builderClassName = "normalBuilder", builderMethodName = "normal", buildMethodName = "create")
     public static Plan createNormal(Long hotelId,
@@ -136,10 +125,21 @@ public class Plan extends AbstractEntity implements Saleable {
         return plan;
     }
 
-    public List<Inventory> createInventories() {
+    @PostPersist
+    protected void onPostPersist() {
+        for (Product product : this.getProducts()) {
+            product.getProductId().setPlanId(this.getPlanId());
+
+            for (Price price : product.getPrices()) {
+                price.getPriceId().setPlanId(this.getPlanId());
+            }
+        }
+    }
+
+    public List<Inventory> createProductInventories() {
         Validate.notNull(this.planId, "the plan has not been created");
 
-        List<Inventory> inventories = new ArrayList<>();
+        var inventories = new ArrayList<Inventory>();
 
         for (Product product : getProducts()) {
             getStayPeriod()
@@ -150,7 +150,6 @@ public class Plan extends AbstractEntity implements Saleable {
 
         return inventories;
     }
-
 
     @Override
     public void startSale() {

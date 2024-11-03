@@ -10,6 +10,7 @@ import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.model.HotelDto;
 import com.eleven.hotel.api.endpoint.request.HotelUpdateRequest;
 import com.eleven.hotel.application.service.HotelService;
+import com.eleven.hotel.domain.model.booking.Booking;
 import com.eleven.hotel.endpoint.support.AsMerchantApi;
 import com.eleven.hotel.endpoint.convert.HotelConvertor;
 import io.swagger.v3.oas.annotations.Operation;
@@ -62,10 +63,10 @@ public class HotelMerchantApi {
 
     @Operation(summary = "test")
     @GetMapping("/test")
-    public void test() {
-        SpringUtil.getBean(BookingService.class).book(BookingCommand.builder()
+    public Booking test() {
+    return     SpringUtil.getBean(BookingService.class).book(BookingCommand.builder()
                 .hotelId(2L)
-                .planId(3410L)
+                .planId(2L)
                 .personCount(4)
                 .saleChannel(SaleChannel.DH)
             .build());

@@ -16,7 +16,7 @@ public class Admin extends AbstractEntity {
 
     @Id
     @Column(name = "admin_id")
-    @GeneratedValue(strategy = GenerationType.TABLE,generator = GENERATOR_NAME)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = GENERATOR_NAME)
     private Long adminId;
 
     @Column(name = "hotel_id")

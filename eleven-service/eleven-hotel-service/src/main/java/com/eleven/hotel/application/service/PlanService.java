@@ -12,10 +12,7 @@ import com.eleven.hotel.application.support.HotelContext;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.model.hotel.RoomRepository;
-import com.eleven.hotel.domain.model.plan.InventoryRepository;
-import com.eleven.hotel.domain.model.plan.Plan;
-import com.eleven.hotel.domain.model.plan.PlanBasic;
-import com.eleven.hotel.domain.model.plan.PlanRepository;
+import com.eleven.hotel.domain.model.plan.*;
 import com.eleven.hotel.domain.values.StockAmount;
 import com.github.wenhao.jpa.Specifications;
 import lombok.RequiredArgsConstructor;
@@ -106,7 +103,7 @@ public class PlanService {
         planRepository.persistAndFlush(plan);
 
         // initialize the inventory
-        var inventories = plan.createInventories();
+        var inventories = plan.createProductInventories();
         inventoryRepository.persistAll(inventories);
 
         // return back the created plan
@@ -139,7 +136,10 @@ public class PlanService {
 
     @Transactional(rollbackFor = Exception.class)
     public void reduceStock(Long hotelId, Long planId, Long roomId, StockReduceCommand command) {
-        var inventory = inventoryRepository.findByHotelIdAndPlanIdAndRoomId(hotelId, planId, roomId).orElseThrow(HotelContext::noPrincipalException);
+        var productId = ProductId.of(hotelId, planId, roomId);
+        var inventoryId = InventoryId.of(productId, command.getDate());
+        var inventory = inventoryRepository.findById(inventoryId).orElseThrow(HotelContext::noPrincipalException);
+        DomainContext.must(inventory.hasEnoughStock(command.getAmount()),HotelErrors.PLAN_INVENTORY_NOT_ENOUGH);
         inventory.reduce(command.getAmount());
         inventoryRepository.updateAndFlush(inventory);
     }

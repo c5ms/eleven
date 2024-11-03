@@ -21,19 +21,7 @@ public class Inventory extends AbstractEntity {
     @Id
     @Column(name = "inventory_id")
     @GeneratedValue(strategy = GenerationType.TABLE, generator = GENERATOR_NAME)
-    private Long inventoryId;
-
-    @Column(name = "hotel_id")
-    private Long hotelId;
-
-    @Column(name = "plan_id")
-    private Long planId;
-
-    @Column(name = "room_id")
-    private Long roomId;
-
-    @Column(name = "sale_date")
-    private LocalDate date;
+    private InventoryId inventoryId;
 
     @Embedded
     @AttributeOverride(name = "count", column = @Column(name = "stock_total"))
@@ -48,17 +36,18 @@ public class Inventory extends AbstractEntity {
 
     public static Inventory of(ProductId productId, LocalDate date, StockAmount stockAmount) {
         Inventory inventory = new Inventory();
-        inventory.setHotelId(productId.getHotelId());
-        inventory.setPlanId(productId.getPlanId());
-        inventory.setRoomId(productId.getRoomId());
-        inventory.setDate(date);
+        inventory.setInventoryId(InventoryId.of(productId, date));
         inventory.setStockTotal(stockAmount);
         inventory.setStockLeft(stockAmount);
         return inventory;
     }
 
+    public boolean hasEnoughStock(int amount) {
+        return this.stockLeft.greaterThan(amount);
+    }
+
     public void reduce(int amount) {
-        Validate.isTrue(this.stockLeft.greaterThan(amount), "no su much stock left");
+        Validate.isTrue(this.hasEnoughStock(amount), "no su much stock left");
         this.setStockLeft(this.stockLeft.subtract(amount));
     }
 }

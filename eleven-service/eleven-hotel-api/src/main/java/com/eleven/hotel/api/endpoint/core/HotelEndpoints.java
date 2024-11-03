@@ -11,7 +11,6 @@ public interface HotelEndpoints {
 
     interface Paths {
         String REGISTER = "/registers";
-
         String HOTEL = "/hotels";
         String ROOM =   "/hotels/{hotelId:\\d+}/rooms";
         String PLAN =  "/hotels/{hotelId:\\d+}/plans";

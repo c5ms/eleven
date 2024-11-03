@@ -54,7 +54,7 @@ public class Slf4jRequestLogAppender implements RequestLogAppender {
         if (status.is5xxServerError()) {
             if (logger.isErrorEnabled()) {
                 if (exception.isPresent()) {
-                    logger.error(marker, "response http status {} when {} {} occur exception",
+                    logger.error(marker, "response http status {} when {} executed {} occur exception",
                         status.value(),
                         subject.getNickName(),
                         requestLog.getOperation(),
@@ -67,14 +67,14 @@ public class Slf4jRequestLogAppender implements RequestLogAppender {
         if (status.is4xxClientError()) {
             if (logger.isWarnEnabled()) {
                 if (exception.isPresent()) {
-                    logger.warn(marker, "response http status {} when {} {} fail, because {}",
+                    logger.warn(marker, "response http status {} when {} executed {} fail, because {}",
                         status.value(),
                         subject.getNickName(),
                         requestLog.getOperation(),
                         ExceptionUtils.getRootCauseMessage(exception.get()));
                     return;
                 }
-                logger.warn(marker, "response http status {} when {} {} fail with no reason",
+                logger.warn(marker, "response http status {} when {} executed {} fail with no reason",
                     status.value(),
                     subject.getNickName(),
                     requestLog.getOperation()
@@ -84,7 +84,7 @@ public class Slf4jRequestLogAppender implements RequestLogAppender {
         }
 
         if (logger.isInfoEnabled()) {
-            logger.info(marker, "response http status {} when {} {} successful",
+            logger.info(marker, "response http status {} when {} executed {} successful",
                 status.value(),
                 subject.getNickName(),
                 requestLog.getOperation());

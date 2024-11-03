@@ -23,7 +23,7 @@ public class Room extends AbstractEntity implements Saleable {
 
     @Id
     @Column(name = "room_id")
-    @GeneratedValue(strategy = GenerationType.TABLE,generator = GENERATOR_NAME)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = GENERATOR_NAME)
     private Long roomId;
 
     @Column(name = "hotel_id")

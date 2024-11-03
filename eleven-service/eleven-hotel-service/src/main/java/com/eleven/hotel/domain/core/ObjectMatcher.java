@@ -1,13 +1,11 @@
 package com.eleven.hotel.domain.core;
 
 
-import org.springframework.data.domain.Persistable;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-public   class ObjectMatcher<T> implements Predicate<T> {
+public class ObjectMatcher<T> implements Predicate<T> {
 
     private final List<Predicate<T>> predicates = new ArrayList<>();
 

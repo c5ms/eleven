@@ -33,6 +33,11 @@ spring:
       'hibernate.order_updates': true
       'hibernate.jdbc.batch_size': 50
 
+  data:
+    mongodb:
+      uri: mongodb://eleven:eleven@localhost:27017/eleven_hotel
+
+
 eleven:
   cache:
     duration: PT8H

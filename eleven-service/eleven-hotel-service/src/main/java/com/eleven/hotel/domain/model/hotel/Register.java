@@ -18,7 +18,7 @@ public class Register extends AbstractEntity {
 
     @Id
     @Column(name = "register_id")
-    @GeneratedValue(strategy = GenerationType.TABLE,generator = GENERATOR_NAME)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = GENERATOR_NAME)
     private Long registerId;
 
     @Column(name = "hotel_id")

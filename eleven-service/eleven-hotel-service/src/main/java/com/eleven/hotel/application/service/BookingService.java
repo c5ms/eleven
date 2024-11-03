@@ -1,11 +1,10 @@
 package com.eleven.hotel.application.service;
 
 import com.eleven.hotel.application.command.BookingCommand;
-import com.eleven.hotel.domain.model.booking.Booking;
-import com.eleven.hotel.domain.model.booking.BookingCharger;
-import com.eleven.hotel.domain.model.booking.HotelInfoRepository;
+import com.eleven.hotel.domain.model.booking.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,10 +16,12 @@ public class BookingService {
 
     private final BookingCharger bookingCharger;
     private final HotelInfoRepository hotelInfoRepository;
+    private final PlanInfoRepository planInfoRepository;
 
     public Booking book(BookingCommand command) {
         var hotel = hotelInfoRepository.findById(command.getHotelId()).orElseThrow();
         var charge = bookingCharger.charge(command.getHotelId(), command.getPlanId(), command.getRoomId(), command.getSaleChannel(), command.getPersonCount());
+        var plan = planInfoRepository.findByPlanId(command.getPlanId()).orElseThrow();
 
         var booking = new Booking(
             1L,

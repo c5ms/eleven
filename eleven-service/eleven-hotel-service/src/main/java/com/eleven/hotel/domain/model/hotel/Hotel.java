@@ -8,7 +8,10 @@ import com.eleven.hotel.domain.model.hotel.event.HotelOpened;
 import com.eleven.hotel.domain.model.hotel.event.HotelRelocated;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
 
 import java.util.Optional;
@@ -23,7 +26,7 @@ public class Hotel extends AbstractEntity implements Saleable {
 
     @Id
     @Column(name = "hotel_id")
-    @GeneratedValue(strategy = GenerationType.TABLE,generator = GENERATOR_NAME)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = GENERATOR_NAME)
     private Long hotelId;
 
     @Nonnull
@@ -50,7 +53,7 @@ public class Hotel extends AbstractEntity implements Saleable {
 
     @Override
     public void startSale() {
-        if(this.saleState!=SaleState.STARTED){
+        if (this.saleState != SaleState.STARTED) {
             this.saleState = SaleState.STARTED;
             addEvent(new HotelOpened(this));
         }
