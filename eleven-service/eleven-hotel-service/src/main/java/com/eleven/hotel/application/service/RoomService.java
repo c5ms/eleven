@@ -24,17 +24,17 @@ public class RoomService {
     private final HotelRepository hotelRepository;
 
     @Transactional(readOnly = true)
-    public Collection<Room> listRoom(Integer hotelId) {
+    public Collection<Room> listRoom(Long hotelId) {
         return roomRepository.findRoomsByHotelId(hotelId);
     }
 
     @Transactional(readOnly = true)
-    public Optional<Room> readRoom(Integer hotelId, Integer roomId) {
+    public Optional<Room> readRoom(Long hotelId, Long roomId) {
         return roomRepository.findByHotelIdAndRoomId(hotelId, roomId);
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Room createRoom(Integer hotelId, RoomCreateCommand command) {
+    public Room createRoom(Long hotelId, RoomCreateCommand command) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(NoPrincipalException::new);
         var room = new Room(hotel.getHotelId(), command.getBasic(), command.getRestriction());
         roomManager.validate(room);
@@ -43,13 +43,13 @@ public class RoomService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void deleteRoom(Integer hotelId, Integer roomId) {
+    public void deleteRoom(Long hotelId, Long roomId) {
         var room = roomRepository.findByHotelIdAndRoomId(hotelId, roomId).orElseThrow(HotelContext::noPrincipalException);
         roomRepository.delete(room);
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Room updateRoom(Integer hotelId, Integer roomId, RoomUpdateCommand command) {
+    public Room updateRoom(Long hotelId, Long roomId, RoomUpdateCommand command) {
         var room = roomRepository.findByHotelIdAndRoomId(hotelId, roomId).orElseThrow(HotelContext::noPrincipalException);
 
         Optional.ofNullable(command.getBasic()).ifPresent(room::setBasic);

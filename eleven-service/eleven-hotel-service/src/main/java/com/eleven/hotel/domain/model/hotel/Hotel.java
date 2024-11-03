@@ -24,7 +24,7 @@ public class Hotel extends AbstractEntity implements Saleable {
     @Id
     @Column(name = "hotel_id")
     @GeneratedValue(strategy = GenerationType.TABLE,generator = GENERATOR_NAME)
-    private Integer hotelId;
+    private Long hotelId;
 
     @Nonnull
     @Column(name = "sale_state")

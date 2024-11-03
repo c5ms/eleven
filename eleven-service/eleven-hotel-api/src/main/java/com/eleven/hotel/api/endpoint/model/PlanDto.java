@@ -4,6 +4,7 @@ import com.eleven.hotel.api.domain.model.ChargeType;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import jakarta.annotation.Nullable;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,8 +21,8 @@ import java.util.List;
 @Accessors(chain = true)
 public class PlanDto {
 
-    private Integer planId;
-    private Integer hotelId;
+    private Long planId;
+    private Long hotelId;
 
     private String name;
     private String desc;
@@ -65,7 +66,7 @@ public class PlanDto {
     @Setter
     @Accessors(chain = true)
     public static class Room {
-        private Integer roomId;
+        private Long roomId;
         private Integer stock;
         private SaleState saleState;
         private ChargeType chargeType;

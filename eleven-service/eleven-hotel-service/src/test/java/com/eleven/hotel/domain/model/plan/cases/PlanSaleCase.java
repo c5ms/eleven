@@ -20,9 +20,9 @@ public class PlanSaleCase {
     private StockAmount stockAmount;
 
     public void startSale() {
-        var hotelId = 1;
-        var roomId_1 = 1;
-        var roomId_2 = 2;
+        var hotelId = 1L;
+        var roomId_1 = 1L;
+        var roomId_2 = 2L;
 
         var plan = createPlan(hotelId);
 
@@ -54,8 +54,8 @@ public class PlanSaleCase {
     }
 
     public void testIsOnSale(TestIsOnSaleExpectation testIsOnSaleExpectation) {
-        var hotelId = 1;
-        var roomId_1 = 1;
+        var hotelId = 1L;
+        var roomId_1 = 1L;
 
         var plan = createPlan(hotelId);
         plan.addProduct(roomId_1, StockAmount.of(50));
@@ -67,7 +67,7 @@ public class PlanSaleCase {
         Assertions.assertEquals(testIsOnSaleExpectation.expectPlanIsOnSale, plan.isOnSale());
     }
 
-    private Plan createPlan(int hotelId) {
+    private Plan createPlan(long hotelId) {
         return Plan.normal()
             .hotelId(hotelId)
             .saleChannels(Set.of(SaleChannel.DH))

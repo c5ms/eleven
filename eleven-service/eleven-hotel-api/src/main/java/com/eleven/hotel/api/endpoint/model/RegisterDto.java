@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 public class RegisterDto {
-    private Integer registerID;
+    private Long registerID;
     private String hotelName;
     private String hotelAddress;
     private String adminName;

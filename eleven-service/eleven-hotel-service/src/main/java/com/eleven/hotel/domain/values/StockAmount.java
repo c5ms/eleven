@@ -38,6 +38,10 @@ public class StockAmount {
         return this.count > stock.count;
     }
 
+    public boolean greaterThan(int num) {
+        return this.count > num;
+    }
+
     public boolean greaterThanZero() {
         return this.count > 0;
     }
@@ -48,6 +52,10 @@ public class StockAmount {
 
     public boolean equalsTo(StockAmount stock) {
         return this.count < stock.count;
+    }
+
+    public StockAmount subtract(int num) {
+        return StockAmount.of(this.count-num);
     }
 
 }

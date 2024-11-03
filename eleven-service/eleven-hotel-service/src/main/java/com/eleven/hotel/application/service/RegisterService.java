@@ -30,7 +30,7 @@ public class RegisterService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void review(Integer registerId,RegisterReviewCommand command) {
+    public void review(Long registerId,RegisterReviewCommand command) {
         var register = registerRepository.findById(registerId).orElseThrow(HotelContext::noPrincipalException);
         if (command.isPass()) {
 

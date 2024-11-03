@@ -20,10 +20,10 @@ public class Booking extends AbstractEntity {
     @Id
     @Column(name = "booking_id")
     @GeneratedValue(strategy = GenerationType.TABLE, generator = GENERATOR_NAME)
-    private Integer bookingId;
+    private Long bookingId;
 
     @Column(name = "traveler_id")
-    private Integer travelerId;
+    private Long travelerId;
 
     @Column(name = "person_count")
     private Integer personCount;
@@ -33,10 +33,10 @@ public class Booking extends AbstractEntity {
     private HotelInfo hotelInfo;
 
     @Column(name = "plan_id")
-    private Integer planId;
+    private Long planId;
 
     @Column(name = "room_id")
-    private Integer roomId;
+    private Long roomId;
 
     @Embedded
     @AttributeOverride(name = "start", column = @Column(name = "check_in_date"))
@@ -46,10 +46,13 @@ public class Booking extends AbstractEntity {
     @Column(name = "amount")
     private BigDecimal amount;
 
-    public Booking(Integer travelerId,
+    protected Booking() {
+    }
+
+    public Booking(Long travelerId,
                    HotelInfo hotelInfo,
-                   Integer planId,
-                   Integer roomId,
+                   Long planId,
+                   Long roomId,
                    Integer personCount,
                    DateRange stayPeriod,
                    BigDecimal amount) {

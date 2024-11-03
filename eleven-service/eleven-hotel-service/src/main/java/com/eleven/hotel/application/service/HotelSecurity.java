@@ -11,7 +11,7 @@ public class HotelSecurity {
 
     private final HotelRepository hotelRepository;
 
-    public boolean accessHotel(Integer hotelId) {
+    public boolean accessHotel(Long hotelId) {
         return hotelRepository.findById(hotelId)
             .map(HotelContext::mustWritable)
             .orElseThrow(HotelContext::noPrincipalException);

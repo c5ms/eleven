@@ -14,9 +14,9 @@ import lombok.Setter;
 @IntegrationEvent
 public class HotelCreatedEvent extends AbstractApplicationEvent {
 
-    private Integer hotelId;
+    private Long hotelId;
 
-    public static HotelCreatedEvent of(Integer hotelId) {
+    public static HotelCreatedEvent of(Long hotelId) {
         var event = new HotelCreatedEvent();
         event.setHotelId(hotelId);
         return event;

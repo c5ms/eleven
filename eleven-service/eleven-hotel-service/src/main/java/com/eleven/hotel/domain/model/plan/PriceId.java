@@ -20,15 +20,15 @@ public class PriceId implements Serializable {
 
     @Nonnull
     @Column(name = "hotel_id")
-    private Integer hotelId;
+    private Long hotelId;
 
     @Nonnull
     @Column(name = "plan_id")
-    private Integer planId;
+    private Long planId;
 
     @Nonnull
     @Column(name = "room_id")
-    private Integer roomId;
+    private Long roomId;
 
     @Nonnull
     @Enumerated(EnumType.STRING)

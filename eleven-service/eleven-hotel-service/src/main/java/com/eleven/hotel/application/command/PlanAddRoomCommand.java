@@ -7,6 +7,6 @@ import lombok.Getter;
 @Getter
 @Builder
 public class PlanAddRoomCommand {
-    private Integer roomId;
+    private Long roomId;
     private StockAmount stock;
 }

@@ -32,20 +32,20 @@ public class PlanMerchantApi {
 
     @Operation(summary = "query plan")
     @GetMapping
-    public PageResult<PlanDto> queryPlan(@PathVariable("hotelId") Integer hotelId, @ParameterObject @Validated PlanQueryRequest request) {
+    public PageResult<PlanDto> queryPlan(@PathVariable("hotelId") Long hotelId, @ParameterObject @Validated PlanQueryRequest request) {
         var query = planConvertor.toQuery(request);
         return planService.queryPage(hotelId, query, request.toPagerequest()).map(planConvertor::toDto);
     }
 
     @Operation(summary = "read plan")
     @GetMapping("/{planId:[0-9]+}")
-    public Optional<PlanDto> readPlan(@PathVariable("hotelId") Integer hotelId, @PathVariable("planId") Integer planId) {
+    public Optional<PlanDto> readPlan(@PathVariable("hotelId") Long hotelId, @PathVariable("planId") Long planId) {
         return planService.readPlan(hotelId, planId).map(planConvertor::toDetail);
     }
 
     @Operation(summary = "create plan")
     @PostMapping
-    public PlanDto createPlan(@PathVariable("hotelId") Integer hotelId, @RequestBody @Validated PlanCreateRequest request) {
+    public PlanDto createPlan(@PathVariable("hotelId") Long hotelId, @RequestBody @Validated PlanCreateRequest request) {
         var command = planConvertor.toCommand(request);
         var plan = planService.createPlan(hotelId, command);
         return planConvertor.toDetail(plan);
@@ -53,24 +53,24 @@ public class PlanMerchantApi {
 
     @Operation(summary = "add room")
     @PostMapping("/{planId:[0-9]+}/rooms")
-    public void addRoom(@PathVariable("hotelId") Integer hotelId, @PathVariable("planId") Integer planId, @RequestBody @Validated PlanAddRoomRequest request) {
+    public void addRoom(@PathVariable("hotelId") Long hotelId, @PathVariable("planId") Long planId, @RequestBody @Validated PlanAddRoomRequest request) {
         var command = planConvertor.toCommand(request);
         planService.addRoom(hotelId, planId, command);
     }
 
     @Operation(summary = "start sale")
     @PostMapping("/{planId:[0-9]+}/rooms/{roomId:[0-9]+}/commands/startSale")
-    public void startSaleProduct(@PathVariable("hotelId") Integer hotelId,
-                                 @PathVariable("planId") Integer planId,
-                                 @PathVariable("roomId") Integer roomId) {
+    public void startSaleProduct(@PathVariable("hotelId") Long hotelId,
+                                 @PathVariable("planId") Long planId,
+                                 @PathVariable("roomId") Long roomId) {
         planService.startSale(hotelId, planId, roomId);
     }
 
     @Operation(summary = "stop sale")
     @PostMapping("/{planId:[0-9]+}/rooms/{roomId:[0-9]+}/commands/stopSale")
-    public void stopSaleProduct(@PathVariable("hotelId") Integer hotelId,
-                                @PathVariable("planId") Integer planId,
-                                @PathVariable("roomId") Integer roomId) {
+    public void stopSaleProduct(@PathVariable("hotelId") Long hotelId,
+                                @PathVariable("planId") Long planId,
+                                @PathVariable("roomId") Long roomId) {
         planService.stopSale(hotelId, planId, roomId);
     }
 

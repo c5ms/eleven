@@ -6,8 +6,8 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface PlanRepository extends BaseJpaRepository<Plan, Integer>, JpaSpecificationExecutor<Plan> {
+public interface PlanRepository extends BaseJpaRepository<Plan, Long>, JpaSpecificationExecutor<Plan> {
 
-    Optional<Plan> findByHotelIdAndPlanId(@Param("hotelId") Integer hotelId, @Param("planId") Integer planId);
+    Optional<Plan> findByHotelIdAndPlanId(@Param("hotelId") Long hotelId, @Param("planId") Long planId);
 
 }

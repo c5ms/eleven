@@ -13,7 +13,7 @@ import lombok.experimental.FieldNameConstants;
 import org.apache.commons.lang3.Validate;
 
 
-@Table(name = "hms_room")
+@Table(name = "hms_hotel_room")
 @Entity
 @Getter
 @Setter(AccessLevel.PROTECTED)
@@ -24,10 +24,10 @@ public class Room extends AbstractEntity implements Saleable {
     @Id
     @Column(name = "room_id")
     @GeneratedValue(strategy = GenerationType.TABLE,generator = GENERATOR_NAME)
-    private Integer roomId;
+    private Long roomId;
 
     @Column(name = "hotel_id")
-    private Integer hotelId;
+    private Long hotelId;
 
     @Column(name = "sale_state")
     @Enumerated(EnumType.STRING)
@@ -43,9 +43,9 @@ public class Room extends AbstractEntity implements Saleable {
 
     @Version
     @Column(name = "update_version")
-    private Integer version;
+    private Long version;
 
-    public Room(Integer hotelId, RoomBasic basic, RoomRestriction restriction) {
+    public Room(Long hotelId, RoomBasic basic, RoomRestriction restriction) {
         this.setHotelId(hotelId);
         this.setSaleState(SaleState.STOPPED);
         this.setBasic(basic);

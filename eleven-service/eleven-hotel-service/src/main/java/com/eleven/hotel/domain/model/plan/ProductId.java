@@ -15,15 +15,15 @@ import java.io.Serializable;
 public class ProductId implements Serializable {
 
     @Column(name = "hotel_id")
-    private Integer hotelId;
+    private Long hotelId;
 
     @Column(name = "plan_id")
-    private Integer planId;
+    private Long planId;
 
     @Column(name = "room_id")
-    private Integer roomId;
+    private Long roomId;
 
-    public static ProductId of(Integer hotelId, Integer planId, Integer roomId) {
+    public static ProductId of(Long hotelId, Long planId, Long roomId) {
         ProductId productId = new ProductId();
         productId.hotelId = hotelId;
         productId.planId = planId;

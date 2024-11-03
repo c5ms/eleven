@@ -17,7 +17,7 @@ public class HotelInfo {
 
     @Id
     @Column(name = "hotel_id")
-    private Integer hotelId;
+    private Long hotelId;
 
     @Column(name = "hotel_name", nullable = false)
     private String name;

@@ -53,7 +53,7 @@ public class PlanCreateRequest {
     @Schema(example = "2024-05-30")
     private LocalDate stayEndDate;
 
-    private List<Integer> rooms = new ArrayList<>();
+    private List<Long> rooms = new ArrayList<>();
 
     private Set<SaleChannel> channels;
 }

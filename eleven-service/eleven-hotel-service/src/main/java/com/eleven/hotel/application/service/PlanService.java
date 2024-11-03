@@ -6,9 +6,9 @@ import com.eleven.hotel.api.application.error.HotelErrors;
 import com.eleven.hotel.api.domain.model.SaleChannel;
 import com.eleven.hotel.application.command.PlanAddRoomCommand;
 import com.eleven.hotel.application.command.PlanCreateCommand;
+import com.eleven.hotel.application.command.StockReduceCommand;
 import com.eleven.hotel.application.query.PlanQuery;
 import com.eleven.hotel.application.support.HotelContext;
-import com.eleven.hotel.domain.manager.PlanManager;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.model.hotel.RoomRepository;
@@ -41,16 +41,15 @@ public class PlanService {
     private final PlanRepository planRepository;
     private final HotelRepository hotelRepository;
     private final RoomRepository roomRepository;
-    private final PlanManager planManager;
     private final InventoryRepository inventoryRepository;
 
-    public Optional<Plan> readPlan(Integer hotelId, Integer planId) {
+    public Optional<Plan> readPlan(Long hotelId, Long planId) {
         return planRepository.findByHotelIdAndPlanId(hotelId, planId)
             .filter(HotelContext::mustReadable);
     }
 
     @Transactional(readOnly = true)
-    public PageResult<Plan> queryPage(Integer hotelId, PlanQuery query, Pageable pageable) {
+    public PageResult<Plan> queryPage(Long hotelId, PlanQuery query, Pageable pageable) {
         hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
         Specification<Plan> specification = Specifications.<Plan>and()
             .like(StringUtils.isNotBlank(query.getPlanName()), Plan.Fields.basic + "." + PlanBasic.Fields.name, "%" + query.getPlanName() + "%")
@@ -61,7 +60,7 @@ public class PlanService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Plan createPlan(Integer hotelId, PlanCreateCommand command) {
+    public Plan createPlan(Long hotelId, PlanCreateCommand command) {
         // verify the hotel is existing
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
 
@@ -115,7 +114,7 @@ public class PlanService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void addRoom(Integer hotelId, Integer planId, PlanAddRoomCommand command) {
+    public void addRoom(Long hotelId, Long planId, PlanAddRoomCommand command) {
         var plan = planRepository.findByHotelIdAndPlanId(hotelId, planId).orElseThrow(HotelContext::noPrincipalException);
         var room = roomRepository.findByHotelIdAndRoomId(hotelId, command.getRoomId()).orElseThrow(HotelContext::noEntityException);
         var stock = command.getStock();
@@ -124,7 +123,7 @@ public class PlanService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void startSale(Integer hotelId, Integer planId, Integer roomId) {
+    public void startSale(Long hotelId, Long planId, Long roomId) {
         var plan = planRepository.findByHotelIdAndPlanId(hotelId, planId).orElseThrow(HotelContext::noPrincipalException);
         DomainContext.must(plan.hasProduct(roomId), HotelErrors.PLAN_NO_SUCH_ROOM);
         DomainContext.must(plan.hasStock(roomId), HotelErrors.PLAN_PRODUCT_NO_STOCK);
@@ -132,9 +131,16 @@ public class PlanService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void stopSale(Integer hotelId, Integer planId, Integer roomId) {
+    public void stopSale(Long hotelId, Long planId, Long roomId) {
         var plan = planRepository.findByHotelIdAndPlanId(hotelId, planId).orElseThrow(HotelContext::noPrincipalException);
         DomainContext.must(plan.hasProduct(roomId), HotelErrors.PLAN_NO_SUCH_ROOM);
         plan.stopSale(roomId);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void reduceStock(Long hotelId, Long planId, Long roomId, StockReduceCommand command) {
+        var inventory = inventoryRepository.findByHotelIdAndPlanIdAndRoomId(hotelId, planId, roomId).orElseThrow(HotelContext::noPrincipalException);
+        inventory.reduce(command.getAmount());
+        inventoryRepository.updateAndFlush(inventory);
     }
 }

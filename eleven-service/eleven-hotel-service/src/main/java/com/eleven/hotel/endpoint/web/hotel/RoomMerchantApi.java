@@ -30,7 +30,7 @@ public class RoomMerchantApi {
 
     @Operation(summary = "list room")
     @GetMapping
-    public List<RoomDto> listRoom(@PathVariable("hotelId") Integer hotelId) {
+    public List<RoomDto> listRoom(@PathVariable("hotelId") Long hotelId) {
         return roomService.listRoom(hotelId)
             .stream()
             .map(roomConvertor::toDto)
@@ -39,14 +39,14 @@ public class RoomMerchantApi {
 
     @Operation(summary = "read room")
     @GetMapping("/{roomId:[0-9]+}")
-    public Optional<RoomDto> readRoom(@PathVariable("hotelId") Integer hotelId, @PathVariable("roomId") Integer roomId) {
+    public Optional<RoomDto> readRoom(@PathVariable("hotelId") Long hotelId, @PathVariable("roomId") Long roomId) {
         return roomService.readRoom(hotelId, roomId)
             .map(roomConvertor::toDto);
     }
 
     @Operation(summary = "create room")
     @PostMapping
-    public RoomDto createRoom(@PathVariable("hotelId") Integer hotelId, @RequestBody @Validated RoomCreateRequest request) {
+    public RoomDto createRoom(@PathVariable("hotelId") Long hotelId, @RequestBody @Validated RoomCreateRequest request) {
         var command = roomConvertor.toCommand(request);
         var room = roomService.createRoom(hotelId, command);
         return roomConvertor.toDto(room);
@@ -54,8 +54,8 @@ public class RoomMerchantApi {
 
     @Operation(summary = "update room")
     @PutMapping("/{roomId:[0-9]+}")
-    public RoomDto updateRoom(@PathVariable("hotelId") Integer hotelId,
-                              @PathVariable("roomId") Integer roomId,
+    public RoomDto updateRoom(@PathVariable("hotelId") Long hotelId,
+                              @PathVariable("roomId") Long roomId,
                               @RequestBody @Validated RoomUpdateRequest request) {
         var command = roomConvertor.toCommand(request);
         var room = roomService.updateRoom(hotelId, roomId, command);
@@ -64,7 +64,7 @@ public class RoomMerchantApi {
 
     @Operation(summary = "delete room")
     @DeleteMapping("/{roomId:[0-9]+}")
-    public void deleteRoom(@PathVariable("hotelId") Integer hotelId, @PathVariable("roomId") Integer roomId) {
+    public void deleteRoom(@PathVariable("hotelId") Long hotelId, @PathVariable("roomId") Long roomId) {
         roomService.deleteRoom(hotelId, roomId);
     }
 

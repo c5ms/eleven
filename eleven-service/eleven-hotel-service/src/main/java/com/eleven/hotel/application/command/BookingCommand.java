@@ -8,10 +8,10 @@ import lombok.Getter;
 @Getter
 @Builder
 public class BookingCommand {
-    private Integer hotelId;
-    private Integer planId;
-    private Integer roomId;
-    private SaleChannel saleChannel;
+    private Long hotelId;
+    private Long planId;
+    private Long roomId;
     private Integer personCount;
+    private SaleChannel saleChannel;
     private DateRange stayPeriod;
 }

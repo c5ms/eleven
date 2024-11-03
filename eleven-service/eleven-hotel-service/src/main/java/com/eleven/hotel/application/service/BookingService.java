@@ -23,7 +23,7 @@ public class BookingService {
         var charge = bookingCharger.charge(command.getHotelId(), command.getPlanId(), command.getRoomId(), command.getSaleChannel(), command.getPersonCount());
 
         var booking = new Booking(
-            1,
+            1L,
             hotel,
             command.getHotelId(),
             command.getPlanId(),

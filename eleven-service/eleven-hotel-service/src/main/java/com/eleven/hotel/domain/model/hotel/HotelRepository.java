@@ -10,6 +10,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.Optional;
 
-public interface HotelRepository extends BaseJpaRepository<Hotel, Integer>, JpaSpecificationExecutor<Hotel> {
+public interface HotelRepository extends BaseJpaRepository<Hotel, Long>, JpaSpecificationExecutor<Hotel> {
 
 }

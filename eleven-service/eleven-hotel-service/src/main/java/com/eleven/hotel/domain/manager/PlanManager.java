@@ -18,7 +18,6 @@ public class PlanManager {
 
     private final List<PlanValidator> planValidators;
     private final InventoryRepository inventoryRepository;
-
     public void validate(Plan plan) {
         for (PlanValidator validator : planValidators) {
             validator.validate(plan).ifPresent(DomainError::throwException);

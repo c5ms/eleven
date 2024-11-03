@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 public class MockBookingCharger implements BookingCharger {
 
     @Override
-    public ChargeResult charge(Integer hotelId, Integer planId, Integer roomId, SaleChannel saleChannel, int persons) {
+    public ChargeResult charge(Long hotelId, Long planId, Long roomId, SaleChannel saleChannel, int persons) {
         var result = new ChargeResult();
         result.setAmount(BigDecimal.valueOf(5400));
         return result;

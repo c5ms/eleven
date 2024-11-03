@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldNameConstants;
 
-@Table(name = "hms_register")
+@Table(name = "hms_hotel_register")
 @Entity
 @Getter
 @Setter(AccessLevel.PROTECTED)
@@ -19,10 +19,10 @@ public class Register extends AbstractEntity {
     @Id
     @Column(name = "register_id")
     @GeneratedValue(strategy = GenerationType.TABLE,generator = GENERATOR_NAME)
-    private Integer registerId;
+    private Long registerId;
 
     @Column(name = "hotel_id")
-    private Integer hotelId;
+    private Long hotelId;
 
     @Embedded
     private HotelInformation hotel;

@@ -57,7 +57,7 @@ public class Product {
     @Column(name = "sale_state")
     private SaleState saleState;
 
-    protected Product(Plan plan, Integer roomId, StockAmount stockAmount) {
+    protected Product(Plan plan, Long roomId, StockAmount stockAmount) {
         this.productId = ProductId.of(plan.getHotelId(), plan.getPlanId(), roomId);
         this.stockAmount = stockAmount;
         this.saleChannels = new HashSet<>();

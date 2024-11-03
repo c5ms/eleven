@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 @IntegrationEvent
 public class PlanStartedSaleEvent extends AbstractApplicationEvent {
 
-    private Integer planId;
+    private Long planId;
 
 
 }

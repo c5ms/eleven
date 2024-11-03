@@ -6,7 +6,7 @@ import lombok.*;
 import lombok.experimental.FieldNameConstants;
 
 
-@Table(name = "hms_admin")
+@Table(name = "hms_hotel_admin")
 @Entity
 @Getter
 @Setter(AccessLevel.PROTECTED)
@@ -17,15 +17,15 @@ public class Admin extends AbstractEntity {
     @Id
     @Column(name = "admin_id")
     @GeneratedValue(strategy = GenerationType.TABLE,generator = GENERATOR_NAME)
-    private Integer adminId;
+    private Long adminId;
 
     @Column(name = "hotel_id")
-    private Integer hotelId;
+    private Long hotelId;
 
     @Embedded
     private Description description;
 
-    public Admin(Integer hotelId, Description description) {
+    public Admin(Long hotelId, Description description) {
         this.setHotelId(hotelId);
         this.setDescription(description);
     }

@@ -26,7 +26,7 @@ public class MerchantSecurityInterceptor implements HandlerInterceptor {
             var variables = getAccess(request);
 
 //            Optional.ofNullable(variables.get("hotelId"))
-//                .map(Integer::parseInt)
+//                .map(Long::parseInt)
 //                .flatMap(hotelRepository::read)
 //                .ifPresentOrElse(ApplicationHelper::mustWritable, WebHelper::notFoundException);
         }

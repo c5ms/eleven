@@ -34,26 +34,26 @@ public class HotelMerchantApi {
 
     @Operation(summary = "read hotel")
     @GetMapping("/{hotelId:[0-9]+}")
-    public Optional<HotelDto> readHotel(@PathVariable("hotelId") Integer hotelId) {
+    public Optional<HotelDto> readHotel(@PathVariable("hotelId") Long hotelId) {
         return hotelService.read(hotelId).map(hotelConvertor::toDto);
     }
 
     @Operation(summary = "update hotel")
     @PostMapping("/{hotelId:[0-9]+}")
-    public void update(@PathVariable("hotelId") Integer hotelId, @RequestBody @Validated HotelUpdateRequest request) {
+    public void update(@PathVariable("hotelId") Long hotelId, @RequestBody @Validated HotelUpdateRequest request) {
         var command = hotelConvertor.toCommand(request);
         hotelService.update(hotelId, command);
     }
 
     @Operation(summary = "open hotel")
     @PostMapping("/{hotelId:[0-9]+}/commands/open")
-    public void openHotel(@PathVariable("hotelId") Integer hotelId) {
+    public void openHotel(@PathVariable("hotelId") Long hotelId) {
         hotelService.open(hotelId);
     }
 
     @Operation(summary = "close hotel")
     @PostMapping("/{hotelId:[0-9]+]}/commands/close")
-    public void closeHotel(@PathVariable("hotelId") Integer hotelId) {
+    public void closeHotel(@PathVariable("hotelId") Long hotelId) {
         hotelService.read(hotelId)
             .filter(HotelContext::mustWritable)
             .orElseThrow(WebContext::notFoundException);
@@ -64,8 +64,8 @@ public class HotelMerchantApi {
     @GetMapping("/test")
     public void test() {
         SpringUtil.getBean(BookingService.class).book(BookingCommand.builder()
-                .hotelId(2)
-                .planId(3410)
+                .hotelId(2L)
+                .planId(3410L)
                 .personCount(4)
                 .saleChannel(SaleChannel.DH)
             .build());

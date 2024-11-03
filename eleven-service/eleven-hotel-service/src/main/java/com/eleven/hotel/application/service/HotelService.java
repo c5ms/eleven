@@ -34,7 +34,7 @@ public class HotelService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Hotel> read(Integer hotelId) {
+    public Optional<Hotel> read(Long hotelId) {
         return hotelRepository.findById(hotelId);
     }
 
@@ -47,7 +47,7 @@ public class HotelService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void update(Integer hotelId, HotelUpdateCommand command) {
+    public void update(Long hotelId, HotelUpdateCommand command) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
 
         Optional.ofNullable(command.getBasic()).ifPresent(hotel::setBasic);
@@ -59,14 +59,14 @@ public class HotelService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void open(Integer hotelId) {
+    public void open(Long hotelId) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
         hotel.startSale();
         hotelRepository.update(hotel);
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void close(Integer hotelId) {
+    public void close(Long hotelId) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
         hotel.stopSale();
         hotelRepository.update(hotel);

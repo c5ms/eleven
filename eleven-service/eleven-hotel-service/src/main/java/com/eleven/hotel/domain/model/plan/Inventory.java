@@ -1,6 +1,5 @@
 package com.eleven.hotel.domain.model.plan;
 
-import com.eleven.hotel.api.domain.model.SaleChannel;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import com.eleven.hotel.domain.values.StockAmount;
 import jakarta.persistence.*;
@@ -8,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
+import org.apache.commons.lang3.Validate;
 
 import java.time.LocalDate;
 
@@ -21,39 +21,44 @@ public class Inventory extends AbstractEntity {
     @Id
     @Column(name = "inventory_id")
     @GeneratedValue(strategy = GenerationType.TABLE, generator = GENERATOR_NAME)
-    private Integer inventoryId;
+    private Long inventoryId;
 
     @Column(name = "hotel_id")
-    private Integer hotelId;
+    private Long hotelId;
 
     @Column(name = "plan_id")
-    private Integer planId;
+    private Long planId;
 
     @Column(name = "room_id")
-    private Integer roomId;
+    private Long roomId;
 
     @Column(name = "sale_date")
     private LocalDate date;
 
     @Embedded
-    @AttributeOverride(name = "count", column = @Column(name = "stock_count"))
-    private StockAmount stockAmount;
+    @AttributeOverride(name = "count", column = @Column(name = "stock_total"))
+    private StockAmount stockTotal;
 
-    @Column(name = "sale_channel")
-    @Enumerated(EnumType.STRING)
-    private SaleChannel saleChannel;
+    @Embedded
+    @AttributeOverride(name = "count", column = @Column(name = "stock_left"))
+    private StockAmount stockLeft;
 
     public Inventory() {
     }
 
-    public static Inventory of(ProductId productId, StockAmount stockAmount, SaleChannel saleChannel, LocalDate date) {
+    public static Inventory of(ProductId productId, LocalDate date, StockAmount stockAmount) {
         Inventory inventory = new Inventory();
         inventory.setHotelId(productId.getHotelId());
         inventory.setPlanId(productId.getPlanId());
         inventory.setRoomId(productId.getRoomId());
-        inventory.setSaleChannel(saleChannel);
         inventory.setDate(date);
-        inventory.setStockAmount(stockAmount);
+        inventory.setStockTotal(stockAmount);
+        inventory.setStockLeft(stockAmount);
         return inventory;
+    }
+
+    public void reduce(int amount) {
+        Validate.isTrue(this.stockLeft.greaterThan(amount), "no su much stock left");
+        this.setStockLeft(this.stockLeft.subtract(amount));
     }
 }

@@ -15,6 +15,6 @@ public class ResourceIdConverter implements Converter<String, ResourceId> {
         if (StringUtils.isBlank(dig)) {
             throw WebContext.notFoundException();
         }
-        return new ResourceId(Integer.parseInt(dig));
+        return new ResourceId(Long.parseLong(dig));
     }
 }

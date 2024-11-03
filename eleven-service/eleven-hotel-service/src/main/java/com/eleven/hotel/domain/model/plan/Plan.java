@@ -36,10 +36,10 @@ public class Plan extends AbstractEntity implements Saleable {
     @Id
     @Column(name = "plan_id")
     @GeneratedValue(strategy = GenerationType.TABLE, generator = GENERATOR_NAME)
-    private Integer planId;
+    private Long planId;
 
     @Column(name = "hotel_id")
-    private Integer hotelId;
+    private Long hotelId;
 
     @Column(name = "is_private")
     private Boolean isPrivate;
@@ -110,7 +110,7 @@ public class Plan extends AbstractEntity implements Saleable {
 
     @SuppressWarnings("unused")
     @Builder(builderClassName = "normalBuilder", builderMethodName = "normal", buildMethodName = "create")
-    public static Plan createNormal(Integer hotelId,
+    public static Plan createNormal(Long hotelId,
                                     StockAmount stockAmount,
                                     DateRange stayPeriod,
                                     Set<SaleChannel> saleChannels,
@@ -140,14 +140,14 @@ public class Plan extends AbstractEntity implements Saleable {
         Validate.notNull(this.planId, "the plan has not been created");
 
         List<Inventory> inventories = new ArrayList<>();
+
         for (Product product : getProducts()) {
-            for (SaleChannel saleChannel : product.getSaleChannels()) {
-                getStayPeriod()
-                    .dates()
-                    .map(localDate -> Inventory.of(product.getProductId(), product.getStockAmount(), saleChannel, localDate))
-                    .forEach(inventories::add);
-            }
+            getStayPeriod()
+                .dates()
+                .map(localDate -> Inventory.of(product.getProductId(), localDate, product.getStockAmount()))
+                .forEach(inventories::add);
         }
+
         return inventories;
     }
 
@@ -169,13 +169,13 @@ public class Plan extends AbstractEntity implements Saleable {
     }
 
 
-    public void startSale(Integer roomId) {
+    public void startSale(Long roomId) {
         var product = requireRoom(roomId);
         product.startSale();
         this.startSale();
     }
 
-    public void stopSale(Integer roomId) {
+    public void stopSale(Long roomId) {
         var product = requireRoom(roomId);
         product.stopSale();
 
@@ -198,19 +198,19 @@ public class Plan extends AbstractEntity implements Saleable {
         return salePeriod.isCurrent();
     }
 
-    public Product addProduct(Integer roomId, StockAmount stock) {
+    public Product addProduct(Long roomId, StockAmount stock) {
         var planRoom = new Product(this, roomId, stock);
         planRoom.setSaleChannels(this.saleChannels);
         this.products.put(planRoom.getProductId(), planRoom);
         return planRoom;
     }
 
-    public void setPrice(Integer roomId, SaleChannel saleChannel, BigDecimal wholeRoomPrice) {
+    public void setPrice(Long roomId, SaleChannel saleChannel, BigDecimal wholeRoomPrice) {
         var product = requireRoom(roomId);
         product.setPrice(saleChannel, wholeRoomPrice);
     }
 
-    public void setPrice(Integer roomId,
+    public void setPrice(Long roomId,
                          SaleChannel saleChannel,
                          BigDecimal onePersonPrice,
                          BigDecimal twoPersonPrice,
@@ -222,16 +222,16 @@ public class Plan extends AbstractEntity implements Saleable {
     }
 
 
-    public Optional<Product> findRoom(Integer roomId) {
+    public Optional<Product> findRoom(Long roomId) {
         var id = ProductId.of(hotelId, planId, roomId);
         return Optional.ofNullable(this.products.get(id));
     }
 
-    public Product requireRoom(Integer roomId) {
+    public Product requireRoom(Long roomId) {
         return this.findRoom(roomId).orElseThrow(() -> new IllegalArgumentException("the room does not exist"));
     }
 
-    public BigDecimal charge(Integer roomId, SaleChannel saleChannel, int personCount) {
+    public BigDecimal charge(Long roomId, SaleChannel saleChannel, int personCount) {
         return this.requireRoom(roomId)
             .findPrice(saleChannel)
             .orElseThrow(() -> new IllegalArgumentException("the room with such channel not exist"))
@@ -242,15 +242,15 @@ public class Plan extends AbstractEntity implements Saleable {
         return MapUtils.isNotEmpty(this.products);
     }
 
-    public boolean hasProduct(Integer roomID) {
+    public boolean hasProduct(Long roomID) {
         return this.products.containsKey(ProductId.of(hotelId, planId, roomID));
     }
 
-    public boolean hasStock(Integer roomID) {
+    public boolean hasStock(Long roomID) {
         return this.requireRoom(roomID).hasStock();
     }
 
-    public boolean isOnSale(int roomId) {
+    public boolean isOnSale(Long roomId) {
         return this.findRoom(roomId)
             .map(Product::isOnSale)
             .orElse(false);

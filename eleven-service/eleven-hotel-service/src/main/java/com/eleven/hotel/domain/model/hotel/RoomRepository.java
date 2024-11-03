@@ -6,9 +6,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.Collection;
 import java.util.Optional;
 
-public interface RoomRepository extends BaseJpaRepository<Room, Integer> {
+public interface RoomRepository extends BaseJpaRepository<Room, Long> {
 
-    Collection<Room> findRoomsByHotelId(Integer hotelId);
+    Collection<Room> findRoomsByHotelId(Long hotelId);
 
-    Optional<Room> findByHotelIdAndRoomId(@Param("hotelId") Integer hotelId, @Param("roomId") Integer roomId);
+    Optional<Room> findByHotelIdAndRoomId(@Param("hotelId") Long hotelId, @Param("roomId") Long roomId);
 }

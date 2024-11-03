@@ -19,6 +19,6 @@ public class PlanCreateCommand {
     private DateTimeRange preSellPeriod;
     private DateRange stayPeriod;
     private PlanBasic basic;
-    private List<Integer> rooms;
+    private List<Long> rooms;
     private Set<SaleChannel> channels;
 }

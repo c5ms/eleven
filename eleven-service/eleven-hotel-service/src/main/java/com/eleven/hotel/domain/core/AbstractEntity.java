@@ -21,10 +21,11 @@ import java.util.List;
 @EntityListeners(AbstractEntityListener.class)
 @FieldNameConstants
 @MappedSuperclass
-@TableGenerator(table = "hms_sequences", name = AbstractEntity.GENERATOR_NAME)
+@TableGenerator(table = AbstractEntity.GENERATOR_TABLE, name = AbstractEntity.GENERATOR_NAME, allocationSize = 5)
 public abstract class AbstractEntity {
 
     public static final String GENERATOR_NAME = "hms_generator";
+    public static final String GENERATOR_TABLE = "hms_sequences";
 
     @Getter(AccessLevel.PROTECTED)
     private transient final @Transient List<DomainEvent> domainEvents = new ArrayList<>();

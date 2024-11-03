@@ -23,7 +23,7 @@ public class HotelInnerApi implements HotelClient {
     private final HotelRepository hotelRepository;
 
     @Override
-    public Optional<HotelDto> readHotel(@RequestParam("id") Integer id) {
+    public Optional<HotelDto> readHotel(@RequestParam("id") Long id) {
         return hotelRepository.findById(id).map(hotelConvertor::toDto);
     }
 }

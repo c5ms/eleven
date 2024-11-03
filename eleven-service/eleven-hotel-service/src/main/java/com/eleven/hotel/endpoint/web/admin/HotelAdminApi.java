@@ -30,7 +30,7 @@ public class HotelAdminApi {
 
     @Operation(summary = "read hotel")
     @GetMapping("/{hotelId:[0-9]+}")
-    public Optional<HotelDto> readHotel(@PathVariable("hotelId") Integer hotelId) {
+    public Optional<HotelDto> readHotel(@PathVariable("hotelId") Long hotelId) {
         return hotelService.read(hotelId).map(hotelConvertor::toDto);
     }
 

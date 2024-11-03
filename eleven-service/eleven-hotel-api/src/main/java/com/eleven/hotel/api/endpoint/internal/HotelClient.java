@@ -16,6 +16,6 @@ public interface HotelClient {
 
     @Operation(summary = "read hotel")
     @GetMapping("/readHotel")
-    Optional<HotelDto> readHotel(@RequestParam("id") Integer id);
+    Optional<HotelDto> readHotel(@RequestParam("id") Long id);
 
 }
