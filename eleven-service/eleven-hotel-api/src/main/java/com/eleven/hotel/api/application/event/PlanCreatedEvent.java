@@ -2,6 +2,7 @@ package com.eleven.hotel.api.application.event;
 
 import com.eleven.core.application.event.IntegrationEvent;
 import com.eleven.core.application.event.support.AbstractApplicationEvent;
+import com.eleven.hotel.api.application.model.PlanDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -10,9 +11,8 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @IntegrationEvent
-public class PlanStartedSaleEvent extends AbstractApplicationEvent {
+public class PlanCreatedEvent extends AbstractApplicationEvent {
 
-    private Long planId;
-
+    private PlanDto plan;
 
 }

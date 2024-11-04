@@ -136,7 +136,7 @@ public class Plan extends AbstractEntity implements Saleable {
         }
     }
 
-    public List<Inventory> createProductInventories() {
+    public List<Inventory> createInventories() {
         Validate.notNull(this.planId, "the plan has not been created");
 
         var inventories = new ArrayList<Inventory>();
@@ -158,13 +158,11 @@ public class Plan extends AbstractEntity implements Saleable {
         Validate.isTrue(this.getProducts().stream().anyMatch(Product::hasStock), "the plan has no stock at all");
 
         this.setSaleState(SaleState.STARTED);
-        this.addEvent(new PlanStarted(this));
     }
 
     @Override
     public void stopSale() {
         this.saleState = SaleState.STOPPED;
-        this.addEvent(new PlanStopped(this));
     }
 
 
@@ -241,12 +239,12 @@ public class Plan extends AbstractEntity implements Saleable {
         return MapUtils.isNotEmpty(this.products);
     }
 
-    public boolean hasProduct(Long roomID) {
-        return this.products.containsKey(ProductId.of(hotelId, planId, roomID));
+    public boolean hasProduct(Long roomId) {
+        return this.products.containsKey(ProductId.of(hotelId, planId, roomId));
     }
 
-    public boolean hasStock(Long roomID) {
-        return this.requireRoom(roomID).hasStock();
+    public boolean hasStock(Long roomId) {
+        return this.requireRoom(roomId).hasStock();
     }
 
     public boolean isOnSale(Long roomId) {

@@ -2,12 +2,13 @@ package com.eleven.hotel.endpoint.web.hotel;
 
 import com.eleven.core.application.query.PageResult;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
-import com.eleven.hotel.api.endpoint.model.PlanDto;
+import com.eleven.hotel.api.application.model.PlanDto;
 import com.eleven.hotel.api.endpoint.request.PlanAddRoomRequest;
 import com.eleven.hotel.api.endpoint.request.PlanCreateRequest;
 import com.eleven.hotel.api.endpoint.request.PlanQueryRequest;
+import com.eleven.hotel.application.command.PlanSetPriceCommand;
 import com.eleven.hotel.application.service.PlanService;
-import com.eleven.hotel.endpoint.convert.PlanConvertor;
+import com.eleven.hotel.application.convert.PlanConvertor;
 import com.eleven.hotel.endpoint.support.AsMerchantApi;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -58,9 +59,19 @@ public class PlanMerchantApi {
         planService.addRoom(hotelId, planId, command);
     }
 
+
+    @Operation(summary = "set price")
+    @PostMapping("/{planId:[0-9]+}/rooms/{roomId:[0-9]+}/prices")
+    public void setPrice(@PathVariable("hotelId") Long hotelId,
+                                 @PathVariable("planId") Long planId,
+                                 @PathVariable("roomId") Long roomId) {
+        var command =PlanSetPriceCommand.builder().build();
+        planService.setPrice(hotelId, planId, roomId,command );
+    }
+
     @Operation(summary = "start sale")
     @PostMapping("/{planId:[0-9]+}/rooms/{roomId:[0-9]+}/commands/startSale")
-    public void startSaleProduct(@PathVariable("hotelId") Long hotelId,
+    public void startSale(@PathVariable("hotelId") Long hotelId,
                                  @PathVariable("planId") Long planId,
                                  @PathVariable("roomId") Long roomId) {
         planService.startSale(hotelId, planId, roomId);
@@ -68,11 +79,10 @@ public class PlanMerchantApi {
 
     @Operation(summary = "stop sale")
     @PostMapping("/{planId:[0-9]+}/rooms/{roomId:[0-9]+}/commands/stopSale")
-    public void stopSaleProduct(@PathVariable("hotelId") Long hotelId,
+    public void stopSale(@PathVariable("hotelId") Long hotelId,
                                 @PathVariable("planId") Long planId,
                                 @PathVariable("roomId") Long roomId) {
         planService.stopSale(hotelId, planId, roomId);
     }
-
 
 }

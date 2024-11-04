@@ -1,10 +1,9 @@
-package com.eleven.hotel.api.endpoint.model;
+package com.eleven.hotel.api.application.model;
 
 import com.eleven.hotel.api.domain.model.ChargeType;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.swagger.v3.oas.models.security.SecurityScheme;
 import jakarta.annotation.Nullable;
 import lombok.Getter;
 import lombok.Setter;
@@ -53,12 +52,12 @@ public class PlanDto {
     @Setter
     @Accessors(chain = true)
     public static class Price {
-        private BigDecimal wholeRoomPrice;
-        private BigDecimal onePersonPrice;
-        private BigDecimal twoPersonPrice;
-        private BigDecimal threePersonPrice;
-        private BigDecimal fourPersonPrice;
-        private BigDecimal fivePersonPrice;
+        private BigDecimal wholeRoom;
+        private BigDecimal onePerson;
+        private BigDecimal twoPerson;
+        private BigDecimal threePerson;
+        private BigDecimal fourPerson;
+        private BigDecimal fivePerson;
     }
 
 

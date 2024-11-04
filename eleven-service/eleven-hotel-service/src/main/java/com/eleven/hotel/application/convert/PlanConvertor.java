@@ -1,7 +1,7 @@
-package com.eleven.hotel.endpoint.convert;
+package com.eleven.hotel.application.convert;
 
 import com.eleven.hotel.api.domain.model.SaleChannel;
-import com.eleven.hotel.api.endpoint.model.PlanDto;
+import com.eleven.hotel.api.application.model.PlanDto;
 import com.eleven.hotel.api.endpoint.request.PlanAddRoomRequest;
 import com.eleven.hotel.api.endpoint.request.PlanCreateRequest;
 import com.eleven.hotel.api.endpoint.request.PlanQueryRequest;

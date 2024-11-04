@@ -4,14 +4,18 @@ import com.eleven.core.application.event.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
+
 @RequiredArgsConstructor
 public class ApplicationEventListener {
     private final ApplicationEventIntegrator integrator;
 
+    @Order
     @EventListener
     public void onEvent(ApplicationEvent event) throws ApplicationEventSerializeException {
         if (null == event.getClass().getAnnotation(IntegrationEvent.class)) {

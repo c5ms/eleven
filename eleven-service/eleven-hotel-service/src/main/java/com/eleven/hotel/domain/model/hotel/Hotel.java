@@ -3,9 +3,6 @@ package com.eleven.hotel.domain.model.hotel;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import com.eleven.hotel.domain.core.Saleable;
-import com.eleven.hotel.domain.model.hotel.event.HotelClosed;
-import com.eleven.hotel.domain.model.hotel.event.HotelOpened;
-import com.eleven.hotel.domain.model.hotel.event.HotelRelocated;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -55,14 +52,12 @@ public class Hotel extends AbstractEntity implements Saleable {
     public void startSale() {
         if (this.saleState != SaleState.STARTED) {
             this.saleState = SaleState.STARTED;
-            addEvent(new HotelOpened(this));
         }
     }
 
     @Override
     public void stopSale() {
         this.saleState = SaleState.STOPPED;
-        addEvent(new HotelClosed(this));
     }
 
     @Override
@@ -72,7 +67,6 @@ public class Hotel extends AbstractEntity implements Saleable {
 
     public void relocate(HotelPosition position) {
         this.position = position;
-        this.addEvent(new HotelRelocated(this));
     }
 
     @Nonnull

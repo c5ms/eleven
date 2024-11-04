@@ -1,6 +1,6 @@
-package com.eleven.hotel.endpoint.convert;
+package com.eleven.hotel.application.convert;
 
-import com.eleven.hotel.api.endpoint.model.RoomDto;
+import com.eleven.hotel.api.application.model.RoomDto;
 import com.eleven.hotel.api.endpoint.request.RoomCreateRequest;
 import com.eleven.hotel.api.endpoint.request.RoomUpdateRequest;
 import com.eleven.hotel.application.command.RoomCreateCommand;

@@ -1,13 +1,17 @@
 package com.eleven.hotel.endpoint.web.admin;
 
 import com.eleven.core.application.query.PageResult;
+import com.eleven.hotel.application.command.HotelCreateCommand;
+import com.eleven.hotel.application.query.HotelQuery;
+import com.eleven.hotel.domain.model.hotel.HotelBasic;
+import com.eleven.hotel.domain.model.hotel.HotelPosition;
 import com.eleven.hotel.endpoint.support.AsAdminApi;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
-import com.eleven.hotel.api.endpoint.model.HotelDto;
+import com.eleven.hotel.api.application.model.HotelDto;
 import com.eleven.hotel.api.endpoint.request.HotelCreateRequest;
 import com.eleven.hotel.api.endpoint.request.HotelQueryRequest;
 import com.eleven.hotel.application.service.HotelService;
-import com.eleven.hotel.endpoint.convert.HotelConvertor;
+import com.eleven.hotel.application.convert.HotelConvertor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +41,27 @@ public class HotelAdminApi {
     @Operation(summary = "create hotel")
     @PostMapping
     public HotelDto createHotel(@Validated @RequestBody HotelCreateRequest request) {
-        var command = hotelConvertor.toCommand(request);
+        var command = HotelCreateCommand.builder()
+            .basic(new HotelBasic(
+                request.getName(),
+                request.getDescription(),
+                request.getHeadPicUrl(),
+                request.getTotalRooms(),
+                request.getCheckIn(),
+                request.getCheckOut(),
+                request.getEmail(),
+                request.getTel())
+            )
+            .position(new HotelPosition(
+                request.getProvince(),
+                request.getCity(),
+                request.getDistrict(),
+                request.getStreet(),
+                request.getAddress(),
+                request.getLat(),
+                request.getLng()
+            ))
+            .build();
         var hotel=hotelService.create(command);
         return hotelConvertor.toDto(hotel);
     }
@@ -45,7 +69,9 @@ public class HotelAdminApi {
     @Operation(summary = "query hotel")
     @GetMapping
     public PageResult<HotelDto> queryHotel(@ParameterObject @Validated HotelQueryRequest request) {
-        var command = hotelConvertor.toCommand(request);
+        var command =  HotelQuery.builder()
+            .hotelName(request.getHotelName())
+            .build();
         return hotelService.query(command).map(hotelConvertor::toDto);
     }
 

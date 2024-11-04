@@ -80,20 +80,22 @@ public class Product {
     }
 
     protected void setPrice(SaleChannel saleChannel, BigDecimal wholeRoomPrice) {
-        Validate.isTrue(this.saleChannels.contains(saleChannel), "the plan has no such sale channel");
+        Validate.isTrue(this.saleChannels.contains(saleChannel), "don't support the channel " + saleChannel);
+        Validate.isTrue(this.chargeType == ChargeType.BY_ROOM, "don't support the charge by whole room");
 
         var price = Price.wholeRoom(this.getProductId(), saleChannel, wholeRoomPrice);
         this.prices.put(price.getPriceId(), price);
         this.setChargeType(price.getChargeType());
     }
 
-    public void setPrice(SaleChannel saleChannel,
+    protected void setPrice(SaleChannel saleChannel,
                          BigDecimal onePersonPrice,
                          BigDecimal twoPersonPrice,
                          BigDecimal threePersonPrice,
                          BigDecimal fourPersonPrice,
                          BigDecimal fivePersonPrice) {
-        Validate.isTrue(this.saleChannels.contains(saleChannel), "the plan has no such sale channel");
+        Validate.isTrue(this.saleChannels.contains(saleChannel), "don't support the channel" + saleChannel);
+        Validate.isTrue(this.chargeType == ChargeType.BY_PERSON, "don't support the charge by person");
 
         var price = Price.byPerson(this.getProductId(),
             saleChannel,

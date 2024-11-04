@@ -4,6 +4,7 @@ import cn.hutool.json.JSONUtil;
 import com.eleven.core.authenticate.AuthenticContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +20,10 @@ public class ApplicationEventIntegrator {
     private final ApplicationEventPublisher applicationEventPublisher;
 
     public void send(ApplicationEvent event) throws ApplicationEventSerializeException {
+        if(CollectionUtils.isEmpty(senders)){
+            return;
+        }
+
         AuthenticContext.getPrincipal().ifPresent(event.getHeader()::setTrigger);
         if (log.isDebugEnabled()) {
             log.debug("send {} to outbound :{}", event.getClass().getSimpleName(), JSONUtil.toJsonStr(event));

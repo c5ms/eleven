@@ -1,4 +1,4 @@
-package com.eleven.hotel.api.endpoint.model;
+package com.eleven.hotel.api.application.model;
 
 import com.eleven.hotel.api.domain.model.SaleState;
 import lombok.Getter;

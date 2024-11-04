@@ -1,12 +1,12 @@
 package com.eleven.hotel.endpoint.web.hotel;
 
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
-import com.eleven.hotel.api.endpoint.model.RoomDto;
+import com.eleven.hotel.api.application.model.RoomDto;
 import com.eleven.hotel.api.endpoint.request.RoomCreateRequest;
 import com.eleven.hotel.api.endpoint.request.RoomUpdateRequest;
 import com.eleven.hotel.application.service.RoomService;
 import com.eleven.hotel.endpoint.support.AsMerchantApi;
-import com.eleven.hotel.endpoint.convert.RoomConvertor;
+import com.eleven.hotel.application.convert.RoomConvertor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
