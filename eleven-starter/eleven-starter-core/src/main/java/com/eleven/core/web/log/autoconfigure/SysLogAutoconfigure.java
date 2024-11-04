@@ -24,5 +24,4 @@ public class SysLogAutoconfigure implements WebMvcConfigurer {
         registry.addInterceptor(sysLogInterceptor);
     }
 
-
 }

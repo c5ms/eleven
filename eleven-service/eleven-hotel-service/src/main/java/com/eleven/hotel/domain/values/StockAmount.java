@@ -10,16 +10,16 @@ public class StockAmount {
 
     Integer count;
 
+    public static StockAmount of(Integer amount) {
+        return new StockAmount(amount);
+    }
+
     StockAmount() {
         this.count = 0;
     }
 
-    public StockAmount(Integer count) {
+    private StockAmount(Integer count) {
         this.count = count;
-    }
-
-    public static StockAmount of(Integer amount) {
-        return new StockAmount(amount);
     }
 
     public static StockAmount zero() {

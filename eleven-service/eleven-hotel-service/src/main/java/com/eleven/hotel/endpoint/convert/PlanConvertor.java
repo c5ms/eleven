@@ -104,7 +104,7 @@ public class PlanConvertor {
     public PlanAddRoomCommand toCommand(PlanAddRoomRequest request) {
         return PlanAddRoomCommand.builder()
             .roomId(request.getRoomId())
-            .stock(new StockAmount(request.getStock()))
+            .stock(StockAmount.of(request.getStock()))
             .build();
     }
 }

@@ -7,6 +7,7 @@ import com.eleven.core.authenticate.AuthenticContext;
 import com.eleven.core.authenticate.Subject;
 import com.eleven.core.time.TimeContext;
 import io.micrometer.tracing.Tracer;
+import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
+import org.springframework.lang.NonNullApi;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -36,10 +38,12 @@ public class RequestLogFilter extends OncePerRequestFilter {
 
     public static final String TRACE_TAG_PRINCIPAL = "principal";
     public static final String TRACE_TAG_PRINCIPAL_TYPE = "principal.type";
+
+    public static final String HTTP_HEADER_SERVICE_PROVIDER = "X-Service-Provider";
+    public static final String HTTP_HEADER_TRACE_ID = "X-Trace-Id";
+
     private final String serverIp;
     private final List<RequestLogAppender> requestLogAppender;
-
-    public final String HTTP_HEADER_SERVICE_PROVIDER = "X-Service-Provider";
 
     @Autowired
     public RequestLogFilter(List<RequestLogAppender> requestLogAppender) {
@@ -47,13 +51,15 @@ public class RequestLogFilter extends OncePerRequestFilter {
         this.requestLogAppender = requestLogAppender;
     }
 
-
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) {
+    protected void doFilterInternal(@Nonnull HttpServletRequest request,
+                                    @Nonnull HttpServletResponse response,
+                                    @Nonnull FilterChain chain) {
         RequestLog requestLog = prepareLog(request);
 
-        // http 链路追踪
         response.setHeader(HTTP_HEADER_SERVICE_PROVIDER, SpringUtil.getApplicationName());
+        response.setHeader(HTTP_HEADER_TRACE_ID, requestLog.getTraceId());
+
         Throwable exception = null;
         try {
             RequestLogContext.markUnPersist();
@@ -78,11 +84,7 @@ public class RequestLogFilter extends OncePerRequestFilter {
                 if (null != exception) {
                     RequestLogContext.setCurrentError(exception);
                 }
-                boolean write = true;
-
-                if (request.getRequestURL().toString().endsWith("/actuator/health")) {
-                    write = false;
-                }
+                boolean write = !request.getRequestURL().toString().endsWith("/actuator/health");
 
                 if (write) {
                     for (RequestLogAppender logAppender : requestLogAppender) {
@@ -122,14 +124,13 @@ public class RequestLogFilter extends OncePerRequestFilter {
             var spanName = request.getMethod() + " " + request.getServletPath();
             span.name(spanName);
 
-            Optional.ofNullable(subject.getPrincipal())
-                .ifPresentOrElse(principal -> {
-                    span.tag(TRACE_TAG_PRINCIPAL, principal.getName());
-                    span.tag(TRACE_TAG_PRINCIPAL_TYPE, principal.getType());
-                }, () -> {
-                    span.tag(TRACE_TAG_PRINCIPAL, "");
-                    span.tag(TRACE_TAG_PRINCIPAL_TYPE, "");
-                });
+            Optional.ofNullable(subject.getPrincipal()).ifPresentOrElse(principal -> {
+                span.tag(TRACE_TAG_PRINCIPAL, principal.getName());
+                span.tag(TRACE_TAG_PRINCIPAL_TYPE, principal.getType());
+            }, () -> {
+                span.tag(TRACE_TAG_PRINCIPAL, "");
+                span.tag(TRACE_TAG_PRINCIPAL_TYPE, "");
+            });
             log.trace("追踪用户身份[{}]：{},traceId:{}", spanName, subject.getNickName(), span.context().traceId());
         });
 

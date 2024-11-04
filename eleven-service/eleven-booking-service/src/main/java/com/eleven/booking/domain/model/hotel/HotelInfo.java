@@ -19,11 +19,11 @@ public class HotelInfo {
     @Column(name = "hotel_id")
     private Long hotelId;
 
-    @Column(name = "hotel_name", nullable = false,length = 100)
+    @Column(name = "hotel_name", nullable = false, length = 100)
     private String name;
 
     @Nonnull
-    @Column(name = "sale_state",length = 50)
+    @Column(name = "sale_state", length = 50)
     @Enumerated(EnumType.STRING)
     private SaleState saleState = SaleState.STOPPED;
 
