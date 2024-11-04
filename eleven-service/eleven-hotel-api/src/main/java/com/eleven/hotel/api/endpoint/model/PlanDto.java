@@ -1,4 +1,4 @@
-package com.eleven.hotel.api.application.model;
+package com.eleven.hotel.api.endpoint.model;
 
 import com.eleven.hotel.api.domain.model.ChargeType;
 import com.eleven.hotel.api.domain.model.SaleState;

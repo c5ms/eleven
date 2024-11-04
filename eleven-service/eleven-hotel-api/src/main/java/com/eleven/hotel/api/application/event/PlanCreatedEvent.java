@@ -2,7 +2,7 @@ package com.eleven.hotel.api.application.event;
 
 import com.eleven.core.application.event.IntegrationEvent;
 import com.eleven.core.application.event.support.AbstractApplicationEvent;
-import com.eleven.hotel.api.application.model.PlanDto;
+import com.eleven.hotel.api.endpoint.model.PlanDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;

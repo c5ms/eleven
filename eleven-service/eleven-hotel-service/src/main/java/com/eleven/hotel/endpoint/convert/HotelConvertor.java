@@ -1,7 +1,7 @@
-package com.eleven.hotel.application.convert;
+package com.eleven.hotel.endpoint.convert;
 
-import com.eleven.hotel.api.application.model.HotelDto;
-import com.eleven.hotel.api.application.model.RegisterDto;
+import com.eleven.hotel.api.endpoint.model.HotelDto;
+import com.eleven.hotel.api.endpoint.model.RegisterDto;
 import com.eleven.hotel.api.endpoint.request.HotelCreateRequest;
 import com.eleven.hotel.api.endpoint.request.HotelQueryRequest;
 import com.eleven.hotel.api.endpoint.request.HotelRegisterRequest;

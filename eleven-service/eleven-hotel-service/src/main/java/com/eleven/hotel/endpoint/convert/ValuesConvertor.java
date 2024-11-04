@@ -1,4 +1,4 @@
-package com.eleven.hotel.application.convert;
+package com.eleven.hotel.endpoint.convert;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

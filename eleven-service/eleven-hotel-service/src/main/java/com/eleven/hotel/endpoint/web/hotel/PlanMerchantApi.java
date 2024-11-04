@@ -2,13 +2,13 @@ package com.eleven.hotel.endpoint.web.hotel;
 
 import com.eleven.core.application.query.PageResult;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
-import com.eleven.hotel.api.application.model.PlanDto;
+import com.eleven.hotel.api.endpoint.model.PlanDto;
 import com.eleven.hotel.api.endpoint.request.PlanAddRoomRequest;
 import com.eleven.hotel.api.endpoint.request.PlanCreateRequest;
 import com.eleven.hotel.api.endpoint.request.PlanQueryRequest;
 import com.eleven.hotel.application.command.PlanSetPriceCommand;
 import com.eleven.hotel.application.service.PlanService;
-import com.eleven.hotel.application.convert.PlanConvertor;
+import com.eleven.hotel.endpoint.convert.PlanConvertor;
 import com.eleven.hotel.endpoint.support.AsMerchantApi;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
