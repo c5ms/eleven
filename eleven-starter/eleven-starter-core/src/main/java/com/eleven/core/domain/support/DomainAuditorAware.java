@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import java.time.temporal.TemporalAccessor;
 import java.util.Optional;
 
-@Component
 public class DomainAuditorAware implements AuditorAware<String>, DateTimeProvider {
 
     @Override

@@ -15,8 +15,6 @@
 
     <modules>
         <module>eleven-app-demo</module>
-<!--        <module>eleven-app-access</module>-->
-        <!-- <module>eleven-app-gateway</module> -->
     </modules>
 
     <properties>

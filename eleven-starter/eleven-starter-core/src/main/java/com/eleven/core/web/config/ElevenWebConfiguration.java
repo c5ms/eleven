@@ -101,8 +101,8 @@ public class ElevenWebConfiguration implements WebMvcConfigurer {
                 )
                 .modules(
                         new Jdk8Module(),
-                        new JavaTimeModule(),
-                        new Hibernate6Module()
+                        new JavaTimeModule()/*,
+                        new Hibernate6Module()*/
                 );
     }
 

@@ -18,10 +18,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableDiscoveryClient
 @EnableFeignClients
 @SpringBootApplication
-public class HotelApplication {
+public class BookingApplication {
 
     public static void main(String[] args) {
-        SpringApplication application = new SpringApplication(HotelApplication.class);
+        SpringApplication application = new SpringApplication(BookingApplication.class);
         application.setBannerMode(Banner.Mode.OFF);
         application.run(args);
     }

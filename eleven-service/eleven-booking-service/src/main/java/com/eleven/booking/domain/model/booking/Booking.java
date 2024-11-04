@@ -26,7 +26,7 @@ public class Booking extends AbstractEntity {
     @Column(name = "traveler_id")
     private Long travelerId;
 
-    @Column(name = "person_count")
+    @Column(name = "person_count",precision = 10)
     private Integer personCount;
 
     @ManyToOne(fetch = FetchType.LAZY)

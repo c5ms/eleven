@@ -23,8 +23,3 @@ eleven:
       license:
         name: Apache 2.0
         url: https://www.demcia.com/
-logging:
-  level:
-    'org.springframework.web.filter.CommonsRequestLoggingFilter': debug
-
-

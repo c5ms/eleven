@@ -16,7 +16,7 @@
 
     <properties>
         <facility>dev</facility>
-        <app.main>com.eleven.HotelApplication</app.main>
+        <app.main>com.eleven.BookingApplication</app.main>
     </properties>
 
     <dependencies>
