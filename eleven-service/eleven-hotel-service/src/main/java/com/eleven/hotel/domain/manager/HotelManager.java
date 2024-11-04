@@ -1,4 +1,4 @@
-package com.eleven.hotel.application.support;
+package com.eleven.hotel.domain.manager;
 
 import com.eleven.hotel.domain.model.hotel.Hotel;
 import com.eleven.hotel.domain.model.hotel.HotelValidator;

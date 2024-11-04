@@ -1,18 +1,13 @@
 package com.eleven.hotel.endpoint.web.hotel;
 
-import cn.hutool.extra.spring.SpringUtil;
-import com.eleven.hotel.api.domain.model.SaleChannel;
-import com.eleven.hotel.application.command.BookingCommand;
-import com.eleven.hotel.application.service.BookingService;
-import com.eleven.hotel.application.support.HotelContext;
 import com.eleven.core.web.WebContext;
 import com.eleven.hotel.api.endpoint.core.HotelEndpoints;
 import com.eleven.hotel.api.endpoint.model.HotelDto;
 import com.eleven.hotel.api.endpoint.request.HotelUpdateRequest;
 import com.eleven.hotel.application.service.HotelService;
-import com.eleven.hotel.domain.model.booking.Booking;
-import com.eleven.hotel.endpoint.support.AsMerchantApi;
+import com.eleven.hotel.application.support.HotelContext;
 import com.eleven.hotel.endpoint.convert.HotelConvertor;
+import com.eleven.hotel.endpoint.support.AsMerchantApi;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -60,16 +55,4 @@ public class HotelMerchantApi {
             .orElseThrow(WebContext::notFoundException);
         hotelService.close(hotelId);
     }
-
-    @Operation(summary = "test")
-    @GetMapping("/test")
-    public Booking test() {
-    return     SpringUtil.getBean(BookingService.class).book(BookingCommand.builder()
-                .hotelId(2L)
-                .planId(2L)
-                .personCount(4)
-                .saleChannel(SaleChannel.DH)
-            .build());
-    }
-
 }

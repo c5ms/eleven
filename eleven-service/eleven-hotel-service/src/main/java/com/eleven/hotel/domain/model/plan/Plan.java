@@ -6,8 +6,6 @@ import com.eleven.hotel.api.domain.model.SaleType;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import com.eleven.hotel.domain.core.ImmutableValues;
 import com.eleven.hotel.domain.core.Saleable;
-import com.eleven.hotel.domain.model.plan.event.PlanStarted;
-import com.eleven.hotel.domain.model.plan.event.PlanStopped;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
 import com.eleven.hotel.domain.values.StockAmount;
