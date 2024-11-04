@@ -1,7 +1,9 @@
-package com.eleven.hotel.application.service;
+package com.eleven.booking.application.service;
 
-import com.eleven.hotel.application.command.BookingCommand;
-import com.eleven.hotel.domain.model.booking.*;
+import com.eleven.booking.application.command.BookingCommand;
+import com.eleven.booking.domain.model.booking.Booking;
+import com.eleven.booking.domain.model.booking.BookingCharger;
+import com.eleven.booking.domain.model.hotel.HotelInfoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

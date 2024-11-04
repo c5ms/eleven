@@ -7,9 +7,9 @@ spring:
   profiles:
     active: @facility@
   datasource:
-    url: ${db.hotel.url}
-    username: ${db.hotel.username}
-    password: ${db.hotel.password}
+    url: ${db.booking.url}
+    username: ${db.booking.username}
+    password: ${db.booking.password}
   cloud:
     nacos:
       config:
@@ -35,7 +35,7 @@ spring:
 
   data:
     mongodb:
-      uri: ${mongo.hotel.uri}
+      uri: ${mongo.booking.uri}
 
 
 eleven:

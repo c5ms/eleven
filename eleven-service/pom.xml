@@ -30,6 +30,10 @@
         <module>eleven-hotel-api</module>
         <module>eleven-hotel-service</module>
         <module>eleven-hotel-listener</module>
+
+        <module>eleven-booking-api</module>
+        <module>eleven-booking-service</module>
+
 <!--        <module>eleven-upms-api</module>-->
 <!--        <module>eleven-upms-service</module>-->
     </modules>
