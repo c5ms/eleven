@@ -2,6 +2,7 @@ package com.eleven.hotel.api.endpoint.internal;
 
 import com.eleven.core.web.WebConstants;
 import com.eleven.hotel.api.endpoint.model.HotelDto;
+import com.eleven.hotel.api.endpoint.model.PlanDto;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Primary;
@@ -16,6 +17,10 @@ public interface HotelClient {
 
     @Operation(summary = "read hotel")
     @GetMapping("/readHotel")
-    Optional<HotelDto> readHotel(@RequestParam("id") Long id);
+    Optional<HotelDto> readHotel(@RequestParam("hotelId") Long hotelId);
+
+    @Operation(summary = "read plan")
+    @GetMapping("/readPlan")
+    Optional<PlanDto> readPlan(@RequestParam("planId") Long planId);
 
 }

@@ -1,6 +1,6 @@
-package com.eleven.hotel.application.service;
+package com.eleven.hotel.application.handler;
 
-import com.eleven.core.application.event.ApplicationEvent;
+import com.eleven.hotel.api.application.event.HotelCreatedEvent;
 import com.eleven.hotel.api.application.event.PlanCreatedEvent;
 import com.eleven.hotel.api.endpoint.internal.HotelClient;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +16,14 @@ public class HotelEventHandler {
 
     @EventListener
     public void on(PlanCreatedEvent event) {
+        var plan = hotelClient.readPlan(event.getPlanId());
+        // write to mongo
+    }
+
+    @EventListener
+    public void on(HotelCreatedEvent event) {
+        var hotel = hotelClient.readHotel(event.getHotelId());
+        // write to mongo
     }
 
 }

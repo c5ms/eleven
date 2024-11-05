@@ -12,7 +12,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @IntegrationEvent
 public class PlanCreatedEvent extends AbstractApplicationEvent {
-
-    private PlanDto plan;
-
+    private Long hotelId;
+    private Long planId;
 }

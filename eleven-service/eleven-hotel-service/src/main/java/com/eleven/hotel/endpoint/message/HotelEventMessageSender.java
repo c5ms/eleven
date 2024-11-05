@@ -18,4 +18,5 @@ public class HotelEventMessageSender implements ApplicationEventMessageSender {
     public void send(ApplicationEventMessage message) {
 //        amqpTemplate.convertAndSend(HotelEventMessageSender.QUEUE_HOTEL_EVENT, message);
     }
+
 }
