@@ -59,29 +59,28 @@ public class PlanMerchantApi {
         planService.addRoom(hotelId, planId, command);
     }
 
-
     @Operation(summary = "set price")
     @PostMapping("/{planId:[0-9]+}/rooms/{roomId:[0-9]+}/prices")
     public void setPrice(@PathVariable("hotelId") Long hotelId,
-                                 @PathVariable("planId") Long planId,
-                                 @PathVariable("roomId") Long roomId) {
-        var command =PlanSetPriceCommand.builder().build();
-        planService.setPrice(hotelId, planId, roomId,command );
+                         @PathVariable("planId") Long planId,
+                         @PathVariable("roomId") Long roomId) {
+        var command = PlanSetPriceCommand.builder().build();
+        planService.setPrice(hotelId, planId, roomId, command);
     }
 
     @Operation(summary = "start sale")
     @PostMapping("/{planId:[0-9]+}/rooms/{roomId:[0-9]+}/commands/startSale")
     public void startSale(@PathVariable("hotelId") Long hotelId,
-                                 @PathVariable("planId") Long planId,
-                                 @PathVariable("roomId") Long roomId) {
+                          @PathVariable("planId") Long planId,
+                          @PathVariable("roomId") Long roomId) {
         planService.startSale(hotelId, planId, roomId);
     }
 
     @Operation(summary = "stop sale")
     @PostMapping("/{planId:[0-9]+}/rooms/{roomId:[0-9]+}/commands/stopSale")
     public void stopSale(@PathVariable("hotelId") Long hotelId,
-                                @PathVariable("planId") Long planId,
-                                @PathVariable("roomId") Long roomId) {
+                         @PathVariable("planId") Long planId,
+                         @PathVariable("roomId") Long roomId) {
         planService.stopSale(hotelId, planId, roomId);
     }
 

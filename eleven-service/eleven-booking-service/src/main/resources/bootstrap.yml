@@ -37,7 +37,6 @@ spring:
     mongodb:
       uri: ${mongo.booking.uri}
 
-
 eleven:
   cache:
     duration: PT8H

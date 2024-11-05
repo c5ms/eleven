@@ -3,6 +3,7 @@ package com.eleven.hotel.application.service;
 import com.eleven.core.application.query.PageResult;
 import com.eleven.core.domain.DomainContext;
 import com.eleven.hotel.api.application.error.HotelErrors;
+import com.eleven.hotel.api.application.event.PlanCreatedEvent;
 import com.eleven.hotel.application.command.PlanAddRoomCommand;
 import com.eleven.hotel.application.command.PlanCreateCommand;
 import com.eleven.hotel.application.command.PlanSetPriceCommand;
@@ -86,6 +87,7 @@ public class PlanService {
         inventoryRepository.persistAll(inventories);
 
         // return back the created plan
+        HotelContext.publishEvent(PlanCreatedEvent.of(plan.getHotelId(), plan.getPlanId()));
         return plan;
     }
 

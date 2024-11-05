@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,7 +19,7 @@ import java.util.List;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class PlanDto {
+public class PlanDto implements Serializable {
 
     private Long planId;
     private Long hotelId;

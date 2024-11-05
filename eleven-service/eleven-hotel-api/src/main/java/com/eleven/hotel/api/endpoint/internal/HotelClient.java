@@ -21,6 +21,6 @@ public interface HotelClient {
 
     @Operation(summary = "read plan")
     @GetMapping("/readPlan")
-    Optional<PlanDto> readPlan(@RequestParam("planId") Long planId);
+    Optional<PlanDto> readPlan(@RequestParam("hotelId") Long hotelId, @RequestParam("planId") Long planId);
 
 }
