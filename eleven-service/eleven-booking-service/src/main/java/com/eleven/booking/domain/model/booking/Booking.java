@@ -2,7 +2,7 @@ package com.eleven.booking.domain.model.booking;
 
 import com.eleven.booking.domain.core.AbstractEntity;
 import com.eleven.booking.domain.core.DateRange;
-import com.eleven.booking.domain.model.hotel.HotelInfo;
+import com.eleven.hotel.api.domain.model.SaleChannel;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 @FieldNameConstants
 public class Booking extends AbstractEntity {
 
+
     @Id
     @Column(name = "booking_id")
     @GeneratedValue(strategy = GenerationType.TABLE, generator = GENERATOR_NAME)
@@ -26,18 +27,21 @@ public class Booking extends AbstractEntity {
     @Column(name = "traveler_id")
     private Long travelerId;
 
-    @Column(name = "person_count",precision = 10)
-    private Integer personCount;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hotel_id")
-    private HotelInfo hotelInfo;
+    private Long hotelId;
 
     @Column(name = "plan_id")
     private Long planId;
 
     @Column(name = "room_id")
     private Long roomId;
+
+    @Column(name = "person_count", precision = 10)
+    private Integer personCount;
+
+    @Enumerated
+    @Column(name = "person_count", precision = 10)
+    private SaleChannel saleChannel;
 
     @Embedded
     @AttributeOverride(name = "start", column = @Column(name = "check_in_date"))
@@ -50,19 +54,20 @@ public class Booking extends AbstractEntity {
     protected Booking() {
     }
 
-    public Booking(Long travelerId,
-                   HotelInfo hotelInfo,
-                   Long planId,
+    public Booking(Plan plan,
                    Long roomId,
                    Integer personCount,
-                   DateRange stayPeriod,
-                   BigDecimal amount) {
-        this.travelerId = travelerId;
+                   SaleChannel saleChannel,
+                   DateRange stayPeriod) {
         this.personCount = personCount;
-        this.hotelInfo = hotelInfo;
-        this.planId = planId;
-        this.roomId = roomId;
         this.stayPeriod = stayPeriod;
-        this.amount = amount;
+        this.saleChannel = saleChannel;
+        this.amount = plan.charge(roomId, saleChannel, personCount);
     }
+
+
+    public boolean hasAmount() {
+        return getAmount().compareTo(BigDecimal.ZERO) > 0;
+    }
+
 }

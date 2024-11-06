@@ -7,7 +7,7 @@ import com.eleven.hotel.api.endpoint.request.PlanCreateRequest;
 import com.eleven.hotel.api.endpoint.request.PlanQueryRequest;
 import com.eleven.hotel.application.command.PlanAddRoomCommand;
 import com.eleven.hotel.application.command.PlanCreateCommand;
-import com.eleven.hotel.application.query.PlanQuery;
+import com.eleven.hotel.application.command.PlanQuery;
 import com.eleven.hotel.domain.model.plan.Plan;
 import com.eleven.hotel.domain.model.plan.PlanBasic;
 import com.eleven.hotel.domain.model.plan.Product;

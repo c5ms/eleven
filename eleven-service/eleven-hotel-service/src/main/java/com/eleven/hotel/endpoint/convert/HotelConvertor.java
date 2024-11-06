@@ -9,7 +9,7 @@ import com.eleven.hotel.api.endpoint.request.HotelUpdateRequest;
 import com.eleven.hotel.application.command.HotelCreateCommand;
 import com.eleven.hotel.application.command.HotelRegisterCommand;
 import com.eleven.hotel.application.command.HotelUpdateCommand;
-import com.eleven.hotel.application.query.HotelQuery;
+import com.eleven.hotel.application.command.HotelQuery;
 import com.eleven.hotel.domain.model.hotel.Hotel;
 import com.eleven.hotel.domain.model.hotel.HotelBasic;
 import com.eleven.hotel.domain.model.hotel.HotelPosition;

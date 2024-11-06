@@ -1,9 +1,12 @@
 package com.eleven.booking.application.service;
 
+import com.eleven.booking.api.application.error.BookingErrors;
 import com.eleven.booking.application.command.BookingCommand;
 import com.eleven.booking.domain.model.booking.Booking;
-import com.eleven.booking.domain.model.booking.BookingCharger;
-import com.eleven.booking.domain.model.hotel.HotelInfoRepository;
+import com.eleven.booking.domain.model.booking.BookingRepository;
+import com.eleven.booking.domain.model.booking.HotelReader;
+import com.eleven.booking.domain.model.booking.PlanReader;
+import com.eleven.core.domain.DomainContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,25 +18,24 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = Exception.class)
 public class BookingService {
 
-    private final BookingCharger bookingCharger;
-    private final HotelInfoRepository hotelInfoRepository;
-//    private final PlanInfoRepository planInfoRepository;
+    private final PlanReader planReader;
+    private final HotelReader hotelReader;
+    private final BookingRepository bookingRepository;
 
     public Booking book(BookingCommand command) {
-        var hotel = hotelInfoRepository.findById(command.getHotelId()).orElseThrow();
-        var charge = bookingCharger.charge(command.getHotelId(), command.getPlanId(), command.getRoomId(), command.getSaleChannel(), command.getPersonCount());
-//        var plan = planInfoRepository.findByPlanId(command.getPlanId()).orElseThrow();
+        var hotel = hotelReader.readHotel(command.getHotelId()).orElseThrow(BookingErrors.HOTEL_NOT_EXIST::toException);
+        var plan = planReader.readPlan(command.getHotelId(), command.getPlanId()).orElseThrow(BookingErrors.PLAN_NOT_EXIST::toException);
 
         var booking = new Booking(
-            1L,
-            hotel,
-            command.getHotelId(),
-            command.getPlanId(),
-            command.getPersonCount(),
-            command.getStayPeriod(),
-            charge.getAmount()
+                plan,
+                command.getRoomId(),
+                command.getPersonCount(),
+                command.getSaleChannel(),
+                command.getStayPeriod()
         );
 
+        DomainContext.must(booking.hasAmount(), BookingErrors.BOOKING_NO_PRICE);
+        bookingRepository.persist(booking);
         return booking;
     }
 

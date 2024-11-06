@@ -1,4 +1,4 @@
-package com.eleven.hotel.application.listener;
+package com.eleven.booking.application.service;
 
 import cn.hutool.json.JSONUtil;
 import com.eleven.core.application.event.ApplicationEvent;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class HotelListener {
+public class BookingListener {
 
     @EventListener
     public void on(DomainEvent event) {
@@ -22,6 +22,4 @@ public class HotelListener {
     public void on(ApplicationEvent event) {
         log.debug("handle application event {}: {}", event.getClass().getSimpleName(), JSONUtil.toJsonStr(event));
     }
-
-
 }

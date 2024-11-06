@@ -2,7 +2,7 @@ package com.eleven.hotel.endpoint.web.admin;
 
 import com.eleven.core.application.query.PageResult;
 import com.eleven.hotel.application.command.HotelCreateCommand;
-import com.eleven.hotel.application.query.HotelQuery;
+import com.eleven.hotel.application.command.HotelQuery;
 import com.eleven.hotel.domain.model.hotel.HotelBasic;
 import com.eleven.hotel.domain.model.hotel.HotelPosition;
 import com.eleven.hotel.endpoint.support.AsAdminApi;

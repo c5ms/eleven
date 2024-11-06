@@ -1,6 +1,6 @@
 package com.eleven.booking.domain.model.booking;
 
-import org.springframework.data.repository.CrudRepository;
+import io.hypersistence.utils.spring.repository.BaseJpaRepository;
 
-public interface BookingRepository extends CrudRepository<Booking, String> {
+public interface BookingRepository extends BaseJpaRepository<Booking, String> {
 }

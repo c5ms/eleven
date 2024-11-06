@@ -8,7 +8,7 @@ import com.eleven.hotel.application.command.PlanAddRoomCommand;
 import com.eleven.hotel.application.command.PlanCreateCommand;
 import com.eleven.hotel.application.command.PlanSetPriceCommand;
 import com.eleven.hotel.application.command.StockReduceCommand;
-import com.eleven.hotel.application.query.PlanQuery;
+import com.eleven.hotel.application.command.PlanQuery;
 import com.eleven.hotel.application.support.HotelContext;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.domain.model.hotel.Room;

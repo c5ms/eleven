@@ -110,11 +110,4 @@ public class DateTimeRange {
         return start.isBefore(end);
     }
 
-    public boolean contains(DateRange range) {
-        if (isEmpty()) {
-            return false;
-        }
-        return this.contains(range.toDateTimeRange());
-    }
-
 }

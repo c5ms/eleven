@@ -1,4 +1,4 @@
-package com.eleven.booking.domain.model.core;
+package com.eleven.booking.domain.core;
 
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.Repository;
