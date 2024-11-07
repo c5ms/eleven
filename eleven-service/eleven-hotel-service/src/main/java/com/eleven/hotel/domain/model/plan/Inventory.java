@@ -4,6 +4,7 @@ import com.eleven.hotel.domain.core.AbstractEntity;
 import com.eleven.hotel.domain.values.StockAmount;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 @Getter
 @Setter(AccessLevel.PROTECTED)
 @FieldNameConstants
+@EqualsAndHashCode(callSuper = false, of = "key")
 public class Inventory extends AbstractEntity {
 
     @Id
@@ -26,8 +28,19 @@ public class Inventory extends AbstractEntity {
     @Embedded
     private InventoryKey key;
 
-    @Column(name = "digest")
-    private String digest;
+    @Embedded
+    @AttributeOverride(name = "hotelId", column = @Column(name = "hotel_id", updatable = false, insertable = false))
+    @AttributeOverride(name = "planId", column = @Column(name = "plan_id", updatable = false, insertable = false))
+    private PlanKey planKey;
+
+    @Embedded
+    @AttributeOverride(name = "hotelId", column = @Column(name = "hotel_id", updatable = false, insertable = false))
+    @AttributeOverride(name = "planId", column = @Column(name = "plan_id", updatable = false, insertable = false))
+    @AttributeOverride(name = "roomId", column = @Column(name = "room_id", updatable = false, insertable = false))
+    private ProductId productId;
+
+    @Column(name = "isValid")
+    private Boolean isValid;
 
     @Embedded
     @AttributeOverride(name = "count", column = @Column(name = "stock_total"))
@@ -41,12 +54,16 @@ public class Inventory extends AbstractEntity {
     }
 
     public static Inventory of(ProductId productId, LocalDate date, StockAmount stockAmount) {
-        InventoryKey key = InventoryKey.of(productId, date);
-        Inventory inventory = new Inventory();
-        inventory.setKey(key);
-        inventory.setDigest(key.digest());
+        var inventoryKey = InventoryKey.of(productId, date);
+        var planKey = PlanKey.of(inventoryKey.getHotelId(), inventoryKey.getPlanId());
+        var inventory = new Inventory();
+
+        inventory.setKey(inventoryKey);
+        inventory.setPlanKey(planKey);
+        inventory.setProductId(productId);
         inventory.setStockTotal(stockAmount);
         inventory.setStockLeft(stockAmount);
+        inventory.setIsValid(true);
         return inventory;
     }
 
@@ -54,9 +71,17 @@ public class Inventory extends AbstractEntity {
         return this.stockLeft.greaterThan(amount);
     }
 
+    public boolean hasBeenBooked() {
+        return this.stockLeft.lessThan(this.stockTotal);
+    }
+
+    public boolean isNew() {
+        return this.inventoryId == null;
+    }
+
     public void reduce(int amount) {
         Validate.isTrue(this.hasEnoughStock(amount), "no su much stock left");
-        this.setStockLeft(this.stockLeft.subtract(amount));
+        this.setStockLeft(this.stockLeft.reduct(amount));
     }
 
 }

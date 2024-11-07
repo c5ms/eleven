@@ -1,7 +1,7 @@
 package com.eleven.hotel.domain.values;
 
-import com.eleven.hotel.domain.values.DateRange;
-import com.eleven.hotel.domain.values.DateTimeRange;
+import com.eleven.core.domain.values.DateRange;
+import com.eleven.core.domain.values.DateTimeRange;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

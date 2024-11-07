@@ -1,7 +1,7 @@
 package com.eleven.booking.domain.model.booking;
 
 import com.eleven.booking.domain.core.AbstractEntity;
-import com.eleven.booking.domain.core.DateRange;
+import com.eleven.core.domain.values.DateRange;
 import com.eleven.hotel.api.domain.model.SaleChannel;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -52,22 +52,17 @@ public class Booking extends AbstractEntity {
     private BigDecimal amount;
 
     protected Booking() {
+
     }
 
-    public Booking(Plan plan,
-                   Long roomId,
-                   Integer personCount,
-                   SaleChannel saleChannel,
-                   DateRange stayPeriod) {
+    public Booking(Plan plan, Integer personCount, SaleChannel saleChannel, DateRange stayPeriod) {
+        this.hotelId = plan.getHotelId();
+        this.planId = plan.getPlanId();
+        this.roomId = plan.getRoomId();
         this.personCount = personCount;
         this.stayPeriod = stayPeriod;
         this.saleChannel = saleChannel;
-        this.amount = plan.charge(roomId, saleChannel, personCount);
-    }
-
-
-    public boolean hasAmount() {
-        return getAmount().compareTo(BigDecimal.ZERO) > 0;
+        this.amount = plan.charge(saleChannel,personCount);
     }
 
 }

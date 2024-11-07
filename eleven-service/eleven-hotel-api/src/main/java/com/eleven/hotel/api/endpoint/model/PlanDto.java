@@ -1,20 +1,14 @@
 package com.eleven.hotel.api.endpoint.model;
 
-import com.eleven.hotel.api.domain.model.ChargeType;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.annotation.Nullable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -44,42 +38,5 @@ public class PlanDto implements Serializable {
     private Boolean isStayPeriodOngoing;
     private LocalDate stayStartDate;
     private LocalDate stayEndDate;
-
-    @Nullable
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private List<Room> rooms = new ArrayList<>();
-
-    @Getter
-    @Setter
-    @Accessors(chain = true)
-    public static class Price {
-        private BigDecimal wholeRoom;
-        private BigDecimal onePerson;
-        private BigDecimal twoPerson;
-        private BigDecimal threePerson;
-        private BigDecimal fourPerson;
-        private BigDecimal fivePerson;
-    }
-
-
-    @Getter
-    @Setter
-    @Accessors(chain = true)
-    public static class Room {
-        private Long roomId;
-        private Integer stock;
-        private SaleState saleState;
-        private ChargeType chargeType;
-        private RoomPrices prices = new RoomPrices();
-    }
-
-    @Getter
-    @Setter
-    @Accessors(chain = true)
-    public static class RoomPrices {
-        private Price dh;
-        private Price dp;
-    }
-
 
 }

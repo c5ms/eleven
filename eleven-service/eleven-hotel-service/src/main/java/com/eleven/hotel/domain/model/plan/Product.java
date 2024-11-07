@@ -4,7 +4,7 @@ import com.eleven.hotel.api.domain.model.ChargeType;
 import com.eleven.hotel.api.domain.model.SaleChannel;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
-import com.eleven.hotel.domain.core.ImmutableValues;
+import com.eleven.core.domain.utils.ImmutableValues;
 import com.eleven.hotel.domain.core.ObjectMatcher;
 import com.eleven.hotel.domain.values.StockAmount;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
@@ -81,7 +81,7 @@ public class Product {
 
     protected void setPrice(SaleChannel saleChannel, BigDecimal wholeRoomPrice) {
         Validate.isTrue(this.saleChannels.contains(saleChannel), "don't support the channel " + saleChannel);
-        Validate.isTrue(this.chargeType == ChargeType.BY_ROOM, "don't support the charge by whole room");
+//        Validate.isTrue(this.chargeType == ChargeType.BY_ROOM, "don't support the charge by whole room");
 
         var price = Price.wholeRoom(this.getProductId(), saleChannel, wholeRoomPrice);
         this.prices.put(price.getPriceId(), price);
@@ -95,7 +95,7 @@ public class Product {
                          BigDecimal fourPersonPrice,
                          BigDecimal fivePersonPrice) {
         Validate.isTrue(this.saleChannels.contains(saleChannel), "don't support the channel" + saleChannel);
-        Validate.isTrue(this.chargeType == ChargeType.BY_PERSON, "don't support the charge by person");
+//        Validate.isTrue(this.chargeType == ChargeType.BY_PERSON, "don't support the charge by person");
 
         var price = Price.byPerson(this.getProductId(),
             saleChannel,

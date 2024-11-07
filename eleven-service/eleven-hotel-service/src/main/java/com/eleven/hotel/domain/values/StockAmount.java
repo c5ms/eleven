@@ -54,7 +54,7 @@ public class StockAmount {
         return this.count < stock.count;
     }
 
-    public StockAmount subtract(int num) {
+    public StockAmount reduct(int num) {
         return StockAmount.of(this.count - num);
     }
 

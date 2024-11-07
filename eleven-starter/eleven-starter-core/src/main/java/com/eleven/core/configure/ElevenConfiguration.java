@@ -7,6 +7,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration(proxyBeanMethods = false)
 @PropertySource("classpath:/config/application-core.properties")
-public class ElevenConfiguration implements WebMvcConfigurer {
+public class ElevenConfiguration {
 
 }

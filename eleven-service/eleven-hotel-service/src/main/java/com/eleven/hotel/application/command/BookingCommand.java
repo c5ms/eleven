@@ -1,7 +1,7 @@
 package com.eleven.hotel.application.command;
 
 import com.eleven.hotel.api.domain.model.SaleChannel;
-import com.eleven.hotel.domain.values.DateRange;
+import com.eleven.core.domain.values.DateRange;
 import lombok.Builder;
 import lombok.Getter;
 

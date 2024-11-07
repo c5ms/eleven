@@ -4,7 +4,17 @@ import com.eleven.hotel.api.domain.model.SaleChannel;
 
 import java.math.BigDecimal;
 
+/**
+ * A plan has multiple rooms in, each room known as a product of the plan.
+ */
 public interface Plan {
 
-    BigDecimal charge(Long roomId, SaleChannel saleChannel, int persons);
+    Long getPlanId();
+
+    Long getHotelId();
+
+    Long getRoomId();
+
+    BigDecimal charge(SaleChannel saleChannel, int persons);
+
 }

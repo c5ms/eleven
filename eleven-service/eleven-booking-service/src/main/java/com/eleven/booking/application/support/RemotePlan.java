@@ -2,39 +2,37 @@ package com.eleven.booking.application.support;
 
 import com.eleven.booking.domain.model.booking.Plan;
 import com.eleven.hotel.api.domain.model.SaleChannel;
+import com.eleven.hotel.api.endpoint.internal.HotelClient;
 import com.eleven.hotel.api.endpoint.model.PlanDto;
-import jakarta.annotation.Nonnull;
+import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
 
+@RequiredArgsConstructor
 public class RemotePlan implements Plan {
 
-    @Nonnull
-    private final PlanDto dto;
+    private final PlanDto plan;
+    private final Long roomId;
+    private final HotelClient hotelClient;
 
-    public RemotePlan(@Nonnull PlanDto dto) {
-        this.dto = dto;
+    @Override
+    public Long getPlanId() {
+        return plan.getPlanId();
     }
 
     @Override
-    public BigDecimal charge(Long roomId, SaleChannel saleChannel, int persons) {
-        if (null == dto.getRooms()) {
-            return BigDecimal.ZERO;
-        }
-        var roomOpt = dto.getRooms().stream()
-                .filter(aRoom -> aRoom.getRoomId().equals(roomId))
-                .findFirst();
+    public Long getHotelId() {
+        return plan.getHotelId();
+    }
 
-        if (roomOpt.isEmpty()) {
-            return BigDecimal.ZERO;
-        }
+    @Override
+    public Long getRoomId() {
+        return roomId;
+    }
 
-        var room = roomOpt.get();
-
-//        switch (saleChannel){
-//            case DH -> room.getPrices().getDh()
-//        }
-        return  BigDecimal.ZERO;
+    @Override
+    public BigDecimal charge(SaleChannel saleChannel, int persons) {
+        return hotelClient.charge(plan.getHotelId(), plan.getPlanId(), roomId, saleChannel, persons).orElseThrow();
     }
 
 }

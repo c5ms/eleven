@@ -11,6 +11,7 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -55,5 +56,5 @@ public class PlanCreateRequest {
 
     private List<Long> rooms = new ArrayList<>();
 
-    private Set<SaleChannel> channels;
+    private Set<SaleChannel> channels = new HashSet<>();
 }

@@ -5,7 +5,7 @@ import com.eleven.core.application.event.ApplicationEventMessage;
 import com.eleven.core.application.event.ApplicationEventMessageSender;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.AmqpTemplate;
+//import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -14,12 +14,12 @@ import org.springframework.stereotype.Component;
 public class EventMessageSender implements ApplicationEventMessageSender {
     public static final String QUEUE_HOTEL_EVENT = "hotel.event";
 
-    private final AmqpTemplate amqpTemplate;
+//    private final AmqpTemplate amqpTemplate;
 
     @Override
     public void send(ApplicationEventMessage message) {
         var body = JSONUtil.toJsonStr(message);
-        amqpTemplate.convertAndSend(EventMessageSender.QUEUE_HOTEL_EVENT, body);
+//        amqpTemplate.convertAndSend(EventMessageSender.QUEUE_HOTEL_EVENT, body);
     }
 
 }

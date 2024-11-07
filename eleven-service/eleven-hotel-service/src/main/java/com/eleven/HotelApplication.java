@@ -1,6 +1,6 @@
 package com.eleven;
 
-import com.eleven.core.domain.configure.EnableElevenDomain;
+import com.eleven.core.configure.EnableElevenDomain;
 import io.hypersistence.utils.spring.repository.BaseJpaRepositoryImpl;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
