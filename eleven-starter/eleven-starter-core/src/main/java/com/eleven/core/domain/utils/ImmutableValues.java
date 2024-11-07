@@ -2,10 +2,8 @@ package com.eleven.core.domain.utils;
 
 import jakarta.annotation.Nonnull;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ImmutableValues<T> implements Iterable<T> {
@@ -38,6 +36,11 @@ public class ImmutableValues<T> implements Iterable<T> {
         return values.isEmpty();
     }
 
+
+    public boolean isNotEmpty() {
+        return !values.isEmpty();
+    }
+
     public T get(int index) {
         return values.get(index);
     }
@@ -46,4 +49,7 @@ public class ImmutableValues<T> implements Iterable<T> {
         values.add(t);
     }
 
+    public Set<T> toSet() {
+        return new HashSet<>(values);
+    }
 }

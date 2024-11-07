@@ -114,7 +114,7 @@ public class PlanService {
         planRepository.delete(plan);
 
         // delete inventories
-        inventoryRepository.deleteByPlanKey(plan.getKey());
+        inventoryRepository.deleteByPlanKey(plan.toPlanKey());
     }
 
     @Transactional(rollbackFor = Exception.class)

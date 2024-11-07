@@ -40,8 +40,8 @@ public class InventoryMerge {
 
     public Collection<Inventory> adds() {
         var allInventories = new HashMap<InventoryKey, Inventory>();
-        currentInventories.forEach(inventory -> allInventories.put(inventory.getKey(), inventory));
-        existingInventories.forEach(inventory -> allInventories.put(inventory.getKey(), inventory));
+        currentInventories.forEach(inventory -> allInventories.put(inventory.getInventoryKey(), inventory));
+        existingInventories.forEach(inventory -> allInventories.put(inventory.getInventoryKey(), inventory));
         return allInventories.values()
                 .stream()
                 .filter(Inventory::isNew)

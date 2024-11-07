@@ -3,7 +3,6 @@ package com.eleven.hotel.domain.model.hotel;
 import com.eleven.hotel.api.domain.model.RoomLevel;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.domain.core.AbstractEntity;
-import com.eleven.hotel.domain.core.Saleable;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -19,7 +18,7 @@ import org.apache.commons.lang3.Validate;
 @Setter(AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @FieldNameConstants
-public class Room extends AbstractEntity implements Saleable {
+public class Room extends AbstractEntity  {
 
     @Id
     @Column(name = "room_id")
@@ -52,22 +51,18 @@ public class Room extends AbstractEntity implements Saleable {
         this.setRestriction(restriction);
     }
 
-    @Override
     public void startSale() {
         this.saleState = SaleState.STARTED;
     }
 
-    @Override
     public void stopSale() {
         this.saleState = SaleState.STOPPED;
     }
 
-    @Override
     public SaleState getSaleState() {
         return this.saleState;
     }
 
-    @Override
     public boolean isOnSale() {
         return saleState.isOnSale();
     }

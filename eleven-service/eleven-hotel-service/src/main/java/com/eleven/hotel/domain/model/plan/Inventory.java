@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @Getter
 @Setter(AccessLevel.PROTECTED)
 @FieldNameConstants
-@EqualsAndHashCode(callSuper = false, of = "key")
+@EqualsAndHashCode(callSuper = false, of = "inventoryKey")
 public class Inventory extends AbstractEntity {
 
     @Id
@@ -26,7 +26,7 @@ public class Inventory extends AbstractEntity {
     private Long inventoryId;
 
     @Embedded
-    private InventoryKey key;
+    private InventoryKey inventoryKey;
 
     @Embedded
     @AttributeOverride(name = "hotelId", column = @Column(name = "hotel_id", updatable = false, insertable = false))
@@ -58,7 +58,7 @@ public class Inventory extends AbstractEntity {
         var planKey = PlanKey.of(inventoryKey.getHotelId(), inventoryKey.getPlanId());
         var inventory = new Inventory();
 
-        inventory.setKey(inventoryKey);
+        inventory.setInventoryKey(inventoryKey);
         inventory.setPlanKey(planKey);
         inventory.setProductId(productId);
         inventory.setStockTotal(stockAmount);

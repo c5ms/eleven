@@ -11,7 +11,7 @@ public class InventoryManager {
     private final InventoryRepository inventoryRepository;
 
     public void mergeInventory(Plan plan) {
-        var existingInventories = inventoryRepository.findByPlanKey(plan.getKey());
+        var existingInventories = inventoryRepository.findByPlanKey(plan.toPlanKey());
         var merger = InventoryMerge.of(plan, existingInventories);
 
         // remove inventory which has never been used and is invalid now.

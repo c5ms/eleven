@@ -8,17 +8,16 @@ import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import com.eleven.hotel.domain.core.ObjectMatcher;
-import com.eleven.hotel.domain.core.Saleable;
 import com.eleven.hotel.domain.values.StockAmount;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
-import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.Validate;
 import org.hibernate.annotations.Type;
 
@@ -31,7 +30,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter(AccessLevel.PROTECTED)
 @FieldNameConstants
-public class Plan extends AbstractEntity implements Saleable {
+public class Plan extends AbstractEntity  {
 
     @Id
     @Column(name = "plan_id")
@@ -114,6 +113,7 @@ public class Plan extends AbstractEntity implements Saleable {
                                     PlanBasic basic) {
 
         Validate.notNull(hotelId, "hotelId must not be null");
+        Validate.notNull(stayPeriod, "sale period must not be null");
         Validate.notNull(stockAmount, "stock must not be null");
         Validate.isTrue(stockAmount.greaterThanZero(), "total must gather than zero");
 
@@ -144,32 +144,26 @@ public class Plan extends AbstractEntity implements Saleable {
         }
     }
 
-    @Override
     public void startSale() {
-        Validate.isTrue(hasRoom(), "the plan has no room");
+        Validate.isTrue(this.getProducts().isNotEmpty(), "the plan has no room");
         Validate.isTrue(this.getProducts().stream().anyMatch(Product::hasPrice), "the plan has no price at all");
         Validate.isTrue(this.getProducts().stream().anyMatch(Product::hasStock), "the plan has no stock at all");
 
         this.setSaleState(SaleState.STARTED);
     }
 
-    @Override
     public void stopSale() {
         this.saleState = SaleState.STOPPED;
     }
 
-    @Override
     public boolean isOnSale() {
-        if (!this.saleState.isOnSale()) {
+        if (!this.getSaleState().isOnSale()) {
             return false;
         }
-        if (this.salePeriod == null) {
-            return false;
-        }
-        if (null != preSalePeriod && preSalePeriod.isCurrent()) {
+        if (null != getPreSalePeriod() && getPreSalePeriod().isCurrent()) {
             return true;
         }
-        return salePeriod.isCurrent();
+        return getSalePeriod().isCurrent();
     }
 
     public void setPrice(Long roomId, SaleChannel saleChannel, BigDecimal wholeRoomPrice) {
@@ -196,7 +190,7 @@ public class Plan extends AbstractEntity implements Saleable {
     }
 
     public Optional<Product> findRoom(Long roomId) {
-        var id = ProductId.of(hotelId, planId, roomId);
+        var id = ProductId.of(getHotelId(), getPlanId(), roomId);
         return Optional.ofNullable(this.products.get(id));
     }
 
@@ -211,9 +205,7 @@ public class Plan extends AbstractEntity implements Saleable {
                 .charge(personCount);
     }
 
-    public boolean hasRoom(Long roomId) {
-        return this.products.containsKey(ProductId.of(hotelId, planId, roomId));
-    }
+
 
     public void startSale(Long roomId) {
         var product = requireRoom(roomId);
@@ -225,7 +217,7 @@ public class Plan extends AbstractEntity implements Saleable {
         var product = requireRoom(roomId);
         product.stopSale();
 
-        if (!hasOnSaleRoom()) {
+        if (this.getProducts().stream().noneMatch(Product::isOnSale)) {
             this.stopSale();
         }
     }
@@ -239,7 +231,7 @@ public class Plan extends AbstractEntity implements Saleable {
     public void openChannel(SaleChannel saleChannel) {
         this.saleChannels.add(saleChannel);
         this.getProducts().forEach(product -> product.openChannel(saleChannel));
-        this.isPrivate = this.saleChannels.isEmpty();
+        this.setIsPrivate(this.saleChannels.isEmpty());
     }
 
     public void closChannel(SaleChannel saleChannel, boolean dropPrices) {
@@ -249,15 +241,15 @@ public class Plan extends AbstractEntity implements Saleable {
             product.closeChannel(saleChannel, dropPrices);
         }
 
-        this.isPrivate = this.saleChannels.isEmpty();
+        this.setIsPrivate( this.saleChannels.isEmpty());
     }
 
-    public boolean hasOnSaleRoom() {
-        return this.getProducts().stream().anyMatch(Product::isOnSale);
+    public boolean hasRoom(Long roomId) {
+        return this.products.containsKey(ProductId.of(getHotelId(), getPlanId(), roomId));
     }
 
     public boolean hasRoom() {
-        return MapUtils.isNotEmpty(this.products);
+        return this.getProducts().isNotEmpty();
     }
 
     public boolean hasStock(Long roomId) {
@@ -279,9 +271,9 @@ public class Plan extends AbstractEntity implements Saleable {
 
     public boolean isApplicable(Inventory inventory) {
         ObjectMatcher<Inventory> matcher= new ObjectMatcher<Inventory>()
-                .should(theInv -> theInv.getPlanKey().equals(getKey()))
-                .should(theInv -> this.stayPeriod.contains(theInv.getKey().getDate()))
-                .should(theInv -> this.products.containsKey(theInv.getProductId()))
+                .should(theInv -> theInv.getPlanKey().equals(toPlanKey()))
+                .should(theInv -> this.getStayPeriod().contains(theInv.getInventoryKey().getDate()))
+                .should(theInv -> this.hasRoom(theInv.getInventoryKey().getRoomId()))
                 ;
         return matcher.test(inventory);
 
@@ -301,7 +293,7 @@ public class Plan extends AbstractEntity implements Saleable {
         return Optional.ofNullable(stayPeriod).orElseGet(DateRange::empty);
     }
 
-    @Nonnull
+    @Nullable
     public DateTimeRange getPreSalePeriod() {
         return Optional.ofNullable(preSalePeriod).orElseGet(DateTimeRange::empty);
     }
@@ -326,7 +318,7 @@ public class Plan extends AbstractEntity implements Saleable {
         return ImmutableValues.of(saleChannels);
     }
 
-    public PlanKey getKey() {
+    public PlanKey toPlanKey() {
         return PlanKey.of(hotelId, planId);
     }
 }
