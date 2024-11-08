@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @Setter(AccessLevel.PROTECTED)
 @FieldNameConstants
 @EqualsAndHashCode(callSuper = false, of = "inventoryKey")
-public class Inventory extends AbstractEntity {
+public class Inventory extends AbstractEntity  {
 
     @Id
     @Column(name = "inventory_id")

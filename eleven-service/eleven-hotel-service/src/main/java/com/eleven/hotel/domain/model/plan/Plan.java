@@ -40,9 +40,6 @@ public class Plan extends AbstractEntity  {
     @Column(name = "hotel_id")
     private Long hotelId;
 
-    @Column(name = "is_private")
-    private Boolean isPrivate;
-
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "plan_id", referencedColumnName = "plan_id", insertable = false, updatable = false)
     @JoinColumn(name = "hotel_id", referencedColumnName = "hotel_id", insertable = false, updatable = false)
@@ -79,13 +76,6 @@ public class Plan extends AbstractEntity  {
     @AttributeOverride(name = "count", column = @Column(name = "stock_count"))
     private StockAmount stock;
 
-    /**
-     * <p>
-     * it will affect the privacy
-     * </p>
-     *
-     * @see #isPrivate
-     */
     @Setter
     @Type(JsonType.class)
     @Column(name = "sale_channels", columnDefinition = "json")
@@ -130,7 +120,6 @@ public class Plan extends AbstractEntity  {
         Optional.ofNullable(saleChannels).ifPresent(channels -> channels.forEach(plan::openChannel));
         return plan;
     }
-
 
     @PostPersist
     protected void onAfterPersist() {
@@ -205,8 +194,6 @@ public class Plan extends AbstractEntity  {
                 .charge(personCount);
     }
 
-
-
     public void startSale(Long roomId) {
         var product = requireRoom(roomId);
         product.startSale();
@@ -222,34 +209,20 @@ public class Plan extends AbstractEntity  {
         }
     }
 
-    public boolean isOnSale(Long roomId) {
-        return this.findRoom(roomId)
-                .map(Product::isOnSale)
-                .orElse(false);
-    }
-
     public void openChannel(SaleChannel saleChannel) {
         this.saleChannels.add(saleChannel);
         this.getProducts().forEach(product -> product.openChannel(saleChannel));
-        this.setIsPrivate(this.saleChannels.isEmpty());
     }
 
     public void closChannel(SaleChannel saleChannel, boolean dropPrices) {
         this.saleChannels.remove(saleChannel);
-
         for (Product product : this.getProducts()) {
             product.closeChannel(saleChannel, dropPrices);
         }
-
-        this.setIsPrivate( this.saleChannels.isEmpty());
     }
 
     public boolean hasRoom(Long roomId) {
         return this.products.containsKey(ProductId.of(getHotelId(), getPlanId(), roomId));
-    }
-
-    public boolean hasRoom() {
-        return this.getProducts().isNotEmpty();
     }
 
     public boolean hasStock(Long roomId) {
@@ -261,13 +234,11 @@ public class Plan extends AbstractEntity  {
     }
 
     public List<Inventory> createInventories() {
-        Validate.notNull(this.planId, "the plan has not been created");
         return getProducts()
                 .stream()
                 .flatMap(product -> createInventories(product).stream())
                 .collect(Collectors.toList());
     }
-
 
     public boolean isApplicable(Inventory inventory) {
         ObjectMatcher<Inventory> matcher= new ObjectMatcher<Inventory>()
@@ -280,6 +251,7 @@ public class Plan extends AbstractEntity  {
     }
 
     private ArrayList<Inventory> createInventories(Product product) {
+        Validate.notNull(this.planId, "the plan has not been created");
         var inventories = new ArrayList<Inventory>();
         getStayPeriod()
                 .dates()
@@ -320,5 +292,10 @@ public class Plan extends AbstractEntity  {
 
     public PlanKey toPlanKey() {
         return PlanKey.of(hotelId, planId);
+    }
+
+    @Column(name = "is_private")
+    private boolean isPrivate(){
+        return getSaleChannels().isEmpty();
     }
 }
