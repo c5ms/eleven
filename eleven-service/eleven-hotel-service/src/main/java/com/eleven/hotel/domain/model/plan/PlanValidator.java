@@ -11,9 +11,4 @@ public interface PlanValidator {
         return Optional.empty();
     }
 
-
-    default Optional<DomainError> validateForBooking(Plan plan) {
-        return Optional.empty();
-    }
-
 }

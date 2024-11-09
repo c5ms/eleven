@@ -1,10 +1,10 @@
 package com.eleven.upms.application.service;
 
+import com.eleven.core.application.query.PageResult;
 import com.eleven.core.data.Audition;
 import com.eleven.core.data.QuerySupport;
-import com.eleven.core.domain.DomainUtils;
-import com.eleven.core.application.model.PageResult;
-import com.eleven.core.time.TimeContext;
+import com.eleven.core.domain.DomainHelper;
+import com.eleven.core.time.TimeHelper;
 import com.eleven.upms.api.application.command.UserCreateCommand;
 import com.eleven.upms.api.application.command.UserQueryCommand;
 import com.eleven.upms.api.application.command.UserStatusChangeCommand;
@@ -24,7 +24,6 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.relational.core.query.Criteria;
-import org.springframework.data.relational.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,8 +74,8 @@ public class UserService {
             criteria = criteria.and(ranges);
         }
 
-        var query = Query.query(criteria).sort(Sort.by(Audition.Fields.createAt).descending());
-        var page = querySupport.query(query, User.class, command.getPage(), command.getSize());
+        var sort=Sort.by(Audition.Fields.createAt).descending();
+        var page = querySupport.query(User.class,criteria,command,sort);
         return page.map(userConvertor::toDetail);
 
     }
@@ -93,12 +92,12 @@ public class UserService {
     @Transactional(rollbackFor = Exception.class)
     public UserDetail createUser(UserCreateCommand command) {
         var user = User.builder()
-            .id(DomainUtils.nextId())
+            .id(DomainHelper.nextId())
             .username(command.getUsername())
             .type(User.USER_TYPE_ADMIN)
             .isLocked(false)
             .status(ObjectUtils.defaultIfNull(command.getState(), UserStatus.NORMAL))
-            .registerAt(TimeContext.localDateTime())
+            .registerAt(TimeHelper.localDateTime())
             .build();
         userManager.create(user);
         authorityManager.grant(user, command.getRoles());

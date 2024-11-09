@@ -114,7 +114,7 @@ alter table hotel.register
 create unique index register_pk
     on hotel.register (id);
 
-create table hotel.room
+create table hotel.target
 (
     id         varchar(50) not null
         primary key,
@@ -129,11 +129,11 @@ create table hotel.room
     sale_state varchar(20)
 );
 
-alter table hotel.room
+alter table hotel.target
     owner to root;
 
 create unique index room_pk
-    on hotel.room (id);
+    on hotel.target (id);
 
 create table hotel.plan_room
 (
@@ -147,7 +147,7 @@ create table hotel.plan_room
             on delete cascade,
     room_id  varchar(50)
         constraint plan_room_room_id_fk
-            references hotel.room
+            references hotel.target
             on delete cascade,
     count    integer,
     price    integer

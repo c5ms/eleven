@@ -1,6 +1,6 @@
 package com.eleven.upms.api.application.command;
 
-import com.eleven.core.application.model.PageQuery;
+import com.eleven.core.application.query.PageQuery;
 import com.eleven.upms.api.domain.model.UserStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;

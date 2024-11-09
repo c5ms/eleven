@@ -1,10 +1,10 @@
 package com.eleven.core.web;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
-import com.eleven.core.application.command.CommandHandleException;
-import com.eleven.core.domain.DomainErrors;
+import com.eleven.core.application.authorize.NoAuthorityException;
+import com.eleven.core.application.authorize.NoPrincipalException;
+import com.eleven.core.application.command.CommandInvalidException;
 import com.eleven.core.domain.DomainException;
-import com.eleven.core.domain.NoRequiredEntityException;
 import com.eleven.core.web.problem.Problem;
 import com.eleven.core.web.problem.ValidationProblem;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -21,6 +21,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
@@ -29,33 +30,26 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 @ControllerAdvice
 public class ElevenExceptionAdvice {
 
-
     @ResponseBody
-    @ApiResponse(description = "Unprocessable Entity", responseCode = "422")
     @ApiResponse(description = "Bad Request", responseCode = "400")
+    @ApiResponse(description = "No Authority", responseCode = "403")
     @ApiResponse(description = "Not Found", responseCode = "404")
     @ApiResponse(description = "Method Not Allowed", responseCode = "405")
     @ApiResponse(description = "Unsupported Media Type", responseCode = "415")
+    @ApiResponse(description = "Unprocessable Entity", responseCode = "422")
     @ApiResponse(description = "Internal Server Error", responseCode = "500")
     @ExceptionHandler({Exception.class,})
     public ResponseEntity<Problem> on(Exception e) {
         HttpStatus status;
 
         //400 - payload
-        if (e instanceof CommandHandleException) {
-            status = HttpStatus.BAD_REQUEST;
-        } else if (e instanceof NoRequiredEntityException) {
-            status = HttpStatus.BAD_REQUEST;
-        } else if (e instanceof HttpMessageConversionException) {
-            log.warn("message convert fail {}", ExceptionUtil.getMessage(e));
-            var problem = Problem.of(DomainErrors.ERROR_REQUEST_BODY_FAILED);
+        if (e instanceof HttpMessageConversionException) {
+            var problem = Problem.of(WebErrors.ERROR_REQUEST_BODY_FAILED);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
-        } else if (e instanceof DomainException ex) {
-            var problem = Problem.of(ex);
-            log.warn(ExceptionUtil.getMessage(ex), ex);
+        } else if (e instanceof CommandInvalidException) {
+            var problem = Problem.of(WebErrors.ERROR_REQUEST_BODY_FAILED);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
         }
-
 
         // 422
         else if (e instanceof BindException ex) {
@@ -66,13 +60,12 @@ public class ElevenExceptionAdvice {
                 .map(objectError -> (FieldError) objectError)
                 .map(fieldError -> new ValidationProblem.Field(fieldError.getField(), fieldError.getCode(), fieldError.getDefaultMessage()))
                 .forEach(problem::addField);
-
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(problem);
         }
 
         // 403
         else if (e instanceof AccessDeniedException) {
-            var problem = Problem.of(DomainErrors.ERROR_ACCESS_DENIED);
+            var problem = Problem.of(WebErrors.ERROR_ACCESS_DENIED);
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(problem);
         }
 
@@ -80,8 +73,6 @@ public class ElevenExceptionAdvice {
         else if (e instanceof NoHandlerFoundException) {
             status = HttpStatus.NOT_FOUND;
         } else if (e instanceof NoResourceFoundException) {
-            status = HttpStatus.NOT_FOUND;
-        } else if (e instanceof ResourceNofFoundException) {
             status = HttpStatus.NOT_FOUND;
         }
 
@@ -92,17 +83,38 @@ public class ElevenExceptionAdvice {
             status = HttpStatus.METHOD_NOT_ALLOWED;
         }
 
+        // dynamic
+        else if (e instanceof ResponseStatusException ex) {
+            status = HttpStatus.valueOf(ex.getStatusCode().value());
+        }
+
+        // inner error system
+        else if (e instanceof DomainException ex) {
+            var problem = Problem.of(ex);
+            // todo with exception or not?
+            log.warn(ExceptionUtil.getMessage(ex));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
+        } else if (e instanceof NoPrincipalException) {
+            status = HttpStatus.NOT_FOUND;
+        } else if (e instanceof NoAuthorityException) {
+            var problem = Problem.of(WebErrors.ERROR_ACCESS_DENIED);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(problem);
+        }
+
         // 500
         else {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
             var problem = Problem.of("system_internal", ExceptionUtils.getRootCauseMessage(e));
+//            if(log.isErrorEnabled()){
+//                log.error(ExceptionUtil.getMessage(e), e);
+//            }
             if (log.isDebugEnabled()) {
                 return ResponseEntity.status(status).body(problem);
             }
         }
 
+
         return ResponseEntity.status(status).build();
     }
-
 
 }

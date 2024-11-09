@@ -15,8 +15,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PlanNameValidator implements PlanValidator {
 
-    private final PlanRepository planRepository;
-
     @Override
     public Optional<DomainError> validate(Plan plan) {
         return Optional.empty();

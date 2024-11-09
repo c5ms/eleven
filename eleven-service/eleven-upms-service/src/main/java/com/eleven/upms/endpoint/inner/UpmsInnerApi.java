@@ -1,12 +1,12 @@
 package com.eleven.upms.endpoint.inner;
 
-import com.eleven.core.security.Subject;
-import com.eleven.core.security.Token;
+import com.eleven.core.authentic.Subject;
+import com.eleven.core.authentic.Token;
 import com.eleven.core.web.annonation.AsInternalApi;
+import com.eleven.upms.api.application.model.UserDetail;
+import com.eleven.upms.api.endpoint.UpmsClient;
 import com.eleven.upms.application.service.TokenService;
 import com.eleven.upms.application.service.UserService;
-import com.eleven.upms.api.endpoint.UpmsClient;
-import com.eleven.upms.api.application.model.UserDetail;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

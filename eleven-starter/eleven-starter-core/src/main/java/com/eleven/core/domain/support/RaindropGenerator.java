@@ -22,22 +22,8 @@ public class RaindropGenerator implements IdentityGenerator {
 
     @Override
     public synchronized String next() {
-//        LocalDateTime localDate = LocalDateTime.now(TimeContext.getClock());
-//        return String.format("%02d%02d%02d%02d%02d%02d%02d%02d%06d",
-//            datacenterId,
-//            workerId,
-//            localDate.getYear(),
-//            localDate.getMonthValue(),
-//            localDate.getDayOfMonth(),
-//            localDate.getHour(),
-//            localDate.getMinute(),
-//            localDate.getSecond(),
-//            seq.incrementAndGet()
-//        );
-        return String.format("%s%s%06d",
-            Long.toHexString(datacenterId * 100 + workerId),
-            Long.toHexString(TimeContext.getClock().millis()/1000),
-            seq.incrementAndGet()
+        var timestampSec = TimeContext.getClock().millis() / 1000;
+        return String.format("%s%06d", Long.toHexString(timestampSec * 10000 + datacenterId * 100 + workerId), seq.incrementAndGet()
         ).toUpperCase(Locale.ROOT);
     }
 
