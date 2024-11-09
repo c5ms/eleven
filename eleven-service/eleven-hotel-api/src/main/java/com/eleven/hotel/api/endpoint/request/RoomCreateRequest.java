@@ -1,7 +1,7 @@
 package com.eleven.hotel.api.endpoint.request;
 
 import com.eleven.hotel.api.domain.model.ChargeType;
-import com.eleven.hotel.api.domain.model.RoomType;
+import com.eleven.hotel.api.domain.model.RoomLevel;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -17,7 +17,7 @@ public class RoomCreateRequest {
     private String name;
 
     @NotNull
-    private RoomType type;
+    private RoomLevel level;
 
     @NotNull
     private ChargeType chargeType;
@@ -26,11 +26,13 @@ public class RoomCreateRequest {
 
     @Min(1)
     @Max(5)
-    private Integer maxPerson;
+    @NotNull
+    private Integer minPerson;
 
     @Min(1)
     @Max(5)
-    private Integer minPerson;
+    @NotNull
+    private Integer maxPerson;
 
     @NotBlank
     private String desc;

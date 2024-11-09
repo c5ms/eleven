@@ -1,20 +1,23 @@
 package com.eleven.hotel.application.command;
 
-import com.eleven.hotel.domain.model.plan.Plan;
-import com.eleven.hotel.domain.values.DateRange;
-import com.eleven.hotel.domain.values.DateTimeRange;
-import com.eleven.hotel.domain.values.Stock;
+import com.eleven.hotel.api.domain.model.SaleChannel;
+import com.eleven.hotel.domain.model.plan.PlanBasic;
+import com.eleven.core.domain.values.DateRange;
+import com.eleven.core.domain.values.DateTimeRange;
+import com.eleven.hotel.domain.values.StockAmount;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.util.Set;
 
 @Getter
 @Builder
 public class PlanCreateCommand {
-    private String hotelId;
-
-    private Stock stock;
-    private DateTimeRange sellPeriod;
-    private DateTimeRange preSellPeriod;
+    private PlanBasic basic;
+    private StockAmount stock;
+    private DateTimeRange salePeriod;
+    private DateTimeRange preSalePeriod;
     private DateRange stayPeriod;
-    private Plan.Description description;
+    private Set<Long> rooms;
+    private Set<SaleChannel> channels;
 }

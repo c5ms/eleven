@@ -1,0 +1,113 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+title The arch of a service
+
+
+'!theme plain
+autoactivate on
+'autonumber
+
+box "Endpoint"
+    control       "RestAPI"                      as endpoint
+    participant   "Convertor"                    as Convertor
+end box
+
+box "Application"  #LightBlue
+    participant       Service                    as Service
+    participant       Transaction                as Transaction
+    participant       Security                   as Security
+    boundary          Event                      as applicationEvent
+end box
+
+box "Domain layer"
+    participant     Service                      as manager
+    entity          Aggregate                    as model
+    boundary        Event                        as domainEvent
+    participant     Persistence                  as persist
+end box
+
+box "Infra layer"  #LightBlue
+    database        DB                  as db
+    database        Queue               as message
+end box
+
+    endpoint -> Service  : command
+
+        Service -> Transaction
+            Transaction -> db
+            return
+        return
+
+            group #LightYellow  Transaction by <color:blue>Infrastructure</color>
+
+                    Service -> persist : locate
+                    return Aggregate,Projection etc.
+
+                    group #LightBlue Secure by <color:blue>Security context</color>
+
+                        Service -> Security : check domain authority
+                        note left Security
+                              1. no resource readable permission
+                              2. no resource writeable permission
+                              3. authorized
+                        end note
+                        return
+
+                        group #LightYellow execute the <color:blue>command</color>
+
+
+                        Service -> manager : call to <color:blue>domain service</color>
+                            manager -> persist
+                                persist -> db
+                                return
+                            return
+                            manager -> model
+                            return
+                            manager -> domainEvent:
+                            return
+                        return
+
+
+                        Service -> model : operate <color:blue>domain aggregate</color>
+                            model -> domainEvent
+                            return:
+                        return
+
+
+
+
+
+                        Service -> persist : persist <color:blue>domain aggregate</color>
+                            persist -> db
+                            return
+                        return
+
+                        end group
+
+
+                        group Integration by <color:blue>Application event</color>
+                            Service -> applicationEvent : publish application event
+                                applicationEvent -> message
+                                return
+                            return
+
+                        end group
+
+                    end group
+
+            end group
+
+        note right endpoint
+            1. no resource readable permission -> 404
+            2. no resource writeable permission -> 403
+            3. no resource existing -> 404
+            4. no functional permission 403
+            5. no authentication -> 401
+        end note
+        return Domain Aggregate
+
+        endpoint->Convertor : convert
+        return representation
+
+@enduml

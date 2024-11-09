@@ -1,6 +1,6 @@
 package com.eleven.core.web.problem;
 
-import com.eleven.core.domain.DomainErrors;
+import com.eleven.core.web.WebErrors;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -15,7 +15,7 @@ public class ValidationProblem extends Problem {
     private final List<Field> fields = new ArrayList<>();
 
     public ValidationProblem() {
-        super(DomainErrors.ERROR_VALIDATE_FAILED.getError(), DomainErrors.ERROR_VALIDATE_FAILED.getMessage());
+        super(WebErrors.ERROR_VALIDATE_FAILED.getError(), WebErrors.ERROR_VALIDATE_FAILED.getMessage());
     }
 
     public static ValidationProblem empty() {

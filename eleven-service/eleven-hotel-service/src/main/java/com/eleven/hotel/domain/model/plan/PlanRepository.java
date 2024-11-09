@@ -1,14 +1,15 @@
 package com.eleven.hotel.domain.model.plan;
 
-import com.eleven.core.data.DomainRepository;
-import org.springframework.data.jdbc.repository.query.Query;
+import io.hypersistence.utils.spring.repository.BaseJpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.Collection;
 import java.util.Optional;
 
-public interface PlanRepository extends DomainRepository<Plan, String> {
+public interface PlanRepository extends BaseJpaRepository<Plan, Long>, JpaSpecificationExecutor<Plan> {
 
-    @Query("select * from plan where  hotel_id=:hotelId and id=:roomId")
-    Optional<Plan> find(@Param("hotelId") String hotelId, @Param("roomId") String roomId);
+    @Query("from Plan where hotelId=:#{#key.hotelId} and planId=:#{#key.planId} ")
+    Optional<Plan> findByKey(@Param("key") PlanKey key);
+
 }

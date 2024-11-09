@@ -1,14 +1,8 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import com.eleven.core.data.DomainRepository;
-import com.eleven.hotel.domain.model.plan.Plan;
-import org.springframework.data.jdbc.repository.query.Query;
-import org.springframework.data.repository.query.Param;
+import io.hypersistence.utils.spring.repository.BaseJpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-import java.util.Optional;
+public interface HotelRepository extends BaseJpaRepository<Hotel, Long>, JpaSpecificationExecutor<Hotel> {
 
-public interface HotelRepository extends DomainRepository<Hotel, String> {
-
-    @Query("select * from hotel where hotel_name=:name")
-    Optional<Hotel> getHotelByName(@Param("name") String name);
 }

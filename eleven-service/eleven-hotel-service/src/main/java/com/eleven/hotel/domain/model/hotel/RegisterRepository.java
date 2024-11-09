@@ -1,6 +1,8 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import com.eleven.core.data.DomainRepository;
+import io.hypersistence.utils.spring.repository.BaseJpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface RegisterRepository extends DomainRepository<Register, String> {
+public interface RegisterRepository extends BaseJpaRepository<Register, Long>, JpaSpecificationExecutor<Register> {
+
 }

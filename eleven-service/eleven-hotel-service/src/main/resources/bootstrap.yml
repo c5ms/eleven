@@ -1,4 +1,3 @@
-
 server:
   port: 9000
 
@@ -28,21 +27,39 @@ spring:
     database-change-log-table: 001_DATABASECHANGELOG
     database-change-log-lock-table: 001_DATABASECHANGELOGLOCK
 
+  jpa:
+    generate-ddl: true
+    properties:
+      'hibernate.order_updates': true
+      'hibernate.jdbc.batch_size': 50
+
+  data:
+    mongodb:
+      uri: ${mongo.hotel.uri}
+
+
 eleven:
   cache:
     duration: PT8H
-    serializer: jackson
-  open-api:
-    title: hotel management
-    description: ross hotel management tool
-    version: 1.0.0.dev
-    terms-of-service: https://www.demcia.com/
-    contact:
-      email: demcia@demcia.com
-      name: 德玛西亚小分队
-      url: https://www.demcia.com/
-    license:
-      name: Apache 2.0
-      url: https://www.demcia.com/
+  data:
+    id-type: raindrop
+  time:
+    provider: local_clock
+  logs:
+    logstash:
+      enabled: false
+  web:
+    open-api:
+      title: Hotel Admin
+      description: ross hotel management tool
+      version: 1.0.0.dev
+      terms-of-service: https://www.demcia.com/
+      contact:
+        email: demcia@demcia.com
+        name: 德玛西亚小分队
+        url: https://www.demcia.com/
+      license:
+        name: Apache 2.0
+        url: https://www.demcia.com/
 
 

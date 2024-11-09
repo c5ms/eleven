@@ -25,8 +25,4 @@ public class DomainException extends RuntimeException implements DomainError {
         return new DomainException(error, message);
     }
 
-//    @Override
-//    public synchronized Throwable fillInStackTrace() {
-//        return this;
-//    }
 }

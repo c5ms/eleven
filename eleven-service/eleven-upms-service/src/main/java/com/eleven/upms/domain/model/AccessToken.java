@@ -1,11 +1,11 @@
 package com.eleven.upms.domain.model;
 
 import com.eleven.core.data.AbstractEntity;
-import com.eleven.core.security.Principal;
-import com.eleven.core.security.ToPrincipal;
-import com.eleven.core.security.Token;
-import com.eleven.core.security.TokenDetail;
-import com.eleven.core.time.TimeContext;
+import com.eleven.core.authentic.Principal;
+import com.eleven.core.authentic.ToPrincipal;
+import com.eleven.core.authentic.Token;
+import com.eleven.core.authentic.TokenDetail;
+import com.eleven.core.time.TimeHelper;
 import com.eleven.upms.api.domain.event.AccessTokenCreatedEvent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -72,7 +72,7 @@ public class AccessToken extends AbstractEntity {
     }
 
     public void expire() {
-        this.expireAt = TimeContext.localDateTime();
+        this.expireAt = TimeHelper.localDateTime();
     }
 
     @Override

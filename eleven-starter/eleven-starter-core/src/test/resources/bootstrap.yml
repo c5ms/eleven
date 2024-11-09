@@ -1,0 +1,21 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        enabled: false
+        group: eve
+        namespace: eleven
+        server-addr: 127.0.0.1:8848
+      discovery:
+        enabled: false
+        group: eve
+        namespace: eleven
+        server-addr: 127.0.0.1:8848
+
+
+
+logging:
+  level:
+    root: info
+    'com.eleven': debug
+

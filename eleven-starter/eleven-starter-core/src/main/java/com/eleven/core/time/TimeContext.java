@@ -40,12 +40,11 @@ public final class TimeContext {
 
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @Configuration(proxyBeanMethods = false)
-    public static class DataTimeContextAutoconfigure {
+    public static class TimeHelperAutoconfigure {
         @Autowired
-        public DataTimeContextAutoconfigure(DynamicAdjustableClock clock) {
+        public TimeHelperAutoconfigure(DynamicAdjustableClock clock) {
             TimeContext.clock = clock;
         }
-
     }
 
 }

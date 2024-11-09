@@ -6,44 +6,37 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
 @Accessors(chain = true)
-public class PlanDto {
+public class PlanDto implements Serializable {
 
-    private String id;
+    private Long planId;
+    private Long hotelId;
+
     private String name;
     private String desc;
     private Integer stock;
     private SaleType type;
     private SaleState state;
 
+    private Boolean isOnSale;
+
     private Boolean isPreSale;
-    private Boolean isPreSaleOngoing;
+    private Boolean isPreSalePeriodOngoing;
     private LocalDateTime preSellStartDate;
     private LocalDateTime preSellEndDate;
 
-    private Boolean isSaleOngoing;
+    private Boolean isSalePeriodOngoing;
     private LocalDateTime sellStartDate;
     private LocalDateTime sellEndDate;
 
+    private Boolean isStayPeriodOngoing;
     private LocalDate stayStartDate;
     private LocalDate stayEndDate;
 
-    private List<PlanRoom> rooms = new ArrayList<>();
-
-
-    @Getter
-    @Setter
-    @Accessors(chain = true)
-    public static class PlanRoom {
-        private String roomId;
-        private Integer stock;
-        private Double price;
-    }
 }

@@ -37,8 +37,10 @@ public class ElevenResponseAdvice implements ResponseBodyAdvice<Object> {
                                   @NonNull ServerHttpRequest request,
                                   @NonNull ServerHttpResponse response) {
 
+        var statusCode = ((ServletServerHttpResponse) response).getServletResponse().getStatus();
+
         // decide to response 404 or 204
-        if (((ServletServerHttpResponse) response).getServletResponse().getStatus() == 404) {
+        if (statusCode == 404) {
             return body;
         }
 
@@ -49,15 +51,29 @@ public class ElevenResponseAdvice implements ResponseBodyAdvice<Object> {
             return body;
         }
 
-        if(request.getMethod() == HttpMethod.GET ){
+        if (request.getMethod() == HttpMethod.GET) {
             boolean isReturnNUll = null == body;
             if (body instanceof Optional<?>) {
                 isReturnNUll = ((Optional<?>) body).isEmpty();
             }
 
-            if (isReturnNUll && ((ServletServerHttpResponse) response).getServletResponse().getStatus() < 300) {
-                response.setStatusCode(HttpStatus.NO_CONTENT);
+            if (isReturnNUll && statusCode < 300 && statusCode >= 200) {
+                response.setStatusCode(HttpStatus.NOT_FOUND);
                 return null;
+            }
+        }
+
+        if(statusCode < 300 && statusCode >= 200 ){
+            if (request.getMethod() == HttpMethod.DELETE) {
+                response.setStatusCode(HttpStatus.NO_CONTENT);
+            }
+
+            if (request.getMethod() == HttpMethod.POST) {
+                response.setStatusCode(HttpStatus.CREATED);
+            }
+
+            if (request.getMethod() == HttpMethod.PUT) {
+                response.setStatusCode(HttpStatus.ACCEPTED);
             }
         }
         return body;

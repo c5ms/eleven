@@ -1,8 +1,8 @@
 package com.eleven.upms.domain.manager;
 
-import com.eleven.core.domain.DomainUtils;
 import com.eleven.core.domain.DomainException;
-import com.eleven.core.security.Principal;
+import com.eleven.core.domain.DomainHelper;
+import com.eleven.core.authentic.Principal;
 import com.eleven.upms.api.domain.core.UpmsConstants;
 import com.eleven.upms.api.domain.event.UserCreatedEvent;
 import com.eleven.upms.domain.model.User;
@@ -51,7 +51,7 @@ public class UserManager {
         validate(user);
         user.changePassword(passwordSupport.defaultEncodedPassword());
         userRepository.save(user);
-        DomainUtils.publishEvent(new UserCreatedEvent(user.getId()));
+        DomainHelper.publishEvent(new UserCreatedEvent(user.getId()));
     }
 
     private void validate(User user) throws DomainException {

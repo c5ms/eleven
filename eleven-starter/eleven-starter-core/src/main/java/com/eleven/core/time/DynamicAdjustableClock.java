@@ -63,7 +63,7 @@ public class DynamicAdjustableClock extends Clock {
         if (zone.equals(this.zone)) {
             return this;
         }
-        DynamicAdjustableClock newClock = new DynamicAdjustableClock(provider, expiration, zone);
+        var newClock = new DynamicAdjustableClock(provider, expiration, zone);
         newClock.baseMilli = this.baseMilli;
         newClock.adjustingTimeMilli = this.adjustingTimeMilli;
         return newClock;
