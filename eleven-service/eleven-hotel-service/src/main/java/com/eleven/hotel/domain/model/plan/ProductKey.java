@@ -9,17 +9,11 @@ import java.io.Serializable;
 @Getter
 @Setter(AccessLevel.PROTECTED)
 @Embeddable
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ProductKey implements Serializable {
+public class ProductKey extends PlanKey {
 
-    @Column(name = "hotel_id")
-    private Long hotelId;
-
-    @Column(name = "plan_id")
-    private Long planId;
-
-    @Column(name = "room_id")
+    @Column(name = "room_id", insertable = true, updatable = true)
     private Long roomId;
 
     public static ProductKey of(Long hotelId, Long planId, Long roomId) {

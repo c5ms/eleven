@@ -1,8 +1,7 @@
 package com.eleven.hotel.domain.model.plan;
 
 import com.eleven.core.domain.DomainValidator;
-import com.eleven.core.domain.DomainError;
-import com.eleven.core.domain.SimpleDomainError;
+import com.eleven.hotel.api.domain.errors.PlanErrors;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import com.eleven.hotel.domain.values.StockAmount;
 import jakarta.persistence.*;
@@ -20,8 +19,8 @@ import java.time.LocalDate;
 @Setter(AccessLevel.PROTECTED)
 @FieldNameConstants
 @EqualsAndHashCode(callSuper = false, of = "inventoryKey")
-public class Inventory extends AbstractEntity  {
-    public final static DomainError ERROR_NOT_ENOUGH = SimpleDomainError.of("plan_inventory_not_enough", "the inventory is not enough");
+public class Inventory extends AbstractEntity {
+
 
     @Id
     @Column(name = "inventory_id")
@@ -83,7 +82,7 @@ public class Inventory extends AbstractEntity  {
     }
 
     public void reduce(int amount) {
-        DomainValidator.must(this.hasEnoughStock(amount), ERROR_NOT_ENOUGH);
+        DomainValidator.must(this.hasEnoughStock(amount), PlanErrors.INVENTORY_NOT_ENOUGH);
         this.setStockLeft(this.stockLeft.reduct(amount));
     }
 

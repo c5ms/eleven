@@ -19,15 +19,15 @@ import java.io.Serializable;
 public class PriceId implements Serializable {
 
     @Nonnull
-    @Column(name = "hotel_id")
+    @Column(name = "hotel_id", insertable = false, updatable = false)
     private Long hotelId;
 
     @Nonnull
-    @Column(name = "plan_id")
+    @Column(name = "plan_id", insertable = false, updatable = false)
     private Long planId;
 
     @Nonnull
-    @Column(name = "room_id")
+    @Column(name = "room_id", insertable = false, updatable = false)
     private Long roomId;
 
     @Nonnull

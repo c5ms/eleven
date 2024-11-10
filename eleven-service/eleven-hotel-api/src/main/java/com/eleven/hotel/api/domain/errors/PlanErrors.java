@@ -12,4 +12,7 @@ public interface PlanErrors {
     DomainError PRICE_NOT_FOUND = SimpleDomainError.of("price_not_found", "the price can not be found");
 
     DomainError UN_SUPPORTED_CHANNEL = SimpleDomainError.of("un_supported_channel", "the channel is unsupported");
+
+
+  DomainError INVENTORY_NOT_ENOUGH = SimpleDomainError.of("inventory_not_enough", "the inventory is not enough");
 }

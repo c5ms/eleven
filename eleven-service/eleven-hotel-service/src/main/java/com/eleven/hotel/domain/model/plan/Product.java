@@ -38,14 +38,14 @@ public class Product {
     private ProductKey productKey;
 
     @Embedded
-    @AttributeOverride(name = "hotelId", column = @Column(name = "plan_id", insertable = false, updatable = false))
+    @AttributeOverride(name = "hotelId", column = @Column(name = "hotel_id", insertable = false, updatable = false))
     @AttributeOverride(name = "planId", column = @Column(name = "plan_id", insertable = false, updatable = false))
     private PlanKey planKey;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "hotel_id", referencedColumnName = "hotel_id", insertable = false, updatable = false)
-    @JoinColumn(name = "plan_id", referencedColumnName = "plan_id", insertable = false, updatable = false)
-    @JoinColumn(name = "room_id", referencedColumnName = "room_id", insertable = false, updatable = false)
+    @JoinColumn(name = "hotel_id", referencedColumnName = "hotel_id")
+    @JoinColumn(name = "plan_id", referencedColumnName = "plan_id")
+    @JoinColumn(name = "room_id", referencedColumnName = "room_id")
     @Transient
     private Map<PriceId, Price> prices = new HashMap<>();
 
