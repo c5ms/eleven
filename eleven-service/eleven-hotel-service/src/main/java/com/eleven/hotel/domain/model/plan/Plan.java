@@ -43,9 +43,9 @@ public class Plan extends AbstractEntity {
     private Long hotelId;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "plan_id", referencedColumnName = "plan_id", insertable = false, updatable = false)
     @JoinColumn(name = "hotel_id", referencedColumnName = "hotel_id", insertable = false, updatable = false)
-    private Map<ProductId, Product> products;
+    @JoinColumn(name = "plan_id", referencedColumnName = "plan_id", insertable = false, updatable = false)
+    private Map<ProductKey, Product> products;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "sale_type")
@@ -121,17 +121,6 @@ public class Plan extends AbstractEntity {
         return plan;
     }
 
-    @PostPersist
-    protected void onAfterPersist() {
-        for (Product product : this.getProducts()) {
-            product.getProductId().setPlanId(this.getPlanId());
-
-            for (Price price : product.getPrices()) {
-                price.getPriceId().setPlanId(this.getPlanId());
-            }
-        }
-    }
-
     public void startSale() {
         DomainValidator.must(this.getProducts().isNotEmpty(), PlanErrors.NO_PRODUCT);
         for (Product product : this.getProducts()) {
@@ -171,15 +160,15 @@ public class Plan extends AbstractEntity {
     }
 
     public Product addRoom(Long roomId, StockAmount stock) {
-        var productId = ProductId.of(getHotelId(), getPlanId(), roomId);
+        var productId = ProductKey.of(hotelId, planId, roomId);
         var product = new Product(productId, this.saleType, this.saleChannels, stock);
-        this.products.put(product.getProductId(), product);
+        this.products.put(productId, product);
         return product;
     }
 
     public Optional<Product> findRoom(Long roomId) {
-        var id = ProductId.of(getHotelId(), getPlanId(), roomId);
-        return Optional.ofNullable(this.products.get(id));
+        var productId = ProductKey.of(hotelId, planId, roomId);
+        return Optional.ofNullable(this.products.get(productId));
     }
 
     public BigDecimal chargeRoom(Long roomId, SaleChannel saleChannel, int personCount) {
@@ -219,7 +208,7 @@ public class Plan extends AbstractEntity {
 
     public boolean isApplicable(Inventory inventory) {
         return Predicates.<Inventory>notNull()
-            .and(theInv -> theInv.getPlanKey().equals(toPlanKey()))
+            .and(theInv -> theInv.getPlanKey().equals(getPlanKey()))
             .and(theInv -> this.getStayPeriod().contains(theInv.getInventoryKey().getDate()))
             .and(theInv -> this.findRoom(theInv.getInventoryKey().getRoomId()).isPresent())
             .test(inventory);
@@ -263,8 +252,8 @@ public class Plan extends AbstractEntity {
         return ImmutableValues.of(saleChannels);
     }
 
-    public PlanKey toPlanKey() {
-        return PlanKey.of(hotelId, planId);
+    public PlanKey getPlanKey() {
+        return  PlanKey.of(hotelId,planId);
     }
 
     // todo why not a JPA field?

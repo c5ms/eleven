@@ -25,7 +25,7 @@ public class RoomService {
 
     @Transactional(readOnly = true)
     public Collection<Room> listRoom(Long hotelId) {
-        return roomRepository.findRoomsByHotelId(hotelId);
+        return roomRepository.findByHotelId(hotelId);
     }
 
     @Transactional(readOnly = true)

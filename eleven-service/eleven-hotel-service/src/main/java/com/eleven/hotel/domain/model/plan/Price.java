@@ -44,15 +44,15 @@ public class Price {
     @Column(name = "five_person_price")
     private BigDecimal fivePersonPrice = BigDecimal.ZERO;
 
-    public static Price wholeRoom(ProductId productId, SaleChannel saleChannel, BigDecimal wholeRoomPrice) {
+    public static Price wholeRoom(ProductKey productKey, SaleChannel saleChannel, BigDecimal wholeRoomPrice) {
         Price price = new Price();
-        price.setPriceId(PriceId.of(productId, saleChannel));
+        price.setPriceId(PriceId.of(productKey, saleChannel));
         price.setChargeType(ChargeType.BY_ROOM);
         price.setWholeRoomPrice(wholeRoomPrice);
         return price;
     }
 
-    public static Price byPerson(ProductId productId,
+    public static Price byPerson(ProductKey productKey,
                                  SaleChannel saleChannel,
                                  BigDecimal onePersonPrice,
                                  BigDecimal twoPersonPrice,
@@ -60,7 +60,7 @@ public class Price {
                                  BigDecimal fourPersonPrice,
                                  BigDecimal fivePersonPrice) {
         Price price = new Price();
-        price.setPriceId(PriceId.of(productId, saleChannel));
+        price.setPriceId(PriceId.of(productKey, saleChannel));
         price.setChargeType(ChargeType.BY_PERSON);
         price.setOnePersonPrice(onePersonPrice);
         price.setTwoPersonPrice(twoPersonPrice);

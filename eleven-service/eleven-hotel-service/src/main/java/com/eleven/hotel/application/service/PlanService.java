@@ -9,7 +9,6 @@ import com.eleven.hotel.application.support.HotelContext;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.domain.model.hotel.RoomRepository;
 import com.eleven.hotel.domain.model.plan.*;
-import com.eleven.hotel.domain.values.StockAmount;
 import com.github.wenhao.jpa.Specifications;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +37,7 @@ public class PlanService {
     private final RoomRepository roomRepository;
 
     public Optional<Plan> readPlan(Long hotelId, Long planId) {
-        return planRepository.findByKey(PlanKey.of(hotelId, planId)).filter(HotelContext::mustReadable);
+        return planRepository.findByHotelIdAndPlanId(hotelId, planId).filter(HotelContext::mustReadable);
     }
 
     @Transactional(readOnly = true)
@@ -91,7 +90,7 @@ public class PlanService {
 
     @Transactional(rollbackFor = Exception.class)
     public void updatePlan(Long hotelId, Long planId, PlanUpdateCommand command) {
-        var plan = planRepository.findByKey(PlanKey.of(hotelId, planId)).orElseThrow(HotelContext::noPrincipalException);
+        var plan = planRepository.findByHotelIdAndPlanId(hotelId, planId).orElseThrow(HotelContext::noPrincipalException);
 
         Optional.ofNullable(command.getBasic()).ifPresent(plan::setBasic);
         Optional.ofNullable(command.getStock()).ifPresent(plan::setStock);
@@ -112,32 +111,32 @@ public class PlanService {
 
     @Transactional(rollbackFor = Exception.class)
     public void deletePlan(Long hotelId, Long planId) {
-        var plan = planRepository.findByKey(PlanKey.of(hotelId, planId)).orElseThrow(HotelContext::noPrincipalException);
+        var plan = planRepository.findByHotelIdAndPlanId(hotelId, planId).orElseThrow(HotelContext::noPrincipalException);
 
         // delete the plan
         planRepository.delete(plan);
 
         // delete inventories
-        inventoryRepository.deleteByPlanKey(plan.toPlanKey());
+        inventoryRepository.deleteByPlanKey(plan.getPlanKey());
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void startSale(Long hotelId, Long planId, Long roomId) {
-        var plan = planRepository.findByKey(PlanKey.of(hotelId, planId)).orElseThrow(HotelContext::noPrincipalException);
+        var plan = planRepository.findByHotelIdAndPlanId(hotelId, planId).orElseThrow(HotelContext::noPrincipalException);
         plan.startSale(roomId);
         planRepository.updateAndFlush(plan);
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void stopSale(Long hotelId, Long planId, Long roomId) {
-        var plan = planRepository.findByKey(PlanKey.of(hotelId, planId)).orElseThrow(HotelContext::noPrincipalException);
+        var plan = planRepository.findByHotelIdAndPlanId(hotelId, planId).orElseThrow(HotelContext::noPrincipalException);
         plan.stopSale(roomId);
         planRepository.updateAndFlush(plan);
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void setPrice(Long hotelId, Long planId, Long roomId, PlanSetPriceCommand command) {
-        var plan = planRepository.findByKey(PlanKey.of(hotelId, planId)).orElseThrow(HotelContext::noPrincipalException);
+        var plan = planRepository.findByHotelIdAndPlanId(hotelId, planId).orElseThrow(HotelContext::noPrincipalException);
 
         switch (command.getChargeType()) {
             case BY_PERSON -> plan.setPrice(
@@ -159,7 +158,7 @@ public class PlanService {
 
     @Transactional(rollbackFor = Exception.class)
     public void reduceStock(Long hotelId, Long planId, Long roomId, StockReduceCommand command) {
-        var productId = ProductId.of(hotelId, planId, roomId);
+        var productId = ProductKey.of(hotelId,planId, roomId);
         var inventoryId = InventoryKey.of(productId, command.getDate());
         var inventory = inventoryRepository.findByInventoryKey(inventoryId).orElseThrow(HotelContext::noPrincipalException);
         inventory.reduce(command.getAmount());
@@ -168,7 +167,7 @@ public class PlanService {
 
     @Transactional(readOnly = true)
     public BigDecimal chargeRoom(Long hotelId, Long planId, Long roomId, SaleChannel saleChannel, int persons) {
-        var plan = planRepository.findByKey(PlanKey.of(hotelId, planId)).orElseThrow(HotelContext::noPrincipalException);
+        var plan = planRepository.findByHotelIdAndPlanId(hotelId, planId).orElseThrow(HotelContext::noPrincipalException);
 
         return plan.chargeRoom(roomId, saleChannel, persons);
     }

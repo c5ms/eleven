@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Embeddable
 @EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ProductId implements Serializable {
+public class ProductKey implements Serializable {
 
     @Column(name = "hotel_id")
     private Long hotelId;
@@ -22,11 +22,11 @@ public class ProductId implements Serializable {
     @Column(name = "room_id")
     private Long roomId;
 
-    public static ProductId of(Long hotelId, Long planId, Long roomId) {
-        ProductId productId = new ProductId();
-        productId.hotelId = hotelId;
-        productId.planId = planId;
-        productId.roomId = roomId;
-        return productId;
+    public static ProductKey of(Long hotelId, Long planId, Long roomId) {
+        ProductKey productKey = new ProductKey();
+        productKey.hotelId = hotelId;
+        productKey.planId = planId;
+        productKey.roomId = roomId;
+        return productKey;
     }
 }

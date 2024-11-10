@@ -22,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -78,7 +77,7 @@ public class PlanConvertor {
 
     public PlanDetail.Room toDto(Product product) {
         return new PlanDetail.Room()
-                .setRoomId(product.getProductId().getRoomId())
+                .setRoomId(product.getProductKey().getRoomId())
                 .setStock(product.getStockAmount().getCount())
                 .setChargeType(product.getChargeType())
                 .setSaleState(product.getSaleState())

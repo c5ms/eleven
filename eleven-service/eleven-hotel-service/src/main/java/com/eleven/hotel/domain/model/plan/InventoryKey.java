@@ -28,15 +28,15 @@ public class InventoryKey implements Serializable {
     @Column(name = "sale_date")
     private LocalDate date;
 
-    public InventoryKey(ProductId productId, LocalDate date) {
-        this.setHotelId(productId.getHotelId());
-        this.setPlanId(productId.getPlanId());
-        this.setRoomId(productId.getRoomId());
+    public InventoryKey(ProductKey productKey, LocalDate date) {
+        this.setHotelId(productKey.getHotelId());
+        this.setPlanId(productKey.getPlanId());
+        this.setRoomId(productKey.getRoomId());
         this.setDate(date);
     }
 
-    public static InventoryKey of(ProductId productId, LocalDate date) {
-        return new InventoryKey(productId,date);
+    public static InventoryKey of(ProductKey productKey, LocalDate date) {
+        return new InventoryKey(productKey,date);
     }
 
     public String digest() {

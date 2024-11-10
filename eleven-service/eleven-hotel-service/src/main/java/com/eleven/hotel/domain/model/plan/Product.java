@@ -1,6 +1,5 @@
 package com.eleven.hotel.domain.model.plan;
 
-import cn.hutool.extra.validation.ValidationUtil;
 import com.eleven.core.domain.DomainValidator;
 import com.eleven.core.domain.utils.ImmutableValues;
 import com.eleven.hotel.api.domain.errors.PlanErrors;
@@ -10,18 +9,16 @@ import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
 import com.eleven.hotel.domain.values.StockAmount;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
-import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldNameConstants;
 import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.lang3.Validate;
 import org.hibernate.annotations.Type;
-import org.springframework.validation.ValidationUtils;
 
 import java.math.BigDecimal;
 import java.util.*;
+
+import static com.eleven.hotel.domain.core.AbstractEntity.GENERATOR_NAME;
 
 @Table(name = "hms_plan_room")
 @Entity
@@ -32,13 +29,24 @@ import java.util.*;
 @FieldNameConstants
 public class Product {
 
-    @EmbeddedId
-    private ProductId productId;
+    @Id
+    @Column(name = "product_id")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = GENERATOR_NAME)
+    private Long productId;
+
+    @Embedded
+    private ProductKey productKey;
+
+    @Embedded
+    @AttributeOverride(name = "hotelId", column = @Column(name = "plan_id", insertable = false, updatable = false))
+    @AttributeOverride(name = "planId", column = @Column(name = "plan_id", insertable = false, updatable = false))
+    private PlanKey planKey;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "hotel_id", referencedColumnName = "hotel_id", insertable = false, updatable = false)
     @JoinColumn(name = "plan_id", referencedColumnName = "plan_id", insertable = false, updatable = false)
     @JoinColumn(name = "room_id", referencedColumnName = "room_id", insertable = false, updatable = false)
+    @Transient
     private Map<PriceId, Price> prices = new HashMap<>();
 
     @Column(name = "charge_type")
@@ -62,11 +70,11 @@ public class Product {
     @Column(name = "sale_state")
     private SaleState saleState;
 
-    protected Product(@NonNull ProductId productId,
+    protected Product(@NonNull ProductKey productKey,
                       @NonNull SaleType saleType,
                       @NonNull Collection<SaleChannel> saleChannels,
                       @NonNull StockAmount stockAmount) {
-        this.productId = productId;
+        this.productKey = productKey;
         this.stockAmount = stockAmount;
         this.saleType = saleType;
         this.saleState = SaleState.STOPPED;
@@ -90,7 +98,7 @@ public class Product {
     protected void setPrice(SaleChannel saleChannel, BigDecimal wholeRoomPrice) {
         DomainValidator.must(this.saleChannels.contains(saleChannel), PlanErrors.UN_SUPPORTED_CHANNEL);
 
-        var price = Price.wholeRoom(this.getProductId(), saleChannel, wholeRoomPrice);
+        var price = Price.wholeRoom(this.getProductKey(), saleChannel, wholeRoomPrice);
         this.prices.put(price.getPriceId(), price);
         this.setChargeType(price.getChargeType());
     }
@@ -102,7 +110,7 @@ public class Product {
                             BigDecimal fourPersonPrice,
                             BigDecimal fivePersonPrice) {
         DomainValidator.must(this.saleChannels.contains(saleChannel), PlanErrors.UN_SUPPORTED_CHANNEL);
-        var price = Price.byPerson(this.getProductId(),
+        var price = Price.byPerson(this.getProductKey(),
             saleChannel,
             onePersonPrice,
             twoPersonPrice,
