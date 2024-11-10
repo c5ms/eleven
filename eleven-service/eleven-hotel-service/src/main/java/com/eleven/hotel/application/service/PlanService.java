@@ -1,21 +1,18 @@
 package com.eleven.hotel.application.service;
 
 import com.eleven.core.application.query.PageResult;
-import com.eleven.core.domain.DomainContext;
-import com.eleven.hotel.api.application.error.HotelErrors;
 import com.eleven.hotel.api.application.event.PlanCreatedEvent;
+import com.eleven.hotel.api.domain.errors.HotelErrors;
+import com.eleven.hotel.api.domain.model.SaleChannel;
 import com.eleven.hotel.application.command.*;
 import com.eleven.hotel.application.support.HotelContext;
-import com.eleven.hotel.domain.model.plan.InventoryManager;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
-import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.model.hotel.RoomRepository;
 import com.eleven.hotel.domain.model.plan.*;
 import com.eleven.hotel.domain.values.StockAmount;
 import com.github.wenhao.jpa.Specifications;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +21,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Slf4j
@@ -33,10 +31,11 @@ public class PlanService {
 
     private final PlanRepository planRepository;
     private final HotelRepository hotelRepository;
-    private final RoomRepository roomRepository;
     private final InventoryRepository inventoryRepository;
 
     private final InventoryManager inventoryManager;
+    private final PlanManager planManager;
+    private final RoomRepository roomRepository;
 
     public Optional<Plan> readPlan(Long hotelId, Long planId) {
         return planRepository.findByKey(PlanKey.of(hotelId, planId)).filter(HotelContext::mustReadable);
@@ -46,8 +45,8 @@ public class PlanService {
     public PageResult<Plan> queryPage(Long hotelId, PlanQuery query, Pageable pageable) {
         hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
         Specification<Plan> specification = Specifications.<Plan>and()
-                .like(StringUtils.isNotBlank(query.getPlanName()), Plan.Fields.basic + "." + PlanBasic.Fields.name, "%" + query.getPlanName() + "%")
-                .build();
+            .like(StringUtils.isNotBlank(query.getPlanName()), Plan.Fields.basic + "." + PlanBasic.Fields.name, "%" + query.getPlanName() + "%")
+            .build();
         var pagination = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()).withSort(Sort.by(Plan.Fields.planId).descending());
         var result = planRepository.findAll(specification, pagination);
         return PageResult.of(result.getContent(), result.getTotalElements());
@@ -60,24 +59,22 @@ public class PlanService {
 
         // create the plan
         var plan = Plan.normal()
-                .hotelId(hotel.getHotelId())
-                .salePeriod(command.getSalePeriod())
-                .preSellPeriod(command.getPreSalePeriod())
-                .stayPeriod(command.getStayPeriod())
-                .basic(command.getBasic())
-                .stockAmount(command.getStock())
-                .saleChannels(command.getChannels())
-                .create();
+            .hotelId(hotel.getHotelId())
+            .salePeriod(command.getSalePeriod())
+            .preSellPeriod(command.getPreSalePeriod())
+            .stayPeriod(command.getStayPeriod())
+            .basic(command.getBasic())
+            .stockAmount(command.getStock())
+            .saleChannels(command.getChannels())
+            .create();
 
-        // add rooms to the plan
-        if (CollectionUtils.isNotEmpty(command.getRooms())) {
-            var rooms = roomRepository.findAllById(command.getRooms());
-            for (Room room : rooms) {
-                plan.addRoom(room.getRoomId(), StockAmount.of(100));
-            }
+        for (Long roomId : command.getRooms()) {
+            var room = roomRepository.findByHotelIdAndRoomId(hotelId, roomId).orElseThrow(HotelErrors.ROOM_NOT_FOUND::toException);
+            plan.addRoom(room.getRoomId(), StockAmount.of(100));
         }
 
         // persist the plan
+        planManager.validate(plan);
         planRepository.persistAndFlush(plan);
 
         // initialize the inventory
@@ -101,6 +98,11 @@ public class PlanService {
         Optional.ofNullable(command.getPreSalePeriod()).ifPresent(plan::setPreSalePeriod);
         Optional.ofNullable(command.getChannels()).ifPresent(plan::setSaleChannels);
 
+        for (Long roomId : command.getRooms()) {
+            var room = roomRepository.findByHotelIdAndRoomId(hotelId, roomId).orElseThrow(HotelErrors.ROOM_NOT_FOUND::toException);
+            plan.addRoom(room.getRoomId(), StockAmount.of(100));
+        }
+
         planRepository.updateAndFlush(plan);
 
         inventoryManager.mergeInventory(plan);
@@ -120,9 +122,6 @@ public class PlanService {
     @Transactional(rollbackFor = Exception.class)
     public void startSale(Long hotelId, Long planId, Long roomId) {
         var plan = planRepository.findByKey(PlanKey.of(hotelId, planId)).orElseThrow(HotelContext::noPrincipalException);
-        DomainContext.must(plan.hasRoom(roomId), HotelErrors.PLAN_NO_SUCH_ROOM);
-        DomainContext.must(plan.hasStock(roomId), HotelErrors.PLAN_PRODUCT_NO_STOCK);
-        DomainContext.must(plan.hasPrice(roomId), HotelErrors.PLAN_PRODUCT_NO_PRICE);
         plan.startSale(roomId);
         planRepository.updateAndFlush(plan);
     }
@@ -130,7 +129,6 @@ public class PlanService {
     @Transactional(rollbackFor = Exception.class)
     public void stopSale(Long hotelId, Long planId, Long roomId) {
         var plan = planRepository.findByKey(PlanKey.of(hotelId, planId)).orElseThrow(HotelContext::noPrincipalException);
-        DomainContext.must(plan.hasRoom(roomId), HotelErrors.PLAN_NO_SUCH_ROOM);
         plan.stopSale(roomId);
         planRepository.updateAndFlush(plan);
     }
@@ -138,23 +136,21 @@ public class PlanService {
     @Transactional(rollbackFor = Exception.class)
     public void setPrice(Long hotelId, Long planId, Long roomId, PlanSetPriceCommand command) {
         var plan = planRepository.findByKey(PlanKey.of(hotelId, planId)).orElseThrow(HotelContext::noPrincipalException);
-        DomainContext.must(plan.hasRoom(roomId), HotelErrors.PLAN_NO_SUCH_ROOM);
-        DomainContext.must(plan.hasStock(roomId), HotelErrors.PLAN_PRODUCT_NO_STOCK);
 
         switch (command.getChargeType()) {
             case BY_PERSON -> plan.setPrice(
-                    roomId,
-                    command.getSaleChannel(),
-                    command.getOnePersonPrice(),
-                    command.getTwoPersonPrice(),
-                    command.getThreePersonPrice(),
-                    command.getFourPersonPrice(),
-                    command.getFivePersonPrice()
+                roomId,
+                command.getSaleChannel(),
+                command.getOnePersonPrice(),
+                command.getTwoPersonPrice(),
+                command.getThreePersonPrice(),
+                command.getFourPersonPrice(),
+                command.getFivePersonPrice()
             );
             case BY_ROOM -> plan.setPrice(
-                    roomId,
-                    command.getSaleChannel(),
-                    command.getWholeRoomPrice()
+                roomId,
+                command.getSaleChannel(),
+                command.getWholeRoomPrice()
             );
         }
     }
@@ -163,10 +159,15 @@ public class PlanService {
     public void reduceStock(Long hotelId, Long planId, Long roomId, StockReduceCommand command) {
         var productId = ProductId.of(hotelId, planId, roomId);
         var inventoryId = InventoryKey.of(productId, command.getDate());
-        var inventory = inventoryRepository.findByKey(inventoryId).orElseThrow(HotelContext::noPrincipalException);
-        DomainContext.must(inventory.hasEnoughStock(command.getAmount()), HotelErrors.PLAN_INVENTORY_NOT_ENOUGH);
+        var inventory = inventoryRepository.findByInventoryKey(inventoryId).orElseThrow(HotelContext::noPrincipalException);
         inventory.reduce(command.getAmount());
         inventoryRepository.updateAndFlush(inventory);
     }
 
+    @Transactional(readOnly = true)
+    public BigDecimal chargeRoom(Long hotelId, Long planId, Long roomId, SaleChannel saleChannel, int persons) {
+        var plan = planRepository.findByKey(PlanKey.of(hotelId, planId)).orElseThrow(HotelContext::noPrincipalException);
+
+        return plan.chargeRoom(roomId, saleChannel, persons);
+    }
 }

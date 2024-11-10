@@ -3,7 +3,7 @@ package com.eleven.hotel.application.listener;
 import cn.hutool.json.JSONUtil;
 import com.eleven.core.application.event.ApplicationEventIntegrator;
 import com.eleven.core.application.event.ApplicationEventMessage;
-import com.eleven.hotel.api.endpoint.model.PlanDto;
+import com.eleven.hotel.api.interfaces.model.PlanDto;
 import com.eleven.hotel.application.service.PlanHandler;
 import com.rabbitmq.client.Channel;
 import lombok.RequiredArgsConstructor;

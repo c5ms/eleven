@@ -33,11 +33,6 @@ spring:
       'hibernate.order_updates': true
       'hibernate.jdbc.batch_size': 50
 
-  data:
-    mongodb:
-      uri: ${mongo.hotel.uri}
-
-
 eleven:
   cache:
     duration: PT8H
@@ -50,7 +45,7 @@ eleven:
       enabled: false
   web:
     open-api:
-      title: Hotel Admin
+      title: Hotel API
       description: ross hotel management tool
       version: 1.0.0.dev
       terms-of-service: https://www.demcia.com/

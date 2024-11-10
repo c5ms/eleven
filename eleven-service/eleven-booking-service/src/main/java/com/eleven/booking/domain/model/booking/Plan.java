@@ -15,6 +15,10 @@ public interface Plan {
 
     Long getRoomId();
 
+    boolean isOnSale();
+
+    boolean isOnSale(long roomId);
+
     BigDecimal charge(SaleChannel saleChannel, int persons);
 
 }

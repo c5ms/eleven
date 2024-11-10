@@ -28,10 +28,6 @@ public class Room extends AbstractEntity  {
     @Column(name = "hotel_id")
     private Long hotelId;
 
-    @Column(name = "sale_state")
-    @Enumerated(EnumType.STRING)
-    private SaleState saleState;
-
     @Setter
     @Embedded
     private RoomBasic basic;
@@ -46,25 +42,8 @@ public class Room extends AbstractEntity  {
 
     public Room(Long hotelId, RoomBasic basic, RoomRestriction restriction) {
         this.setHotelId(hotelId);
-        this.setSaleState(SaleState.STOPPED);
         this.setBasic(basic);
         this.setRestriction(restriction);
-    }
-
-    public void startSale() {
-        this.saleState = SaleState.STARTED;
-    }
-
-    public void stopSale() {
-        this.saleState = SaleState.STOPPED;
-    }
-
-    public SaleState getSaleState() {
-        return this.saleState;
-    }
-
-    public boolean isOnSale() {
-        return saleState.isOnSale();
     }
 
     @Getter

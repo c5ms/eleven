@@ -2,18 +2,18 @@ package com.eleven.core.domain.values;
 
 import com.eleven.core.time.TimeContext;
 import lombok.EqualsAndHashCode;
-import lombok.Value;
+import lombok.Getter;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.util.Assert;
 
 import java.time.LocalDateTime;
 
-@Value
+@Getter
 @EqualsAndHashCode
 public class DateTimeRange {
 
-    LocalDateTime start;
-    LocalDateTime end;
+    private final LocalDateTime start;
+    private final LocalDateTime end;
 
     DateTimeRange() {
         this.start = null;

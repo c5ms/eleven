@@ -24,8 +24,8 @@ import java.util.List;
 @TableGenerator(table = AbstractEntity.GENERATOR_TABLE, name = AbstractEntity.GENERATOR_NAME, allocationSize = 5)
 public abstract class AbstractEntity {
 
-    public static final String GENERATOR_NAME = "hms_generator";
-    public static final String GENERATOR_TABLE = "hms_sequences";
+    public static final String GENERATOR_NAME = "bk_generator";
+    public static final String GENERATOR_TABLE = "bk_sequences";
 
     @Getter(AccessLevel.PROTECTED)
     private transient final @Transient List<DomainEvent> domainEvents = new ArrayList<>();

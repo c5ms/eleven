@@ -1,6 +1,6 @@
 package com.eleven.hotel.application.service;
 
-import com.eleven.hotel.api.endpoint.model.PlanDto;
+import com.eleven.hotel.api.interfaces.model.PlanDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.MongoTemplate;

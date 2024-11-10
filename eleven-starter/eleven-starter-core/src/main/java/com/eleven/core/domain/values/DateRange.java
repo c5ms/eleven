@@ -1,12 +1,16 @@
 package com.eleven.core.domain.values;
 
 import com.eleven.core.time.TimeContext;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
 @Value
@@ -14,9 +18,10 @@ import java.util.stream.Stream;
 public class DateRange {
 
     LocalDate start;
+
     LocalDate end;
 
-    DateRange() {
+     private DateRange() {
         this.start = null;
         this.end = null;
     }
@@ -30,8 +35,12 @@ public class DateRange {
         this.end = end;
     }
 
+    public static DateRange of(LocalDate start, LocalDate end) {
+        return new DateRange(start, end);
+    }
+
     public static DateRange empty() {
-        return new DateRange(null, null);
+        return new DateRange();
     }
 
     public int days() {
@@ -56,10 +65,12 @@ public class DateRange {
         return this.end.isAfter(range.end);
     }
 
+    @JsonIgnore
     public boolean isEmpty() {
         return ObjectUtils.anyNull(this.start, this.end);
     }
 
+    @JsonIgnore
     public boolean isCurrent() {
         if (isEmpty()) {
             return false;

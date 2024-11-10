@@ -11,13 +11,12 @@ import lombok.experimental.FieldNameConstants;
 
 import java.math.BigDecimal;
 
-@Table(name = "hms_booking")
+@Table(name = "bk_booking")
 @Entity
 @Getter
 @Setter(AccessLevel.PROTECTED)
 @FieldNameConstants
 public class Booking extends AbstractEntity {
-
 
     @Id
     @Column(name = "booking_id")
@@ -40,7 +39,7 @@ public class Booking extends AbstractEntity {
     private Integer personCount;
 
     @Enumerated
-    @Column(name = "person_count", precision = 10)
+    @Column(name = "sale_channel", precision = 10)
     private SaleChannel saleChannel;
 
     @Embedded

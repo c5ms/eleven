@@ -18,7 +18,7 @@ import java.util.Optional;
 @Setter(AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @FieldNameConstants
-public class Hotel extends AbstractEntity  {
+public class Hotel extends AbstractEntity {
 
     @Id
     @Column(name = "hotel_id")

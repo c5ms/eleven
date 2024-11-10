@@ -2,7 +2,7 @@ package com.eleven.hotel.application.handler;
 
 import com.eleven.hotel.api.application.event.HotelCreatedEvent;
 import com.eleven.hotel.api.application.event.PlanCreatedEvent;
-import com.eleven.hotel.api.endpoint.internal.HotelClient;
+import com.eleven.hotel.api.interfaces.client.HotelClient;
 import com.eleven.hotel.application.service.PlanHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

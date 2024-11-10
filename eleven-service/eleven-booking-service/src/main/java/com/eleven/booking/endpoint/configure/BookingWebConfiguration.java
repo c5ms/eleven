@@ -1,8 +1,8 @@
 package com.eleven.booking.endpoint.configure;
 
+import com.eleven.booking.endpoint.support.AsCustomerApi;
 import com.eleven.booking.endpoint.support.CustomerSecurityInterceptor;
 import com.eleven.core.web.utils.AnnotationPredicate;
-import com.eleven.booking.endpoint.support.AsCustomerApi;
 import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.models.GroupedOpenApi;
@@ -16,16 +16,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @RequiredArgsConstructor
 @Configuration(proxyBeanMethods = false)
 public class BookingWebConfiguration implements WebMvcConfigurer {
-    private final  static   String API_PREFIX_ADMIN = "/api/admin";
-    private final  static String API_PREFIX_MERCHANT = "/api/merchant";
-    private final  static String API_PREFIX_CUSTOMER = "/api/customer";
+    private final static String API_PREFIX_CUSTOMER = "/api/customer";
 
     private final CustomerSecurityInterceptor customerSecurityInterceptor;
 
     @Override
     public void addInterceptors(@Nonnull InterceptorRegistry registry) {
-        registry.addInterceptor(customerSecurityInterceptor).addPathPatterns(API_PREFIX_MERCHANT + "/bookings/{hotelId}");
-        registry.addInterceptor(customerSecurityInterceptor).addPathPatterns(API_PREFIX_MERCHANT + "/reservations/{hotelId}");
+        registry.addInterceptor(customerSecurityInterceptor).addPathPatterns(API_PREFIX_CUSTOMER + "/customer");
     }
 
     @Override
@@ -34,21 +31,13 @@ public class BookingWebConfiguration implements WebMvcConfigurer {
     }
 
     @Bean
-    public GroupedOpenApi merchantApi() {
+    public GroupedOpenApi customerApi() {
         return GroupedOpenApi.builder()
-                .group("merchant-api")
-                .displayName("merchant")
-                .pathsToMatch(API_PREFIX_MERCHANT + "/**")
-                .build();
+            .group("customer-api")
+            .displayName("customer")
+            .pathsToMatch(API_PREFIX_CUSTOMER + "/**")
+            .build();
     }
 
-    @Bean
-    public GroupedOpenApi adminApi() {
-        return GroupedOpenApi.builder()
-                .group("admin-api")
-                .displayName("admin")
-                .pathsToMatch(API_PREFIX_ADMIN + "/**")
-                .build();
-    }
 
 }

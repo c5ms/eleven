@@ -7,8 +7,6 @@ import java.util.Optional;
 
 public interface PlanValidator {
 
-    default Optional<DomainError> validate(Plan plan) {
-        return Optional.empty();
-    }
+     void  validate(Plan plan);
 
 }

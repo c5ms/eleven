@@ -2,8 +2,8 @@ package com.eleven.booking.application.support;
 
 import com.eleven.booking.domain.model.booking.Plan;
 import com.eleven.hotel.api.domain.model.SaleChannel;
-import com.eleven.hotel.api.endpoint.internal.HotelClient;
-import com.eleven.hotel.api.endpoint.model.PlanDto;
+import com.eleven.hotel.api.interfaces.client.HotelClient;
+import com.eleven.hotel.api.interfaces.model.PlanDto;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
@@ -31,8 +31,18 @@ public class RemotePlan implements Plan {
     }
 
     @Override
+    public boolean isOnSale() {
+        return plan.getIsOnSale();
+    }
+
+    @Override
+    public boolean isOnSale(long roomId) {
+        return false;
+    }
+
+    @Override
     public BigDecimal charge(SaleChannel saleChannel, int persons) {
-        return hotelClient.charge(plan.getHotelId(), plan.getPlanId(), roomId, saleChannel, persons).orElseThrow();
+        return hotelClient.chargeRoom(plan.getHotelId(), plan.getPlanId(), roomId, saleChannel, persons);
     }
 
 }

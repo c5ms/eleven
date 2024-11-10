@@ -1,14 +1,16 @@
 package com.eleven.hotel.domain.model.plan;
 
+import com.eleven.core.domain.DomainValidator;
 import com.eleven.core.domain.utils.ImmutableValues;
 import com.eleven.core.domain.values.DateRange;
 import com.eleven.core.domain.values.DateTimeRange;
+import com.eleven.hotel.api.domain.errors.PlanErrors;
 import com.eleven.hotel.api.domain.model.SaleChannel;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
 import com.eleven.hotel.domain.core.AbstractEntity;
-import com.eleven.hotel.domain.core.ObjectMatcher;
 import com.eleven.hotel.domain.values.StockAmount;
+import com.google.common.base.Predicates;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
@@ -30,7 +32,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter(AccessLevel.PROTECTED)
 @FieldNameConstants
-public class Plan extends AbstractEntity  {
+public class Plan extends AbstractEntity {
 
     @Id
     @Column(name = "plan_id")
@@ -76,7 +78,6 @@ public class Plan extends AbstractEntity  {
     @AttributeOverride(name = "count", column = @Column(name = "stock_count"))
     private StockAmount stock;
 
-    @Setter
     @Type(JsonType.class)
     @Column(name = "sale_channels", columnDefinition = "json")
     @Enumerated(EnumType.STRING)
@@ -115,9 +116,8 @@ public class Plan extends AbstractEntity  {
         plan.setPreSalePeriod(preSellPeriod);
         plan.setSaleType(SaleType.NORMAL);
         plan.setSaleState(SaleState.STOPPED);
+        plan.setSaleChannels(saleChannels);
         plan.setBasic(basic);
-
-        Optional.ofNullable(saleChannels).ifPresent(channels -> channels.forEach(plan::openChannel));
         return plan;
     }
 
@@ -134,10 +134,10 @@ public class Plan extends AbstractEntity  {
     }
 
     public void startSale() {
-        Validate.isTrue(this.getProducts().isNotEmpty(), "the plan has no room");
-        Validate.isTrue(this.getProducts().stream().anyMatch(Product::hasPrice), "the plan has no price at all");
-        Validate.isTrue(this.getProducts().stream().anyMatch(Product::hasStock), "the plan has no stock at all");
-
+        DomainValidator.must(this.getProducts().isNotEmpty(), PlanErrors.NO_PRODUCT);
+        for (Product product : this.getProducts()) {
+            product.startSale();
+        }
         this.setSaleState(SaleState.STARTED);
     }
 
@@ -156,7 +156,7 @@ public class Plan extends AbstractEntity  {
     }
 
     public void setPrice(Long roomId, SaleChannel saleChannel, BigDecimal wholeRoomPrice) {
-        var product = requireRoom(roomId);
+        var product = findRoom(roomId).orElseThrow(PlanErrors.PRODUCT_NOT_FOUND::toException);
         product.setPrice(saleChannel, wholeRoomPrice);
     }
 
@@ -167,15 +167,15 @@ public class Plan extends AbstractEntity  {
                          BigDecimal threePersonPrice,
                          BigDecimal fourPersonPrice,
                          BigDecimal fivePersonPrice) {
-        var product = requireRoom(roomId);
+        var product = findRoom(roomId).orElseThrow(PlanErrors.PRODUCT_NOT_FOUND::toException);
         product.setPrice(saleChannel, onePersonPrice, twoPersonPrice, threePersonPrice, fourPersonPrice, fivePersonPrice);
     }
 
     public Product addRoom(Long roomId, StockAmount stock) {
-        var planRoom = new Product(this, roomId, stock);
-        planRoom.setSaleChannels(this.saleChannels);
-        this.products.put(planRoom.getProductId(), planRoom);
-        return planRoom;
+        var productId = ProductId.of(getHotelId(), getPlanId(), roomId);
+        var product = new Product(productId, this.saleType, this.saleChannels, stock);
+        this.products.put(product.getProductId(), product);
+        return product;
     }
 
     public Optional<Product> findRoom(Long roomId) {
@@ -183,81 +183,55 @@ public class Plan extends AbstractEntity  {
         return Optional.ofNullable(this.products.get(id));
     }
 
-    public Product requireRoom(Long roomId) {
-        return this.findRoom(roomId).orElseThrow(() -> new IllegalArgumentException("the room does not exist"));
-    }
-
     public BigDecimal chargeRoom(Long roomId, SaleChannel saleChannel, int personCount) {
-        return this.requireRoom(roomId)
-                .findPrice(saleChannel)
-                .orElseThrow(() -> new IllegalArgumentException("the room with such channel not exist"))
-                .charge(personCount);
+        var product = findRoom(roomId).orElseThrow(PlanErrors.PRODUCT_NOT_FOUND::toException);
+        var price = product.findPrice(saleChannel).orElseThrow(PlanErrors.PRICE_NOT_FOUND::toException);
+        return price.charge(personCount);
     }
 
     public void startSale(Long roomId) {
-        var product = requireRoom(roomId);
+        var product = findRoom(roomId).orElseThrow(PlanErrors.PRODUCT_NOT_FOUND::toException);
         product.startSale();
         this.startSale();
     }
 
     public void stopSale(Long roomId) {
-        var product = requireRoom(roomId);
+        var product = findRoom(roomId).orElseThrow(PlanErrors.PRODUCT_NOT_FOUND::toException);
         product.stopSale();
-
         if (this.getProducts().stream().noneMatch(Product::isOnSale)) {
             this.stopSale();
         }
     }
 
-    public void openChannel(SaleChannel saleChannel) {
-        this.saleChannels.add(saleChannel);
-        this.getProducts().forEach(product -> product.openChannel(saleChannel));
-    }
-
-    public void closChannel(SaleChannel saleChannel, boolean dropPrices) {
-        this.saleChannels.remove(saleChannel);
-        for (Product product : this.getProducts()) {
-            product.closeChannel(saleChannel, dropPrices);
-        }
-    }
-
-    public boolean hasRoom(Long roomId) {
-        return this.products.containsKey(ProductId.of(getHotelId(), getPlanId(), roomId));
-    }
-
-    public boolean hasStock(Long roomId) {
-        return this.requireRoom(roomId).hasStock();
-    }
-
-    public boolean hasPrice(Long roomId) {
-        return this.requireRoom(roomId).hasPrice();
-    }
-
     public List<Inventory> createInventories() {
         return getProducts()
-                .stream()
-                .flatMap(product -> createInventories(product).stream())
-                .collect(Collectors.toList());
+            .stream()
+            .flatMap(product -> createInventories(product).stream())
+            .collect(Collectors.toList());
+    }
+
+    private List<Inventory> createInventories(Product product) {
+        var creator = InventoryCreator.of(product);
+        return getStayPeriod()
+            .dates()
+            .map(creator::create)
+            .collect(Collectors.toList());
     }
 
     public boolean isApplicable(Inventory inventory) {
-        ObjectMatcher<Inventory> matcher= new ObjectMatcher<Inventory>()
-                .should(theInv -> theInv.getPlanKey().equals(toPlanKey()))
-                .should(theInv -> this.getStayPeriod().contains(theInv.getInventoryKey().getDate()))
-                .should(theInv -> this.hasRoom(theInv.getInventoryKey().getRoomId()))
-                ;
-        return matcher.test(inventory);
-
+        return Predicates.<Inventory>notNull()
+            .and(theInv -> theInv.getPlanKey().equals(toPlanKey()))
+            .and(theInv -> this.getStayPeriod().contains(theInv.getInventoryKey().getDate()))
+            .and(theInv -> this.findRoom(theInv.getInventoryKey().getRoomId()).isPresent())
+            .test(inventory);
     }
 
-    private ArrayList<Inventory> createInventories(Product product) {
-        Validate.notNull(this.planId, "the plan has not been created");
-        var inventories = new ArrayList<Inventory>();
-        getStayPeriod()
-                .dates()
-                .map(localDate -> Inventory.of(product.getProductId(), localDate, product.getStockAmount()))
-                .forEach(inventories::add);
-        return inventories;
+    public Plan setSaleChannels(Set<SaleChannel> saleChannels) {
+        this.saleChannels = saleChannels;
+        for (Product product : this.getProducts()) {
+            product.setSaleChannels(this.saleChannels);
+        }
+        return this;
     }
 
     @Nonnull
@@ -294,8 +268,9 @@ public class Plan extends AbstractEntity  {
         return PlanKey.of(hotelId, planId);
     }
 
+    // todo why not a JPA field?
     @Column(name = "is_private")
-    private boolean isPrivate(){
+    private Boolean getIsPrivate() {
         return getSaleChannels().isEmpty();
     }
 }

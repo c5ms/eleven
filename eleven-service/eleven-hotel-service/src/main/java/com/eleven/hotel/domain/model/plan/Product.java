@@ -1,19 +1,24 @@
 package com.eleven.hotel.domain.model.plan;
 
+import cn.hutool.extra.validation.ValidationUtil;
+import com.eleven.core.domain.DomainValidator;
+import com.eleven.core.domain.utils.ImmutableValues;
+import com.eleven.hotel.api.domain.errors.PlanErrors;
 import com.eleven.hotel.api.domain.model.ChargeType;
 import com.eleven.hotel.api.domain.model.SaleChannel;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
-import com.eleven.core.domain.utils.ImmutableValues;
-import com.eleven.hotel.domain.core.ObjectMatcher;
 import com.eleven.hotel.domain.values.StockAmount;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldNameConstants;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.Validate;
 import org.hibernate.annotations.Type;
+import org.springframework.validation.ValidationUtils;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -57,17 +62,20 @@ public class Product {
     @Column(name = "sale_state")
     private SaleState saleState;
 
-    protected Product(Plan plan, Long roomId, StockAmount stockAmount) {
-        this.productId = ProductId.of(plan.getHotelId(), plan.getPlanId(), roomId);
+    protected Product(@NonNull ProductId productId,
+                      @NonNull SaleType saleType,
+                      @NonNull Collection<SaleChannel> saleChannels,
+                      @NonNull StockAmount stockAmount) {
+        this.productId = productId;
         this.stockAmount = stockAmount;
-        this.saleChannels = new HashSet<>();
-        this.saleType = plan.getSaleType();
+        this.saleType = saleType;
         this.saleState = SaleState.STOPPED;
+        this.saleChannels = new HashSet<>(saleChannels);
     }
 
     protected void startSale() {
-        Validate.isTrue(hasPrice(), "the room has no price");
-        Validate.isTrue(hasStock(), "the room has no stock");
+        DomainValidator.must(hasStock(), PlanErrors.NO_STOCK);
+        DomainValidator.must(hasPrice(), PlanErrors.NO_PRICE);
         this.setSaleState(SaleState.STARTED);
     }
 
@@ -80,8 +88,7 @@ public class Product {
     }
 
     protected void setPrice(SaleChannel saleChannel, BigDecimal wholeRoomPrice) {
-        Validate.isTrue(this.saleChannels.contains(saleChannel), "don't support the channel " + saleChannel);
-//        Validate.isTrue(this.chargeType == ChargeType.BY_ROOM, "don't support the charge by whole room");
+        DomainValidator.must(this.saleChannels.contains(saleChannel), PlanErrors.UN_SUPPORTED_CHANNEL);
 
         var price = Price.wholeRoom(this.getProductId(), saleChannel, wholeRoomPrice);
         this.prices.put(price.getPriceId(), price);
@@ -89,14 +96,12 @@ public class Product {
     }
 
     protected void setPrice(SaleChannel saleChannel,
-                         BigDecimal onePersonPrice,
-                         BigDecimal twoPersonPrice,
-                         BigDecimal threePersonPrice,
-                         BigDecimal fourPersonPrice,
-                         BigDecimal fivePersonPrice) {
-        Validate.isTrue(this.saleChannels.contains(saleChannel), "don't support the channel" + saleChannel);
-//        Validate.isTrue(this.chargeType == ChargeType.BY_PERSON, "don't support the charge by person");
-
+                            BigDecimal onePersonPrice,
+                            BigDecimal twoPersonPrice,
+                            BigDecimal threePersonPrice,
+                            BigDecimal fourPersonPrice,
+                            BigDecimal fivePersonPrice) {
+        DomainValidator.must(this.saleChannels.contains(saleChannel), PlanErrors.UN_SUPPORTED_CHANNEL);
         var price = Price.byPerson(this.getProductId(),
             saleChannel,
             onePersonPrice,
@@ -109,23 +114,9 @@ public class Product {
     }
 
     public Optional<Price> findPrice(SaleChannel channel) {
-        var matcher = new ObjectMatcher<Price>()
-            .should(price -> price.is(channel));
         return getPrices().stream()
-            .filter(matcher)
+            .filter(price -> price.is(channel))
             .findFirst();
-    }
-
-    protected void openChannel(SaleChannel saleChannel) {
-        this.saleChannels.add(saleChannel);
-    }
-
-    protected void closeChannel(SaleChannel saleChannel, boolean dropPrice) {
-        this.saleChannels.add(saleChannel);
-        if (dropPrice) {
-            var priceId = PriceId.of(productId, saleChannel);
-            this.prices.remove(priceId);
-        }
     }
 
     public ImmutableValues<SaleChannel> getSaleChannels() {

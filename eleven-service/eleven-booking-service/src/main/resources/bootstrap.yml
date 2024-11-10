@@ -1,5 +1,5 @@
 server:
-  port: 9000
+  port: 9001
 
 spring:
   application:
@@ -49,7 +49,7 @@ eleven:
       enabled: false
   web:
     open-api:
-      title: Hotel Admin
+      title: Booking API
       description: ross hotel management tool
       version: 1.0.0.dev
       terms-of-service: https://www.demcia.com/

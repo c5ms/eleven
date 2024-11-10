@@ -1,7 +1,7 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import com.eleven.core.domain.DomainContext;
-import com.eleven.hotel.api.application.error.HotelErrors;
+import com.eleven.core.domain.DomainValidator;
+import com.eleven.hotel.api.domain.errors.HotelErrors;
 import com.eleven.hotel.api.domain.model.RegisterState;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import jakarta.persistence.*;
@@ -41,17 +41,17 @@ public class Register extends AbstractEntity {
     }
 
     public void reject() {
-        this.checkBeforeReview();
+        this.isReviewable();
         this.state = RegisterState.REJECTED;
     }
 
     public void accept() {
-        this.checkBeforeReview();
+        this.isReviewable();
         this.state = RegisterState.ACCEPTED;
     }
 
-    private void checkBeforeReview() {
-        DomainContext.must(this.state == RegisterState.UNDER_REVIEW, HotelErrors.REGISTRATION_NOT_REVIEWABLE);
+    private void isReviewable() {
+        DomainValidator.must(this.state == RegisterState.UNDER_REVIEW, HotelErrors.REGISTER_NOT_REVIEWABLE);
     }
 
     public void belongTo(Hotel hotel) {

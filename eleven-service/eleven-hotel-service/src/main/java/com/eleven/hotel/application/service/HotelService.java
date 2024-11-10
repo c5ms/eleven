@@ -7,7 +7,7 @@ import com.eleven.hotel.application.command.HotelCreateCommand;
 import com.eleven.hotel.application.command.HotelUpdateCommand;
 import com.eleven.hotel.application.command.HotelQuery;
 import com.eleven.hotel.application.support.HotelContext;
-import com.eleven.hotel.domain.manager.HotelManager;
+import com.eleven.hotel.domain.model.hotel.HotelManager;
 import com.eleven.hotel.domain.model.hotel.Hotel;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.github.wenhao.jpa.Specifications;

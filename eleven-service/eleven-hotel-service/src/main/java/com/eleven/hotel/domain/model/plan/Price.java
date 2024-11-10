@@ -44,7 +44,6 @@ public class Price {
     @Column(name = "five_person_price")
     private BigDecimal fivePersonPrice = BigDecimal.ZERO;
 
-
     public static Price wholeRoom(ProductId productId, SaleChannel saleChannel, BigDecimal wholeRoomPrice) {
         Price price = new Price();
         price.setPriceId(PriceId.of(productId, saleChannel));
@@ -97,7 +96,6 @@ public class Price {
         if (4 == personCount) {
             return this.fourPersonPrice;
         }
-
         return this.fivePersonPrice;
     }
 

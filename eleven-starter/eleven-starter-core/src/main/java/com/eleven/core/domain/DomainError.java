@@ -3,7 +3,6 @@ package com.eleven.core.domain;
 
 public interface DomainError {
 
-
     String getError();
 
     String getMessage();

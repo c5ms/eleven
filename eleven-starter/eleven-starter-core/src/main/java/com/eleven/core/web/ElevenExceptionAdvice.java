@@ -5,8 +5,6 @@ import com.eleven.core.application.authorize.NoAuthorityException;
 import com.eleven.core.application.authorize.NoPrincipalException;
 import com.eleven.core.application.command.CommandInvalidException;
 import com.eleven.core.domain.DomainException;
-import com.eleven.core.web.problem.Problem;
-import com.eleven.core.web.problem.ValidationProblem;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;

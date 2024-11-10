@@ -1,5 +1,8 @@
 package com.eleven.hotel.domain.model.plan;
 
+import com.eleven.core.domain.DomainValidator;
+import com.eleven.core.domain.DomainError;
+import com.eleven.core.domain.SimpleDomainError;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import com.eleven.hotel.domain.values.StockAmount;
 import jakarta.persistence.*;
@@ -8,7 +11,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
-import org.apache.commons.lang3.Validate;
 
 import java.time.LocalDate;
 
@@ -19,6 +21,7 @@ import java.time.LocalDate;
 @FieldNameConstants
 @EqualsAndHashCode(callSuper = false, of = "inventoryKey")
 public class Inventory extends AbstractEntity  {
+    public final static DomainError ERROR_NOT_ENOUGH = SimpleDomainError.of("plan_inventory_not_enough", "the inventory is not enough");
 
     @Id
     @Column(name = "inventory_id")
@@ -56,8 +59,8 @@ public class Inventory extends AbstractEntity  {
     public static Inventory of(ProductId productId, LocalDate date, StockAmount stockAmount) {
         var inventoryKey = InventoryKey.of(productId, date);
         var planKey = PlanKey.of(inventoryKey.getHotelId(), inventoryKey.getPlanId());
-        var inventory = new Inventory();
 
+        var inventory = new Inventory();
         inventory.setInventoryKey(inventoryKey);
         inventory.setPlanKey(planKey);
         inventory.setProductId(productId);
@@ -80,7 +83,7 @@ public class Inventory extends AbstractEntity  {
     }
 
     public void reduce(int amount) {
-        Validate.isTrue(this.hasEnoughStock(amount), "no su much stock left");
+        DomainValidator.must(this.hasEnoughStock(amount), ERROR_NOT_ENOUGH);
         this.setStockLeft(this.stockLeft.reduct(amount));
     }
 
