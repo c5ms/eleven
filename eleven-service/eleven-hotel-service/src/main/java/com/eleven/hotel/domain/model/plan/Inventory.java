@@ -40,7 +40,7 @@ public class Inventory extends AbstractEntity {
     @AttributeOverride(name = "roomId", column = @Column(name = "room_id", updatable = false, insertable = false))
     private ProductKey productKey;
 
-    @Column(name = "isValid")
+    @Column(name = "is_valid")
     private Boolean isValid;
 
     @Embedded

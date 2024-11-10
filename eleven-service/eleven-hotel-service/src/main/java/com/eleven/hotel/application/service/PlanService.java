@@ -67,15 +67,17 @@ public class PlanService {
             .saleChannels(command.getChannels())
             .create();
 
-//        planRepository.persist(plan);
+        // persist first and retrieve the planId
+        planManager.validate(plan);
+        planRepository.persist(plan);
 
+        // add rooms to the plan
         for (PlanAddRoomCommand addRoomCommand : command.getRooms()) {
             var room = roomRepository.findByHotelIdAndRoomId(hotelId, addRoomCommand.getRoomId()).orElseThrow(HotelErrors.ROOM_NOT_FOUND::toException);
             plan.addRoom(room.getRoomId(), addRoomCommand.getStock());
         }
 
         // persist the plan
-        planManager.validate(plan);
         planRepository.persistAndFlush(plan);
 
         // initialize the inventory

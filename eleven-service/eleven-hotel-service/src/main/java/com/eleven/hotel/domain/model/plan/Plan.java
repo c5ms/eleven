@@ -43,7 +43,6 @@ public class Plan extends AbstractEntity {
     private Long hotelId;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "hotel_id", referencedColumnName = "hotel_id")
     @JoinColumn(name = "plan_id", referencedColumnName = "plan_id")
     private Map<ProductKey, Product> products;
 
@@ -144,7 +143,6 @@ public class Plan extends AbstractEntity {
     }
 
     public void setPrice(Long roomId, SaleChannel saleChannel, BigDecimal wholeRoomPrice) {
-        Validate.notNull(planId,"the plan has not been persisted");
         var product = findRoom(roomId).orElseThrow(PlanErrors.PRODUCT_NOT_FOUND::toException);
         product.setPrice(saleChannel, wholeRoomPrice);
     }
@@ -161,6 +159,7 @@ public class Plan extends AbstractEntity {
     }
 
     public Product addRoom(Long roomId, StockAmount stock) {
+        Validate.notNull(planId,"the plan has not been persisted");
         var productId = ProductKey.of(hotelId, planId, roomId);
         var product = new Product(productId, this.saleType, this.saleChannels, stock);
         this.products.put(productId, product);

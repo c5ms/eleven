@@ -14,7 +14,6 @@ import java.time.format.DateTimeFormatter;
 @EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class InventoryKey implements Serializable {
-    private static final long DIGEST_VERSION = 1L;
 
     @Column(name = "hotel_id")
     private Long hotelId;
