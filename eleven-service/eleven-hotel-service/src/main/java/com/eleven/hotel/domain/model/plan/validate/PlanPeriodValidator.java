@@ -1,7 +1,6 @@
 package com.eleven.hotel.domain.model.plan.validate;
 
 import com.eleven.core.domain.DomainValidator;
-import com.eleven.core.domain.SimpleDomainError;
 import com.eleven.hotel.api.domain.errors.PlanErrors;
 import com.eleven.hotel.domain.model.plan.Plan;
 import com.eleven.hotel.domain.model.plan.PlanValidator;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class PlanNameValidator implements PlanValidator {
+public class PlanPeriodValidator implements PlanValidator {
 
     @Override
     public void validate(Plan plan) {

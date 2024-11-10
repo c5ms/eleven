@@ -21,7 +21,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 @Slf4j
 @Service
@@ -71,14 +74,10 @@ public class PlanService {
         planManager.validate(plan);
         planRepository.persist(plan);
 
-        // add rooms to the plan
-        for (PlanAddRoomCommand addRoomCommand : command.getRooms()) {
-            var room = roomRepository.findByHotelIdAndRoomId(hotelId, addRoomCommand.getRoomId()).orElseThrow(HotelErrors.ROOM_NOT_FOUND::toException);
-            plan.addRoom(room.getRoomId(), addRoomCommand.getStock());
-        }
+        // add rooms
+        setRooms(plan, command.getRooms());
 
         // persist the plan
-
         planRepository.persistAndFlush(plan);
 
         // initialize the inventory
@@ -101,18 +100,26 @@ public class PlanService {
         Optional.ofNullable(command.getSalePeriod()).ifPresent(plan::setSalePeriod);
         Optional.ofNullable(command.getPreSalePeriod()).ifPresent(plan::setPreSalePeriod);
         Optional.ofNullable(command.getChannels()).ifPresent(plan::setSaleChannels);
-
-        for (PlanAddRoomCommand addRoomCommand : command.getRooms()) {
-            var room = roomRepository.findByHotelIdAndRoomId(hotelId, addRoomCommand.getRoomId()).orElseThrow(HotelErrors.ROOM_NOT_FOUND::toException);
-            plan.addRoom(room.getRoomId(), addRoomCommand.getStock());
-        }
-
+        setRooms(plan, command.getRooms());
 
         planManager.validate(plan);
         planRepository.updateAndFlush(plan);
 
         inventoryManager.mergeInventory(plan);
     }
+
+
+    private void setRooms(Plan plan, List<PlanAddRoomCommand> commands) {
+        var keys = new HashSet<ProductKey>();
+        for (PlanAddRoomCommand addRoomCommand : commands) {
+            var room = roomRepository.findByHotelIdAndRoomId(plan.getHotelId(), addRoomCommand.getRoomId()).orElseThrow(HotelErrors.ROOM_NOT_FOUND::toException);
+            plan.addRoom(room.getRoomId(), addRoomCommand.getStock());
+            keys.add(plan.getProductKey(room.getRoomId()));
+        }
+        var isUseless = (Predicate<Product>) product -> !keys.contains(product.getProductKey());
+        plan.removeRoom(isUseless);
+    }
+
 
     @Transactional(rollbackFor = Exception.class)
     public void deletePlan(Long hotelId, Long planId) {
@@ -164,7 +171,7 @@ public class PlanService {
 
     @Transactional(rollbackFor = Exception.class)
     public void reduceStock(Long hotelId, Long planId, Long roomId, StockReduceCommand command) {
-        var productId = ProductKey.of(hotelId,planId, roomId);
+        var productId = ProductKey.of(hotelId, planId, roomId);
         var inventoryId = InventoryKey.of(productId, command.getDate());
         var inventory = inventoryRepository.findByInventoryKey(inventoryId).orElseThrow(HotelContext::noPrincipalException);
         inventory.reduce(command.getAmount());
@@ -177,4 +184,6 @@ public class PlanService {
 
         return plan.chargeRoom(roomId, saleChannel, persons);
     }
+
+
 }

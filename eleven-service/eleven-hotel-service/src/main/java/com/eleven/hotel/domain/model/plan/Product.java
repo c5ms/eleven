@@ -37,15 +37,15 @@ public class Product {
     @Embedded
     private ProductKey productKey;
 
+    @Column(name = "charge_type")
+    @Enumerated(EnumType.STRING)
+    private ChargeType chargeType;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "hotel_id", referencedColumnName = "hotel_id")
     @JoinColumn(name = "plan_id", referencedColumnName = "plan_id")
     @JoinColumn(name = "room_id", referencedColumnName = "room_id")
     private Map<PriceKey, Price> prices = new HashMap<>();
-
-    @Column(name = "charge_type")
-    @Enumerated(EnumType.STRING)
-    private ChargeType chargeType;
 
     @Type(JsonType.class)
     @Column(name = "sale_channels", columnDefinition = "json")
@@ -137,5 +137,10 @@ public class Product {
         return this.getStockAmount().greaterThanZero();
     }
 
-
+    public StockAmount getStockAmount() {
+        if(null == this.stockAmount) {
+            return StockAmount.zero();
+        }
+        return stockAmount;
+    }
 }

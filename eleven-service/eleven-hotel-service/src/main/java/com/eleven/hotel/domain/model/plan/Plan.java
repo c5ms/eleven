@@ -15,16 +15,14 @@ import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldNameConstants;
 import org.apache.commons.lang3.Validate;
 import org.hibernate.annotations.Type;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Table(name = "hms_plan")
@@ -160,17 +158,40 @@ public class Plan extends AbstractEntity {
         product.setPrice(saleChannel, onePersonPrice, twoPersonPrice, threePersonPrice, fourPersonPrice, fivePersonPrice);
     }
 
-    // todo  no way to remove room
-    public Product addRoom(Long roomId, StockAmount stock) {
+    public void removeRoom(Predicate<Product> predicate) {
+        var removing = this.products.values()
+            .stream()
+            .filter(predicate)
+            .map(Product::getProductKey)
+            .collect(Collectors.toSet());
+        removing.forEach(this.products::remove);
+    }
+
+    public void addRoom(@NonNull Long roomId, StockAmount stock) {
         Validate.notNull(planId, "the plan has not been persisted");
-        var productId = ProductKey.of(hotelId, planId, roomId);
-        var product = new Product(productId, this.saleType, this.saleChannels, stock);
-        this.products.put(productId, product);
-        return product;
+        if (null == stock) {
+            stock = StockAmount.zero();
+        }
+        var productKey = getProductKey(roomId);
+        var product = (Product) null;
+
+        if (this.products.containsKey(productKey)) {
+            product = this.products.get(productKey);
+        } else {
+            product = createproduct(stock, productKey);
+        }
+
+        product.setStockAmount(stock);
+        this.products.put(productKey, product);
+    }
+
+    @Nonnull
+    private Product createproduct(StockAmount stock, ProductKey productKey) {
+        return new Product(productKey, this.saleType, this.saleChannels, stock);
     }
 
     public Optional<Product> findRoom(Long roomId) {
-        var productId = ProductKey.of(hotelId, planId, roomId);
+        var productId = getProductKey(roomId);
         return Optional.ofNullable(this.products.get(productId));
     }
 
@@ -255,8 +276,13 @@ public class Plan extends AbstractEntity {
         return ImmutableValues.of(saleChannels);
     }
 
+    @Nonnull
     public PlanKey getPlanKey() {
         return PlanKey.of(hotelId, planId);
     }
 
+    @Nonnull
+    public ProductKey getProductKey(Long roomId) {
+        return ProductKey.of(hotelId, planId, roomId);
+    }
 }

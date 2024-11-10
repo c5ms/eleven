@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
+import org.apache.commons.lang3.ObjectUtils;
 
 import java.time.LocalDate;
 
@@ -73,6 +74,9 @@ public class Inventory extends AbstractEntity {
     }
 
     public boolean hasBeenBooked() {
+        if(ObjectUtils.anyNull(this.stockLeft,this.stockTotal)){
+            return false;
+        }
         return this.stockLeft.lessThan(this.stockTotal);
     }
 

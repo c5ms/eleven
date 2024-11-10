@@ -1,5 +1,6 @@
 package com.eleven.hotel.domain.model.plan;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.MappedSuperclass;
@@ -18,6 +19,7 @@ public class PlanKey implements Serializable {
     @Column(name = "hotel_id", updatable = false, insertable = false)
     private Long hotelId;
 
+    @Nullable
     @Column(name = "plan_id", updatable = false, insertable = false)
     private Long planId;
 
