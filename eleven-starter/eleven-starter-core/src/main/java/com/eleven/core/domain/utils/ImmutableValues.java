@@ -52,4 +52,8 @@ public class ImmutableValues<T> implements Iterable<T> {
     public Set<T> toSet() {
         return new HashSet<>(values);
     }
+
+    public ArrayList<T> toList() {
+        return new ArrayList<>(values);
+    }
 }

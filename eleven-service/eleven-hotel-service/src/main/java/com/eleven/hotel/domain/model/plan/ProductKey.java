@@ -13,7 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProductKey implements Serializable {
 
-    @Column(name = "hotel_id")
+    @Column(name = "hotel_id", insertable = false, updatable = false)
     private Long hotelId;
 
     @Column(name = "plan_id", insertable = false, updatable = false)

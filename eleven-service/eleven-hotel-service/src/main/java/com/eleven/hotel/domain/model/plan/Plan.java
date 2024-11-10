@@ -43,6 +43,7 @@ public class Plan extends AbstractEntity {
     private Long hotelId;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "hotel_id", referencedColumnName = "hotel_id")
     @JoinColumn(name = "plan_id", referencedColumnName = "plan_id")
     private Map<ProductKey, Product> products;
 
@@ -117,6 +118,7 @@ public class Plan extends AbstractEntity {
         plan.setSaleState(SaleState.STOPPED);
         plan.setSaleChannels(saleChannels);
         plan.setBasic(basic);
+
         return plan;
     }
 
@@ -158,8 +160,9 @@ public class Plan extends AbstractEntity {
         product.setPrice(saleChannel, onePersonPrice, twoPersonPrice, threePersonPrice, fourPersonPrice, fivePersonPrice);
     }
 
+    // todo  no way to remove room
     public Product addRoom(Long roomId, StockAmount stock) {
-        Validate.notNull(planId,"the plan has not been persisted");
+        Validate.notNull(planId, "the plan has not been persisted");
         var productId = ProductKey.of(hotelId, planId, roomId);
         var product = new Product(productId, this.saleType, this.saleChannels, stock);
         this.products.put(productId, product);
@@ -253,12 +256,7 @@ public class Plan extends AbstractEntity {
     }
 
     public PlanKey getPlanKey() {
-        return  PlanKey.of(hotelId,planId);
+        return PlanKey.of(hotelId, planId);
     }
 
-    // todo why not a JPA field?
-    @Column(name = "is_private")
-    private Boolean getIsPrivate() {
-        return getSaleChannels().isEmpty();
-    }
 }

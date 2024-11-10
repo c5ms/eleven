@@ -16,11 +16,12 @@ public class RoomCreateRequest {
     @NotBlank
     private String name;
 
-    @NotNull
-    private RoomLevel level;
+
+    @NotBlank
+    private String desc;
 
     @NotNull
-    private ChargeType chargeType;
+    private RoomLevel level;
 
     private String headPicUrl;
 
@@ -34,7 +35,5 @@ public class RoomCreateRequest {
     @NotNull
     private Integer maxPerson;
 
-    @NotBlank
-    private String desc;
 
 }

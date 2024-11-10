@@ -1,5 +1,7 @@
 package com.eleven.hotel.domain.model.plan;
 
+import com.eleven.hotel.api.domain.errors.HotelErrors;
+import com.eleven.hotel.application.command.PlanAddRoomCommand;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -19,5 +21,6 @@ public class PlanManager {
             validator.validate(plan);
         }
     }
+
 
 }

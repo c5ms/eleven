@@ -33,8 +33,8 @@ public class PlanService {
     private final InventoryRepository inventoryRepository;
 
     private final InventoryManager inventoryManager;
-    private final PlanManager planManager;
     private final RoomRepository roomRepository;
+    private final PlanManager planManager;
 
     public Optional<Plan> readPlan(Long hotelId, Long planId) {
         return planRepository.findByKey(PlanKey.of(hotelId, planId)).filter(HotelContext::mustReadable);
@@ -78,6 +78,7 @@ public class PlanService {
         }
 
         // persist the plan
+
         planRepository.persistAndFlush(plan);
 
         // initialize the inventory
@@ -106,6 +107,8 @@ public class PlanService {
             plan.addRoom(room.getRoomId(), addRoomCommand.getStock());
         }
 
+
+        planManager.validate(plan);
         planRepository.updateAndFlush(plan);
 
         inventoryManager.mergeInventory(plan);

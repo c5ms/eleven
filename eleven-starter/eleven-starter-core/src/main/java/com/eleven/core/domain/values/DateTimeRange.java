@@ -60,7 +60,7 @@ public class DateTimeRange {
         if (isEmpty()) {
             return false;
         }
-        return this.end.isBefore(dateTimeRange.end);
+        return this.end.isBefore(dateTimeRange.start);
     }
 
     public boolean isAfter(DateTimeRange dateTimeRange) {

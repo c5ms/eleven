@@ -1,5 +1,6 @@
 package com.eleven.hotel.api.interfaces.model;
 
+import com.eleven.hotel.api.domain.model.SaleChannel;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -23,6 +25,8 @@ public class PlanDto implements Serializable {
     private Integer stock;
     private SaleType type;
     private SaleState state;
+
+    private List<SaleChannel> channels;
 
     private Boolean isOnSale;
 
