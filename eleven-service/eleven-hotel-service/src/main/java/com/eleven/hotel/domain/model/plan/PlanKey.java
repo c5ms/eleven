@@ -19,7 +19,6 @@ public class PlanKey implements Serializable {
     @Column(name = "plan_id", updatable = false, insertable = false)
     private Long planId;
 
-
     public PlanKey(Long hotelId, Long planId) {
         this.setHotelId(hotelId);
         this.setPlanId(planId);

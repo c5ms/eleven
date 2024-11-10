@@ -68,14 +68,16 @@ public class PlanService {
             .saleChannels(command.getChannels())
             .create();
 
-        for (Long roomId : command.getRooms()) {
-            var room = roomRepository.findByHotelIdAndRoomId(hotelId, roomId).orElseThrow(HotelErrors.ROOM_NOT_FOUND::toException);
-            plan.addRoom(room.getRoomId(), StockAmount.of(100));
+        planRepository.persist(plan);
+
+        for (PlanAddRoomCommand addRoomCommand : command.getRooms()) {
+            var room = roomRepository.findByHotelIdAndRoomId(hotelId, addRoomCommand.getRoomId()).orElseThrow(HotelErrors.ROOM_NOT_FOUND::toException);
+            plan.addRoom(room.getRoomId(), addRoomCommand.getStock());
         }
 
         // persist the plan
         planManager.validate(plan);
-        planRepository.persistAndFlush(plan);
+        planRepository.persist(plan);
 
         // initialize the inventory
         inventoryManager.mergeInventory(plan);
@@ -98,9 +100,9 @@ public class PlanService {
         Optional.ofNullable(command.getPreSalePeriod()).ifPresent(plan::setPreSalePeriod);
         Optional.ofNullable(command.getChannels()).ifPresent(plan::setSaleChannels);
 
-        for (Long roomId : command.getRooms()) {
-            var room = roomRepository.findByHotelIdAndRoomId(hotelId, roomId).orElseThrow(HotelErrors.ROOM_NOT_FOUND::toException);
-            plan.addRoom(room.getRoomId(), StockAmount.of(100));
+        for (PlanAddRoomCommand addRoomCommand : command.getRooms()) {
+            var room = roomRepository.findByHotelIdAndRoomId(hotelId, addRoomCommand.getRoomId()).orElseThrow(HotelErrors.ROOM_NOT_FOUND::toException);
+            plan.addRoom(room.getRoomId(), addRoomCommand.getStock());
         }
 
         planRepository.updateAndFlush(plan);

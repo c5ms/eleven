@@ -57,6 +57,13 @@ public class PlanMerchantApi {
         return planConvertor.toDetail(plan);
     }
 
+    @Operation(summary = "delete plan")
+    @DeleteMapping("/{planId:[0-9]+}")
+    public void deletePlan(@PathVariable("hotelId") Long hotelId,
+                                 @PathVariable("planId") Long planId) {
+        planService.deletePlan(hotelId, planId);
+    }
+
     @Operation(summary = "update plan")
     @PutMapping("/{planId:[0-9]+}")
     public PlanDetail updatePlan(@PathVariable("hotelId") Long hotelId,

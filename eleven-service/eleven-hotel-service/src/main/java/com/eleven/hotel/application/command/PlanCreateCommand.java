@@ -8,6 +8,9 @@ import com.eleven.hotel.domain.values.StockAmount;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -18,6 +21,10 @@ public class PlanCreateCommand {
     private DateTimeRange salePeriod;
     private DateTimeRange preSalePeriod;
     private DateRange stayPeriod;
-    private Set<Long> rooms;
-    private Set<SaleChannel> channels;
+
+    @Builder.Default
+    private Set<SaleChannel> channels = new HashSet<>();
+
+    @Builder.Default
+    private List<PlanAddRoomCommand> rooms= new ArrayList<>();
 }

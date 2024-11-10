@@ -123,7 +123,6 @@ public class Plan extends AbstractEntity {
 
     @PostPersist
     protected void onAfterPersist() {
-
         for (Product product : this.getProducts()) {
             product.getProductId().setPlanId(this.getPlanId());
 

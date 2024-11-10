@@ -5,9 +5,11 @@ import com.eleven.core.domain.values.DateTimeRange;
 import com.eleven.hotel.api.domain.model.SaleChannel;
 import com.eleven.hotel.api.interfaces.model.PlanDetail;
 import com.eleven.hotel.api.interfaces.model.PlanDto;
+import com.eleven.hotel.api.interfaces.request.PlanAddRoomRequest;
 import com.eleven.hotel.api.interfaces.request.PlanCreateRequest;
 import com.eleven.hotel.api.interfaces.request.PlanQueryRequest;
 import com.eleven.hotel.api.interfaces.request.PlanUpdateRequest;
+import com.eleven.hotel.application.command.PlanAddRoomCommand;
 import com.eleven.hotel.application.command.PlanCreateCommand;
 import com.eleven.hotel.application.command.PlanQuery;
 import com.eleven.hotel.application.command.PlanUpdateCommand;
@@ -21,6 +23,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -98,20 +101,29 @@ public class PlanConvertor {
                 .preSalePeriod(new DateTimeRange(request.getPreSellStartDate(), request.getPreSellEndDate()))
                 .stayPeriod(new DateRange(request.getStayStartDate(), request.getStayEndDate()))
                 .salePeriod(new DateTimeRange(request.getSellStartDate(), request.getSellEndDate()))
-                .rooms(new HashSet<>(request.getRooms()))
+                .rooms( request.getRooms().stream().map(this::toCommand).collect(Collectors.toList()))
                 .channels(request.getChannels())
                 .build();
     }
 
     public PlanUpdateCommand toCommand(PlanUpdateRequest request) {
         return PlanUpdateCommand.builder()
-                .basic(new PlanBasic(request.getName(), request.getDesc()))
-                .stock(StockAmount.of(request.getStock()))
-                .preSalePeriod(new DateTimeRange(request.getPreSellStartDate(), request.getPreSellEndDate()))
-                .stayPeriod(new DateRange(request.getStayStartDate(), request.getStayEndDate()))
-                .salePeriod(new DateTimeRange(request.getSellStartDate(), request.getSellEndDate()))
-                .rooms(new HashSet<>(request.getRooms()))
-                .channels(request.getChannels())
-                .build();
+            .basic(new PlanBasic(request.getName(), request.getDesc()))
+            .stock(StockAmount.of(request.getStock()))
+            .preSalePeriod(new DateTimeRange(request.getPreSellStartDate(), request.getPreSellEndDate()))
+            .stayPeriod(new DateRange(request.getStayStartDate(), request.getStayEndDate()))
+            .salePeriod(new DateTimeRange(request.getSellStartDate(), request.getSellEndDate()))
+            .rooms( request.getRooms().stream().map(this::toCommand).collect(Collectors.toList()))
+            .channels(request.getChannels())
+            .build();
     }
+
+    private PlanAddRoomCommand toCommand(PlanAddRoomRequest request) {
+         return PlanAddRoomCommand.builder()
+             .roomId(request.getRoomId())
+             .stock(StockAmount.of(request.getStock()))
+             .build();
+    }
+
+
 }
