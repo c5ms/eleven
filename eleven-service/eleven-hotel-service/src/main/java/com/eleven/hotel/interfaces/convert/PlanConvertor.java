@@ -99,9 +99,9 @@ public class PlanConvertor {
         return PlanCreateCommand.builder()
             .basic(new PlanBasic(request.getName(), request.getDesc()))
             .stock(StockAmount.of(request.getStock()))
-            .preSalePeriod(new DateTimeRange(request.getPreSellStartDate(), request.getPreSellEndDate()))
+            .preSalePeriod(new DateTimeRange(request.getPreSaleStartDate(), request.getPreSaleEndDate()))
             .stayPeriod(new DateRange(request.getStayStartDate(), request.getStayEndDate()))
-            .salePeriod(new DateTimeRange(request.getSellStartDate(), request.getSellEndDate()))
+            .salePeriod(new DateTimeRange(request.getSaleStartDate(), request.getSaleEndDate()))
             .rooms(request.getRooms().stream().map(this::toCommand).collect(Collectors.toList()))
             .channels(request.getChannels())
             .build();
@@ -111,9 +111,9 @@ public class PlanConvertor {
         return PlanUpdateCommand.builder()
             .basic(new PlanBasic(request.getName(), request.getDesc()))
             .stock(StockAmount.of(request.getStock()))
-            .preSalePeriod(new DateTimeRange(request.getPreSellStartDate(), request.getPreSellEndDate()))
+            .preSalePeriod(new DateTimeRange(request.getPreSaleStartDate(), request.getPreSaleEndDate()))
             .stayPeriod(new DateRange(request.getStayStartDate(), request.getStayEndDate()))
-            .salePeriod(new DateTimeRange(request.getSellStartDate(), request.getSellEndDate()))
+            .salePeriod(new DateTimeRange(request.getSaleStartDate(), request.getSaleEndDate()))
             .rooms(request.getRooms().stream().map(this::toCommand).collect(Collectors.toList()))
             .channels(request.getChannels())
             .build();

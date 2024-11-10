@@ -33,18 +33,18 @@ public class PlanCreateRequest {
     private Integer stock;
 
     @Schema(type = "string",format = "date-time", example = "2024-01-01 00:00:00")
-    private LocalDateTime preSellStartDate;
+    private LocalDateTime preSaleStartDate;
 
     @Schema(type = "string",format = "date-time",example = "2024-01-02 08:00:00")
-    private LocalDateTime preSellEndDate;
+    private LocalDateTime preSaleEndDate;
 
     @NotNull
     @Schema(type = "string",format = "date-time",example = "2024-01-30 00:00:00")
-    private LocalDateTime sellStartDate;
+    private LocalDateTime saleStartDate;
 
     @NotNull
     @Schema(type = "string",format = "date-time",example = "2024-05-30 00:00:00")
-    private LocalDateTime sellEndDate;
+    private LocalDateTime saleEndDate;
 
     @NotNull
     @Schema(example = "2024-05-30")
