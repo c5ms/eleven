@@ -39,13 +39,4 @@ public class InventoryKey implements Serializable {
         return new InventoryKey(productKey,date);
     }
 
-    public String digest() {
-        return DIGEST_VERSION + "#" +
-               planId + "#" +
-               hotelId + "#" +
-               roomId + "#" +
-               date.format(DateTimeFormatter.ISO_LOCAL_DATE);
-    }
-
-
 }

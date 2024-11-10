@@ -16,7 +16,7 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PriceId implements Serializable {
+public class PriceKey implements Serializable {
 
     @Nonnull
     @Column(name = "hotel_id", insertable = false, updatable = false)
@@ -35,12 +35,12 @@ public class PriceId implements Serializable {
     @Column(name = "sale_channel")
     private SaleChannel saleChannel;
 
-    public static PriceId of(ProductKey productKey, SaleChannel saleChannel) {
-        PriceId priceId = new PriceId();
-        priceId.hotelId = productKey.getHotelId();
-        priceId.planId = productKey.getPlanId();
-        priceId.roomId = productKey.getRoomId();
-        priceId.saleChannel = saleChannel;
-        return priceId;
+    public static PriceKey of(ProductKey productKey, SaleChannel saleChannel) {
+        PriceKey priceKey = new PriceKey();
+        priceKey.hotelId = productKey.getHotelId();
+        priceKey.planId = productKey.getPlanId();
+        priceKey.roomId = productKey.getRoomId();
+        priceKey.saleChannel = saleChannel;
+        return priceKey;
     }
 }

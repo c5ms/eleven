@@ -76,7 +76,7 @@ public class PlanService {
 
         // persist the plan
         planManager.validate(plan);
-        planRepository.persist(plan);
+        planRepository.persistAndFlush(plan);
 
         // initialize the inventory
         inventoryManager.mergeInventory(plan);

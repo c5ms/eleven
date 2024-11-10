@@ -37,17 +37,11 @@ public class Product {
     @Embedded
     private ProductKey productKey;
 
-    @Embedded
-    @AttributeOverride(name = "hotelId", column = @Column(name = "hotel_id", insertable = false, updatable = false))
-    @AttributeOverride(name = "planId", column = @Column(name = "plan_id", insertable = false, updatable = false))
-    private PlanKey planKey;
-
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "hotel_id", referencedColumnName = "hotel_id")
     @JoinColumn(name = "plan_id", referencedColumnName = "plan_id")
     @JoinColumn(name = "room_id", referencedColumnName = "room_id")
-    @Transient
-    private Map<PriceId, Price> prices = new HashMap<>();
+    private Map<PriceKey, Price> prices = new HashMap<>();
 
     @Column(name = "charge_type")
     @Enumerated(EnumType.STRING)
@@ -99,7 +93,7 @@ public class Product {
         DomainValidator.must(this.saleChannels.contains(saleChannel), PlanErrors.UN_SUPPORTED_CHANNEL);
 
         var price = Price.wholeRoom(this.getProductKey(), saleChannel, wholeRoomPrice);
-        this.prices.put(price.getPriceId(), price);
+        this.prices.put(price.getPriceKey(), price);
         this.setChargeType(price.getChargeType());
     }
 
@@ -117,7 +111,7 @@ public class Product {
             threePersonPrice,
             fourPersonPrice,
             fivePersonPrice);
-        this.prices.put(price.getPriceId(), price);
+        this.prices.put(price.getPriceKey(), price);
         this.setChargeType(price.getChargeType());
     }
 

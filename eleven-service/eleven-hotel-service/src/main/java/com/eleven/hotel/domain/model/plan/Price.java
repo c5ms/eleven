@@ -9,6 +9,8 @@ import org.apache.commons.lang3.Validate;
 
 import java.math.BigDecimal;
 
+import static com.eleven.hotel.domain.core.AbstractEntity.GENERATOR_NAME;
+
 
 @Entity
 @Table(name = "hms_plan_price")
@@ -19,8 +21,13 @@ import java.math.BigDecimal;
 @FieldNameConstants
 public class Price {
 
-    @EmbeddedId
-    private PriceId priceId;
+    @Id
+    @Column(name = "price_id")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = GENERATOR_NAME)
+    private Long priceId;
+
+    @Embedded
+    private PriceKey priceKey;
 
     @Column(name = "charge_type")
     @Enumerated(EnumType.STRING)
@@ -46,7 +53,7 @@ public class Price {
 
     public static Price wholeRoom(ProductKey productKey, SaleChannel saleChannel, BigDecimal wholeRoomPrice) {
         Price price = new Price();
-        price.setPriceId(PriceId.of(productKey, saleChannel));
+        price.setPriceKey(PriceKey.of(productKey, saleChannel));
         price.setChargeType(ChargeType.BY_ROOM);
         price.setWholeRoomPrice(wholeRoomPrice);
         return price;
@@ -60,7 +67,7 @@ public class Price {
                                  BigDecimal fourPersonPrice,
                                  BigDecimal fivePersonPrice) {
         Price price = new Price();
-        price.setPriceId(PriceId.of(productKey, saleChannel));
+        price.setPriceKey(PriceKey.of(productKey, saleChannel));
         price.setChargeType(ChargeType.BY_PERSON);
         price.setOnePersonPrice(onePersonPrice);
         price.setTwoPersonPrice(twoPersonPrice);
@@ -71,7 +78,7 @@ public class Price {
     }
 
     public boolean is(SaleChannel saleChannel) {
-        return priceId.getSaleChannel() == saleChannel;
+        return priceKey.getSaleChannel() == saleChannel;
     }
 
     public BigDecimal charge(int personCount) {

@@ -21,7 +21,6 @@ import java.time.LocalDate;
 @EqualsAndHashCode(callSuper = false, of = "inventoryKey")
 public class Inventory extends AbstractEntity {
 
-
     @Id
     @Column(name = "inventory_id")
     @GeneratedValue(strategy = GenerationType.TABLE, generator = GENERATOR_NAME)

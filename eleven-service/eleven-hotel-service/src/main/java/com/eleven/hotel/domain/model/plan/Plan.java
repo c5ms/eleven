@@ -156,14 +156,11 @@ public class Plan extends AbstractEntity {
                          BigDecimal threePersonPrice,
                          BigDecimal fourPersonPrice,
                          BigDecimal fivePersonPrice) {
-        Validate.notNull(planId,"the plan has not been persisted");
         var product = findRoom(roomId).orElseThrow(PlanErrors.PRODUCT_NOT_FOUND::toException);
         product.setPrice(saleChannel, onePersonPrice, twoPersonPrice, threePersonPrice, fourPersonPrice, fivePersonPrice);
     }
 
     public Product addRoom(Long roomId, StockAmount stock) {
-//        Validate.notNull(planId,"the plan has not been persisted");
-
         var productId = ProductKey.of(hotelId, planId, roomId);
         var product = new Product(productId, this.saleType, this.saleChannels, stock);
         this.products.put(productId, product);
