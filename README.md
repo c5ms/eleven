@@ -93,7 +93,7 @@
 
 #### 依赖顺序
 - xxxService      Spring bean 级别的 Application service
-  - xxxManager    Spring bean 级别的 domain service
+  - xxxManager    Spring bean 级别的 domain service, we don't put it into the domain layer, it acts as a common logic serving for the application.
     - xxxSupport  Spring bean 级别业务公共方法类
       - xxxEr/Or  Spring bean 级别的底层工具类，无层级依赖，他通常是业务级别的
         - xxxUtil   纯粹的技术支持工具类，只能依赖基础工具包，他通常是三方common包级别的
