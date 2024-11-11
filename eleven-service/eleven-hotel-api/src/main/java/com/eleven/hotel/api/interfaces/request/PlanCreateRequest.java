@@ -56,7 +56,7 @@ public class PlanCreateRequest {
 
     private Set<SaleChannel> channels = new HashSet<>();
 
-    private List<PlanAddRoomRequest> rooms = new ArrayList<>();
+    private Set<Long> rooms = new HashSet<>();
 
 
 }

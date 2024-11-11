@@ -40,9 +40,9 @@ public class Plan extends AbstractEntity {
     private Long hotelId;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "hotel_id", referencedColumnName = "hotel_id")
-    @JoinColumn(name = "plan_id", referencedColumnName = "plan_id")
-    private Map<ProductKey, Product> products;
+    @JoinColumn(name = "hotel_id", referencedColumnName = "hotel_id", insertable = false, updatable = false)
+    @JoinColumn(name = "plan_id", referencedColumnName = "plan_id", insertable = false, updatable = false)
+    private List<Product> products;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "sale_type")
@@ -70,7 +70,6 @@ public class Plan extends AbstractEntity {
     @AttributeOverride(name = "end", column = @Column(name = "stay_period_end"))
     private DateRange stayPeriod;
 
-    @Setter
     @Embedded
     @AttributeOverride(name = "count", column = @Column(name = "stock_count"))
     private StockAmount stock;
@@ -85,9 +84,16 @@ public class Plan extends AbstractEntity {
     private PlanBasic basic;
 
     protected Plan() {
-        this.products = new HashMap<>();
+        this.products = new ArrayList<>();
         this.saleChannels = new HashSet<>();
         this.saleType = SaleType.NORMAL;
+    }
+
+    @PrePersist
+    protected void complete() {
+        for (Product value : this.products) {
+            value.getProductKey().set(getPlanKey());
+        }
     }
 
     @SuppressWarnings("unused")
@@ -131,40 +137,24 @@ public class Plan extends AbstractEntity {
     }
 
     public void removeRoom(Predicate<Product> predicate) {
-        var removing = this.products.values()
-                .stream()
-                .filter(predicate)
-                .map(Product::getProductKey)
-                .collect(Collectors.toSet());
-        removing.forEach(this.products::remove);
+        this.products.removeIf(predicate);
     }
 
-    public void addRoom(@NonNull Long roomId, StockAmount stock) {
-        Validate.notNull(planId, "the plan has not been persisted");
-        if (null == stock) {
-            stock = StockAmount.zero();
-        }
+    public void addRoom(@NonNull Long roomId) {
         var productKey = getProductKey(roomId);
-        var product = (Product) null;
-
-        if (this.products.containsKey(productKey)) {
-            product = this.products.get(productKey);
-        } else {
-            product = createproduct(stock, productKey);
+        if (findRoom(roomId).isPresent()) {
+            return;
         }
-
-        product.setStockAmount(stock);
-        this.products.put(productKey, product);
+        var product = new Product(productKey, this.saleType, this.saleChannels, stock);
+        this.products.add(product);
     }
 
-    @Nonnull
-    private Product createproduct(StockAmount stock, ProductKey productKey) {
-        return new Product(productKey, this.saleType, this.saleChannels, stock);
-    }
 
     public Optional<Product> findRoom(Long roomId) {
-        var productId = getProductKey(roomId);
-        return Optional.ofNullable(this.products.get(productId));
+        var productKey = getProductKey(roomId);
+        return this.products.stream()
+            .filter(product -> product.is(productKey))
+            .findFirst();
     }
 
     public BigDecimal chargeRoom(Long roomId, SaleChannel saleChannel, int personCount) {
@@ -192,31 +182,39 @@ public class Plan extends AbstractEntity {
 
     public List<Inventory> createInventories() {
         return getProducts()
-                .stream()
-                .flatMap(product -> createInventories(product).stream())
-                .collect(Collectors.toList());
+            .stream()
+            .flatMap(product -> createInventories(product).stream())
+            .collect(Collectors.toList());
     }
 
     private List<Inventory> createInventories(Product product) {
         var creator = InventoryCreator.of(product);
         return getStayPeriod()
-                .dates()
-                .map(creator::create)
-                .collect(Collectors.toList());
+            .dates()
+            .map(creator::create)
+            .collect(Collectors.toList());
     }
 
     public boolean isApplicable(Inventory inventory) {
         return Predicates.<Inventory>notNull()
-                .and(theInv -> theInv.getPlanKey().equals(getPlanKey()))
-                .and(theInv -> this.getStayPeriod().contains(theInv.getInventoryKey().getDate()))
-                .and(theInv -> this.findRoom(theInv.getInventoryKey().getRoomId()).isPresent())
-                .test(inventory);
+            .and(theInv -> theInv.getPlanKey().equals(getPlanKey()))
+            .and(theInv -> this.getStayPeriod().contains(theInv.getInventoryKey().getDate()))
+            .and(theInv -> this.findRoom(theInv.getInventoryKey().getRoomId()).isPresent())
+            .test(inventory);
     }
 
     public Plan setSaleChannels(Set<SaleChannel> saleChannels) {
         this.saleChannels = saleChannels;
         for (Product product : this.getProducts()) {
             product.setSaleChannels(this.saleChannels);
+        }
+        return this;
+    }
+
+    public Plan setStock(StockAmount stock) {
+        this.stock = stock;
+        for (Product value : this.products) {
+            value.setStock(stock);
         }
         return this;
     }
@@ -243,7 +241,7 @@ public class Plan extends AbstractEntity {
 
     @Nonnull
     public ImmutableValues<Product> getProducts() {
-        return ImmutableValues.of(products.values());
+        return ImmutableValues.of(products);
     }
 
     @Nonnull
@@ -258,6 +256,6 @@ public class Plan extends AbstractEntity {
 
     @Nonnull
     public ProductKey getProductKey(Long roomId) {
-        return ProductKey.of(hotelId, planId, roomId);
+        return ProductKey.of(getPlanKey(), roomId);
     }
 }

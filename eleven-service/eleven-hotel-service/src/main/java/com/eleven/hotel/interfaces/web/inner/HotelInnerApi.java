@@ -7,6 +7,8 @@ import com.eleven.hotel.api.interfaces.model.HotelDto;
 import com.eleven.hotel.api.interfaces.model.PlanDto;
 import com.eleven.hotel.application.service.PlanService;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
+import com.eleven.hotel.domain.model.plan.PlanKey;
+import com.eleven.hotel.domain.model.plan.ProductKey;
 import com.eleven.hotel.interfaces.convert.HotelConvertor;
 import com.eleven.hotel.interfaces.convert.PlanConvertor;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,7 +37,8 @@ public class HotelInnerApi implements HotelClient {
 
     @Override
     public Optional<PlanDto> readPlan(@RequestParam("hotelId") Long hotelId, @RequestParam("planId") Long planId) {
-        return planService.readPlan(hotelId, planId).map(planConvertor::toDetail);
+        var planKye= PlanKey.of(hotelId, planId);
+        return planService.readPlan(planKye).map(planConvertor::toDetail);
     }
 
     @Override
@@ -44,7 +47,8 @@ public class HotelInnerApi implements HotelClient {
                                  @RequestParam("roomId") Long roomId,
                                  @RequestParam("saleChannel") SaleChannel saleChannel,
                                  @RequestParam("persons") int persons) {
-        return planService.chargeRoom(hotelId, planId, roomId, saleChannel, persons);
+        var productKey = ProductKey.of(hotelId, planId, roomId);
+        return planService.chargeRoom(productKey, saleChannel, persons);
     }
 
 

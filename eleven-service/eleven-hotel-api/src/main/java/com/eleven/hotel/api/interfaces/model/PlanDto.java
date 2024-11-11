@@ -32,12 +32,12 @@ public class PlanDto implements Serializable {
 
     private Boolean isPreSale;
     private Boolean isPreSalePeriodOngoing;
-    private LocalDateTime preSellStartDate;
-    private LocalDateTime preSellEndDate;
+    private LocalDateTime preSaleStartDate;
+    private LocalDateTime preSaleEndDate;
 
     private Boolean isSalePeriodOngoing;
-    private LocalDateTime sellStartDate;
-    private LocalDateTime sellEndDate;
+    private LocalDateTime saleStartDate;
+    private LocalDateTime saleEndDate;
 
     private Boolean isStayPeriodOngoing;
     private LocalDate stayStartDate;

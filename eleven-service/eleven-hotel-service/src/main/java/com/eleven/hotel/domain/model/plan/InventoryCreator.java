@@ -13,7 +13,7 @@ public class InventoryCreator {
     }
 
     public Inventory create(LocalDate date) {
-        return Inventory.of(product.getProductKey(), date, product.getStockAmount());
+        return Inventory.of(product.getProductKey(), date, product.getStock());
     }
 
 

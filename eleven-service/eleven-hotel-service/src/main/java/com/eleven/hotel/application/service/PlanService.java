@@ -39,8 +39,8 @@ public class PlanService {
     public PageResult<Plan> queryPage(Long hotelId, PlanQuery query, Pageable pageable) {
         hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
         Specification<Plan> specification = Specifications.<Plan>and()
-                .like(StringUtils.isNotBlank(query.getPlanName()), Plan.Fields.basic + "." + PlanBasic.Fields.name, "%" + query.getPlanName() + "%")
-                .build();
+            .like(StringUtils.isNotBlank(query.getPlanName()), Plan.Fields.basic + "." + PlanBasic.Fields.name, "%" + query.getPlanName() + "%")
+            .build();
         var pagination = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()).withSort(Sort.by(Plan.Fields.planId).descending());
         var result = planRepository.findAll(specification, pagination);
         return PageResult.of(result.getContent(), result.getTotalElements());
@@ -55,8 +55,8 @@ public class PlanService {
     public Plan createPlan(Long hotelId, PlanCreateCommand command) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
         var plan = planManager.createPlan(hotel, command);
+        planRepository.persist(plan);
         invManager.initialize(plan);
-        planRepository.updateAndFlush(plan);
         HotelContext.publishEvent(PlanCreatedEvent.of(plan.getHotelId(), plan.getPlanId()));
         return plan;
     }
@@ -66,8 +66,8 @@ public class PlanService {
         var plan = planRepository.findByKey(planKey).orElseThrow(HotelContext::noPrincipalException);
         planManager.update(plan, command);
         planManager.validate(plan);
-        invManager.initialize(plan);
         planRepository.updateAndFlush(plan);
+        invManager.initialize(plan);
         return plan;
     }
 
@@ -81,16 +81,16 @@ public class PlanService {
     @Transactional(rollbackFor = Exception.class)
     public void startSale(PlanKey planKey, Long roomId) {
         var plan = planRepository.findByKey(planKey).orElseThrow(HotelContext::noPrincipalException);
-        var room = plan.findRoom(roomId).orElseThrow(HotelContext::noPrincipalException);
-        plan.startSale(room.getProductKey().getRoomId());
+        plan.findRoom(roomId).orElseThrow(HotelContext::noPrincipalException);
+        plan.startSale(roomId);
         planRepository.updateAndFlush(plan);
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void stopSale(PlanKey planKey, Long roomId) {
         var plan = planRepository.findByKey(planKey).orElseThrow(HotelContext::noPrincipalException);
-        var room = plan.findRoom(roomId).orElseThrow(HotelContext::noPrincipalException);
-        plan.stopSale(room.getProductKey().getRoomId());
+        plan.findRoom(roomId).orElseThrow(HotelContext::noPrincipalException);
+        plan.stopSale(roomId);
         planRepository.updateAndFlush(plan);
     }
 

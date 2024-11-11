@@ -26,5 +26,5 @@ public class PlanUpdateCommand {
     private Set<SaleChannel> channels = new HashSet<>();
 
     @Builder.Default
-    private List<PlanAddRoomCommand> rooms = new ArrayList<>();
+    private Set<Long> rooms = new HashSet<>();
 }

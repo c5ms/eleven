@@ -18,8 +18,6 @@ import org.hibernate.annotations.Type;
 import java.math.BigDecimal;
 import java.util.*;
 
-import static com.eleven.hotel.domain.core.AbstractEntity.GENERATOR_NAME;
-
 @Table(name = "hms_plan_room")
 @Entity
 @Getter
@@ -29,12 +27,7 @@ import static com.eleven.hotel.domain.core.AbstractEntity.GENERATOR_NAME;
 @FieldNameConstants
 public class Product {
 
-    @Id
-    @Column(name = "product_id")
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = GENERATOR_NAME)
-    private Long productId;
-
-    @Embedded
+    @EmbeddedId
     private ProductKey productKey;
 
     @Column(name = "charge_type")
@@ -42,9 +35,9 @@ public class Product {
     private ChargeType chargeType;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "hotel_id", referencedColumnName = "hotel_id")
-    @JoinColumn(name = "plan_id", referencedColumnName = "plan_id")
-    @JoinColumn(name = "room_id", referencedColumnName = "room_id")
+    @JoinColumn(name = "hotel_id", referencedColumnName = "hotel_id", insertable = false, updatable = false)
+    @JoinColumn(name = "plan_id", referencedColumnName = "plan_id", insertable = false, updatable = false)
+    @JoinColumn(name = "room_id", referencedColumnName = "room_id", insertable = false, updatable = false)
     private Map<PriceKey, Price> prices = new HashMap<>();
 
     @Type(JsonType.class)
@@ -54,7 +47,7 @@ public class Product {
 
     @Embedded
     @AttributeOverride(name = "count", column = @Column(name = "stock_amount"))
-    private StockAmount stockAmount;
+    private StockAmount stock;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "sale_type")
@@ -64,12 +57,20 @@ public class Product {
     @Column(name = "sale_state")
     private SaleState saleState;
 
+
+    @PrePersist
+    protected void complete(){
+        for (Price price : this.getPrices()) {
+            price.getPriceKey().apply(getProductKey());
+        }
+    }
+
     protected Product(@NonNull ProductKey productKey,
                       @NonNull SaleType saleType,
                       @NonNull Collection<SaleChannel> saleChannels,
-                      @NonNull StockAmount stockAmount) {
+                      @NonNull StockAmount stock) {
         this.productKey = productKey;
-        this.stockAmount = stockAmount;
+        this.stock = stock;
         this.saleType = saleType;
         this.saleState = SaleState.STOPPED;
         this.saleChannels = new HashSet<>(saleChannels);
@@ -125,13 +126,18 @@ public class Product {
     }
 
     public boolean hasStock() {
-        return this.getStockAmount().greaterThanZero();
+        return this.getStock().greaterThanZero();
     }
 
-    public StockAmount getStockAmount() {
-        if (null == this.stockAmount) {
+    public StockAmount getStock() {
+        if (null == this.stock) {
             return StockAmount.zero();
         }
-        return stockAmount;
+        return stock;
     }
+
+    public  boolean is(ProductKey key){
+        return key.equals(this.getProductKey());
+    }
+
 }
