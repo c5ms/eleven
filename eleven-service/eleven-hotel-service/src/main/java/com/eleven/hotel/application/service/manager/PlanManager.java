@@ -6,16 +6,16 @@ import com.eleven.hotel.application.command.PlanSetPriceCommand;
 import com.eleven.hotel.application.command.PlanUpdateCommand;
 import com.eleven.hotel.domain.model.hotel.Hotel;
 import com.eleven.hotel.domain.model.hotel.RoomRepository;
-import com.eleven.hotel.domain.model.plan.*;
+import com.eleven.hotel.domain.model.plan.Plan;
+import com.eleven.hotel.domain.model.plan.PlanValidator;
+import com.eleven.hotel.domain.model.plan.Product;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Predicate;
 
 
 @Slf4j
@@ -42,8 +42,12 @@ public class PlanManager {
             .stockAmount(command.getStock())
             .saleChannels(command.getChannels())
             .create();
-        validate(plan);
-        setRooms(plan, command.getRooms());
+
+        for (Long roomId : command.getRooms()) {
+            var room = roomRepository.findByHotelIdAndRoomId(plan.getHotelId(), roomId).orElseThrow(HotelErrors.ROOM_NOT_FOUND::toException);
+            plan.addRoom(room.getRoomId());
+        }
+
         return plan;
     }
 
@@ -54,7 +58,12 @@ public class PlanManager {
         Optional.ofNullable(command.getSalePeriod()).ifPresent(plan::setSalePeriod);
         Optional.ofNullable(command.getPreSalePeriod()).ifPresent(plan::setPreSalePeriod);
         Optional.ofNullable(command.getChannels()).ifPresent(plan::setSaleChannels);
-        setRooms(plan, command.getRooms());
+
+        command.getRooms().stream()
+            .filter(roomId -> plan.findRoom(roomId).isEmpty())
+            .map(roomId -> roomRepository.findByHotelIdAndRoomId(plan.getHotelId(), roomId).orElseThrow(HotelErrors.ROOM_NOT_FOUND::toException))
+            .forEach(room -> plan.addRoom(room.getRoomId()));
+        plan.removeRoom(product -> !command.getRooms().contains(product.getProductKey().getRoomId()));
     }
 
     public void setPrice(Product room, PlanSetPriceCommand command) {
@@ -73,14 +82,5 @@ public class PlanManager {
             );
         }
     }
-
-    public void setRooms(Plan plan, Set<Long> rooms) {
-        rooms.stream()
-            .filter(roomId -> plan.findRoom(roomId).isPresent())
-            .map(roomId -> roomRepository.findByHotelIdAndRoomId(plan.getHotelId(), roomId).orElseThrow(HotelErrors.ROOM_NOT_FOUND::toException))
-            .forEach(room -> plan.addRoom(room.getRoomId()));
-        plan.removeRoom(product -> !rooms.contains(product.getProductKey().getRoomId()));
-    }
-
 
 }

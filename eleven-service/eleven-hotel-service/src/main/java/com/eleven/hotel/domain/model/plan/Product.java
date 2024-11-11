@@ -27,7 +27,7 @@ import java.util.*;
 @FieldNameConstants
 public class Product {
 
-    @EmbeddedId
+    @Id
     private ProductKey productKey;
 
     @Column(name = "charge_type")
