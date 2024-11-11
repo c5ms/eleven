@@ -27,8 +27,8 @@ public class RegisterAdminApi {
     @PostMapping("/{registerId:[0-9]+}/reviews")
     public void reviewRegister(@PathVariable("registerId") Long registerId, @RequestBody @Validated RegisterReviewRequest request) {
         var command = RegisterReviewCommand.builder()
-            .pass(request.getPass())
-            .build();
+                .pass(request.getPass())
+                .build();
         registerService.review(registerId, command);
     }
 

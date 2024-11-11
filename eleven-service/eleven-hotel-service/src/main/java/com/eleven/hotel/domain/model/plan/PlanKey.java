@@ -1,9 +1,9 @@
 package com.eleven.hotel.domain.model.plan;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.io.Serializable;
@@ -13,22 +13,19 @@ import java.io.Serializable;
 @Embeddable
 @MappedSuperclass
 @EqualsAndHashCode
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PlanKey implements Serializable {
 
+    @NonNull
     @Column(name = "hotel_id", updatable = false, insertable = false)
     private Long hotelId;
 
-    @Nullable
+    @NonNull
     @Column(name = "plan_id", updatable = false, insertable = false)
     private Long planId;
 
-    protected PlanKey(Long hotelId, Long planId) {
-        this.setHotelId(hotelId);
-        this.setPlanId(planId);
-    }
-
-    public static PlanKey of(Long hotelId, Long planId) {
+    public static PlanKey of(@NotNull Long hotelId, @NotNull Long planId) {
         return new PlanKey(hotelId, planId);
     }
 

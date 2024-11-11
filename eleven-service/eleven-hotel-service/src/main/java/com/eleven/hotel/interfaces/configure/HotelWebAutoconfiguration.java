@@ -36,19 +36,19 @@ public class HotelWebAutoconfiguration implements WebMvcConfigurer {
     @Bean
     public GroupedOpenApi merchantApi() {
         return GroupedOpenApi.builder()
-            .group("merchant-api")
-            .displayName("merchant")
-            .pathsToMatch(API_PREFIX_MERCHANT + "/**")
-            .build();
+                .group("merchant-api")
+                .displayName("merchant")
+                .pathsToMatch(API_PREFIX_MERCHANT + "/**")
+                .build();
     }
 
     @Bean
     public GroupedOpenApi adminApi() {
         return GroupedOpenApi.builder()
-            .group("admin-api")
-            .displayName("admin")
-            .pathsToMatch(API_PREFIX_ADMIN + "/**")
-            .build();
+                .group("admin-api")
+                .displayName("admin")
+                .pathsToMatch(API_PREFIX_ADMIN + "/**")
+                .build();
     }
 
 }

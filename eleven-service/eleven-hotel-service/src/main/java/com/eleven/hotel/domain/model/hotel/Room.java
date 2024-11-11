@@ -1,7 +1,6 @@
 package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.hotel.api.domain.model.RoomLevel;
-import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -18,7 +17,7 @@ import org.apache.commons.lang3.Validate;
 @Setter(AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @FieldNameConstants
-public class Room extends AbstractEntity  {
+public class Room extends AbstractEntity {
 
     @Id
     @Column(name = "room_id")

@@ -40,10 +40,10 @@ public class HotelInnerApi implements HotelClient {
 
     @Override
     public BigDecimal chargeRoom(@RequestParam("hotelId") Long hotelId,
-                                @RequestParam("planId") Long planId,
-                                @RequestParam("roomId") Long roomId,
-                                @RequestParam("saleChannel") SaleChannel saleChannel,
-                                @RequestParam("persons") int persons) {
+                                 @RequestParam("planId") Long planId,
+                                 @RequestParam("roomId") Long roomId,
+                                 @RequestParam("saleChannel") SaleChannel saleChannel,
+                                 @RequestParam("persons") int persons) {
         return planService.chargeRoom(hotelId, planId, roomId, saleChannel, persons);
     }
 

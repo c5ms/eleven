@@ -1,9 +1,9 @@
 package com.eleven.hotel.application.command;
 
-import com.eleven.hotel.api.domain.model.SaleChannel;
-import com.eleven.hotel.domain.model.plan.PlanBasic;
 import com.eleven.core.domain.values.DateRange;
 import com.eleven.core.domain.values.DateTimeRange;
+import com.eleven.hotel.api.domain.model.SaleChannel;
+import com.eleven.hotel.domain.model.plan.PlanBasic;
 import com.eleven.hotel.domain.values.StockAmount;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,5 +26,5 @@ public class PlanCreateCommand {
     private Set<SaleChannel> channels = new HashSet<>();
 
     @Builder.Default
-    private List<PlanAddRoomCommand> rooms= new ArrayList<>();
+    private List<PlanAddRoomCommand> rooms = new ArrayList<>();
 }

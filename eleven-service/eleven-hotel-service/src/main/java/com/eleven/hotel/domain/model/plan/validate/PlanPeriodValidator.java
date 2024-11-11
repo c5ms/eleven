@@ -15,7 +15,7 @@ public class PlanPeriodValidator implements PlanValidator {
 
     @Override
     public void validate(Plan plan) {
-        if(null!=plan.getPreSalePeriod()){
+        if (null != plan.getPreSalePeriod()) {
             DomainValidator.must(plan.getPreSalePeriod().isBefore(plan.getSalePeriod()), PlanErrors.PRE_SALE_PERIOD_ERROR);
         }
     }

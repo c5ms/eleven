@@ -1,6 +1,5 @@
 package com.eleven.hotel.domain.model.plan;
 
-import com.eleven.core.domain.DomainValidator;
 import com.eleven.core.domain.utils.ImmutableValues;
 import com.eleven.core.domain.values.DateRange;
 import com.eleven.core.domain.values.DateTimeRange;
@@ -120,17 +119,6 @@ public class Plan extends AbstractEntity {
         return plan;
     }
 
-    public void startSale() {
-        DomainValidator.must(this.getProducts().isNotEmpty(), PlanErrors.NO_PRODUCT);
-        for (Product product : this.getProducts()) {
-            product.startSale();
-        }
-        this.setSaleState(SaleState.STARTED);
-    }
-
-    public void stopSale() {
-        this.saleState = SaleState.STOPPED;
-    }
 
     public boolean isOnSale() {
         if (!this.getSaleState().isOnSale()) {
@@ -142,28 +130,12 @@ public class Plan extends AbstractEntity {
         return getSalePeriod().isCurrent();
     }
 
-    public void setPrice(Long roomId, SaleChannel saleChannel, BigDecimal wholeRoomPrice) {
-        var product = findRoom(roomId).orElseThrow(PlanErrors.PRODUCT_NOT_FOUND::toException);
-        product.setPrice(saleChannel, wholeRoomPrice);
-    }
-
-    public void setPrice(Long roomId,
-                         SaleChannel saleChannel,
-                         BigDecimal onePersonPrice,
-                         BigDecimal twoPersonPrice,
-                         BigDecimal threePersonPrice,
-                         BigDecimal fourPersonPrice,
-                         BigDecimal fivePersonPrice) {
-        var product = findRoom(roomId).orElseThrow(PlanErrors.PRODUCT_NOT_FOUND::toException);
-        product.setPrice(saleChannel, onePersonPrice, twoPersonPrice, threePersonPrice, fourPersonPrice, fivePersonPrice);
-    }
-
     public void removeRoom(Predicate<Product> predicate) {
         var removing = this.products.values()
-            .stream()
-            .filter(predicate)
-            .map(Product::getProductKey)
-            .collect(Collectors.toSet());
+                .stream()
+                .filter(predicate)
+                .map(Product::getProductKey)
+                .collect(Collectors.toSet());
         removing.forEach(this.products::remove);
     }
 
@@ -203,39 +175,42 @@ public class Plan extends AbstractEntity {
 
     public void startSale(Long roomId) {
         var product = findRoom(roomId).orElseThrow(PlanErrors.PRODUCT_NOT_FOUND::toException);
-        product.startSale();
-        this.startSale();
+        product.setSaleState(SaleState.STARTED);
+        this.setSaleState(SaleState.STARTED);
     }
 
     public void stopSale(Long roomId) {
         var product = findRoom(roomId).orElseThrow(PlanErrors.PRODUCT_NOT_FOUND::toException);
-        product.stopSale();
+
+        product.setSaleState(SaleState.STARTED);
+
         if (this.getProducts().stream().noneMatch(Product::isOnSale)) {
-            this.stopSale();
+            this.setSaleState(SaleState.STOPPED);
         }
+
     }
 
     public List<Inventory> createInventories() {
         return getProducts()
-            .stream()
-            .flatMap(product -> createInventories(product).stream())
-            .collect(Collectors.toList());
+                .stream()
+                .flatMap(product -> createInventories(product).stream())
+                .collect(Collectors.toList());
     }
 
     private List<Inventory> createInventories(Product product) {
         var creator = InventoryCreator.of(product);
         return getStayPeriod()
-            .dates()
-            .map(creator::create)
-            .collect(Collectors.toList());
+                .dates()
+                .map(creator::create)
+                .collect(Collectors.toList());
     }
 
     public boolean isApplicable(Inventory inventory) {
         return Predicates.<Inventory>notNull()
-            .and(theInv -> theInv.getPlanKey().equals(getPlanKey()))
-            .and(theInv -> this.getStayPeriod().contains(theInv.getInventoryKey().getDate()))
-            .and(theInv -> this.findRoom(theInv.getInventoryKey().getRoomId()).isPresent())
-            .test(inventory);
+                .and(theInv -> theInv.getPlanKey().equals(getPlanKey()))
+                .and(theInv -> this.getStayPeriod().contains(theInv.getInventoryKey().getDate()))
+                .and(theInv -> this.findRoom(theInv.getInventoryKey().getRoomId()).isPresent())
+                .test(inventory);
     }
 
     public Plan setSaleChannels(Set<SaleChannel> saleChannels) {

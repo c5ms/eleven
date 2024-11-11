@@ -11,6 +11,7 @@ import com.eleven.hotel.api.interfaces.request.PlanQueryRequest;
 import com.eleven.hotel.api.interfaces.request.PlanUpdateRequest;
 import com.eleven.hotel.application.command.PlanSetPriceCommand;
 import com.eleven.hotel.application.service.PlanService;
+import com.eleven.hotel.domain.model.plan.PlanKey;
 import com.eleven.hotel.interfaces.convert.PlanConvertor;
 import com.eleven.hotel.interfaces.support.AsMerchantApi;
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,7 +47,8 @@ public class PlanMerchantApi {
     @Operation(summary = "read plan")
     @GetMapping("/{planId:[0-9]+}")
     public Optional<PlanDetail> readPlan(@PathVariable("hotelId") Long hotelId, @PathVariable("planId") Long planId) {
-        return planService.readPlan(hotelId, planId).map(planConvertor::toDetail);
+        var plankey = PlanKey.of(hotelId, planId);
+        return planService.readPlan(plankey).map(planConvertor::toDetail);
     }
 
     @Operation(summary = "create plan")
@@ -60,8 +62,9 @@ public class PlanMerchantApi {
     @Operation(summary = "delete plan")
     @DeleteMapping("/{planId:[0-9]+}")
     public void deletePlan(@PathVariable("hotelId") Long hotelId,
-                                 @PathVariable("planId") Long planId) {
-        planService.deletePlan(hotelId, planId);
+                           @PathVariable("planId") Long planId) {
+        var plankey = PlanKey.of(hotelId, planId);
+        planService.deletePlan(plankey);
     }
 
     @Operation(summary = "update plan")
@@ -70,15 +73,16 @@ public class PlanMerchantApi {
                                  @PathVariable("planId") Long planId,
                                  @RequestBody @Validated PlanUpdateRequest request) {
         var command = planConvertor.toCommand(request);
-        planService.updatePlan(hotelId, planId, command);
-        var plan = planService.readPlan(hotelId, planId).orElseThrow(WebContext::notFoundException);
+        var plankey = PlanKey.of(hotelId, planId);
+        var plan = planService.updatePlan(plankey, command);
         return planConvertor.toDetail(plan);
     }
 
     @Operation(summary = "list room")
     @GetMapping("/{planId:[0-9]+}/rooms")
     public List<PlanDetail.Room> listRoom(@PathVariable("hotelId") Long hotelId, @PathVariable("planId") Long planId) {
-        var plan = planService.readPlan(hotelId, planId).orElseThrow(WebContext::notFoundException);
+        var plankey = PlanKey.of(hotelId, planId);
+        var plan = planService.readPlan(plankey).orElseThrow(WebContext::notFoundException);
         return plan.getProducts().stream().map(planConvertor::toDto).toList();
     }
 
@@ -87,12 +91,14 @@ public class PlanMerchantApi {
     public void setPrice(@PathVariable("hotelId") Long hotelId,
                          @PathVariable("planId") Long planId,
                          @PathVariable("roomId") Long roomId) {
+        // todo
         var command = PlanSetPriceCommand.builder()
-            .chargeType(ChargeType.BY_ROOM)
-            .wholeRoomPrice(BigDecimal.valueOf(200))
-            .saleChannel(SaleChannel.DP)
-            .build();
-        planService.setPrice(hotelId, planId, roomId, command);
+                .chargeType(ChargeType.BY_ROOM)
+                .saleChannel(SaleChannel.DP)
+                .wholeRoomPrice(BigDecimal.valueOf(200))
+                .build();
+        var planKey = PlanKey.of(hotelId, planId);
+        planService.setPrice(planKey, roomId, command);
     }
 
     @Operation(summary = "start sale")
@@ -100,7 +106,8 @@ public class PlanMerchantApi {
     public void startSale(@PathVariable("hotelId") Long hotelId,
                           @PathVariable("planId") Long planId,
                           @PathVariable("roomId") Long roomId) {
-        planService.startSale(hotelId, planId, roomId);
+        var planKey = PlanKey.of(hotelId, planId);
+        planService.startSale(planKey, roomId);
     }
 
     @Operation(summary = "stop sale")
@@ -108,7 +115,8 @@ public class PlanMerchantApi {
     public void stopSale(@PathVariable("hotelId") Long hotelId,
                          @PathVariable("planId") Long planId,
                          @PathVariable("roomId") Long roomId) {
-        planService.stopSale(hotelId, planId, roomId);
+        var planKey = PlanKey.of(hotelId, planId);
+        planService.stopSale(planKey, roomId);
     }
 
 }

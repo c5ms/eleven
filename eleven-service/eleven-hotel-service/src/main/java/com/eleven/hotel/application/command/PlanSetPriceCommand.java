@@ -19,5 +19,5 @@ public class PlanSetPriceCommand {
     private BigDecimal threePersonPrice;
     private BigDecimal fourPersonPrice;
     private BigDecimal fivePersonPrice;
-    
+
 }

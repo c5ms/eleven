@@ -13,8 +13,8 @@ public class HotelSecurity {
 
     public boolean accessHotel(Long hotelId) {
         return hotelRepository.findById(hotelId)
-            .map(HotelContext::mustWritable)
-            .orElseThrow(HotelContext::noPrincipalException);
+                .map(HotelContext::mustWritable)
+                .orElseThrow(HotelContext::noPrincipalException);
     }
 
 }

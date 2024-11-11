@@ -75,21 +75,12 @@ public class Product {
         this.saleChannels = new HashSet<>(saleChannels);
     }
 
-    protected void startSale() {
-        DomainValidator.must(hasStock(), PlanErrors.NO_STOCK);
-        DomainValidator.must(hasPrice(), PlanErrors.NO_PRICE);
-        this.setSaleState(SaleState.STARTED);
-    }
-
-    protected void stopSale() {
-        this.setSaleState(SaleState.STOPPED);
-    }
 
     public boolean isOnSale() {
         return this.saleState.isOnSale();
     }
 
-    protected void setPrice(SaleChannel saleChannel, BigDecimal wholeRoomPrice) {
+    public void setPrice(SaleChannel saleChannel, BigDecimal wholeRoomPrice) {
         DomainValidator.must(this.saleChannels.contains(saleChannel), PlanErrors.UN_SUPPORTED_CHANNEL);
 
         var price = Price.wholeRoom(this.getProductKey(), saleChannel, wholeRoomPrice);
@@ -97,28 +88,28 @@ public class Product {
         this.setChargeType(price.getChargeType());
     }
 
-    protected void setPrice(SaleChannel saleChannel,
-                            BigDecimal onePersonPrice,
-                            BigDecimal twoPersonPrice,
-                            BigDecimal threePersonPrice,
-                            BigDecimal fourPersonPrice,
-                            BigDecimal fivePersonPrice) {
+    public void setPrice(SaleChannel saleChannel,
+                         BigDecimal onePersonPrice,
+                         BigDecimal twoPersonPrice,
+                         BigDecimal threePersonPrice,
+                         BigDecimal fourPersonPrice,
+                         BigDecimal fivePersonPrice) {
         DomainValidator.must(this.saleChannels.contains(saleChannel), PlanErrors.UN_SUPPORTED_CHANNEL);
         var price = Price.byPerson(this.getProductKey(),
-            saleChannel,
-            onePersonPrice,
-            twoPersonPrice,
-            threePersonPrice,
-            fourPersonPrice,
-            fivePersonPrice);
+                saleChannel,
+                onePersonPrice,
+                twoPersonPrice,
+                threePersonPrice,
+                fourPersonPrice,
+                fivePersonPrice);
         this.prices.put(price.getPriceKey(), price);
         this.setChargeType(price.getChargeType());
     }
 
     public Optional<Price> findPrice(SaleChannel channel) {
         return getPrices().stream()
-            .filter(price -> price.is(channel))
-            .findFirst();
+                .filter(price -> price.is(channel))
+                .findFirst();
     }
 
     public ImmutableValues<SaleChannel> getSaleChannels() {
@@ -138,7 +129,7 @@ public class Product {
     }
 
     public StockAmount getStockAmount() {
-        if(null == this.stockAmount) {
+        if (null == this.stockAmount) {
             return StockAmount.zero();
         }
         return stockAmount;

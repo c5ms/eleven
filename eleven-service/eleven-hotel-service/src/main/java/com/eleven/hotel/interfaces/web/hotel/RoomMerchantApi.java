@@ -31,16 +31,16 @@ public class RoomMerchantApi {
     @GetMapping
     public List<RoomDto> listRoom(@PathVariable("hotelId") Long hotelId) {
         return roomService.listRoom(hotelId)
-            .stream()
-            .map(roomConvertor::toDto)
-            .collect(Collectors.toList());
+                .stream()
+                .map(roomConvertor::toDto)
+                .collect(Collectors.toList());
     }
 
     @Operation(summary = "read room")
-    @GetMapping("/{roomId:[0-9]+}")
+    @GetMapping()
     public Optional<RoomDto> readRoom(@PathVariable("hotelId") Long hotelId, @PathVariable("roomId") Long roomId) {
         return roomService.readRoom(hotelId, roomId)
-            .map(roomConvertor::toDto);
+                .map(roomConvertor::toDto);
     }
 
     @Operation(summary = "create room")

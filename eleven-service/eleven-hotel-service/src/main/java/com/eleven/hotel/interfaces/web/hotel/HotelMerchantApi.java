@@ -50,8 +50,8 @@ public class HotelMerchantApi {
     @PostMapping("/{hotelId:[0-9]+]}/commands/close")
     public void closeHotel(@PathVariable("hotelId") Long hotelId) {
         hotelService.read(hotelId)
-            .filter(HotelContext::mustWritable)
-            .orElseThrow(WebContext::notFoundException);
+                .filter(HotelContext::mustWritable)
+                .orElseThrow(WebContext::notFoundException);
         hotelService.close(hotelId);
     }
 }

@@ -1,5 +1,8 @@
-package com.eleven.hotel.domain.model.plan;
+package com.eleven.hotel.application.service.manager;
 
+import com.eleven.hotel.domain.model.plan.InventoryMerge;
+import com.eleven.hotel.domain.model.plan.InventoryRepository;
+import com.eleven.hotel.domain.model.plan.Plan;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -10,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class InventoryManager {
     private final InventoryRepository inventoryRepository;
 
-    public void mergeInventory(Plan plan) {
+    public void initialize(Plan plan) {
         var existingInventories = inventoryRepository.findByPlanKey(plan.getPlanKey());
         var merger = InventoryMerge.of(plan, existingInventories);
 

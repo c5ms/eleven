@@ -41,26 +41,26 @@ public class HotelAdminApi {
     @PostMapping
     public HotelDto createHotel(@Validated @RequestBody HotelCreateRequest request) {
         var command = HotelCreateCommand.builder()
-            .basic(new HotelBasic(
-                request.getName(),
-                request.getDescription(),
-                request.getHeadPicUrl(),
-                request.getTotalRooms(),
-                request.getCheckIn(),
-                request.getCheckOut(),
-                request.getEmail(),
-                request.getTel())
-            )
-            .position(new HotelPosition(
-                request.getProvince(),
-                request.getCity(),
-                request.getDistrict(),
-                request.getStreet(),
-                request.getAddress(),
-                request.getLat(),
-                request.getLng()
-            ))
-            .build();
+                .basic(new HotelBasic(
+                        request.getName(),
+                        request.getDescription(),
+                        request.getHeadPicUrl(),
+                        request.getTotalRooms(),
+                        request.getCheckIn(),
+                        request.getCheckOut(),
+                        request.getEmail(),
+                        request.getTel())
+                )
+                .position(new HotelPosition(
+                        request.getProvince(),
+                        request.getCity(),
+                        request.getDistrict(),
+                        request.getStreet(),
+                        request.getAddress(),
+                        request.getLat(),
+                        request.getLng()
+                ))
+                .build();
         var hotel = hotelService.create(command);
         return hotelConvertor.toDto(hotel);
     }
@@ -69,8 +69,8 @@ public class HotelAdminApi {
     @GetMapping
     public PageResult<HotelDto> queryHotel(@ParameterObject @Validated HotelQueryRequest request) {
         var command = HotelQuery.builder()
-            .hotelName(request.getHotelName())
-            .build();
+                .hotelName(request.getHotelName())
+                .build();
         return hotelService.query(command).map(hotelConvertor::toDto);
     }
 

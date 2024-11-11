@@ -36,7 +36,6 @@ public class ImmutableValues<T> implements Iterable<T> {
         return values.isEmpty();
     }
 
-
     public boolean isNotEmpty() {
         return !values.isEmpty();
     }

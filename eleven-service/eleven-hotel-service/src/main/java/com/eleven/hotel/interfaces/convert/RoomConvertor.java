@@ -21,35 +21,35 @@ public class RoomConvertor {
 
     public RoomDto toDto(Room room) {
         return new RoomDto()
-            .setRoomId(room.getRoomId())
-            .setHotelId(room.getHotelId())
-            .setName(room.getBasic().getName())
-            .setType(room.getBasic().getLevel())
-            .setDesc(room.getBasic().getDesc())
-            .setHeadPicUrl(room.getBasic().getHeadPicUrl())
-            .setMinPerson(room.getRestriction().getMinPerson())
-            .setMaxPerson(room.getRestriction().getMaxPerson())
-            ;
+                .setRoomId(room.getRoomId())
+                .setHotelId(room.getHotelId())
+                .setName(room.getBasic().getName())
+                .setType(room.getBasic().getLevel())
+                .setDesc(room.getBasic().getDesc())
+                .setHeadPicUrl(room.getBasic().getHeadPicUrl())
+                .setMinPerson(room.getRestriction().getMinPerson())
+                .setMaxPerson(room.getRestriction().getMaxPerson())
+                ;
     }
 
     public List<RoomDto> toDto(List<Room> rooms) {
         return rooms.stream()
-            .map(this::toDto)
-            .collect(Collectors.toList());
+                .map(this::toDto)
+                .collect(Collectors.toList());
     }
 
     public RoomCreateCommand toCommand(RoomCreateRequest request) {
         return RoomCreateCommand.builder()
-            .basic(new Room.RoomBasic(request.getName(), request.getLevel(), request.getDesc(), request.getHeadPicUrl()))
-            .restriction(new Room.RoomRestriction(request.getMinPerson(), request.getMaxPerson()))
-            .build();
+                .basic(new Room.RoomBasic(request.getName(), request.getLevel(), request.getDesc(), request.getHeadPicUrl()))
+                .restriction(new Room.RoomRestriction(request.getMinPerson(), request.getMaxPerson()))
+                .build();
     }
 
     public RoomUpdateCommand toCommand(RoomUpdateRequest request) {
         return RoomUpdateCommand.builder()
-            .chargeType(request.getChargeType())
-            .basic(new Room.RoomBasic(request.getName(), request.getType(), request.getDesc(), request.getHeadPicUrl()))
-            .restriction(new Room.RoomRestriction(request.getMinPerson(), request.getMaxPerson()))
-            .build();
+                .chargeType(request.getChargeType())
+                .basic(new Room.RoomBasic(request.getName(), request.getType(), request.getDesc(), request.getHeadPicUrl()))
+                .restriction(new Room.RoomRestriction(request.getMinPerson(), request.getMaxPerson()))
+                .build();
     }
 }

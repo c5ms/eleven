@@ -74,7 +74,7 @@ public class Inventory extends AbstractEntity {
     }
 
     public boolean hasBeenBooked() {
-        if(ObjectUtils.anyNull(this.stockLeft,this.stockTotal)){
+        if (ObjectUtils.anyNull(this.stockLeft, this.stockTotal)) {
             return false;
         }
         return this.stockLeft.lessThan(this.stockTotal);
@@ -86,7 +86,7 @@ public class Inventory extends AbstractEntity {
 
     public void reduce(int amount) {
         DomainValidator.must(this.hasEnoughStock(amount), PlanErrors.INVENTORY_NOT_ENOUGH);
-        this.setStockLeft(this.stockLeft.reduct(amount));
+        this.setStockLeft(this.stockLeft.reduce(amount));
     }
 
 }
