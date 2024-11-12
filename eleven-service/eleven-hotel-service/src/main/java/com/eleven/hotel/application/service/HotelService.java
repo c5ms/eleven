@@ -1,15 +1,15 @@
 package com.eleven.hotel.application.service;
 
 import com.eleven.core.application.query.PageResult;
-import com.eleven.hotel.api.application.event.HotelCreatedEvent;
-import com.eleven.hotel.api.application.event.HotelUpdatedEvent;
+import com.eleven.core.domain.DomainEvents;
 import com.eleven.hotel.application.command.HotelCreateCommand;
 import com.eleven.hotel.application.command.HotelQuery;
 import com.eleven.hotel.application.command.HotelUpdateCommand;
-import com.eleven.hotel.application.service.manager.HotelManager;
 import com.eleven.hotel.application.support.HotelContext;
+import com.eleven.hotel.domain.manager.HotelManager;
 import com.eleven.hotel.domain.model.hotel.Hotel;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
+import com.eleven.hotel.domain.model.hotel.HotelUpdatedEvent;
 import com.github.wenhao.jpa.Specifications;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -28,7 +28,7 @@ public class HotelService {
     @Transactional(readOnly = true)
     public PageResult<Hotel> query(HotelQuery query) {
         var specification = Specifications.<Hotel>and()
-                .build();
+            .build();
         var result = hotelRepository.findAll(specification, PageRequest.of(query.getPage(), query.getSize() - 1));
         return PageResult.of(result.getContent(), result.getTotalElements());
     }
@@ -39,20 +39,20 @@ public class HotelService {
     }
 
     public Hotel create(HotelCreateCommand command) {
-        var hotel = hotelManager.createHotel(command);
+        var hotel = Hotel.of(command.getBasic(), command.getPosition());
         hotelManager.validate(hotel);
         hotelRepository.persist(hotel);
-        HotelContext.publishEvent(HotelCreatedEvent.of(hotel.getHotelId()));
         return hotel;
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void update(Long hotelId, HotelUpdateCommand command) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
-        hotelManager.updateHotel(hotel,command);
+        Optional.ofNullable(command.getBasic()).ifPresent(hotel::setBasic);
+        Optional.ofNullable(command.getPosition()).ifPresent(hotel::relocate);
         hotelManager.validate(hotel);
         hotelRepository.update(hotel);
-        HotelContext.publishEvent(HotelUpdatedEvent.of(hotel.getHotelId()));
+        DomainEvents.publish(HotelUpdatedEvent.of(hotel));
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -68,8 +68,6 @@ public class HotelService {
         hotel.stopSale();
         hotelRepository.update(hotel);
     }
-
-
 
 
 }

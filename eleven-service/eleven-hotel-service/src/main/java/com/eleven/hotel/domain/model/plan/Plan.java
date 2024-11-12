@@ -1,5 +1,6 @@
 package com.eleven.hotel.domain.model.plan;
 
+import com.eleven.core.domain.DomainEvents;
 import com.eleven.core.domain.utils.ImmutableValues;
 import com.eleven.core.domain.values.DateRange;
 import com.eleven.core.domain.values.DateTimeRange;

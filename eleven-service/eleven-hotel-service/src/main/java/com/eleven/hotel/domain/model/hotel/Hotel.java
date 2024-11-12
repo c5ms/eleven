@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
+import org.springframework.jdbc.support.incrementer.SybaseAnywhereMaxValueIncrementer;
 
 import java.util.Optional;
 
@@ -37,14 +38,22 @@ public class Hotel extends AbstractEntity {
     @Embedded
     private HotelBasic basic;
 
-    public Hotel(Register register) {
+    private Hotel(Register register) {
         var description = HotelBasic.justName(register.getHotel().getName());
         this.setBasic(description);
     }
 
-    public Hotel(HotelBasic basic, HotelPosition position) {
+    private Hotel(HotelBasic basic, HotelPosition position) {
         this.setBasic(basic);
         this.setPosition(position);
+    }
+
+    public static Hotel of(Register register){
+        return new Hotel(register);
+    }
+
+    public static Hotel of(HotelBasic basic, HotelPosition position){
+        return new Hotel(basic,position);
     }
 
     public void startSale() {

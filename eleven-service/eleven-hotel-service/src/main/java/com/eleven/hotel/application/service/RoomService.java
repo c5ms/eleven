@@ -3,7 +3,7 @@ package com.eleven.hotel.application.service;
 import com.eleven.core.application.authorize.NoPrincipalException;
 import com.eleven.hotel.application.command.RoomCreateCommand;
 import com.eleven.hotel.application.command.RoomUpdateCommand;
-import com.eleven.hotel.application.service.manager.RoomManager;
+import com.eleven.hotel.domain.manager.RoomManager;
 import com.eleven.hotel.application.support.HotelContext;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.domain.model.hotel.Room;
@@ -36,7 +36,7 @@ public class RoomService {
     @Transactional(rollbackFor = Exception.class)
     public Room createRoom(Long hotelId, RoomCreateCommand command) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(NoPrincipalException::new);
-        var room = roomManager.createRoom(hotel, command);
+        var room = new Room(hotel.getHotelId(), command.getBasic(), command.getRestriction());
         roomManager.validate(room);
         roomRepository.persist(room);
         return room;

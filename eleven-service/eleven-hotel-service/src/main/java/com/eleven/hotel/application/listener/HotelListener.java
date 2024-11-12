@@ -1,4 +1,4 @@
-package com.eleven.hotel.application.service;
+package com.eleven.hotel.application.listener;
 
 import cn.hutool.json.JSONUtil;
 import com.eleven.core.application.event.ApplicationEvent;

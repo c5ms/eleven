@@ -1,4 +1,4 @@
-package com.eleven.hotel.application.service.manager;
+package com.eleven.hotel.domain.manager;
 
 import com.eleven.hotel.domain.model.plan.InventoryMerge;
 import com.eleven.hotel.domain.model.plan.InventoryRepository;

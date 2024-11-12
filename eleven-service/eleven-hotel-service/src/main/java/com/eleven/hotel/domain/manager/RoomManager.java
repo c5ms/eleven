@@ -1,7 +1,5 @@
-package com.eleven.hotel.application.service.manager;
+package com.eleven.hotel.domain.manager;
 
-import com.eleven.hotel.application.command.RoomCreateCommand;
-import com.eleven.hotel.domain.model.hotel.Hotel;
 import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.model.hotel.RoomValidator;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +16,6 @@ public class RoomManager {
 
     public void validate(Room room) {
         roomValidators.forEach(roomValidator -> roomValidator.validate(room));
-    }
-
-    public Room createRoom(Hotel hotel, RoomCreateCommand command) {
-        return new Room(hotel.getHotelId(), command.getBasic(), command.getRestriction());
     }
 
 }
