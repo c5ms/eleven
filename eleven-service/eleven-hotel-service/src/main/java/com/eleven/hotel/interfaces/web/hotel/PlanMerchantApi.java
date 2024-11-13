@@ -1,7 +1,6 @@
 package com.eleven.hotel.interfaces.web.hotel;
 
 import com.eleven.core.application.query.PageResult;
-import com.eleven.core.web.WebContext;
 import com.eleven.hotel.api.domain.model.ChargeType;
 import com.eleven.hotel.api.domain.model.SaleChannel;
 import com.eleven.hotel.api.interfaces.model.PlanDetail;
@@ -23,7 +22,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -85,10 +83,10 @@ public class PlanMerchantApi {
                          @PathVariable("roomId") Long roomId) {
         // todo
         var command = PlanSetPriceCommand.builder()
-                .chargeType(ChargeType.BY_ROOM)
-                .saleChannel(SaleChannel.DP)
-                .wholeRoomPrice(BigDecimal.valueOf(200))
-                .build();
+            .chargeType(ChargeType.BY_ROOM)
+            .saleChannel(SaleChannel.DP)
+            .wholeRoomPrice(BigDecimal.valueOf(200))
+            .build();
         var planKey = PlanKey.of(hotelId, planId);
         planService.setPrice(planKey, roomId, command);
     }
