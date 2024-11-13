@@ -78,14 +78,6 @@ public class PlanMerchantApi {
         return planConvertor.toDetail(plan);
     }
 
-    @Operation(summary = "list room")
-    @GetMapping("/{planId:[0-9]+}/rooms")
-    public List<PlanDetail.Room> listRoom(@PathVariable("hotelId") Long hotelId, @PathVariable("planId") Long planId) {
-        var plankey = PlanKey.of(hotelId, planId);
-        var plan = planService.readPlan(plankey).orElseThrow(WebContext::notFoundException);
-        return plan.getProducts().stream().map(planConvertor::toDto).toList();
-    }
-
     @Operation(summary = "set price")
     @PostMapping("/{planId:[0-9]+}/rooms/{roomId:[0-9]+}/prices")
     public void setPrice(@PathVariable("hotelId") Long hotelId,

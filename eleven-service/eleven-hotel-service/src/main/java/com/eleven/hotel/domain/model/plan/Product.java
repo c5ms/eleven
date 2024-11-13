@@ -7,6 +7,7 @@ import com.eleven.hotel.api.domain.model.SaleChannel;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
 import com.eleven.hotel.domain.errors.PlanErrors;
+import com.eleven.hotel.domain.model.room.Room;
 import com.eleven.hotel.domain.values.StockAmount;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
@@ -27,7 +28,7 @@ import java.util.*;
 @FieldNameConstants
 public class Product {
 
-    @Id
+    @EmbeddedId
     private ProductKey productKey;
 
     @Column(name = "charge_type")
@@ -39,6 +40,14 @@ public class Product {
     @JoinColumn(name = "plan_id", referencedColumnName = "plan_id", insertable = false, updatable = false)
     @JoinColumn(name = "room_id", referencedColumnName = "room_id", insertable = false, updatable = false)
     private Map<PriceKey, Price> prices = new HashMap<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id", referencedColumnName = "room_id", insertable = false, updatable = false)
+    private Room room;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "plan_id", referencedColumnName = "plan_id", insertable = false, updatable = false)
+    private Plan plan;
 
     @Type(JsonType.class)
     @Column(name = "sale_channels", columnDefinition = "json")
@@ -64,11 +73,13 @@ public class Product {
         }
     }
 
-    protected Product(@NonNull ProductKey productKey,
+    protected Product(@NonNull Plan plan,
+                      @NonNull Room room,
                       @NonNull SaleType saleType,
                       @NonNull Collection<SaleChannel> saleChannels,
                       @NonNull StockAmount stock) {
-        this.productKey = productKey;
+        this.productKey = ProductKey.of(plan.toKey(), room.getRoomId());
+        this.room = room;
         this.stock = stock;
         this.saleType = saleType;
         this.saleState = SaleState.STOPPED;
@@ -96,20 +107,20 @@ public class Product {
                          BigDecimal fivePersonPrice) {
         DomainValidator.must(this.saleChannels.contains(saleChannel), PlanErrors.UN_SUPPORTED_CHANNEL);
         var price = Price.byPerson(this.getProductKey(),
-                saleChannel,
-                onePersonPrice,
-                twoPersonPrice,
-                threePersonPrice,
-                fourPersonPrice,
-                fivePersonPrice);
+            saleChannel,
+            onePersonPrice,
+            twoPersonPrice,
+            threePersonPrice,
+            fourPersonPrice,
+            fivePersonPrice);
         this.prices.put(price.getPriceKey(), price);
         this.setChargeType(price.getChargeType());
     }
 
     public Optional<Price> findPrice(SaleChannel channel) {
         return getPrices().stream()
-                .filter(price -> price.is(channel))
-                .findFirst();
+            .filter(price -> price.is(channel))
+            .findFirst();
     }
 
     public ImmutableValues<SaleChannel> getSaleChannels() {

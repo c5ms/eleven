@@ -93,12 +93,12 @@ public class Plan extends AbstractEntity {
     @SuppressWarnings("unused")
     @Builder(builderClassName = "Normal", builderMethodName = "normal", buildMethodName = "create")
     protected static Plan createNormal(Long hotelId,
-                                     StockAmount stockAmount,
-                                     DateRange stayPeriod,
-                                     Set<SaleChannel> saleChannels,
-                                     DateTimeRange salePeriod,
-                                     DateTimeRange preSellPeriod,
-                                     PlanBasic basic) {
+                                       StockAmount stockAmount,
+                                       DateRange stayPeriod,
+                                       Set<SaleChannel> saleChannels,
+                                       DateTimeRange salePeriod,
+                                       DateTimeRange preSellPeriod,
+                                       PlanBasic basic) {
 
         Validate.notNull(hotelId, "hotelId must not be null");
         Validate.notNull(stayPeriod, "sale period must not be null");
@@ -134,7 +134,7 @@ public class Plan extends AbstractEntity {
         if (findRoom(roomId).isPresent()) {
             return;
         }
-        var product = new Product(productKey, this.saleType, this.saleChannels, stock);
+        var product = new Product(this, room, this.saleType, this.saleChannels, stock);
         this.products.add(product);
     }
 
@@ -145,8 +145,8 @@ public class Plan extends AbstractEntity {
     public Optional<Product> findRoom(Long roomId) {
         var productKey = getProductKey(roomId);
         return this.products.stream()
-                .filter(product -> product.is(productKey))
-                .findFirst();
+            .filter(product -> product.is(productKey))
+            .findFirst();
     }
 
     public BigDecimal chargeRoom(Room room, SaleChannel saleChannel, int personCount) {
@@ -174,22 +174,22 @@ public class Plan extends AbstractEntity {
 
     public List<Inventory> createInventories() {
         return getProducts()
-                .stream()
-                .flatMap(product -> {
-                    var creator = InventoryFactory.of(product);
-                    return getStayPeriod()
-                            .dates()
-                            .map(creator::create);
-                })
-                .collect(Collectors.toList());
+            .stream()
+            .flatMap(product -> {
+                var creator = InventoryFactory.of(product);
+                return getStayPeriod()
+                    .dates()
+                    .map(creator::create);
+            })
+            .collect(Collectors.toList());
     }
 
     public boolean isApplicable(Inventory inventory) {
         return Predicates.<Inventory>notNull()
-                .and(theInv -> theInv.getInventoryKey().toPlanKey().equals(toKey()))
-                .and(theInv -> this.getStayPeriod().contains(theInv.getInventoryKey().getDate()))
-                .and(theInv -> this.findRoom(theInv.getInventoryKey().getRoomId()).isPresent())
-                .test(inventory);
+            .and(theInv -> theInv.getInventoryKey().toPlanKey().equals(toKey()))
+            .and(theInv -> this.getStayPeriod().contains(theInv.getInventoryKey().getDate()))
+            .and(theInv -> this.findRoom(theInv.getInventoryKey().getRoomId()).isPresent())
+            .test(inventory);
     }
 
     public void update(PlanPatch patch) {

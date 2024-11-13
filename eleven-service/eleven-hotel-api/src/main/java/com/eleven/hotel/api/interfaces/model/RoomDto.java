@@ -17,7 +17,6 @@ public class RoomDto {
     private Long roomId;
     private String name;
     private RoomLevel type;
-    private ChargeType chargeType;
     private String headPicUrl;
     private String desc;
     private Integer maxPerson;

@@ -1,6 +1,7 @@
 package com.eleven.hotel.api.interfaces.model;
 
 import com.eleven.hotel.api.domain.model.ChargeType;
+import com.eleven.hotel.api.domain.model.RoomLevel;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.annotation.Nullable;
@@ -39,9 +40,15 @@ public class PlanDetail extends PlanDto {
     @Accessors(chain = true)
     public static class Room {
         private Long roomId;
+        private String name;
+        private RoomLevel type;
+        private ChargeType chargeType;
+        private String headPicUrl;
+        private String desc;
+        private Integer maxPerson;
+        private Integer minPerson;
         private Integer stock;
         private SaleState saleState;
-        private ChargeType chargeType;
         private RoomPrices prices = new RoomPrices();
     }
 

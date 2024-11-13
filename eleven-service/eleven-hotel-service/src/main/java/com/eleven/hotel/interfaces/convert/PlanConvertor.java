@@ -15,6 +15,7 @@ import com.eleven.hotel.domain.model.plan.Plan;
 import com.eleven.hotel.domain.model.plan.PlanBasic;
 import com.eleven.hotel.domain.model.plan.PlanPatch;
 import com.eleven.hotel.domain.model.plan.Product;
+import com.eleven.hotel.domain.model.room.RoomRepository;
 import com.eleven.hotel.domain.values.StockAmount;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ import java.util.Optional;
 public class PlanConvertor {
     public final ValuesConvertor values;
     private final ModelMapper modelMapper;
+    private final RoomRepository roomRepository;
 
     public PlanDto toDto(Plan plan) {
         var dto = new PlanDto();
@@ -44,30 +46,30 @@ public class PlanConvertor {
 
     private void fillUp(PlanDto dto, Plan plan) {
         dto.setPlanId(plan.getPlanId())
-                .setHotelId(plan.getHotelId())
-                .setName(plan.getBasic().getName())
-                .setDesc(plan.getBasic().getDesc())
-                .setStock(plan.getStock().getCount())
-                .setType(plan.getSaleType())
-                .setState(plan.getSaleState())
-                .setIsOnSale(plan.isOnSale())
-                .setChannels(plan.getSaleChannels().toList())
+            .setHotelId(plan.getHotelId())
+            .setName(plan.getBasic().getName())
+            .setDesc(plan.getBasic().getDesc())
+            .setStock(plan.getStock().getCount())
+            .setType(plan.getSaleType())
+            .setState(plan.getSaleState())
+            .setIsOnSale(plan.isOnSale())
+            .setChannels(plan.getSaleChannels().toList())
 
-                // pre sale
-                .setIsPreSale(Optional.ofNullable(plan.getPreSalePeriod()).map(DateTimeRange::isNotEmpty).orElse(false))
-                .setIsPreSalePeriodOngoing(plan.getPreSalePeriod().isCurrent())
-                .setPreSaleStartDate(plan.getPreSalePeriod().getStart())
-                .setPreSaleEndDate(plan.getPreSalePeriod().getEnd())
+            // pre sale
+            .setIsPreSale(Optional.ofNullable(plan.getPreSalePeriod()).map(DateTimeRange::isNotEmpty).orElse(false))
+            .setIsPreSalePeriodOngoing(plan.getPreSalePeriod().isCurrent())
+            .setPreSaleStartDate(plan.getPreSalePeriod().getStart())
+            .setPreSaleEndDate(plan.getPreSalePeriod().getEnd())
 
-                // sale period
-                .setIsSalePeriodOngoing(plan.getPreSalePeriod().isCurrent())
-                .setSaleStartDate(plan.getSalePeriod().getStart())
-                .setSaleEndDate(plan.getSalePeriod().getEnd())
+            // sale period
+            .setIsSalePeriodOngoing(plan.getPreSalePeriod().isCurrent())
+            .setSaleStartDate(plan.getSalePeriod().getStart())
+            .setSaleEndDate(plan.getSalePeriod().getEnd())
 
-                // stay period
-                .setIsStayPeriodOngoing(plan.getStayPeriod().isCurrent())
-                .setStayStartDate(plan.getStayPeriod().getStart())
-                .setStayEndDate(plan.getStayPeriod().getEnd());
+            // stay period
+            .setIsStayPeriodOngoing(plan.getStayPeriod().isCurrent())
+            .setStayStartDate(plan.getStayPeriod().getStart())
+            .setStayEndDate(plan.getStayPeriod().getEnd());
 
         if (dto instanceof PlanDetail detail) {
             detail.setRooms(plan.getProducts().stream().map(this::toDto).toList());
@@ -77,46 +79,52 @@ public class PlanConvertor {
 
     public PlanDetail.Room toDto(Product product) {
         return new PlanDetail.Room()
-                .setRoomId(product.getProductKey().getRoomId())
-                .setStock(product.getStock().getCount())
-                .setChargeType(product.getChargeType())
-                .setSaleState(product.getSaleState())
-                .setPrices(new PlanDetail.RoomPrices()
-                        .setDh(product.findPrice(SaleChannel.DH).map(price -> modelMapper.map(price, PlanDetail.Price.class)).orElse(null))
-                        .setDp(product.findPrice(SaleChannel.DP).map(price -> modelMapper.map(price, PlanDetail.Price.class)).orElse(null))
-                );
+            .setRoomId(product.getProductKey().getRoomId())
+            .setName(product.getRoom().getBasic().getName())
+            .setType(product.getRoom().getBasic().getLevel())
+            .setDesc(product.getRoom().getBasic().getDesc())
+            .setHeadPicUrl(product.getRoom().getBasic().getHeadPicUrl())
+            .setMinPerson(product.getRoom().getRestriction().getMinPerson())
+            .setMaxPerson(product.getRoom().getRestriction().getMaxPerson())
+            .setStock(product.getStock().getCount())
+            .setChargeType(product.getChargeType())
+            .setSaleState(product.getSaleState())
+            .setPrices(new PlanDetail.RoomPrices()
+                .setDh(product.findPrice(SaleChannel.DH).map(price -> modelMapper.map(price, PlanDetail.Price.class)).orElse(null))
+                .setDp(product.findPrice(SaleChannel.DP).map(price -> modelMapper.map(price, PlanDetail.Price.class)).orElse(null))
+            );
     }
 
     public PlanQuery toQuery(PlanQueryRequest request) {
         return PlanQuery.builder()
-                .planName(request.getPlanName())
-                .build();
+            .planName(request.getPlanName())
+            .build();
     }
 
     public PlanCreateCommand toCommand(PlanCreateRequest request) {
         return PlanCreateCommand.builder()
+            .basic(new PlanBasic(request.getName(), request.getDesc()))
+            .stock(StockAmount.of(request.getStock()))
+            .preSalePeriod(new DateTimeRange(request.getPreSaleStartDate(), request.getPreSaleEndDate()))
+            .stayPeriod(new DateRange(request.getStayStartDate(), request.getStayEndDate()))
+            .salePeriod(new DateTimeRange(request.getSaleStartDate(), request.getSaleEndDate()))
+            .rooms(request.getRooms())
+            .channels(request.getChannels())
+            .build();
+    }
+
+    public PlanUpdateCommand toCommand(PlanUpdateRequest request) {
+        return PlanUpdateCommand.builder()
+            .patch(PlanPatch.builder()
                 .basic(new PlanBasic(request.getName(), request.getDesc()))
                 .stock(StockAmount.of(request.getStock()))
                 .preSalePeriod(new DateTimeRange(request.getPreSaleStartDate(), request.getPreSaleEndDate()))
                 .stayPeriod(new DateRange(request.getStayStartDate(), request.getStayEndDate()))
                 .salePeriod(new DateTimeRange(request.getSaleStartDate(), request.getSaleEndDate()))
-                .rooms(request.getRooms())
                 .channels(request.getChannels())
-                .build();
-    }
-
-    public PlanUpdateCommand toCommand(PlanUpdateRequest request) {
-        return PlanUpdateCommand.builder()
-                .patch(PlanPatch.builder()
-                        .basic(new PlanBasic(request.getName(), request.getDesc()))
-                        .stock(StockAmount.of(request.getStock()))
-                        .preSalePeriod(new DateTimeRange(request.getPreSaleStartDate(), request.getPreSaleEndDate()))
-                        .stayPeriod(new DateRange(request.getStayStartDate(), request.getStayEndDate()))
-                        .salePeriod(new DateTimeRange(request.getSaleStartDate(), request.getSaleEndDate()))
-                        .channels(request.getChannels())
-                        .build())
-                .rooms(request.getRooms())
-                .build();
+                .build())
+            .rooms(request.getRooms())
+            .build();
     }
 
 

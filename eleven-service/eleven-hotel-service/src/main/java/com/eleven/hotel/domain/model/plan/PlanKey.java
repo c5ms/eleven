@@ -17,12 +17,11 @@ import java.io.Serializable;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PlanKey implements Serializable {
 
+    @Column(name = "hotel_id", updatable = false, insertable = false)
+    private Long hotelId;
 
     @Column(name = "plan_id", updatable = false, insertable = false)
     private Long planId;
-
-    @Column(name = "hotel_id", updatable = false, insertable = false)
-    private Long hotelId;
 
     public static PlanKey of(@NotNull Long hotelId,@NotNull Long planId) {
         return new PlanKey(hotelId, planId);
