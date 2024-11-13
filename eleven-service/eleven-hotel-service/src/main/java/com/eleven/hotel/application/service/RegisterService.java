@@ -1,11 +1,10 @@
 package com.eleven.hotel.application.service;
 
 import com.eleven.core.domain.DomainEvents;
-import com.eleven.hotel.domain.model.hotel.HotelCreatedEvent;
 import com.eleven.hotel.application.command.HotelRegisterCommand;
 import com.eleven.hotel.application.command.RegisterReviewCommand;
-import com.eleven.hotel.domain.manager.RegisterManager;
 import com.eleven.hotel.application.support.HotelContext;
+import com.eleven.hotel.domain.manager.RegisterManager;
 import com.eleven.hotel.domain.model.hotel.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,7 +24,7 @@ public class RegisterService {
     public Register register(HotelRegisterCommand command) {
         var register = new Register(command.getHotel(), command.getAdmin());
         registerManager.validate(register);
-        registerRepository.persistAndFlush(register);
+        registerRepository.saveAndFlush(register);
         return register;
     }
 
@@ -38,21 +37,20 @@ public class RegisterService {
             var hotel = Hotel.of(register);
             register.belongTo(hotel);
 
-            var admin =  new Admin(hotel.getHotelId(), new Admin.Description(
-                register.getAdmin().getName(),
-                register.getAdmin().getEmail(),
-                register.getAdmin().getTel()
+            var admin = new Admin(hotel.getHotelId(), new Admin.Description(
+                    register.getAdmin().getName(),
+                    register.getAdmin().getEmail(),
+                    register.getAdmin().getTel()
             ));
 
-            adminRepository.persist(admin);
-            hotelRepository.persist(hotel);
-            registerRepository.persistAndFlush(register);
+            adminRepository.saveAndFlush(admin);
+            hotelRepository.saveAndFlush(hotel);
 
             DomainEvents.publish(HotelCreatedEvent.of(hotel));
         } else {
             register.reject();
-            registerRepository.persistAndFlush(register);
         }
 
+        registerRepository.saveAndFlush(register);
     }
 }

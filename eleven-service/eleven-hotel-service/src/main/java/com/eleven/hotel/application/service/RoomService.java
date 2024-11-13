@@ -38,7 +38,7 @@ public class RoomService {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(NoPrincipalException::new);
         var room = new Room(hotel.getHotelId(), command.getBasic(), command.getRestriction());
         roomManager.validate(room);
-        roomRepository.persist(room);
+        roomRepository.saveAndFlush(room);
         return room;
     }
 
@@ -55,7 +55,7 @@ public class RoomService {
         Optional.ofNullable(command.getBasic()).ifPresent(room::setBasic);
         Optional.ofNullable(command.getRestriction()).ifPresent(room::setRestriction);
         roomManager.validate(room);
-        roomRepository.persist(room);
+        roomRepository.saveAndFlush(room);
         return room;
     }
 

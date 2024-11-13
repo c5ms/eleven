@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 //@EnableElevenAuthentication
 //@EnableElevenCache
 @EnableElevenDomain
-@EnableJpaRepositories(repositoryBaseClass = BaseJpaRepositoryImpl.class)
+@EnableJpaRepositories
 @EnableJpaAuditing
 @EnableDiscoveryClient
 @EnableFeignClients

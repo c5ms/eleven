@@ -1,6 +1,5 @@
 package com.eleven.hotel.domain.model.plan;
 
-import com.eleven.core.domain.DomainEvents;
 import com.eleven.core.domain.utils.ImmutableValues;
 import com.eleven.core.domain.values.DateRange;
 import com.eleven.core.domain.values.DateTimeRange;
@@ -9,6 +8,8 @@ import com.eleven.hotel.api.domain.model.SaleChannel;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
 import com.eleven.hotel.domain.core.AbstractEntity;
+import com.eleven.hotel.domain.model.plan.events.PlanCreatedEvent;
+import com.eleven.hotel.domain.model.plan.events.PlanStayPeriodChangedEvent;
 import com.eleven.hotel.domain.values.StockAmount;
 import com.google.common.base.Predicates;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
@@ -65,7 +66,6 @@ public class Plan extends AbstractEntity {
     @AttributeOverride(name = "end", column = @Column(name = "pre_sale_period_end"))
     private DateTimeRange preSalePeriod;
 
-    @Setter
     @Embedded
     @AttributeOverride(name = "start", column = @Column(name = "stay_period_start"))
     @AttributeOverride(name = "end", column = @Column(name = "stay_period_end"))
@@ -88,6 +88,7 @@ public class Plan extends AbstractEntity {
         this.products = new ArrayList<>();
         this.saleChannels = new HashSet<>();
         this.saleType = SaleType.NORMAL;
+        this.addEvent(PlanCreatedEvent.of(this));
     }
 
     @PrePersist
@@ -154,8 +155,8 @@ public class Plan extends AbstractEntity {
     public Optional<Product> findRoom(Long roomId) {
         var productKey = getProductKey(roomId);
         return this.products.stream()
-            .filter(product -> product.is(productKey))
-            .findFirst();
+                .filter(product -> product.is(productKey))
+                .findFirst();
     }
 
     public BigDecimal chargeRoom(Long roomId, SaleChannel saleChannel, int personCount) {
@@ -183,25 +184,25 @@ public class Plan extends AbstractEntity {
 
     public List<Inventory> createInventories() {
         return getProducts()
-            .stream()
-            .flatMap(product -> createInventories(product).stream())
-            .collect(Collectors.toList());
+                .stream()
+                .flatMap(product -> createInventories(product).stream())
+                .collect(Collectors.toList());
     }
 
     private List<Inventory> createInventories(Product product) {
         var creator = InventoryCreator.of(product);
         return getStayPeriod()
-            .dates()
-            .map(creator::create)
-            .collect(Collectors.toList());
+                .dates()
+                .map(creator::create)
+                .collect(Collectors.toList());
     }
 
     public boolean isApplicable(Inventory inventory) {
         return Predicates.<Inventory>notNull()
-            .and(theInv -> theInv.getPlanKey().equals(getPlanKey()))
-            .and(theInv -> this.getStayPeriod().contains(theInv.getInventoryKey().getDate()))
-            .and(theInv -> this.findRoom(theInv.getInventoryKey().getRoomId()).isPresent())
-            .test(inventory);
+                .and(theInv -> theInv.getPlanKey().equals(getPlanKey()))
+                .and(theInv -> this.getStayPeriod().contains(theInv.getInventoryKey().getDate()))
+                .and(theInv -> this.findRoom(theInv.getInventoryKey().getRoomId()).isPresent())
+                .test(inventory);
     }
 
     public Plan setSaleChannels(Set<SaleChannel> saleChannels) {
@@ -217,6 +218,14 @@ public class Plan extends AbstractEntity {
         for (Product value : this.products) {
             value.setStock(stock);
         }
+        return this;
+    }
+
+    public Plan setStayPeriod(DateRange stayPeriod) {
+        if (!Objects.equals(this.stayPeriod, stayPeriod)) {
+            this.addEvent(PlanStayPeriodChangedEvent.of(this));
+        }
+        this.stayPeriod = stayPeriod;
         return this;
     }
 

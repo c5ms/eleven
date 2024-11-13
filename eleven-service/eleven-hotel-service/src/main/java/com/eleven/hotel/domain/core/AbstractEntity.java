@@ -8,9 +8,12 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.domain.AfterDomainEventPublication;
+import org.springframework.data.domain.DomainEvents;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 @Getter
 @EntityListeners(AbstractEntityListener.class)
@@ -23,6 +26,20 @@ public abstract class AbstractEntity {
     public static final String GENERATOR_TABLE = "hms_sequences";
 
     @Getter(AccessLevel.PROTECTED)
-    private transient final @Transient List<DomainEvent> domainEvents = new ArrayList<>();
+    private transient final @Transient Map<Class<?>, DomainEvent> domainEvents = new HashMap<>();
+
+    @DomainEvents
+    Collection<DomainEvent> domainEvents() {
+        return domainEvents.values();
+    }
+
+    @AfterDomainEventPublication
+    void clearEvents() {
+        domainEvents.clear();
+    }
+
+    protected void addEvent(DomainEvent event) {
+        this.domainEvents.put(event.getClass(), event);
+    }
 
 }

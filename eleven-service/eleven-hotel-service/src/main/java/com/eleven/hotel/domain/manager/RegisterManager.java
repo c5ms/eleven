@@ -13,20 +13,10 @@ import java.util.List;
 public class RegisterManager {
 
     private final List<RegisterValidator> registerValidators;
-    private final HotelRepository hotelRepository;
-    private final AdminRepository adminRepository;
-    private final RegisterRepository registerRepository;
 
     public void validate(Register register) {
         registerValidators.forEach(roomValidator -> roomValidator.validate(register));
     }
 
-    public void accept(Register register) {
-
-    }
-
-    public void reject(Register register) {
-        register.reject();
-    }
 
 }

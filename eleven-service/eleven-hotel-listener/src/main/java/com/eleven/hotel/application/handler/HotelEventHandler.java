@@ -1,6 +1,5 @@
 package com.eleven.hotel.application.handler;
 
-import com.eleven.hotel.api.application.event.HotelCreatedEvent;
 import com.eleven.hotel.api.interfaces.client.HotelClient;
 import com.eleven.hotel.application.service.PlanHandler;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +13,5 @@ public class HotelEventHandler {
     private final HotelClient hotelClient;
     private final PlanHandler planHandler;
 
-
-    public void on(HotelCreatedEvent event) {
-
-    }
 
 }

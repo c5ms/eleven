@@ -41,7 +41,7 @@ public class HotelService {
     public Hotel create(HotelCreateCommand command) {
         var hotel = Hotel.of(command.getBasic(), command.getPosition());
         hotelManager.validate(hotel);
-        hotelRepository.persist(hotel);
+        hotelRepository.saveAndFlush(hotel);
         return hotel;
     }
 
@@ -51,7 +51,7 @@ public class HotelService {
         Optional.ofNullable(command.getBasic()).ifPresent(hotel::setBasic);
         Optional.ofNullable(command.getPosition()).ifPresent(hotel::relocate);
         hotelManager.validate(hotel);
-        hotelRepository.update(hotel);
+        hotelRepository.saveAndFlush(hotel);
         DomainEvents.publish(HotelUpdatedEvent.of(hotel));
     }
 
@@ -59,14 +59,14 @@ public class HotelService {
     public void open(Long hotelId) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
         hotel.startSale();
-        hotelRepository.update(hotel);
+        hotelRepository.saveAndFlush(hotel);
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void close(Long hotelId) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
         hotel.stopSale();
-        hotelRepository.update(hotel);
+        hotelRepository.saveAndFlush(hotel);
     }
 
 

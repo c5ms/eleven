@@ -1,7 +1,7 @@
 package com.eleven.hotel.domain.core;
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.eleven.core.domain.DomainEvent;
-import com.eleven.core.domain.DomainEvents;
 import jakarta.persistence.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,7 +24,10 @@ public class AbstractEntityListener {
     @PostUpdate
     @PostRemove
     private void afterAnyUpdate(AbstractEntity entity) {
-
+        for (DomainEvent domainEvent : entity.getDomainEvents()) {
+            SpringUtil.publishEvent(domainEvent);
+        }
+        entity.clearEvents();;
     }
 
 

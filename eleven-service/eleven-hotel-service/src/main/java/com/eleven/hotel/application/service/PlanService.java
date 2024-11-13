@@ -1,13 +1,11 @@
 package com.eleven.hotel.application.service;
 
 import com.eleven.core.application.query.PageResult;
-import com.eleven.core.domain.DomainEvents;
-import com.eleven.hotel.domain.model.plan.PlanCreatedEvent;
 import com.eleven.hotel.api.domain.errors.HotelErrors;
 import com.eleven.hotel.api.domain.model.SaleChannel;
 import com.eleven.hotel.application.command.*;
 import com.eleven.hotel.application.support.HotelContext;
-import com.eleven.hotel.domain.manager.InventoryManager;
+import com.eleven.hotel.domain.model.plan.InventoryManager;
 import com.eleven.hotel.domain.manager.PlanManager;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.domain.model.hotel.RoomRepository;
@@ -72,9 +70,7 @@ public class PlanService {
             .map(roomId ->roomRepository.findByHotelIdAndRoomId(plan.getHotelId(), roomId).orElseThrow(HotelErrors.ROOM_NOT_FOUND::toException) )
             .forEach(room -> plan.addRoom(room.getRoomId()));
 
-        planRepository.persist(plan);
-
-        DomainEvents.publish(PlanCreatedEvent.of(plan));
+        planRepository.saveAndFlush(plan);
         return plan;
     }
 
@@ -95,8 +91,7 @@ public class PlanService {
         plan.removeRoom(product -> !command.getRooms().contains(product.getProductKey().getRoomId()));
 
         planManager.validate(plan);
-        planRepository.updateAndFlush(plan);
-        invManager.initialize(plan);
+        planRepository.saveAndFlush(plan);
         return plan;
     }
 
@@ -112,7 +107,7 @@ public class PlanService {
         var plan = readPlan(planKey).orElseThrow(HotelContext::noPrincipalException);
         plan.findRoom(roomId).orElseThrow(HotelContext::noPrincipalException);
         plan.startSale(roomId);
-        planRepository.updateAndFlush(plan);
+        planRepository.saveAndFlush(plan);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -120,7 +115,7 @@ public class PlanService {
         var plan = readPlan(planKey).orElseThrow(HotelContext::noPrincipalException);
         plan.findRoom(roomId).orElseThrow(HotelContext::noPrincipalException);
         plan.stopSale(roomId);
-        planRepository.updateAndFlush(plan);
+        planRepository.saveAndFlush(plan);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -133,7 +128,7 @@ public class PlanService {
                     command.getThreePersonPrice(), command.getFourPersonPrice(), command.getFivePersonPrice());
             case BY_ROOM -> room.setPrice(command.getSaleChannel(), command.getWholeRoomPrice());
         }
-        planRepository.updateAndFlush(plan);
+        planRepository.saveAndFlush(plan);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -141,7 +136,7 @@ public class PlanService {
         var inventoryKey = InventoryKey.of(productKey, command.getDate());
         var inventory = inventoryRepository.findByInventoryKey(inventoryKey).orElseThrow(HotelContext::noPrincipalException);
         inventory.reduce(command.getAmount());
-        inventoryRepository.updateAndFlush(inventory);
+        inventoryRepository.saveAndFlush(inventory);
     }
 
     @Transactional(readOnly = true)

@@ -1,8 +1,8 @@
 package com.eleven.hotel.application.listener;
 
 import cn.hutool.json.JSONUtil;
-import com.eleven.hotel.domain.manager.InventoryManager;
-import com.eleven.hotel.domain.model.plan.PlanCreatedEvent;
+import com.eleven.hotel.domain.model.plan.InventoryManager;
+import com.eleven.hotel.domain.model.plan.events.PlanCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -18,7 +18,7 @@ public class PlanListener {
     @EventListener
     public void on(PlanCreatedEvent event) {
         var plan = event.getPlan();
-        inventoryManager.initialize(plan);
+        inventoryManager.initializeInventoryFor(plan);
         log.debug("handle plan created event: {}", JSONUtil.toJsonStr(event));
     }
 
