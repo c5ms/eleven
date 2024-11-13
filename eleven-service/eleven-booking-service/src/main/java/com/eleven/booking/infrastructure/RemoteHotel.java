@@ -1,4 +1,4 @@
-package com.eleven.booking.application.support;
+package com.eleven.booking.infrastructure;
 
 import com.eleven.booking.domain.model.booking.Hotel;
 import com.eleven.hotel.api.domain.model.SaleState;

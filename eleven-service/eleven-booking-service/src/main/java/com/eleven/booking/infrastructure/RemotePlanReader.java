@@ -1,7 +1,7 @@
-package com.eleven.booking.application.support;
+package com.eleven.booking.infrastructure;
 
 import com.eleven.booking.domain.model.booking.Plan;
-import com.eleven.booking.domain.model.booking.PlanReader;
+import com.eleven.booking.application.service.PlanReader;
 import com.eleven.hotel.api.interfaces.client.HotelClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

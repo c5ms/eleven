@@ -1,4 +1,6 @@
-package com.eleven.booking.domain.model.booking;
+package com.eleven.booking.application.service;
+
+import com.eleven.booking.domain.model.booking.Hotel;
 
 import java.util.Optional;
 

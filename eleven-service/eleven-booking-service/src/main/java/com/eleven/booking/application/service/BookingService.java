@@ -4,8 +4,6 @@ import com.eleven.booking.api.domain.errors.BookingErrors;
 import com.eleven.booking.application.command.BookingCreateCommand;
 import com.eleven.booking.domain.model.booking.Booking;
 import com.eleven.booking.domain.model.booking.BookingRepository;
-import com.eleven.booking.domain.model.booking.HotelReader;
-import com.eleven.booking.domain.model.booking.PlanReader;
 import com.eleven.core.domain.DomainValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

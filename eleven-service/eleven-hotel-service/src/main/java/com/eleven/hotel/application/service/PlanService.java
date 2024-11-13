@@ -34,7 +34,6 @@ public class PlanService {
     private final InventoryRepository inventoryRepository;
 
     private final PlanManager planManager;
-    private final InventoryManager invManager;
     private final RoomRepository roomRepository;
 
     @Transactional(readOnly = true)

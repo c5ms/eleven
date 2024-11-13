@@ -127,7 +127,6 @@ public class Plan extends AbstractEntity {
         return plan;
     }
 
-
     public boolean isOnSale() {
         if (!this.getSaleState().isOnSale()) {
             return false;
