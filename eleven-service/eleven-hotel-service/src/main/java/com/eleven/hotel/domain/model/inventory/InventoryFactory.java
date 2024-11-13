@@ -1,20 +1,20 @@
-package com.eleven.hotel.domain.model.plan;
+package com.eleven.hotel.domain.model.inventory;
 
+import com.eleven.hotel.domain.model.plan.Product;
 import lombok.AllArgsConstructor;
 
 import java.time.LocalDate;
 
 @AllArgsConstructor
-public class InventoryCreator {
+public class InventoryFactory {
     private final Product product;
 
-    public static InventoryCreator of(Product product) {
-        return new InventoryCreator(product);
+    public static InventoryFactory of(Product product) {
+        return new InventoryFactory(product);
     }
 
     public Inventory create(LocalDate date) {
         return Inventory.of(product.getProductKey(), date, product.getStock());
     }
-
 
 }

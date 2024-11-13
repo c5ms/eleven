@@ -2,11 +2,11 @@ package com.eleven.hotel.domain.model.plan;
 
 import com.eleven.core.domain.DomainValidator;
 import com.eleven.core.domain.utils.ImmutableValues;
-import com.eleven.hotel.api.domain.errors.PlanErrors;
 import com.eleven.hotel.api.domain.model.ChargeType;
 import com.eleven.hotel.api.domain.model.SaleChannel;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
+import com.eleven.hotel.domain.errors.PlanErrors;
 import com.eleven.hotel.domain.values.StockAmount;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
@@ -59,7 +59,7 @@ public class Product {
 
 
     @PrePersist
-    protected void complete(){
+    protected void complete() {
         for (Price price : this.getPrices()) {
             price.getPriceKey().apply(getProductKey());
         }
@@ -136,7 +136,7 @@ public class Product {
         return stock;
     }
 
-    public  boolean is(ProductKey key){
+    public boolean is(ProductKey key) {
         return key.equals(this.getProductKey());
     }
 

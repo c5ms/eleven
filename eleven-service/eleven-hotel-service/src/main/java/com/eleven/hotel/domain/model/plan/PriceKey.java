@@ -44,7 +44,7 @@ public class PriceKey implements Serializable {
         return priceKey;
     }
 
-    public void apply(ProductKey productKey){
+    public void apply(ProductKey productKey) {
         this.setHotelId(productKey.getHotelId());
         this.setPlanId(productKey.getPlanId());
         this.setRoomId(productKey.getRoomId());

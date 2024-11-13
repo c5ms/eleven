@@ -1,8 +1,8 @@
 package com.eleven.hotel.application.listener;
 
 import cn.hutool.json.JSONUtil;
-import com.eleven.hotel.domain.model.plan.InventoryManager;
-import com.eleven.hotel.domain.model.plan.events.PlanCreatedEvent;
+import com.eleven.hotel.domain.manager.InventoryManager;
+import com.eleven.hotel.domain.model.plan.PlanCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;

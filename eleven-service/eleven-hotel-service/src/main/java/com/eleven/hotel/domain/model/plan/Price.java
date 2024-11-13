@@ -9,8 +9,6 @@ import org.apache.commons.lang3.Validate;
 
 import java.math.BigDecimal;
 
-import static com.eleven.hotel.domain.core.AbstractEntity.GENERATOR_NAME;
-
 
 @Entity
 @Table(name = "hms_plan_price")
@@ -47,7 +45,7 @@ public class Price {
     private BigDecimal fivePersonPrice = BigDecimal.ZERO;
 
     public static Price wholeRoom(ProductKey productKey, SaleChannel saleChannel, BigDecimal wholeRoomPrice) {
-        Price price = new Price();
+        var price = new Price();
         price.setPriceKey(PriceKey.of(productKey, saleChannel));
         price.setChargeType(ChargeType.BY_ROOM);
         price.setWholeRoomPrice(wholeRoomPrice);

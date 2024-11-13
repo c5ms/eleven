@@ -22,8 +22,8 @@ import java.util.Map;
 @TableGenerator(table = AbstractEntity.GENERATOR_TABLE, name = AbstractEntity.GENERATOR_NAME, allocationSize = 5)
 public abstract class AbstractEntity {
 
-    public static final String GENERATOR_NAME = "hms_generator";
-    public static final String GENERATOR_TABLE = "hms_sequences";
+    protected static final String GENERATOR_NAME = "hms_generator";
+    protected static final String GENERATOR_TABLE = "hms_sequences";
 
     @Getter(AccessLevel.PROTECTED)
     private transient final @Transient Map<Class<?>, DomainEvent> domainEvents = new HashMap<>();

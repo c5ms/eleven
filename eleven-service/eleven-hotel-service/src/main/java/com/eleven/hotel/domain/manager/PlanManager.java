@@ -1,6 +1,5 @@
 package com.eleven.hotel.domain.manager;
 
-import com.eleven.hotel.domain.model.hotel.RoomRepository;
 import com.eleven.hotel.domain.model.plan.Plan;
 import com.eleven.hotel.domain.model.plan.PlanValidator;
 import lombok.RequiredArgsConstructor;

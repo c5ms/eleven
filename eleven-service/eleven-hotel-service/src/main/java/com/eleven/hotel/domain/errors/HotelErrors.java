@@ -1,4 +1,4 @@
-package com.eleven.hotel.api.domain.errors;
+package com.eleven.hotel.domain.errors;
 
 import com.eleven.core.domain.DomainError;
 import com.eleven.core.domain.SimpleDomainError;

@@ -1,4 +1,4 @@
-package com.eleven.hotel.domain.model.hotel;
+package com.eleven.hotel.domain.model.room;
 
 import com.eleven.hotel.api.domain.model.RoomLevel;
 import com.eleven.hotel.domain.core.AbstractEntity;

@@ -5,7 +5,7 @@ import com.eleven.hotel.api.interfaces.request.RoomCreateRequest;
 import com.eleven.hotel.api.interfaces.request.RoomUpdateRequest;
 import com.eleven.hotel.application.command.RoomCreateCommand;
 import com.eleven.hotel.application.command.RoomUpdateCommand;
-import com.eleven.hotel.domain.model.hotel.Room;
+import com.eleven.hotel.domain.model.room.Room;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

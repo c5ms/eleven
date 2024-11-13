@@ -2,6 +2,7 @@ package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.domain.core.AbstractEntity;
+import com.eleven.hotel.domain.model.register.Register;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -9,7 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
-import org.springframework.jdbc.support.incrementer.SybaseAnywhereMaxValueIncrementer;
 
 import java.util.Optional;
 

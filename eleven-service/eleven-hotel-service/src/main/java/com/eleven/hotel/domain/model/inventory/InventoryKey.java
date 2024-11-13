@@ -1,5 +1,7 @@
-package com.eleven.hotel.domain.model.plan;
+package com.eleven.hotel.domain.model.inventory;
 
+import com.eleven.hotel.domain.model.plan.PlanKey;
+import com.eleven.hotel.domain.model.plan.ProductKey;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.*;

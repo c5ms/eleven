@@ -1,24 +1,28 @@
 package com.eleven.hotel.domain.model.plan;
 
+import com.eleven.core.domain.DomainValidator;
 import com.eleven.core.domain.utils.ImmutableValues;
 import com.eleven.core.domain.values.DateRange;
 import com.eleven.core.domain.values.DateTimeRange;
-import com.eleven.hotel.api.domain.errors.PlanErrors;
 import com.eleven.hotel.api.domain.model.SaleChannel;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
 import com.eleven.hotel.domain.core.AbstractEntity;
-import com.eleven.hotel.domain.model.plan.events.PlanCreatedEvent;
-import com.eleven.hotel.domain.model.plan.events.PlanStayPeriodChangedEvent;
+import com.eleven.hotel.domain.errors.PlanErrors;
+import com.eleven.hotel.domain.model.inventory.Inventory;
+import com.eleven.hotel.domain.model.inventory.InventoryFactory;
+import com.eleven.hotel.domain.model.room.Room;
 import com.eleven.hotel.domain.values.StockAmount;
 import com.google.common.base.Predicates;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
-import org.apache.commons.lang3.Validate;
 import org.hibernate.annotations.Type;
 
 import java.math.BigDecimal;
@@ -54,13 +58,11 @@ public class Plan extends AbstractEntity {
     @Column(name = "sale_state")
     private SaleState saleState;
 
-    @Setter
     @Embedded
     @AttributeOverride(name = "start", column = @Column(name = "sale_period_start"))
     @AttributeOverride(name = "end", column = @Column(name = "sale_period_end"))
     private DateTimeRange salePeriod;
 
-    @Setter
     @Embedded
     @AttributeOverride(name = "start", column = @Column(name = "pre_sale_period_start"))
     @AttributeOverride(name = "end", column = @Column(name = "pre_sale_period_end"))
@@ -80,7 +82,6 @@ public class Plan extends AbstractEntity {
     @Enumerated(EnumType.STRING)
     private Set<SaleChannel> saleChannels;
 
-    @Setter
     @Embedded
     private PlanBasic basic;
 
@@ -93,55 +94,15 @@ public class Plan extends AbstractEntity {
 
     @PrePersist
     protected void complete() {
+        validate();
+
         for (Product value : this.products) {
             value.getProductKey().set(getPlanKey());
         }
     }
 
-    @SuppressWarnings("unused")
-    @Builder(builderClassName = "normalBuilder", builderMethodName = "normal", buildMethodName = "create")
-    public static Plan createNormal(Long hotelId,
-                                    StockAmount stockAmount,
-                                    DateRange stayPeriod,
-                                    Set<SaleChannel> saleChannels,
-                                    DateTimeRange salePeriod,
-                                    DateTimeRange preSellPeriod,
-                                    PlanBasic basic) {
-
-        Validate.notNull(hotelId, "hotelId must not be null");
-        Validate.notNull(stayPeriod, "sale period must not be null");
-        Validate.notNull(stockAmount, "stock must not be null");
-        Validate.isTrue(stockAmount.greaterThanZero(), "total must gather than zero");
-
-        var plan = new Plan();
-        plan.setHotelId(hotelId);
-        plan.setStock(stockAmount);
-        plan.setSalePeriod(salePeriod);
-        plan.setStayPeriod(stayPeriod);
-        plan.setPreSalePeriod(preSellPeriod);
-        plan.setSaleType(SaleType.NORMAL);
-        plan.setSaleState(SaleState.STOPPED);
-        plan.setSaleChannels(saleChannels);
-        plan.setBasic(basic);
-
-        return plan;
-    }
-
-    public boolean isOnSale() {
-        if (!this.getSaleState().isOnSale()) {
-            return false;
-        }
-        if (null != getPreSalePeriod() && getPreSalePeriod().isCurrent()) {
-            return true;
-        }
-        return getSalePeriod().isCurrent();
-    }
-
-    public void removeRoom(Predicate<Product> predicate) {
-        this.products.removeIf(predicate);
-    }
-
-    public void addRoom(@NonNull Long roomId) {
+    public void addRoom(@NonNull Room room) {
+        var roomId = room.getRoomId();
         var productKey = getProductKey(roomId);
         if (findRoom(roomId).isPresent()) {
             return;
@@ -150,6 +111,9 @@ public class Plan extends AbstractEntity {
         this.products.add(product);
     }
 
+    public void removeRoom(Predicate<Product> predicate) {
+        this.products.removeIf(predicate);
+    }
 
     public Optional<Product> findRoom(Long roomId) {
         var productKey = getProductKey(roomId);
@@ -158,7 +122,8 @@ public class Plan extends AbstractEntity {
                 .findFirst();
     }
 
-    public BigDecimal chargeRoom(Long roomId, SaleChannel saleChannel, int personCount) {
+    public BigDecimal chargeRoom(Room room, SaleChannel saleChannel, int personCount) {
+        var roomId = room.getRoomId();
         var product = findRoom(roomId).orElseThrow(PlanErrors.PRODUCT_NOT_FOUND::toException);
         var price = product.findPrice(saleChannel).orElseThrow(PlanErrors.PRICE_NOT_FOUND::toException);
         return price.charge(personCount);
@@ -178,21 +143,17 @@ public class Plan extends AbstractEntity {
         if (this.getProducts().stream().noneMatch(Product::isOnSale)) {
             this.setSaleState(SaleState.STOPPED);
         }
-
     }
 
     public List<Inventory> createInventories() {
         return getProducts()
                 .stream()
-                .flatMap(product -> createInventories(product).stream())
-                .collect(Collectors.toList());
-    }
-
-    private List<Inventory> createInventories(Product product) {
-        var creator = InventoryCreator.of(product);
-        return getStayPeriod()
-                .dates()
-                .map(creator::create)
+                .flatMap(product -> {
+                    var creator = InventoryFactory.of(product);
+                    return getStayPeriod()
+                            .dates()
+                            .map(creator::create);
+                })
                 .collect(Collectors.toList());
     }
 
@@ -204,28 +165,13 @@ public class Plan extends AbstractEntity {
                 .test(inventory);
     }
 
-    public Plan setSaleChannels(Set<SaleChannel> saleChannels) {
-        this.saleChannels = saleChannels;
-        for (Product product : this.getProducts()) {
-            product.setSaleChannels(this.saleChannels);
-        }
-        return this;
-    }
-
-    public Plan setStock(StockAmount stock) {
-        this.stock = stock;
-        for (Product value : this.products) {
-            value.setStock(stock);
-        }
-        return this;
-    }
-
-    public Plan setStayPeriod(DateRange stayPeriod) {
-        if (!Objects.equals(this.stayPeriod, stayPeriod)) {
-            this.addEvent(PlanStayPeriodChangedEvent.of(this));
-        }
-        this.stayPeriod = stayPeriod;
-        return this;
+    public void update(PlanPatch patch) {
+        Optional.ofNullable(patch.getBasic()).ifPresent(this::setBasic);
+        Optional.ofNullable(patch.getStock()).ifPresent(this::setStock);
+        Optional.ofNullable(patch.getStayPeriod()).ifPresent(this::setStayPeriod);
+        Optional.ofNullable(patch.getSalePeriod()).ifPresent(this::setSalePeriod);
+        Optional.ofNullable(patch.getPreSalePeriod()).ifPresent(this::setPreSalePeriod);
+        Optional.ofNullable(patch.getChannels()).ifPresent(this::setSaleChannels);
     }
 
     @Nonnull
@@ -267,4 +213,45 @@ public class Plan extends AbstractEntity {
     public ProductKey getProductKey(Long roomId) {
         return ProductKey.of(getPlanKey(), roomId);
     }
+
+    public boolean isOnSale() {
+        if (!this.getSaleState().isOnSale()) {
+            return false;
+        }
+        if (null != getPreSalePeriod() && getPreSalePeriod().isCurrent()) {
+            return true;
+        }
+        return getSalePeriod().isCurrent();
+    }
+
+    protected Plan setSaleChannels(Set<SaleChannel> saleChannels) {
+        this.saleChannels = saleChannels;
+        for (Product product : this.getProducts()) {
+            product.setSaleChannels(this.saleChannels);
+        }
+        return this;
+    }
+
+    protected Plan setStock(StockAmount stock) {
+        this.stock = stock;
+        for (Product value : this.products) {
+            value.setStock(stock);
+        }
+        return this;
+    }
+
+    protected Plan setStayPeriod(DateRange stayPeriod) {
+        if (null != this.stayPeriod && !Objects.equals(this.stayPeriod, stayPeriod)) {
+            this.addEvent(PlanStayPeriodChangedEvent.of(this));
+        }
+        this.stayPeriod = stayPeriod;
+        return this;
+    }
+
+    protected void validate() {
+        if (null != getPreSalePeriod() && getPreSalePeriod().isNotEmpty()) {
+            DomainValidator.must(getPreSalePeriod().isBefore(getSalePeriod()), PlanErrors.PRE_SALE_PERIOD_ERROR);
+        }
+    }
+
 }

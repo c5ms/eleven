@@ -1,9 +1,10 @@
-package com.eleven.hotel.domain.model.hotel;
+package com.eleven.hotel.domain.model.register;
 
 import com.eleven.core.domain.DomainValidator;
-import com.eleven.hotel.api.domain.errors.HotelErrors;
+import com.eleven.hotel.domain.errors.HotelErrors;
 import com.eleven.hotel.api.domain.model.RegisterState;
 import com.eleven.hotel.domain.core.AbstractEntity;
+import com.eleven.hotel.domain.model.hotel.Hotel;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldNameConstants;

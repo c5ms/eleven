@@ -32,12 +32,9 @@ public class ProductKey implements Serializable {
         this.roomId = roomId;
     }
 
-    public static ProductKey of(Long hotelId,
-                                Long planId,
-                                Long roomId) {
+    public static ProductKey of(Long hotelId, Long planId, Long roomId) {
         return new ProductKey(hotelId, planId, roomId);
     }
-
 
     public static ProductKey of(PlanKey planKey, Long roomId) {
         return new ProductKey(planKey, roomId);

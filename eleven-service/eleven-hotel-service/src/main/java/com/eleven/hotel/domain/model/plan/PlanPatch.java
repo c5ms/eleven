@@ -1,9 +1,8 @@
-package com.eleven.hotel.application.command;
+package com.eleven.hotel.domain.model.plan;
 
 import com.eleven.core.domain.values.DateRange;
 import com.eleven.core.domain.values.DateTimeRange;
 import com.eleven.hotel.api.domain.model.SaleChannel;
-import com.eleven.hotel.domain.model.plan.PlanBasic;
 import com.eleven.hotel.domain.values.StockAmount;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +12,8 @@ import java.util.Set;
 
 @Getter
 @Builder
-public class PlanCreateCommand {
+public class PlanPatch {
+
     private PlanBasic basic;
     private StockAmount stock;
     private DateTimeRange salePeriod;
@@ -22,7 +22,4 @@ public class PlanCreateCommand {
 
     @Builder.Default
     private Set<SaleChannel> channels = new HashSet<>();
-
-    @Builder.Default
-    private Set<Long> rooms = new HashSet<>();
 }

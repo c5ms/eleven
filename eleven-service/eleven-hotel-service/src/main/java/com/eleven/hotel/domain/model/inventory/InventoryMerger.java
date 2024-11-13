@@ -1,24 +1,26 @@
-package com.eleven.hotel.domain.model.plan;
+package com.eleven.hotel.domain.model.inventory;
+
+import com.eleven.hotel.domain.model.plan.Plan;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class InventoryMerge {
+public class InventoryMerger {
 
     private final Plan plan;
     private final List<Inventory> existingInventories;
     private final List<Inventory> currentInventories;
 
-    private InventoryMerge(Plan plan, List<Inventory> existingInventories) {
+    private InventoryMerger(Plan plan, List<Inventory> existingInventories) {
         this.plan = plan;
         this.existingInventories = existingInventories;
         this.currentInventories = plan.createInventories();
     }
 
-    public static InventoryMerge of(Plan plan, List<Inventory> existingInventories) {
-        return new InventoryMerge(plan, existingInventories);
+    public static InventoryMerger of(Plan plan, List<Inventory> existingInventories) {
+        return new InventoryMerger(plan, existingInventories);
     }
 
     public Collection<Inventory> removes() {

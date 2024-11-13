@@ -1,8 +1,10 @@
-package com.eleven.hotel.domain.model.plan;
+package com.eleven.hotel.domain.model.inventory;
 
 import com.eleven.core.domain.DomainValidator;
-import com.eleven.hotel.api.domain.errors.PlanErrors;
+import com.eleven.hotel.domain.errors.PlanErrors;
 import com.eleven.hotel.domain.core.AbstractEntity;
+import com.eleven.hotel.domain.model.plan.PlanKey;
+import com.eleven.hotel.domain.model.plan.ProductKey;
 import com.eleven.hotel.domain.values.StockAmount;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
