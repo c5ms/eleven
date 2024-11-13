@@ -9,7 +9,5 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor(staticName = "of")
 public class HotelUpdatedEvent implements DomainEvent {
-
     private Hotel hotel;
-
 }

@@ -4,7 +4,6 @@ import com.eleven.core.domain.DomainEvent;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.TableGenerator;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.experimental.FieldNameConstants;
 import org.springframework.data.annotation.Transient;
@@ -25,16 +24,15 @@ public abstract class AbstractEntity {
     protected static final String GENERATOR_NAME = "hms_generator";
     protected static final String GENERATOR_TABLE = "hms_sequences";
 
-    @Getter(AccessLevel.PROTECTED)
     private transient final @Transient Map<Class<?>, DomainEvent> domainEvents = new HashMap<>();
 
     @DomainEvents
-    Collection<DomainEvent> domainEvents() {
+    protected Collection<DomainEvent> domainEvents() {
         return domainEvents.values();
     }
 
     @AfterDomainEventPublication
-    void clearEvents() {
+    protected void clearEvents() {
         domainEvents.clear();
     }
 

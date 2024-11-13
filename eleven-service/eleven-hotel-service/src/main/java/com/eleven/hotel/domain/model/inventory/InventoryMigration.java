@@ -7,20 +7,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class InventoryMerger {
+public class InventoryMigration {
 
     private final Plan plan;
     private final List<Inventory> existingInventories;
     private final List<Inventory> currentInventories;
 
-    private InventoryMerger(Plan plan, List<Inventory> existingInventories) {
+    private InventoryMigration(Plan plan, List<Inventory> existingInventories) {
         this.plan = plan;
         this.existingInventories = existingInventories;
         this.currentInventories = plan.createInventories();
     }
 
-    public static InventoryMerger of(Plan plan, List<Inventory> existingInventories) {
-        return new InventoryMerger(plan, existingInventories);
+    public static InventoryMigration of(Plan plan, List<Inventory> existingInventories) {
+        return new InventoryMigration(plan, existingInventories);
     }
 
     public Collection<Inventory> removes() {

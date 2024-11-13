@@ -1,8 +1,9 @@
 package com.eleven.hotel.domain.model.plan;
 
-import jakarta.annotation.Nonnull;
+import com.eleven.hotel.domain.model.room.RoomKey;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.io.Serializable;
@@ -15,18 +16,18 @@ import java.io.Serializable;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProductKey implements Serializable {
 
-    @NonNull
+    @NotNull
     @Column(name = "hotel_id")
     private Long hotelId;
 
     @Column(name = "plan_id")
     private Long planId;
 
-    @NonNull
+    @NotNull
     @Column(name = "room_id")
     private Long roomId;
 
-    public ProductKey(PlanKey planKey, @Nonnull Long roomId) {
+    public ProductKey(PlanKey planKey, Long roomId) {
         this.hotelId = planKey.getHotelId();
         this.planId = planKey.getPlanId();
         this.roomId = roomId;
@@ -49,4 +50,7 @@ public class ProductKey implements Serializable {
         return PlanKey.of(this.hotelId, this.planId);
     }
 
+    public RoomKey toRoomKey() {
+        return RoomKey.of(this.hotelId, this.roomId);
+    }
 }

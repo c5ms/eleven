@@ -13,12 +13,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class PlanListener {
 
-    private final InventoryManager inventoryManager;
 
     @EventListener
     public void on(PlanCreatedEvent event) {
         var plan = event.getPlan();
-        inventoryManager.initializeInventoryFor(plan);
         log.debug("handle plan created event: {}", JSONUtil.toJsonStr(event));
     }
 

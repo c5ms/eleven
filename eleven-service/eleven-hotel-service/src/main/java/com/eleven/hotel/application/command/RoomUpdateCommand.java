@@ -1,7 +1,8 @@
 package com.eleven.hotel.application.command;
 
 import com.eleven.hotel.api.domain.model.ChargeType;
-import com.eleven.hotel.domain.model.room.Room;
+import com.eleven.hotel.domain.model.room.RoomBasic;
+import com.eleven.hotel.domain.model.room.RoomRestriction;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -9,6 +10,6 @@ import lombok.Getter;
 @Builder
 public class RoomUpdateCommand {
     private ChargeType chargeType;
-    private Room.RoomBasic basic;
-    private Room.RoomRestriction restriction;
+    private RoomBasic basic;
+    private RoomRestriction restriction;
 }

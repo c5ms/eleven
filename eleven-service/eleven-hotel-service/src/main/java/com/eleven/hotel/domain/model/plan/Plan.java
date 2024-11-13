@@ -18,11 +18,9 @@ import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldNameConstants;
+import org.apache.commons.lang3.Validate;
 import org.hibernate.annotations.Type;
 
 import java.math.BigDecimal;
@@ -92,12 +90,41 @@ public class Plan extends AbstractEntity {
         this.addEvent(PlanCreatedEvent.of(this));
     }
 
+    @SuppressWarnings("unused")
+    @Builder(builderClassName = "Normal", builderMethodName = "normal", buildMethodName = "create")
+    protected static Plan createNormal(Long hotelId,
+                                     StockAmount stockAmount,
+                                     DateRange stayPeriod,
+                                     Set<SaleChannel> saleChannels,
+                                     DateTimeRange salePeriod,
+                                     DateTimeRange preSellPeriod,
+                                     PlanBasic basic) {
+
+        Validate.notNull(hotelId, "hotelId must not be null");
+        Validate.notNull(stayPeriod, "sale period must not be null");
+        Validate.notNull(stockAmount, "stock must not be null");
+        Validate.isTrue(stockAmount.greaterThanZero(), "total must gather than zero");
+
+        var plan = new Plan();
+        plan.setHotelId(hotelId);
+        plan.setStock(stockAmount);
+        plan.setSalePeriod(salePeriod);
+        plan.setStayPeriod(stayPeriod);
+        plan.setPreSalePeriod(preSellPeriod);
+        plan.setSaleType(SaleType.NORMAL);
+        plan.setSaleState(SaleState.STOPPED);
+        plan.setSaleChannels(saleChannels);
+        plan.setBasic(basic);
+
+        return plan;
+    }
+
     @PrePersist
     protected void complete() {
         validate();
 
         for (Product value : this.products) {
-            value.getProductKey().set(getPlanKey());
+            value.getProductKey().set(toKey());
         }
     }
 
@@ -159,7 +186,7 @@ public class Plan extends AbstractEntity {
 
     public boolean isApplicable(Inventory inventory) {
         return Predicates.<Inventory>notNull()
-                .and(theInv -> theInv.getPlanKey().equals(getPlanKey()))
+                .and(theInv -> theInv.getInventoryKey().toPlanKey().equals(toKey()))
                 .and(theInv -> this.getStayPeriod().contains(theInv.getInventoryKey().getDate()))
                 .and(theInv -> this.findRoom(theInv.getInventoryKey().getRoomId()).isPresent())
                 .test(inventory);
@@ -205,13 +232,13 @@ public class Plan extends AbstractEntity {
     }
 
     @Nonnull
-    public PlanKey getPlanKey() {
+    public PlanKey toKey() {
         return PlanKey.of(hotelId, planId);
     }
 
     @Nonnull
     public ProductKey getProductKey(Long roomId) {
-        return ProductKey.of(getPlanKey(), roomId);
+        return ProductKey.of(toKey(), roomId);
     }
 
     public boolean isOnSale() {
@@ -224,31 +251,28 @@ public class Plan extends AbstractEntity {
         return getSalePeriod().isCurrent();
     }
 
-    protected Plan setSaleChannels(Set<SaleChannel> saleChannels) {
+    private void setSaleChannels(Set<SaleChannel> saleChannels) {
         this.saleChannels = saleChannels;
         for (Product product : this.getProducts()) {
             product.setSaleChannels(this.saleChannels);
         }
-        return this;
     }
 
-    protected Plan setStock(StockAmount stock) {
+    private void setStock(StockAmount stock) {
         this.stock = stock;
         for (Product value : this.products) {
             value.setStock(stock);
         }
-        return this;
     }
 
-    protected Plan setStayPeriod(DateRange stayPeriod) {
+    private void setStayPeriod(DateRange stayPeriod) {
         if (null != this.stayPeriod && !Objects.equals(this.stayPeriod, stayPeriod)) {
             this.addEvent(PlanStayPeriodChangedEvent.of(this));
         }
         this.stayPeriod = stayPeriod;
-        return this;
     }
 
-    protected void validate() {
+    private void validate() {
         if (null != getPreSalePeriod() && getPreSalePeriod().isNotEmpty()) {
             DomainValidator.must(getPreSalePeriod().isBefore(getSalePeriod()), PlanErrors.PRE_SALE_PERIOD_ERROR);
         }

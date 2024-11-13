@@ -7,6 +7,7 @@ import com.eleven.hotel.domain.manager.RoomManager;
 import com.eleven.hotel.application.support.HotelContext;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.domain.model.room.Room;
+import com.eleven.hotel.domain.model.room.RoomKey;
 import com.eleven.hotel.domain.model.room.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,28 +30,28 @@ public class RoomService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Room> readRoom(Long hotelId, Long roomId) {
-        return roomRepository.findByHotelIdAndRoomId(hotelId, roomId);
+    public Optional<Room> readRoom(RoomKey roomKey) {
+        return roomRepository.findByRoomKey(roomKey);
     }
 
     @Transactional(rollbackFor = Exception.class)
     public Room createRoom(Long hotelId, RoomCreateCommand command) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(NoPrincipalException::new);
-        var room = new Room(hotel.getHotelId(), command.getBasic(), command.getRestriction());
+        var room = Room.of(hotel.getHotelId(), command.getBasic(), command.getRestriction());
         roomManager.validate(room);
         roomRepository.saveAndFlush(room);
         return room;
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void deleteRoom(Long hotelId, Long roomId) {
-        var room = roomRepository.findByHotelIdAndRoomId(hotelId, roomId).orElseThrow(HotelContext::noPrincipalException);
+    public void deleteRoom(RoomKey roomKey) {
+        var room = roomRepository.findByRoomKey(roomKey).orElseThrow(HotelContext::noPrincipalException);
         roomRepository.delete(room);
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Room updateRoom(Long hotelId, Long roomId, RoomUpdateCommand command) {
-        var room = roomRepository.findByHotelIdAndRoomId(hotelId, roomId).orElseThrow(HotelContext::noPrincipalException);
+    public Room updateRoom(RoomKey roomKey, RoomUpdateCommand command) {
+        var room = roomRepository.findByRoomKey(roomKey).orElseThrow(HotelContext::noPrincipalException);
 
         Optional.ofNullable(command.getBasic()).ifPresent(room::setBasic);
         Optional.ofNullable(command.getRestriction()).ifPresent(room::setRestriction);

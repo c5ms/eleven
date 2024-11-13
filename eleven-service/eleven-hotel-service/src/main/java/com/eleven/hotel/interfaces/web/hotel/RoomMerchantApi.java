@@ -4,6 +4,7 @@ import com.eleven.hotel.api.interfaces.model.RoomDto;
 import com.eleven.hotel.api.interfaces.request.RoomCreateRequest;
 import com.eleven.hotel.api.interfaces.request.RoomUpdateRequest;
 import com.eleven.hotel.application.service.RoomService;
+import com.eleven.hotel.domain.model.room.RoomKey;
 import com.eleven.hotel.interfaces.convert.RoomConvertor;
 import com.eleven.hotel.interfaces.support.AsMerchantApi;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,8 +40,8 @@ public class RoomMerchantApi {
     @Operation(summary = "read room")
     @GetMapping("/{roomId:[0-9]+}")
     public Optional<RoomDto> readRoom(@PathVariable("hotelId") Long hotelId, @PathVariable("roomId") Long roomId) {
-        return roomService.readRoom(hotelId, roomId)
-                .map(roomConvertor::toDto);
+        var roomKey = RoomKey.of(hotelId, roomId);
+        return roomService.readRoom(roomKey).map(roomConvertor::toDto);
     }
 
     @Operation(summary = "create room")
@@ -57,14 +58,16 @@ public class RoomMerchantApi {
                               @PathVariable("roomId") Long roomId,
                               @RequestBody @Validated RoomUpdateRequest request) {
         var command = roomConvertor.toCommand(request);
-        var room = roomService.updateRoom(hotelId, roomId, command);
+        var roomKey = RoomKey.of(hotelId, roomId);
+        var room = roomService.updateRoom(roomKey, command);
         return roomConvertor.toDto(room);
     }
 
     @Operation(summary = "delete room")
     @DeleteMapping("/{roomId:[0-9]+}")
     public void deleteRoom(@PathVariable("hotelId") Long hotelId, @PathVariable("roomId") Long roomId) {
-        roomService.deleteRoom(hotelId, roomId);
+        var roomKey = RoomKey.of(hotelId, roomId);
+        roomService.deleteRoom(roomKey);
     }
 
 }

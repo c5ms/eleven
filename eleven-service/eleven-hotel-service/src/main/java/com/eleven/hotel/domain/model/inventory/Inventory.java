@@ -27,17 +27,6 @@ public class Inventory extends AbstractEntity {
     @EmbeddedId
     private InventoryKey inventoryKey;
 
-    @Embedded
-    @AttributeOverride(name = "hotelId", column = @Column(name = "hotel_id", updatable = false, insertable = false))
-    @AttributeOverride(name = "planId", column = @Column(name = "plan_id", updatable = false, insertable = false))
-    private PlanKey planKey;
-
-    @Embedded
-    @AttributeOverride(name = "hotelId", column = @Column(name = "hotel_id", updatable = false, insertable = false))
-    @AttributeOverride(name = "planId", column = @Column(name = "plan_id", updatable = false, insertable = false))
-    @AttributeOverride(name = "roomId", column = @Column(name = "room_id", updatable = false, insertable = false))
-    private ProductKey productKey;
-
     @Column(name = "is_valid")
     private Boolean isValid;
 
@@ -54,10 +43,9 @@ public class Inventory extends AbstractEntity {
 
     public static Inventory of(ProductKey productKey, LocalDate date, StockAmount stockAmount) {
         var inventoryKey = InventoryKey.of(productKey, date);
+
         var inventory = new Inventory();
         inventory.setInventoryKey(inventoryKey);
-        inventory.setPlanKey(productKey.toPlanKey());
-        inventory.setProductKey(inventoryKey.toProductKey());
         inventory.setStockTotal(stockAmount);
         inventory.setStockLeft(stockAmount);
         inventory.setIsValid(true);

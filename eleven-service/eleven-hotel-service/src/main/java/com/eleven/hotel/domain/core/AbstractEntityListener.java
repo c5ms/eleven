@@ -24,10 +24,7 @@ public class AbstractEntityListener {
     @PostUpdate
     @PostRemove
     private void afterAnyUpdate(AbstractEntity entity) {
-        for (DomainEvent domainEvent : entity.getDomainEvents()) {
-            SpringUtil.publishEvent(domainEvent);
-        }
-        entity.clearEvents();;
+
     }
 
 

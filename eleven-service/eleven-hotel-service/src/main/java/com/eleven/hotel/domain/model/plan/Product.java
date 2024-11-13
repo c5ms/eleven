@@ -57,7 +57,6 @@ public class Product {
     @Column(name = "sale_state")
     private SaleState saleState;
 
-
     @PrePersist
     protected void complete() {
         for (Price price : this.getPrices()) {

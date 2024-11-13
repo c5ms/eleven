@@ -1,13 +1,14 @@
 package com.eleven.hotel.application.command;
 
-import com.eleven.hotel.domain.model.room.Room;
+import com.eleven.hotel.domain.model.room.RoomBasic;
+import com.eleven.hotel.domain.model.room.RoomRestriction;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @Builder
 public class RoomCreateCommand {
-    private Room.RoomBasic basic;
-    private Room.RoomRestriction restriction;
+    private RoomBasic basic;
+    private RoomRestriction restriction;
 
 }

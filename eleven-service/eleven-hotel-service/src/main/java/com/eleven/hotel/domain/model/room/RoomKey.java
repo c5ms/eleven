@@ -1,12 +1,10 @@
-package com.eleven.hotel.domain.model.plan;
+package com.eleven.hotel.domain.model.room;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-
-import java.io.Serializable;
 
 @Getter
 @Setter(AccessLevel.PROTECTED)
@@ -15,17 +13,16 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PlanKey implements Serializable {
-
-
-    @Column(name = "plan_id", updatable = false, insertable = false)
-    private Long planId;
+public class RoomKey {
 
     @Column(name = "hotel_id", updatable = false, insertable = false)
     private Long hotelId;
 
-    public static PlanKey of(@NotNull Long hotelId,@NotNull Long planId) {
-        return new PlanKey(hotelId, planId);
+    @Column(name = "room_id", updatable = false, insertable = false)
+    private Long roomId;
+
+    public static RoomKey of(@NotNull Long hotelId, @NotNull Long roomId) {
+        return new RoomKey(hotelId, roomId);
     }
 
 }

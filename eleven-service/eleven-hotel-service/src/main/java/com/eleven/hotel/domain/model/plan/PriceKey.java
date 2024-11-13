@@ -36,7 +36,7 @@ public class PriceKey implements Serializable {
     private SaleChannel saleChannel;
 
     public static PriceKey of(ProductKey productKey, SaleChannel saleChannel) {
-        PriceKey priceKey = new PriceKey();
+        var priceKey = new PriceKey();
         priceKey.hotelId = productKey.getHotelId();
         priceKey.planId = productKey.getPlanId();
         priceKey.roomId = productKey.getRoomId();
