@@ -2,7 +2,6 @@ package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.domain.core.AbstractEntity;
-import com.eleven.hotel.domain.model.register.Register;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import lombok.AccessLevel;

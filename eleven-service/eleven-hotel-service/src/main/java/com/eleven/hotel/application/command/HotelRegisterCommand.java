@@ -1,6 +1,6 @@
 package com.eleven.hotel.application.command;
 
-import com.eleven.hotel.domain.model.register.Register;
+import com.eleven.hotel.domain.model.hotel.Register;
 import lombok.Builder;
 import lombok.Getter;
 

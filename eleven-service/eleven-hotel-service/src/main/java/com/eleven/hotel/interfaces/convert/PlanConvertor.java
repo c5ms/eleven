@@ -15,7 +15,7 @@ import com.eleven.hotel.domain.model.plan.Plan;
 import com.eleven.hotel.domain.model.plan.PlanBasic;
 import com.eleven.hotel.domain.model.plan.PlanPatch;
 import com.eleven.hotel.domain.model.plan.Product;
-import com.eleven.hotel.domain.model.room.RoomRepository;
+import com.eleven.hotel.domain.model.hotel.RoomRepository;
 import com.eleven.hotel.domain.values.StockAmount;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -79,7 +79,7 @@ public class PlanConvertor {
 
     public PlanDetail.Room toDto(Product product) {
         return new PlanDetail.Room()
-            .setRoomId(product.getProductKey().getRoomId())
+            .setRoomId(product.getKey().getRoomId())
             .setName(product.getRoom().getBasic().getName())
             .setType(product.getRoom().getBasic().getLevel())
             .setDesc(product.getRoom().getBasic().getDesc())
@@ -90,8 +90,8 @@ public class PlanConvertor {
             .setChargeType(product.getChargeType())
             .setSaleState(product.getSaleState())
             .setPrices(new PlanDetail.RoomPrices()
-                .setDh(product.findPrice(SaleChannel.DH).map(price -> modelMapper.map(price, PlanDetail.Price.class)).orElse(null))
-                .setDp(product.findPrice(SaleChannel.DP).map(price -> modelMapper.map(price, PlanDetail.Price.class)).orElse(null))
+                .setDh(product.priceOf(SaleChannel.DH).map(price -> modelMapper.map(price, PlanDetail.Price.class)).orElse(null))
+                .setDp(product.priceOf(SaleChannel.DP).map(price -> modelMapper.map(price, PlanDetail.Price.class)).orElse(null))
             );
     }
 

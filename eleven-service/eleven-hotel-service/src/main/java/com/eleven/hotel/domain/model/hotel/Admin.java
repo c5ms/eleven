@@ -1,4 +1,4 @@
-package com.eleven.hotel.domain.model.admin;
+package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.hotel.domain.core.AbstractEntity;
 import jakarta.persistence.*;

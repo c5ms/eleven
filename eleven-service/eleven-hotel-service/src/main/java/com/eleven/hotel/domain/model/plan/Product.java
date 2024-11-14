@@ -7,13 +7,12 @@ import com.eleven.hotel.api.domain.model.SaleChannel;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
 import com.eleven.hotel.domain.errors.PlanErrors;
-import com.eleven.hotel.domain.model.room.Room;
+import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.values.StockAmount;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldNameConstants;
-import org.apache.commons.collections4.MapUtils;
 import org.hibernate.annotations.Type;
 
 import java.math.BigDecimal;
@@ -29,7 +28,7 @@ import java.util.*;
 public class Product {
 
     @EmbeddedId
-    private ProductKey productKey;
+    private ProductKey key;
 
     @Column(name = "charge_type")
     @Enumerated(EnumType.STRING)
@@ -69,7 +68,7 @@ public class Product {
     @PrePersist
     protected void complete() {
         for (Price price : this.getPrices()) {
-            price.getPriceKey().apply(getProductKey());
+            price.getKey().apply(getKey());
         }
     }
 
@@ -78,7 +77,7 @@ public class Product {
                       @NonNull SaleType saleType,
                       @NonNull Collection<SaleChannel> saleChannels,
                       @NonNull StockAmount stock) {
-        this.productKey = ProductKey.of(plan.toKey(), room.getRoomId());
+        this.key = ProductKey.of(plan.toKey(), room.getRoomId());
         this.room = room;
         this.stock = stock;
         this.saleType = saleType;
@@ -94,8 +93,8 @@ public class Product {
     public void setPrice(SaleChannel saleChannel, BigDecimal wholeRoomPrice) {
         DomainValidator.must(this.saleChannels.contains(saleChannel), PlanErrors.UN_SUPPORTED_CHANNEL);
 
-        var price = Price.wholeRoom(this.getProductKey(), saleChannel, wholeRoomPrice);
-        this.prices.put(price.getPriceKey(), price);
+        var price = Price.wholeRoom(this.getKey(), saleChannel, wholeRoomPrice);
+        this.prices.put(price.getKey(), price);
         this.setChargeType(price.getChargeType());
     }
 
@@ -106,18 +105,18 @@ public class Product {
                          BigDecimal fourPersonPrice,
                          BigDecimal fivePersonPrice) {
         DomainValidator.must(this.saleChannels.contains(saleChannel), PlanErrors.UN_SUPPORTED_CHANNEL);
-        var price = Price.byPerson(this.getProductKey(),
+        var price = Price.byPerson(this.getKey(),
             saleChannel,
             onePersonPrice,
             twoPersonPrice,
             threePersonPrice,
             fourPersonPrice,
             fivePersonPrice);
-        this.prices.put(price.getPriceKey(), price);
+        this.prices.put(price.getKey(), price);
         this.setChargeType(price.getChargeType());
     }
 
-    public Optional<Price> findPrice(SaleChannel channel) {
+    public Optional<Price> priceOf(SaleChannel channel) {
         return getPrices().stream()
             .filter(price -> price.is(channel))
             .findFirst();
@@ -131,13 +130,10 @@ public class Product {
         return ImmutableValues.of(prices.values());
     }
 
-    public boolean hasPrice() {
-        return MapUtils.isNotEmpty(this.prices);
-    }
 
-    public boolean hasStock() {
-        return this.getStock().greaterThanZero();
-    }
+
+
+
 
     public StockAmount getStock() {
         if (null == this.stock) {
@@ -147,7 +143,7 @@ public class Product {
     }
 
     public boolean is(ProductKey key) {
-        return key.equals(this.getProductKey());
+        return key.equals(this.getKey());
     }
 
 }

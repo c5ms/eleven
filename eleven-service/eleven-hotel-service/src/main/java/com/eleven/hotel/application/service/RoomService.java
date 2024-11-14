@@ -3,12 +3,9 @@ package com.eleven.hotel.application.service;
 import com.eleven.core.application.authorize.NoPrincipalException;
 import com.eleven.hotel.application.command.RoomCreateCommand;
 import com.eleven.hotel.application.command.RoomUpdateCommand;
-import com.eleven.hotel.domain.manager.RoomManager;
 import com.eleven.hotel.application.support.HotelContext;
-import com.eleven.hotel.domain.model.hotel.HotelRepository;
-import com.eleven.hotel.domain.model.room.Room;
-import com.eleven.hotel.domain.model.room.RoomKey;
-import com.eleven.hotel.domain.model.room.RoomRepository;
+import com.eleven.hotel.domain.manager.RoomManager;
+import com.eleven.hotel.domain.model.hotel.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +20,7 @@ public class RoomService {
     private final RoomManager roomManager;
     private final RoomRepository roomRepository;
     private final HotelRepository hotelRepository;
+    private final InventoryRepository inventoryRepository;
 
     @Transactional(readOnly = true)
     public Collection<Room> listRoom(Long hotelId) {
@@ -37,9 +35,16 @@ public class RoomService {
     @Transactional(rollbackFor = Exception.class)
     public Room createRoom(Long hotelId, RoomCreateCommand command) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(NoPrincipalException::new);
-        var room = Room.of(hotel.getHotelId(), command.getBasic(), command.getRestriction());
+
+        // create the room
+        var room = Room.of(hotel.getHotelId(), command.getBasic(), command.getRestriction(),command.getStayPeriod(), command.getCount());
         roomManager.validate(room);
-        roomRepository.saveAndFlush(room);
+        roomRepository.save(room);
+
+        // initialize the inventories
+        var inventories = room.createInventories();
+        inventoryRepository.saveAllAndFlush(inventories);
+
         return room;
     }
 
@@ -47,6 +52,9 @@ public class RoomService {
     public void deleteRoom(RoomKey roomKey) {
         var room = roomRepository.findByRoomKey(roomKey).orElseThrow(HotelContext::noPrincipalException);
         roomRepository.delete(room);
+
+        // drop the inventories
+        inventoryRepository.deleteByRoomKey(roomKey);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -57,6 +65,9 @@ public class RoomService {
         Optional.ofNullable(command.getRestriction()).ifPresent(room::setRestriction);
         roomManager.validate(room);
         roomRepository.saveAndFlush(room);
+
+        // todo align the inventory
+
         return room;
     }
 

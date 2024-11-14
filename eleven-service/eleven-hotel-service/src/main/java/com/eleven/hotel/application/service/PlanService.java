@@ -8,11 +8,10 @@ import com.eleven.hotel.domain.errors.HotelErrors;
 import com.eleven.hotel.domain.manager.InventoryManager;
 import com.eleven.hotel.domain.manager.PlanManager;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
-import com.eleven.hotel.domain.model.inventory.InventoryKey;
-import com.eleven.hotel.domain.model.inventory.InventoryRepository;
+import com.eleven.hotel.domain.model.plan.PlanInventoryRepository;
 import com.eleven.hotel.domain.model.plan.*;
-import com.eleven.hotel.domain.model.room.RoomKey;
-import com.eleven.hotel.domain.model.room.RoomRepository;
+import com.eleven.hotel.domain.model.hotel.RoomKey;
+import com.eleven.hotel.domain.model.hotel.RoomRepository;
 import com.github.wenhao.jpa.Specifications;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +33,7 @@ public class PlanService {
 
     private final PlanRepository planRepository;
     private final HotelRepository hotelRepository;
-    private final InventoryRepository inventoryRepository;
+    private final PlanInventoryRepository planInventoryRepository;
 
     private final PlanManager planManager;
     private final RoomRepository roomRepository;
@@ -90,7 +89,7 @@ public class PlanService {
                 .map(roomId -> RoomKey.of(planKey.getHotelId(), roomId))
                 .map(roomKey -> roomRepository.findByRoomKey(roomKey).orElseThrow(HotelErrors.ROOM_NOT_FOUND::toException))
                 .forEach(plan::addRoom);
-        plan.removeRoom(product -> !command.getRooms().contains(product.getProductKey().getRoomId()));
+        plan.removeRoom(product -> !command.getRooms().contains(product.getKey().getRoomId()));
 
         planManager.validate(plan);
         planRepository.saveAndFlush(plan);
@@ -102,7 +101,7 @@ public class PlanService {
     public void deletePlan(PlanKey planKey) {
         var plan = readPlan(planKey).orElseThrow(HotelContext::noPrincipalException);
         planRepository.delete(plan);
-        inventoryRepository.deleteByPlanKey(plan.toKey());
+        planInventoryRepository.deleteByPlanKey(plan.toKey());
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -134,19 +133,11 @@ public class PlanService {
         planRepository.saveAndFlush(plan);
     }
 
-    @Transactional(rollbackFor = Exception.class)
-    public void reduceStock(ProductKey productKey, StockReduceCommand command) {
-        var inventoryKey = InventoryKey.of(productKey, command.getDate());
-        var inventory = inventoryRepository.findByInventoryKey(inventoryKey).orElseThrow(HotelContext::noPrincipalException);
-        inventory.reduce(command.getAmount());
-        inventoryRepository.saveAndFlush(inventory);
-    }
-
     @Transactional(readOnly = true)
     public BigDecimal chargeRoom(ProductKey productKey, SaleChannel saleChannel, int persons) {
         var plan = readPlan(productKey.toPlanKey()).orElseThrow(HotelContext::noPrincipalException);
-        var room = roomRepository.findByRoomKey(productKey.toRoomKey()).orElseThrow(HotelContext::noPrincipalException);
-        return plan.chargeRoom(room, saleChannel, persons);
+        var product = plan.findRoom(productKey.getRoomId()).orElseThrow(HotelContext::noPrincipalException);
+        return product.priceOf(saleChannel).map(price -> price.charge(persons)).orElse(BigDecimal.ZERO);
     }
 
 }

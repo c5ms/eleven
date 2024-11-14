@@ -1,7 +1,6 @@
-package com.eleven.hotel.domain.model.inventory;
+package com.eleven.hotel.domain.model.plan;
 
-import com.eleven.hotel.domain.model.plan.PlanKey;
-import com.eleven.hotel.domain.model.plan.ProductKey;
+import com.eleven.hotel.domain.model.hotel.RoomKey;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.*;
@@ -15,7 +14,7 @@ import java.time.LocalDate;
 @EqualsAndHashCode
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class InventoryKey implements Serializable {
+public class PlanInventoryKey implements Serializable {
 
     @NonNull
     @Column(name = "hotel_id")
@@ -33,15 +32,26 @@ public class InventoryKey implements Serializable {
     @Column(name = "sale_date")
     private LocalDate date;
 
-    public InventoryKey(ProductKey productKey, LocalDate date) {
+    public PlanInventoryKey(ProductKey productKey, LocalDate date) {
         this.setHotelId(productKey.getHotelId());
         this.setPlanId(productKey.getPlanId());
         this.setRoomId(productKey.getRoomId());
         this.setDate(date);
     }
 
-    public static InventoryKey of(ProductKey productKey, LocalDate date) {
-        return new InventoryKey(productKey, date);
+    public PlanInventoryKey(PlanKey planKey,RoomKey roomKey, LocalDate date) {
+        this.setHotelId(planKey.getHotelId());
+        this.setPlanId(planKey.getPlanId());
+        this.setRoomId(roomKey.getRoomId());
+        this.setDate(date);
+    }
+
+    public static PlanInventoryKey of(ProductKey productKey, LocalDate date) {
+        return new PlanInventoryKey(productKey, date);
+    }
+
+    public static PlanInventoryKey of(PlanKey planKey, RoomKey roomKey, LocalDate date) {
+        return new PlanInventoryKey(planKey,roomKey, date);
     }
 
     public PlanKey toPlanKey() {

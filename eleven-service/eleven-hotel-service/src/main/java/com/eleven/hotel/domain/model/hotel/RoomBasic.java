@@ -1,4 +1,4 @@
-package com.eleven.hotel.domain.model.room;
+package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.hotel.api.domain.model.RoomLevel;
 import jakarta.persistence.Column;

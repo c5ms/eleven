@@ -1,5 +1,6 @@
 package com.eleven.core.domain.values;
 
+import cn.hutool.core.comparator.CompareUtil;
 import com.eleven.core.time.TimeContext;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -11,6 +12,7 @@ import org.springframework.util.Assert;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.stream.Stream;
 
 @Value
@@ -70,7 +72,6 @@ public class DateRange {
         return ObjectUtils.anyNull(this.start, this.end);
     }
 
-    @JsonIgnore
     public boolean isCurrent() {
         if (isEmpty()) {
             return false;

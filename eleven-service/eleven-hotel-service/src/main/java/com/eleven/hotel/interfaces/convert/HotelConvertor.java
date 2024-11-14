@@ -13,7 +13,7 @@ import com.eleven.hotel.application.command.HotelUpdateCommand;
 import com.eleven.hotel.domain.model.hotel.Hotel;
 import com.eleven.hotel.domain.model.hotel.HotelBasic;
 import com.eleven.hotel.domain.model.hotel.HotelPosition;
-import com.eleven.hotel.domain.model.register.Register;
+import com.eleven.hotel.domain.model.hotel.Register;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

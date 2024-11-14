@@ -4,7 +4,7 @@ import com.eleven.hotel.api.interfaces.model.RoomDto;
 import com.eleven.hotel.api.interfaces.request.RoomCreateRequest;
 import com.eleven.hotel.api.interfaces.request.RoomUpdateRequest;
 import com.eleven.hotel.application.service.RoomService;
-import com.eleven.hotel.domain.model.room.RoomKey;
+import com.eleven.hotel.domain.model.hotel.RoomKey;
 import com.eleven.hotel.interfaces.convert.RoomConvertor;
 import com.eleven.hotel.interfaces.support.AsMerchantApi;
 import io.swagger.v3.oas.annotations.Operation;

@@ -1,7 +1,7 @@
 package com.eleven.hotel.domain.manager;
 
-import com.eleven.hotel.domain.model.inventory.InventoryMigration;
-import com.eleven.hotel.domain.model.inventory.InventoryRepository;
+import com.eleven.hotel.domain.model.plan.PlanInventoryMigration;
+import com.eleven.hotel.domain.model.plan.PlanInventoryRepository;
 import com.eleven.hotel.domain.model.plan.Plan;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,20 +12,20 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class InventoryManager {
 
-    private final InventoryRepository inventoryRepository;
+    private final PlanInventoryRepository planInventoryRepository;
 
     public void initializeInventoryFor(Plan plan) {
-        var existingInventories = inventoryRepository.findByPlanKey(plan.toKey());
-        var merger = InventoryMigration.of(plan, existingInventories);
+        var existingInventories = planInventoryRepository.findByPlanKey(plan.toKey());
+        var merger = PlanInventoryMigration.of(plan, existingInventories);
 
         // remove inventory which has never been used and is invalid now.
-        inventoryRepository.deleteAllInBatch(merger.removes());
+        planInventoryRepository.deleteAllInBatch(merger.removes());
 
         // update invalid status
-        inventoryRepository.saveAllAndFlush(merger.updates());
+        planInventoryRepository.saveAllAndFlush(merger.updates());
 
         // add new inventories
-        inventoryRepository.saveAllAndFlush(merger.adds());
+        planInventoryRepository.saveAllAndFlush(merger.adds());
     }
 
 }

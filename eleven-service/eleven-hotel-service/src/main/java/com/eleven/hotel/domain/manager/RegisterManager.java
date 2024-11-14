@@ -1,7 +1,7 @@
 package com.eleven.hotel.domain.manager;
 
-import com.eleven.hotel.domain.model.register.Register;
-import com.eleven.hotel.domain.model.register.RegisterValidator;
+import com.eleven.hotel.domain.model.hotel.Register;
+import com.eleven.hotel.domain.model.hotel.RegisterValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

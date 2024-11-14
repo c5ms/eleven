@@ -9,9 +9,7 @@ import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.api.domain.model.SaleType;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import com.eleven.hotel.domain.errors.PlanErrors;
-import com.eleven.hotel.domain.model.inventory.Inventory;
-import com.eleven.hotel.domain.model.inventory.InventoryFactory;
-import com.eleven.hotel.domain.model.room.Room;
+import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.values.StockAmount;
 import com.google.common.base.Predicates;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
@@ -24,6 +22,7 @@ import org.apache.commons.lang3.Validate;
 import org.hibernate.annotations.Type;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -120,17 +119,16 @@ public class Plan extends AbstractEntity {
     }
 
     @PrePersist
-    protected void complete() {
+    protected void beforePersist() {
         validate();
 
         for (Product value : this.products) {
-            value.getProductKey().set(toKey());
+            value.getKey().set(toKey());
         }
     }
 
     public void addRoom(@NonNull Room room) {
         var roomId = room.getRoomId();
-        var productKey = getProductKey(roomId);
         if (findRoom(roomId).isPresent()) {
             return;
         }
@@ -145,14 +143,14 @@ public class Plan extends AbstractEntity {
     public Optional<Product> findRoom(Long roomId) {
         var productKey = getProductKey(roomId);
         return this.products.stream()
-            .filter(product -> product.is(productKey))
-            .findFirst();
+                .filter(product -> product.is(productKey))
+                .findFirst();
     }
 
-    public BigDecimal chargeRoom(Room room, SaleChannel saleChannel, int personCount) {
-        var roomId = room.getRoomId();
+    // todo no use
+    public BigDecimal priceOf(Long roomId, SaleChannel saleChannel, int personCount) {
         var product = findRoom(roomId).orElseThrow(PlanErrors.PRODUCT_NOT_FOUND::toException);
-        var price = product.findPrice(saleChannel).orElseThrow(PlanErrors.PRICE_NOT_FOUND::toException);
+        var price = product.priceOf(saleChannel).orElseThrow(PlanErrors.PRICE_NOT_FOUND::toException);
         return price.charge(personCount);
     }
 
@@ -172,24 +170,25 @@ public class Plan extends AbstractEntity {
         }
     }
 
-    public List<Inventory> createInventories() {
+    public List<PlanInventory> createInventories() {
         return getProducts()
-            .stream()
-            .flatMap(product -> {
-                var creator = InventoryFactory.of(product);
-                return getStayPeriod()
-                    .dates()
-                    .map(creator::create);
-            })
-            .collect(Collectors.toList());
+                .stream()
+                .flatMap(product -> {
+                    var creator = PlanInventoryFactory.of(product);
+                    return getStayPeriod()
+                            .dates()
+                            .filter(localDate -> localDate.isAfter(LocalDate.now()))
+                            .map(creator::create);
+                })
+                .collect(Collectors.toList());
     }
 
-    public boolean isApplicable(Inventory inventory) {
-        return Predicates.<Inventory>notNull()
-            .and(theInv -> theInv.getInventoryKey().toPlanKey().equals(toKey()))
-            .and(theInv -> this.getStayPeriod().contains(theInv.getInventoryKey().getDate()))
-            .and(theInv -> this.findRoom(theInv.getInventoryKey().getRoomId()).isPresent())
-            .test(inventory);
+    public boolean isApplicable(PlanInventory planInventory) {
+        return Predicates.<PlanInventory>notNull()
+                .and(theInv -> theInv.getKey().toPlanKey().equals(toKey()))
+                .and(theInv -> this.getStayPeriod().contains(theInv.getKey().getDate()))
+                .and(theInv -> this.findRoom(theInv.getKey().getRoomId()).isPresent())
+                .test(planInventory);
     }
 
     public void update(PlanPatch patch) {

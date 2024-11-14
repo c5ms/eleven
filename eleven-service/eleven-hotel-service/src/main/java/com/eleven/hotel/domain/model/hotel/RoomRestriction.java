@@ -1,4 +1,4 @@
-package com.eleven.hotel.domain.model.room;
+package com.eleven.hotel.domain.model.hotel;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -20,9 +20,6 @@ public final class RoomRestriction {
     private Integer minPerson;
 
     public RoomRestriction(Integer minPerson, Integer maxPerson) {
-        //        Validate.notNull(maxPerson, "max person must not null");
-        //        Validate.notNull(minPerson, "min person must not null");
-        //        Validate.isTrue(maxPerson > minPerson, "max person must be greater than min");
         this.maxPerson = maxPerson;
         this.minPerson = minPerson;
     }

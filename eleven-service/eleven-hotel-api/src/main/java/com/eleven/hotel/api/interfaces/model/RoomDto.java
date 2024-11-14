@@ -1,5 +1,6 @@
 package com.eleven.hotel.api.interfaces.model;
 
+import com.eleven.core.domain.values.DateRange;
 import com.eleven.hotel.api.domain.model.ChargeType;
 import com.eleven.hotel.api.domain.model.RoomLevel;
 import com.eleven.hotel.api.domain.model.SaleState;
@@ -21,4 +22,8 @@ public class RoomDto {
     private String desc;
     private Integer maxPerson;
     private Integer minPerson;
+
+    private Integer count;
+
+    private DateRange stayPeriod;
 }

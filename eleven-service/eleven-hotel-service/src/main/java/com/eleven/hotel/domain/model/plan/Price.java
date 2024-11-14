@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 public class Price {
 
     @EmbeddedId
-    private PriceKey priceKey;
+    private PriceKey key;
 
     @Column(name = "charge_type")
     @Enumerated(EnumType.STRING)
@@ -46,7 +46,7 @@ public class Price {
 
     public static Price wholeRoom(ProductKey productKey, SaleChannel saleChannel, BigDecimal wholeRoomPrice) {
         var price = new Price();
-        price.setPriceKey(PriceKey.of(productKey, saleChannel));
+        price.setKey(PriceKey.of(productKey, saleChannel));
         price.setChargeType(ChargeType.BY_ROOM);
         price.setWholeRoomPrice(wholeRoomPrice);
         return price;
@@ -60,7 +60,7 @@ public class Price {
                                  BigDecimal fourPersonPrice,
                                  BigDecimal fivePersonPrice) {
         Price price = new Price();
-        price.setPriceKey(PriceKey.of(productKey, saleChannel));
+        price.setKey(PriceKey.of(productKey, saleChannel));
         price.setChargeType(ChargeType.BY_PERSON);
         price.setOnePersonPrice(onePersonPrice);
         price.setTwoPersonPrice(twoPersonPrice);
@@ -71,7 +71,7 @@ public class Price {
     }
 
     public boolean is(SaleChannel saleChannel) {
-        return priceKey.getSaleChannel() == saleChannel;
+        return key.getSaleChannel() == saleChannel;
     }
 
     public BigDecimal charge(int personCount) {

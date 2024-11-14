@@ -1,10 +1,8 @@
-package com.eleven.hotel.domain.model.inventory;
+package com.eleven.hotel.domain.model.plan;
 
 import com.eleven.core.domain.DomainValidator;
-import com.eleven.hotel.domain.errors.PlanErrors;
 import com.eleven.hotel.domain.core.AbstractEntity;
-import com.eleven.hotel.domain.model.plan.PlanKey;
-import com.eleven.hotel.domain.model.plan.ProductKey;
+import com.eleven.hotel.domain.errors.PlanErrors;
 import com.eleven.hotel.domain.values.StockAmount;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -21,11 +19,12 @@ import java.time.LocalDate;
 @Getter
 @Setter(AccessLevel.PROTECTED)
 @FieldNameConstants
-@EqualsAndHashCode(callSuper = false, of = "inventoryKey")
-public class Inventory extends AbstractEntity {
+@EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
+public class PlanInventory extends AbstractEntity {
 
     @EmbeddedId
-    private InventoryKey inventoryKey;
+    @EqualsAndHashCode.Include
+    private PlanInventoryKey key;
 
     @Column(name = "is_valid")
     private Boolean isValid;
@@ -38,16 +37,16 @@ public class Inventory extends AbstractEntity {
     @AttributeOverride(name = "count", column = @Column(name = "stock_left"))
     private StockAmount stockLeft;
 
-    protected Inventory() {
+    protected PlanInventory() {
     }
 
-    public static Inventory of(ProductKey productKey, LocalDate date, StockAmount stockAmount) {
-        var inventoryKey = InventoryKey.of(productKey, date);
+    public static PlanInventory of(Product product, LocalDate date) {
+        var inventoryKey = PlanInventoryKey.of(product.getKey(), date);
 
-        var inventory = new Inventory();
-        inventory.setInventoryKey(inventoryKey);
-        inventory.setStockTotal(stockAmount);
-        inventory.setStockLeft(stockAmount);
+        var inventory = new PlanInventory();
+        inventory.setKey(inventoryKey);
+        inventory.setStockTotal(product.getStock());
+        inventory.setStockLeft(product.getStock());
         inventory.setIsValid(true);
         return inventory;
     }

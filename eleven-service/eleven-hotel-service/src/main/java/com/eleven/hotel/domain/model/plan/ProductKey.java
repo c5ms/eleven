@@ -1,6 +1,6 @@
 package com.eleven.hotel.domain.model.plan;
 
-import com.eleven.hotel.domain.model.room.RoomKey;
+import com.eleven.hotel.domain.model.hotel.RoomKey;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
