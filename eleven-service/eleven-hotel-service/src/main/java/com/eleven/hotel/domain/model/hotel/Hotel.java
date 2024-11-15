@@ -4,10 +4,8 @@ import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import lombok.experimental.FieldNameConstants;
 
 import java.util.Optional;
@@ -25,7 +23,7 @@ public class Hotel extends AbstractEntity {
     @GeneratedValue(strategy = GenerationType.TABLE, generator = GENERATOR_NAME)
     private Long hotelId;
 
-    @Nonnull
+    @NonNull
     @Column(name = "sale_state")
     @Enumerated(EnumType.STRING)
     private SaleState saleState = SaleState.STOPPED;
