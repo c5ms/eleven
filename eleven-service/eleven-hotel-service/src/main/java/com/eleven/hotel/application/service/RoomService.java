@@ -62,7 +62,7 @@ public class RoomService {
         var room = roomRepository.findByRoomKey(roomKey).orElseThrow(HotelContext::noPrincipalException);
 
         Optional.ofNullable(command.getBasic()).ifPresent(room::setBasic);
-        Optional.ofNullable(command.getRestriction()).ifPresent(room::setRestriction);
+        Optional.ofNullable(command.getRestriction()).ifPresent(room::setOccupancy);
         roomManager.validate(room);
         roomRepository.saveAndFlush(room);
 

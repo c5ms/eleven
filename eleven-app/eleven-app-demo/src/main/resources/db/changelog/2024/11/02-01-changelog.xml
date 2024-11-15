@@ -50,7 +50,7 @@
         </createTable>
     </changeSet>
     <changeSet id="1730562955288-4" author="wangzc">
-        <createTable tableName="hms_plan_room">
+        <createTable tableName="product">
             <column name="charge_type" type="VARCHAR(255)"/>
             <column name="sale_channels" type="json"/>
             <column name="hotel_id" type="INT">
@@ -118,13 +118,13 @@
         </createTable>
     </changeSet>
     <changeSet id="1730562955288-8" author="wangzc">
-        <addForeignKeyConstraint baseColumnNames="plan_id" baseTableName="hms_plan_room"
+        <addForeignKeyConstraint baseColumnNames="plan_id" baseTableName="product"
                                  constraintName="FK_HMS_PLAN_ROOM_ON_PLAN" referencedColumnNames="plan_id"
                                  referencedTableName="hms_plan"/>
     </changeSet>
     <changeSet id="1730562955288-9" author="wangzc">
         <addForeignKeyConstraint baseColumnNames="" baseTableName="hms_price" constraintName="FK_HMS_PRICEON_"
-                                 referencedColumnNames="hotel_id,plan_id,room_id" referencedTableName="hms_plan_room"/>
+                                 referencedColumnNames="hotel_id,plan_id,room_id" referencedTableName="product"/>
     </changeSet>
 
 </databaseChangeLog>

@@ -1,7 +1,6 @@
 package com.eleven.hotel.api.interfaces.model;
 
 import com.eleven.hotel.api.domain.model.ChargeType;
-import com.eleven.hotel.api.domain.model.RoomLevel;
 import com.eleven.hotel.api.domain.model.SaleState;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.annotation.Nullable;

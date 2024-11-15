@@ -8,7 +8,7 @@ import com.eleven.hotel.application.command.RoomCreateCommand;
 import com.eleven.hotel.application.command.RoomUpdateCommand;
 import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.model.hotel.RoomBasic;
-import com.eleven.hotel.domain.model.hotel.RoomRestriction;
+import com.eleven.hotel.domain.model.hotel.RoomOccupancy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -30,8 +30,8 @@ public class RoomConvertor {
                 .setType(room.getBasic().getLevel())
                 .setDesc(room.getBasic().getDesc())
                 .setHeadPicUrl(room.getBasic().getHeadPicUrl())
-                .setMinPerson(room.getRestriction().getMinPerson())
-                .setMaxPerson(room.getRestriction().getMaxPerson())
+                .setMinPerson(room.getOccupancy().getMinPerson())
+                .setMaxPerson(room.getOccupancy().getMaxPerson())
                 .setCount(room.getCount())
                 .setStayPeriod(room.getStayPeriod())
                 ;
@@ -46,7 +46,7 @@ public class RoomConvertor {
     public RoomCreateCommand toCommand(RoomCreateRequest request) {
         return RoomCreateCommand.builder()
                 .basic(new RoomBasic(request.getName(), request.getLevel(), request.getDesc(), request.getHeadPicUrl()))
-                .restriction(new RoomRestriction(request.getMinPerson(), request.getMaxPerson()))
+                .restriction(new RoomOccupancy(request.getMinPerson(), request.getMaxPerson()))
                 .stayPeriod(DateRange.of(request.getStayStartDate(), request.getStayEndDate()))
                 .count(request.getCount())
                 .build();
@@ -55,7 +55,7 @@ public class RoomConvertor {
     public RoomUpdateCommand toCommand(RoomUpdateRequest request) {
         return RoomUpdateCommand.builder()
                 .basic(new RoomBasic(request.getName(), request.getType(), request.getDesc(), request.getHeadPicUrl()))
-                .restriction(new RoomRestriction(request.getMinPerson(), request.getMaxPerson()))
+                .restriction(new RoomOccupancy(request.getMinPerson(), request.getMaxPerson()))
                 .stayPeriod(DateRange.of(request.getStayStartDate(), request.getStayEndDate()))
                 .count(request.getCount())
                 .build();

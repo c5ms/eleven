@@ -1,9 +1,6 @@
 package com.eleven.hotel.api.interfaces.model;
 
 import com.eleven.core.domain.values.DateRange;
-import com.eleven.hotel.api.domain.model.ChargeType;
-import com.eleven.hotel.api.domain.model.RoomLevel;
-import com.eleven.hotel.api.domain.model.SaleState;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;

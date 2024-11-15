@@ -1,29 +1,24 @@
 package com.eleven.core.domain.values;
 
-import cn.hutool.core.comparator.CompareUtil;
 import com.eleven.core.time.TimeContext;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Value;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Period;
 import java.util.stream.Stream;
 
-@Value
+@Data
 @EqualsAndHashCode
 public class DateRange {
 
-    LocalDate start;
+    private LocalDate start;
 
-    LocalDate end;
+    private LocalDate end;
 
-     private DateRange() {
+    private DateRange() {
         this.start = null;
         this.end = null;
     }

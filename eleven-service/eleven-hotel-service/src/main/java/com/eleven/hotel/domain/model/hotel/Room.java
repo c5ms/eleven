@@ -36,48 +36,43 @@ public class Room extends AbstractEntity {
 
     @Setter
     @Embedded
-    private RoomRestriction restriction;
+    private RoomOccupancy occupancy;
 
-    @Column(name = "stock_count")
-    private Integer count;
+    @Column(name = "quantity")
+    private Integer quantity;
 
     @Embedded
-    @AttributeOverride(name = "start", column = @Column(name = "stay_period_start"))
-    @AttributeOverride(name = "end", column = @Column(name = "stay_period_end"))
-    private DateRange stayPeriod;
-
-    @Version
-    @Column(name = "update_version")
-    private Long version;
+    @AttributeOverride(name = "start", column = @Column(name = "available_period_start"))
+    @AttributeOverride(name = "end", column = @Column(name = "available_period_end"))
+    private DateRange availablePeriod;
 
     protected Room() {
 
     }
 
-    public static Room of(Long hotelId, RoomBasic basic, RoomRestriction restriction, DateRange stayPeriod, Integer count) {
+    public static Room of(Long hotelId, RoomBasic basic, RoomOccupancy restriction, DateRange availablePeriod, Integer quantity) {
         var room = new Room();
         room.setHotelId(hotelId);
         room.setBasic(basic);
-        room.setRestriction(restriction);
-        room.setCount(count);
-        room.setStayPeriod(stayPeriod);
+        room.setOccupancy(restriction);
+        room.setQuantity(quantity);
+        room.setAvailablePeriod(availablePeriod);
         return room;
     }
 
     public List<Inventory> createInventories() {
-        if (null == stayPeriod) {
+        if (null == availablePeriod) {
             return new ArrayList<>();
         }
         var inventoryBuilder = Inventory.builder()
                 .room(this);
-        return getStayPeriod()
+        return getAvailablePeriod()
                 .dates()
                 .filter(localDate -> localDate.isAfter(LocalDate.now()))
                 .map(inventoryBuilder::date)
                 .map(Inventory.InventoryBuilder::build)
                 .collect(Collectors.toList());
     }
-
 
     @Nonnull
     public RoomKey toKey() {

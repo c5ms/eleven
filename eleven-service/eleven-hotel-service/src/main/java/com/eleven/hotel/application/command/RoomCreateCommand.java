@@ -2,8 +2,7 @@ package com.eleven.hotel.application.command;
 
 import com.eleven.core.domain.values.DateRange;
 import com.eleven.hotel.domain.model.hotel.RoomBasic;
-import com.eleven.hotel.domain.model.hotel.RoomRestriction;
-import com.eleven.hotel.domain.values.StockAmount;
+import com.eleven.hotel.domain.model.hotel.RoomOccupancy;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -11,7 +10,7 @@ import lombok.Getter;
 @Builder
 public class RoomCreateCommand {
     private RoomBasic basic;
-    private RoomRestriction restriction;
+    private RoomOccupancy restriction;
     private Integer count;
     private DateRange stayPeriod;
 }

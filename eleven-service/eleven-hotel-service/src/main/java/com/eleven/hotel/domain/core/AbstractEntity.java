@@ -15,8 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Getter
-@EntityListeners(AbstractEntityListener.class)
-@FieldNameConstants
 @MappedSuperclass
 @TableGenerator(table = AbstractEntity.GENERATOR_TABLE, name = AbstractEntity.GENERATOR_NAME, allocationSize = 5)
 public abstract class AbstractEntity {

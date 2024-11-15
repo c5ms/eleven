@@ -11,7 +11,7 @@ import lombok.experimental.FieldNameConstants;
 @Embeddable
 @FieldNameConstants
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public final class RoomRestriction {
+public final class RoomOccupancy {
 
     @Column(name = "restrict_max_person")
     private Integer maxPerson;
@@ -19,7 +19,7 @@ public final class RoomRestriction {
     @Column(name = "restrict_min_person")
     private Integer minPerson;
 
-    public RoomRestriction(Integer minPerson, Integer maxPerson) {
+    public RoomOccupancy(Integer minPerson, Integer maxPerson) {
         this.maxPerson = maxPerson;
         this.minPerson = minPerson;
     }
