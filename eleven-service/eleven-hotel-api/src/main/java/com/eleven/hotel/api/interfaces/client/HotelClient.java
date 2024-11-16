@@ -1,9 +1,8 @@
 package com.eleven.hotel.api.interfaces.client;
 
-import com.eleven.core.web.WebConstants;
-import com.eleven.hotel.api.domain.model.SaleChannel;
-import com.eleven.hotel.api.interfaces.model.HotelDto;
-import com.eleven.hotel.api.interfaces.model.PlanDto;
+import com.eleven.hotel.api.domain.values.SaleChannel;
+import com.eleven.hotel.api.interfaces.vo.HotelDto;
+import com.eleven.hotel.api.interfaces.vo.PlanDto;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Primary;
@@ -15,7 +14,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 @Primary
-@FeignClient(value = "hotel", path = WebConstants.API_PREFIX_INTERNAL)
+@FeignClient(value = "hotel", path = "/api/internal")
 public interface HotelClient {
 
     @Operation(summary = "read hotel")
@@ -29,8 +28,8 @@ public interface HotelClient {
     @Operation(summary = "charge room")
     @PostMapping("/chargeRoom")
     BigDecimal chargeRoom(@RequestParam("hotelId") Long hotelId,
-                         @RequestParam("planId") Long planId,
-                         @RequestParam("roomId") Long roomId,
-                         @RequestParam("saleChannel") SaleChannel saleChannel,
-                         @RequestParam("persons") int persons);
+                          @RequestParam("planId") Long planId,
+                          @RequestParam("roomId") Long roomId,
+                          @RequestParam("saleChannel") SaleChannel saleChannel,
+                          @RequestParam("persons") int persons);
 }

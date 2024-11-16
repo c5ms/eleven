@@ -1,6 +1,6 @@
 package com.eleven.upms.endpoint.admin;
 
-import com.eleven.core.web.annonation.AsAdminApi;
+import com.eleven.core.interfaces.annonation.AsAdminApi;
 import com.eleven.upms.api.application.command.RoleCreateCommand;
 import com.eleven.upms.api.application.command.RoleUpdateCommand;
 import com.eleven.upms.api.application.model.RoleDetail;

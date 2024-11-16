@@ -1,8 +1,8 @@
 package com.eleven.booking.infrastructure;
 
 import com.eleven.booking.domain.model.booking.Hotel;
-import com.eleven.hotel.api.domain.model.SaleState;
-import com.eleven.hotel.api.interfaces.model.HotelDto;
+import com.eleven.hotel.api.domain.values.SaleState;
+import com.eleven.hotel.api.interfaces.vo.HotelDto;
 
 public class RemoteHotel implements Hotel {
 

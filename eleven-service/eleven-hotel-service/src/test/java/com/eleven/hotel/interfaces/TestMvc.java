@@ -1,6 +1,6 @@
 package com.eleven.hotel.interfaces;
 
-import com.eleven.hotel.interfaces.web.hotel.RegisterMerchantApi;
+import com.eleven.hotel.interfaces.rest.external.RegisterMerchantApi;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;

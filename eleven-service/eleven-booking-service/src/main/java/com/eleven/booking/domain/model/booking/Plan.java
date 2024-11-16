@@ -1,6 +1,6 @@
 package com.eleven.booking.domain.model.booking;
 
-import com.eleven.hotel.api.domain.model.SaleChannel;
+import com.eleven.hotel.api.domain.values.SaleChannel;
 
 import java.math.BigDecimal;
 

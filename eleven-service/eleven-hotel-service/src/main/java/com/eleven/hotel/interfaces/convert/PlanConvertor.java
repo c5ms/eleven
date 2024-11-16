@@ -1,13 +1,13 @@
 package com.eleven.hotel.interfaces.convert;
 
-import com.eleven.core.domain.values.DateRange;
-import com.eleven.core.domain.values.DateTimeRange;
-import com.eleven.hotel.api.domain.model.SaleChannel;
-import com.eleven.hotel.api.interfaces.model.PlanDetail;
-import com.eleven.hotel.api.interfaces.model.PlanDto;
-import com.eleven.hotel.api.interfaces.request.PlanCreateRequest;
-import com.eleven.hotel.api.interfaces.request.PlanQueryRequest;
-import com.eleven.hotel.api.interfaces.request.PlanUpdateRequest;
+import com.eleven.hotel.api.domain.values.DateRange;
+import com.eleven.hotel.api.domain.values.DateTimeRange;
+import com.eleven.hotel.api.domain.values.SaleChannel;
+import com.eleven.hotel.api.interfaces.vo.PlanDetail;
+import com.eleven.hotel.api.interfaces.vo.PlanDto;
+import com.eleven.hotel.api.interfaces.dto.PlanCreateRequest;
+import com.eleven.hotel.api.interfaces.dto.PlanQueryRequest;
+import com.eleven.hotel.api.interfaces.dto.PlanUpdateRequest;
 import com.eleven.hotel.application.command.PlanCreateCommand;
 import com.eleven.hotel.application.command.PlanQuery;
 import com.eleven.hotel.application.command.PlanUpdateCommand;
@@ -16,7 +16,7 @@ import com.eleven.hotel.domain.model.plan.PlanBasic;
 import com.eleven.hotel.domain.model.plan.PlanPatch;
 import com.eleven.hotel.domain.model.plan.Product;
 import com.eleven.hotel.domain.model.hotel.RoomRepository;
-import com.eleven.hotel.domain.values.StockAmount;
+import com.eleven.hotel.api.domain.values.StockAmount;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -81,7 +81,6 @@ public class PlanConvertor {
         return new PlanDetail.Room()
             .setRoomId(product.getKey().getRoomId())
             .setName(product.getRoom().getBasic().getName())
-            .setType(product.getRoom().getBasic().getLevel())
             .setDesc(product.getRoom().getBasic().getDesc())
             .setHeadPicUrl(product.getRoom().getBasic().getHeadPicUrl())
             .setMinPerson(product.getRoom().getOccupancy().getMinPerson())

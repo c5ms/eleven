@@ -1,6 +1,6 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import com.eleven.core.domain.values.DateRange;
+import com.eleven.hotel.api.domain.values.DateRange;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-@Table(name = "hms_hotel_room")
+@Table(name = "room")
 @Entity
 @Getter
 @Setter(AccessLevel.PROTECTED)

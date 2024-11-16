@@ -1,9 +1,9 @@
 package com.eleven.booking.infrastructure;
 
 import com.eleven.booking.domain.model.booking.Plan;
-import com.eleven.hotel.api.domain.model.SaleChannel;
+import com.eleven.hotel.api.domain.values.SaleChannel;
 import com.eleven.hotel.api.interfaces.client.HotelClient;
-import com.eleven.hotel.api.interfaces.model.PlanDto;
+import com.eleven.hotel.api.interfaces.vo.PlanDto;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;

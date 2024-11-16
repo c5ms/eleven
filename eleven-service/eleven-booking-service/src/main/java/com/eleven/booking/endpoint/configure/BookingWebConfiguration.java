@@ -2,7 +2,7 @@ package com.eleven.booking.endpoint.configure;
 
 import com.eleven.booking.endpoint.support.AsCustomerApi;
 import com.eleven.booking.endpoint.support.CustomerSecurityInterceptor;
-import com.eleven.core.web.utils.AnnotationPredicate;
+import com.eleven.core.interfaces.rest.utils.AnnotationPredicate;
 import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.models.GroupedOpenApi;

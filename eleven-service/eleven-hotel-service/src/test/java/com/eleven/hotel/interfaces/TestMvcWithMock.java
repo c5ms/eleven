@@ -1,7 +1,7 @@
 package com.eleven.hotel.interfaces;
 
 import com.eleven.hotel.application.service.HotelService;
-import com.eleven.hotel.interfaces.web.admin.RegisterAdminApi;
+import com.eleven.hotel.interfaces.rest.admin.RegisterAdminApi;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

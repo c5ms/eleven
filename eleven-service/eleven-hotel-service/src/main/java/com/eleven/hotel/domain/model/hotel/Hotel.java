@@ -1,83 +1,55 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import com.eleven.hotel.api.domain.model.SaleState;
 import com.eleven.hotel.domain.core.AbstractEntity;
-import jakarta.annotation.Nonnull;
+import com.eleven.hotel.domain.values.Address;
+import com.eleven.hotel.domain.values.CheckPolicy;
+import com.eleven.hotel.domain.values.Position;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import lombok.experimental.FieldNameConstants;
 
-import java.util.Optional;
-
-@Table(name = "hms_hotel")
+@Table(name = "hotel")
 @Entity
 @Getter
 @Setter(AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@FieldNameConstants
 public class Hotel extends AbstractEntity {
 
     @Id
     @Column(name = "hotel_id")
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = GENERATOR_NAME)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long hotelId;
 
-    @NonNull
-    @Column(name = "sale_state")
-    @Enumerated(EnumType.STRING)
-    private SaleState saleState = SaleState.STOPPED;
-
-    @Embedded
-    private HotelPosition position;
+    @Column(name = "active")
+    private Boolean active = true;
 
     @Setter
     @Embedded
-    private HotelBasic basic;
+    private HotelBasic basic = HotelBasic.empty();
 
-    private Hotel(Register register) {
-        var description = HotelBasic.justName(register.getHotel().getName());
-        this.setBasic(description);
-    }
 
-    private Hotel(HotelBasic basic, HotelPosition position) {
-        this.setBasic(basic);
-        this.setPosition(position);
-    }
+    @Embedded
+    private Address address = Address.empty();
 
-    public static Hotel of(Register register){
-        return new Hotel(register);
-    }
+    @Setter
+    @Embedded
+    private Position position = Position.empty();
 
-    public static Hotel of(HotelBasic basic, HotelPosition position){
-        return new Hotel(basic,position);
-    }
+    @Embedded
+    private CheckPolicy checkPolicy = CheckPolicy.empty();
 
-    public void startSale() {
-        if (this.saleState != SaleState.STARTED) {
-            this.saleState = SaleState.STARTED;
-        }
-    }
-
-    public void stopSale() {
-        this.saleState = SaleState.STOPPED;
-    }
-
-    public boolean isOnSale() {
-        return saleState.isOnSale();
-    }
-
-    public void relocate(HotelPosition position) {
+    @Builder
+    public Hotel(HotelBasic basic, Position position, Address address, CheckPolicy checkPolicy) {
+        this.basic = basic;
         this.position = position;
+        this.address = address;
+        this.checkPolicy = checkPolicy;
     }
 
-    @Nonnull
-    public HotelPosition getPosition() {
-        return Optional.ofNullable(position).orElse(new HotelPosition());
+    public void deactivate() {
+        this.active=false;
     }
 
-    public HotelBasic getBasic() {
-        return Optional.ofNullable(basic).orElse(new HotelBasic());
+    public void active() {
+        this.active=true;
     }
-
 }

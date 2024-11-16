@@ -1,7 +1,7 @@
 package com.eleven.hotel.application.service;
 
 import com.eleven.core.application.query.PageResult;
-import com.eleven.core.domain.DomainEvents;
+import com.eleven.core.domain.event.DomainEvents;
 import com.eleven.hotel.application.command.HotelCreateCommand;
 import com.eleven.hotel.application.command.HotelQuery;
 import com.eleven.hotel.application.command.HotelUpdateCommand;
@@ -39,7 +39,12 @@ public class HotelService {
     }
 
     public Hotel create(HotelCreateCommand command) {
-        var hotel = Hotel.of(command.getBasic(), command.getPosition());
+        var hotel = Hotel.builder()
+            .basic(command.getBasic())
+            .position(command.getPosition())
+            .address(command.getAddress())
+            .checkPolicy(command.getCheckPolicy())
+            .build();
         hotelManager.validate(hotel);
         hotelRepository.saveAndFlush(hotel);
         return hotel;
@@ -49,7 +54,7 @@ public class HotelService {
     public void update(Long hotelId, HotelUpdateCommand command) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
         Optional.ofNullable(command.getBasic()).ifPresent(hotel::setBasic);
-        Optional.ofNullable(command.getPosition()).ifPresent(hotel::relocate);
+        Optional.ofNullable(command.getPosition()).ifPresent(hotel::setPosition);
         hotelManager.validate(hotel);
         hotelRepository.saveAndFlush(hotel);
         DomainEvents.publish(HotelUpdatedEvent.of(hotel));
@@ -58,14 +63,14 @@ public class HotelService {
     @Transactional(rollbackFor = Exception.class)
     public void open(Long hotelId) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
-        hotel.startSale();
+        hotel.active();
         hotelRepository.saveAndFlush(hotel);
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void close(Long hotelId) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
-        hotel.stopSale();
+        hotel.deactivate();
         hotelRepository.saveAndFlush(hotel);
     }
 

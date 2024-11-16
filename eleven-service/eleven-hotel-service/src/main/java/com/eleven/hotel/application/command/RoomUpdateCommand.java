@@ -1,6 +1,6 @@
 package com.eleven.hotel.application.command;
 
-import com.eleven.core.domain.values.DateRange;
+import com.eleven.hotel.api.domain.values.DateRange;
 import com.eleven.hotel.domain.model.hotel.RoomBasic;
 import com.eleven.hotel.domain.model.hotel.RoomOccupancy;
 import lombok.Builder;

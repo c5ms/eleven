@@ -247,7 +247,6 @@
     </dependencyManagement>
 
     <dependencies>
-
         <!-- dev -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -259,22 +258,6 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-       <!-- <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-processor</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok-mapstruct-binding</artifactId>
-            <scope>provided</scope>
-        </dependency>-->
-
     </dependencies>
 
     <build>
@@ -596,7 +579,6 @@
         </plugins>
     </build>
 
-
     <repositories>
         <!--<repository>
             <id>central</id>
@@ -621,6 +603,5 @@
             </snapshots>
         </repository>-->
     </repositories>
-
 
 </project>

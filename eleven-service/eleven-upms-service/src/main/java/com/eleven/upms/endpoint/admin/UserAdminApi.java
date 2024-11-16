@@ -1,7 +1,7 @@
 package com.eleven.upms.endpoint.admin;
 
 import com.eleven.core.application.query.PageResult;
-import com.eleven.core.web.annonation.AsAdminApi;
+import com.eleven.core.interfaces.annonation.AsAdminApi;
 import com.eleven.upms.api.application.command.UserCreateCommand;
 import com.eleven.upms.api.application.command.UserQueryCommand;
 import com.eleven.upms.api.application.command.UserStatusChangeCommand;

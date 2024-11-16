@@ -1,7 +1,7 @@
 package com.eleven;
 
 import com.eleven.core.configure.EnableElevenDomain;
-import io.hypersistence.utils.spring.repository.BaseJpaRepositoryImpl;
+import com.eleven.core.configure.EnableElevenRest;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 //@EnableElevenAuthentication
 //@EnableElevenCache
 @EnableElevenDomain
+@EnableElevenRest
 @EnableJpaRepositories
 @EnableJpaAuditing
 @EnableDiscoveryClient

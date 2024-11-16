@@ -1,9 +1,9 @@
 package com.eleven.hotel.domain.model.plan;
 
-import com.eleven.core.domain.DomainValidator;
+import com.eleven.core.domain.error.DomainValidator;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import com.eleven.hotel.domain.errors.PlanErrors;
-import com.eleven.hotel.domain.values.StockAmount;
+import com.eleven.hotel.api.domain.values.StockAmount;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;

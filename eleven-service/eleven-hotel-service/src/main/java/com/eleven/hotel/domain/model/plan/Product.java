@@ -1,14 +1,14 @@
 package com.eleven.hotel.domain.model.plan;
 
-import com.eleven.core.domain.DomainValidator;
-import com.eleven.core.domain.utils.ImmutableValues;
-import com.eleven.hotel.api.domain.model.ChargeType;
-import com.eleven.hotel.api.domain.model.SaleChannel;
-import com.eleven.hotel.api.domain.model.SaleState;
-import com.eleven.hotel.api.domain.model.SaleType;
+import com.eleven.core.domain.error.DomainValidator;
+import com.eleven.core.domain.values.ImmutableValues;
+import com.eleven.hotel.api.domain.values.ChargeType;
+import com.eleven.hotel.api.domain.values.SaleChannel;
+import com.eleven.hotel.api.domain.values.SaleState;
+import com.eleven.hotel.api.domain.values.SaleType;
 import com.eleven.hotel.domain.errors.PlanErrors;
 import com.eleven.hotel.domain.model.hotel.Room;
-import com.eleven.hotel.domain.values.StockAmount;
+import com.eleven.hotel.api.domain.values.StockAmount;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.*;

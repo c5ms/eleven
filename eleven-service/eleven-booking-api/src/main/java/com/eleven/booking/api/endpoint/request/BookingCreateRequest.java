@@ -1,7 +1,6 @@
 package com.eleven.booking.api.endpoint.request;
 
-import com.eleven.core.domain.values.DateRange;
-import com.eleven.hotel.api.domain.model.SaleChannel;
+import com.eleven.hotel.api.domain.values.SaleChannel;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;

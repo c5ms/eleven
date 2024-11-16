@@ -1,6 +1,6 @@
 package com.eleven.booking.domain.model.booking;
 
-import com.eleven.hotel.api.domain.model.SaleState;
+import com.eleven.hotel.api.domain.values.SaleState;
 
 
 public interface Hotel {

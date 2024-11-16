@@ -2,7 +2,7 @@ package com.eleven.hotel.application.listener;
 
 import cn.hutool.json.JSONUtil;
 import com.eleven.core.application.event.ApplicationEvent;
-import com.eleven.core.domain.DomainEvent;
+import com.eleven.core.domain.error.DomainEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
