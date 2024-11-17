@@ -4,7 +4,6 @@ import com.eleven.booking.api.endpoint.request.BookingCreateRequest;
 import com.eleven.booking.application.service.BookingService;
 import com.eleven.booking.domain.model.booking.Booking;
 import com.eleven.booking.endpoint.convert.BookingConvertor;
-import com.eleven.booking.endpoint.support.AsCustomerApi;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Slf4j
-@AsCustomerApi
 @RequiredArgsConstructor
 @Tag(name = "book")
 @RequestMapping("/books")

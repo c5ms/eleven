@@ -1,7 +1,7 @@
 package com.eleven.booking.domain.model.booking;
 
 import com.eleven.booking.domain.core.AbstractEntity;
-import com.eleven.core.domain.values.DateRange;
+import com.eleven.hotel.api.domain.values.DateRange;
 import com.eleven.hotel.api.domain.values.SaleChannel;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -61,7 +61,7 @@ public class Booking extends AbstractEntity {
         this.personCount = personCount;
         this.stayPeriod = stayPeriod;
         this.saleChannel = saleChannel;
-        this.amount = plan.charge(saleChannel,personCount);
+        this.amount = plan.charge(saleChannel, personCount);
     }
 
 }

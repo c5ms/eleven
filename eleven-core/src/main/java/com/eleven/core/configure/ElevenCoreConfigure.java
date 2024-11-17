@@ -38,7 +38,6 @@ import java.time.format.DateTimeFormatter;
 class ElevenCoreConfigure {
     private final ElevenCoreProperties coreProperties;
 
-
     @Bean
     ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
@@ -84,6 +83,7 @@ class ElevenCoreConfigure {
                 new Jdk8Module(),
                 new JavaTimeModule(),
                 new Hibernate6Module()
+                    .enable(Hibernate6Module.Feature.FORCE_LAZY_LOADING)
             );
     }
 

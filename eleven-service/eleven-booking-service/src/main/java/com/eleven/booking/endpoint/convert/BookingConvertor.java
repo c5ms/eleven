@@ -2,7 +2,6 @@ package com.eleven.booking.endpoint.convert;
 
 import com.eleven.booking.api.endpoint.request.BookingCreateRequest;
 import com.eleven.booking.application.command.BookingCreateCommand;
-import com.eleven.core.domain.values.DateRange;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -20,7 +19,6 @@ public class BookingConvertor {
             .planId(request.getPlanId())
             .roomId(request.getRoomId())
             .personCount(request.getPersonCount())
-            .stayPeriod(DateRange.of(request.getCheckInDate(), request.getCheckOutDate()))
             .saleChannel(request.getSaleChannel())
             .build();
     }

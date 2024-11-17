@@ -1,14 +1,14 @@
 package com.eleven.hotel.interfaces.resource;
 
 import com.eleven.core.application.query.PageResult;
-import com.eleven.core.interfaces.rest.annonation.AsResourceApi;
-import com.eleven.hotel.api.domain.values.ChargeType;
-import com.eleven.hotel.api.domain.values.SaleChannel;
-import com.eleven.hotel.api.interfaces.dto.PlanCreateRequest;
-import com.eleven.hotel.api.interfaces.dto.PlanQueryRequest;
-import com.eleven.hotel.api.interfaces.dto.PlanUpdateRequest;
-import com.eleven.hotel.api.interfaces.vo.PlanDetail;
-import com.eleven.hotel.api.interfaces.vo.PlanDto;
+import com.eleven.core.interfaces.web.annonation.AsRestApi;
+import com.eleven.hotel.api.domain.enums.ChargeType;
+import com.eleven.hotel.api.domain.enums.SaleChannel;
+import com.eleven.hotel.api.interfaces.request.PlanCreateRequest;
+import com.eleven.hotel.api.interfaces.request.PlanQueryRequest;
+import com.eleven.hotel.api.interfaces.request.PlanUpdateRequest;
+import com.eleven.hotel.api.interfaces.dto.PlanDetail;
+import com.eleven.hotel.api.interfaces.dto.PlanDto;
 import com.eleven.hotel.application.command.PlanSetPriceCommand;
 import com.eleven.hotel.application.service.PlanService;
 import com.eleven.hotel.domain.model.plan.PlanKey;
@@ -26,7 +26,7 @@ import java.util.Optional;
 
 
 @Slf4j
-@AsResourceApi
+@AsRestApi
 @RequiredArgsConstructor
 @Tag(name = "plan")
 @RequestMapping("/hotels/{hotelId:[0-9]+}/plans")

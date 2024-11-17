@@ -1,6 +1,6 @@
 package com.eleven.hotel.domain.model.plan;
 
-import com.eleven.hotel.api.domain.values.SaleChannel;
+import com.eleven.hotel.api.domain.enums.SaleChannel;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

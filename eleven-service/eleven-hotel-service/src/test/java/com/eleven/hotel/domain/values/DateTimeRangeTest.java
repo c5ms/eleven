@@ -16,7 +16,7 @@ class DateTimeRangeTest {
         assertEquals(range1.getStart(), LocalDateTime.of(2024, 11, 15, 0, 0));
         assertEquals(range1.getEnd(), LocalDateTime.of(2024, 11, 18, 0, 0));
 
-        assertThrows(IllegalArgumentException.class,() -> new DateRange(LocalDate.of(2024, 11, 15), LocalDate.of(2024, 11, 14)));
+        assertThrows(IllegalArgumentException.class, () -> new DateRange(LocalDate.of(2024, 11, 15), LocalDate.of(2024, 11, 14)));
     }
 
     @Test

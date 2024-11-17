@@ -24,10 +24,6 @@ public class DateTimeRange {
     }
 
     public DateTimeRange(LocalDateTime start, LocalDateTime end) {
-        if (null != start && null != end) {
-            Validate.isTrue(start.isBefore(end), "start must before end");
-        }
-
         this.start = start;
         this.end = end;
     }
@@ -94,13 +90,7 @@ public class DateTimeRange {
         if (isEmpty()) {
             return false;
         }
-        if (start.isAfter(time)) {
-            return false;
-        }
-        if (end.isBefore(time)) {
-            return false;
-        }
-        return start.isBefore(end);
+        return time.isAfter(this.start) && time.isBefore(this.end);
     }
 
     public boolean contains(DateTimeRange range) {

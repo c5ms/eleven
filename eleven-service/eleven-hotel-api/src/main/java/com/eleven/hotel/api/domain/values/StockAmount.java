@@ -1,20 +1,22 @@
 package com.eleven.hotel.api.domain.values;
 
+import jakarta.persistence.Embeddable;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Value;
 
 
-@Value
+@Data
+@Embeddable
 @EqualsAndHashCode
 public class StockAmount {
 
-    Integer count;
+    private Integer count;
 
     public static StockAmount of(Integer amount) {
         return new StockAmount(amount);
     }
 
-    StockAmount() {
+    protected StockAmount() {
         this.count = 0;
     }
 

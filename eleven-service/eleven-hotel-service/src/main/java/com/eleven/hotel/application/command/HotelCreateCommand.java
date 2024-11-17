@@ -1,9 +1,9 @@
 package com.eleven.hotel.application.command;
 
 import com.eleven.hotel.domain.model.hotel.HotelBasic;
-import com.eleven.hotel.domain.values.Address;
-import com.eleven.hotel.domain.values.CheckPolicy;
-import com.eleven.hotel.domain.values.Position;
+import com.eleven.hotel.domain.model.hotel.values.Address;
+import com.eleven.hotel.domain.model.hotel.values.CheckPolicy;
+import com.eleven.hotel.domain.model.hotel.values.Position;
 import lombok.Builder;
 import lombok.Getter;
 

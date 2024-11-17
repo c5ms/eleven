@@ -1,18 +1,14 @@
 package com.eleven.hotel.interfaces;
 
-import com.eleven.hotel.interfaces.rest.external.RegisterMerchantApi;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class TestMvc {
 
-    @Autowired
-    RegisterMerchantApi registerMerchantApi;
 
     @Test
     void registerHotelTest() {

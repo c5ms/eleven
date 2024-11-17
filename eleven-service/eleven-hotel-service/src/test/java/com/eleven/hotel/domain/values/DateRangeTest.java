@@ -13,12 +13,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class DateRangeTest {
 
     @Test
-    void basic(){
+    void basic() {
         DateRange range1 = new DateRange(LocalDate.of(2024, 11, 15), LocalDate.of(2024, 11, 18));
         assertEquals(range1.getStart(), LocalDate.of(2024, 11, 15));
         assertEquals(range1.getEnd(), LocalDate.of(2024, 11, 18));
 
-        assertThrows(IllegalArgumentException.class,() -> new DateRange(LocalDate.of(2024, 11, 15), LocalDate.of(2024, 11, 14)));
+        assertThrows(IllegalArgumentException.class, () -> new DateRange(LocalDate.of(2024, 11, 15), LocalDate.of(2024, 11, 14)));
     }
 
     @Test

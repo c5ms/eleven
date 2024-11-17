@@ -1,12 +1,12 @@
 package com.eleven.hotel.interfaces.resource;
 
 import com.eleven.core.application.query.PageResult;
-import com.eleven.core.interfaces.rest.Rests;
-import com.eleven.core.interfaces.rest.annonation.AsResourceApi;
-import com.eleven.hotel.api.interfaces.dto.HotelCreateRequest;
-import com.eleven.hotel.api.interfaces.dto.HotelQueryRequest;
-import com.eleven.hotel.api.interfaces.dto.HotelUpdateRequest;
-import com.eleven.hotel.api.interfaces.vo.HotelDto;
+import com.eleven.core.interfaces.web.Rests;
+import com.eleven.core.interfaces.web.annonation.AsRestApi;
+import com.eleven.hotel.api.interfaces.request.HotelCreateRequest;
+import com.eleven.hotel.api.interfaces.request.HotelQueryRequest;
+import com.eleven.hotel.api.interfaces.request.HotelUpdateRequest;
+import com.eleven.hotel.api.interfaces.dto.HotelDto;
 import com.eleven.hotel.application.command.HotelQuery;
 import com.eleven.hotel.application.service.HotelService;
 import com.eleven.hotel.application.support.HotelContext;
@@ -23,7 +23,7 @@ import java.util.Optional;
 
 
 @Slf4j
-@AsResourceApi
+@AsRestApi
 @RequiredArgsConstructor
 @Tag(name = "hotel")
 @RequestMapping("/hotels")

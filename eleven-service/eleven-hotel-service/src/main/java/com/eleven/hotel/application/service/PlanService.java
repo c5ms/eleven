@@ -1,7 +1,7 @@
 package com.eleven.hotel.application.service;
 
 import com.eleven.core.application.query.PageResult;
-import com.eleven.hotel.api.domain.values.SaleChannel;
+import com.eleven.hotel.api.domain.enums.SaleChannel;
 import com.eleven.hotel.application.command.*;
 import com.eleven.hotel.application.support.HotelContext;
 import com.eleven.hotel.domain.errors.HotelErrors;

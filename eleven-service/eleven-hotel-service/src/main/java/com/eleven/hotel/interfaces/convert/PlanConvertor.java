@@ -2,12 +2,12 @@ package com.eleven.hotel.interfaces.convert;
 
 import com.eleven.hotel.api.domain.values.DateRange;
 import com.eleven.hotel.api.domain.values.DateTimeRange;
-import com.eleven.hotel.api.domain.values.SaleChannel;
-import com.eleven.hotel.api.interfaces.vo.PlanDetail;
-import com.eleven.hotel.api.interfaces.vo.PlanDto;
-import com.eleven.hotel.api.interfaces.dto.PlanCreateRequest;
-import com.eleven.hotel.api.interfaces.dto.PlanQueryRequest;
-import com.eleven.hotel.api.interfaces.dto.PlanUpdateRequest;
+import com.eleven.hotel.api.domain.enums.SaleChannel;
+import com.eleven.hotel.api.interfaces.dto.PlanDetail;
+import com.eleven.hotel.api.interfaces.dto.PlanDto;
+import com.eleven.hotel.api.interfaces.request.PlanCreateRequest;
+import com.eleven.hotel.api.interfaces.request.PlanQueryRequest;
+import com.eleven.hotel.api.interfaces.request.PlanUpdateRequest;
 import com.eleven.hotel.application.command.PlanCreateCommand;
 import com.eleven.hotel.application.command.PlanQuery;
 import com.eleven.hotel.application.command.PlanUpdateCommand;
@@ -82,7 +82,6 @@ public class PlanConvertor {
             .setRoomId(product.getKey().getRoomId())
             .setName(product.getRoom().getBasic().getName())
             .setDesc(product.getRoom().getBasic().getDesc())
-            .setHeadPicUrl(product.getRoom().getBasic().getHeadPicUrl())
             .setMinPerson(product.getRoom().getOccupancy().getMinPerson())
             .setMaxPerson(product.getRoom().getOccupancy().getMaxPerson())
             .setStock(product.getStock().getCount())

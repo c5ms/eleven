@@ -1,7 +1,7 @@
 package com.eleven.hotel.domain.model.plan;
 
-import com.eleven.hotel.api.domain.values.ChargeType;
-import com.eleven.hotel.api.domain.values.SaleChannel;
+import com.eleven.hotel.api.domain.enums.ChargeType;
+import com.eleven.hotel.api.domain.enums.SaleChannel;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldNameConstants;

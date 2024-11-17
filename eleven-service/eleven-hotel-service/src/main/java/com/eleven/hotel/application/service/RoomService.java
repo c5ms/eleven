@@ -37,7 +37,14 @@ public class RoomService {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(NoPrincipalException::new);
 
         // create the room
-        var room = Room.of(hotel.getHotelId(), command.getBasic(), command.getRestriction(),command.getStayPeriod(), command.getCount());
+        var room = Room.builder()
+            .hotelId(hotel.getHotelId())
+            .basic(command.getBasic())
+            .availablePeriod(command.getAvailablePeriod())
+            .quantity(command.getQuantity())
+            .restriction(command.getRestriction())
+            .images(command.getImages())
+            .build();
         roomManager.validate(room);
         roomRepository.save(room);
 

@@ -5,4 +5,5 @@ import lombok.experimental.Accessors;
 
 @Setter
 @Accessors(chain = true)
-public class PlanSaleCase { }
+public class PlanSaleCase {
+}

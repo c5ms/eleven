@@ -1,7 +1,7 @@
 package com.eleven.hotel.application.command;
 
-import com.eleven.hotel.api.domain.values.ChargeType;
-import com.eleven.hotel.api.domain.values.SaleChannel;
+import com.eleven.hotel.api.domain.enums.ChargeType;
+import com.eleven.hotel.api.domain.enums.SaleChannel;
 import lombok.Builder;
 import lombok.Getter;
 

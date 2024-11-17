@@ -1,7 +1,7 @@
 package com.eleven.booking.infrastructure;
 
-import com.eleven.booking.domain.model.booking.Hotel;
 import com.eleven.booking.application.service.HotelReader;
+import com.eleven.booking.domain.model.booking.Hotel;
 import com.eleven.hotel.api.interfaces.client.HotelClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +19,8 @@ public class RemoteHotelReader implements HotelReader {
     @Override
     public Optional<Hotel> readHotel(Long hotelId) {
         return hotelClient.readHotel(hotelId)
-                .map(RemoteHotel::new)
-                ;
+            .map(RemoteHotel::new)
+            ;
     }
 
 }

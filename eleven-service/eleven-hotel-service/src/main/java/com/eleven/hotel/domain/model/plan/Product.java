@@ -2,10 +2,10 @@ package com.eleven.hotel.domain.model.plan;
 
 import com.eleven.core.domain.error.DomainValidator;
 import com.eleven.core.domain.values.ImmutableValues;
-import com.eleven.hotel.api.domain.values.ChargeType;
-import com.eleven.hotel.api.domain.values.SaleChannel;
-import com.eleven.hotel.api.domain.values.SaleState;
-import com.eleven.hotel.api.domain.values.SaleType;
+import com.eleven.hotel.api.domain.enums.ChargeType;
+import com.eleven.hotel.api.domain.enums.SaleChannel;
+import com.eleven.hotel.api.domain.enums.SaleState;
+import com.eleven.hotel.api.domain.enums.SaleType;
 import com.eleven.hotel.domain.errors.PlanErrors;
 import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.api.domain.values.StockAmount;

@@ -1,9 +1,9 @@
 package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.hotel.domain.core.AbstractEntity;
-import com.eleven.hotel.domain.values.Address;
-import com.eleven.hotel.domain.values.CheckPolicy;
-import com.eleven.hotel.domain.values.Position;
+import com.eleven.hotel.domain.model.hotel.values.Address;
+import com.eleven.hotel.domain.model.hotel.values.CheckPolicy;
+import com.eleven.hotel.domain.model.hotel.values.Position;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,7 +25,6 @@ public class Hotel extends AbstractEntity {
     @Setter
     @Embedded
     private HotelBasic basic = HotelBasic.empty();
-
 
     @Embedded
     private Address address = Address.empty();

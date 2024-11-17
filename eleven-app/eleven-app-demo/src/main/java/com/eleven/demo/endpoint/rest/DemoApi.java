@@ -1,7 +1,7 @@
 package com.eleven.demo.endpoint.rest;
 
 import com.eleven.hotel.api.interfaces.client.HotelClient;
-import com.eleven.hotel.api.interfaces.vo.HotelDto;
+import com.eleven.hotel.api.interfaces.dto.HotelDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -9,6 +9,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.Validate;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.stream.Stream;
 
 @Data
@@ -94,11 +95,15 @@ public class DateRange {
         if (isEmpty()) {
             return false;
         }
-        return toDateTimeRange().contains(date.atStartOfDay());
+        return date.isAfter(this.start) && date.isBefore(this.end);
     }
 
     public boolean contains(DateRange range) {
         return toDateTimeRange().contains(range.toDateTimeRange());
     }
 
+
+    public Period toPeriod() {
+        return  Period.between(this.start, this.end);
+    }
 }

@@ -1,16 +1,17 @@
 package com.eleven.hotel.interfaces.internal;
 
-import com.eleven.core.interfaces.rest.annonation.AsInternalApi;
-import com.eleven.hotel.api.domain.values.SaleChannel;
+import com.eleven.core.interfaces.web.annonation.AsInnerApi;
+import com.eleven.hotel.api.domain.enums.SaleChannel;
 import com.eleven.hotel.api.interfaces.client.HotelClient;
-import com.eleven.hotel.api.interfaces.vo.HotelDto;
-import com.eleven.hotel.api.interfaces.vo.PlanDto;
+import com.eleven.hotel.api.interfaces.dto.HotelDto;
+import com.eleven.hotel.api.interfaces.dto.PlanDto;
 import com.eleven.hotel.application.service.PlanService;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.domain.model.plan.PlanKey;
 import com.eleven.hotel.domain.model.plan.ProductKey;
 import com.eleven.hotel.interfaces.convert.HotelConvertor;
 import com.eleven.hotel.interfaces.convert.PlanConvertor;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,9 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-@Slf4j
-@AsInternalApi
+@Hidden
 @Tag(name = "internal")
+@Slf4j
+@AsInnerApi
 @RequiredArgsConstructor
 public class HotelApi implements HotelClient {
 

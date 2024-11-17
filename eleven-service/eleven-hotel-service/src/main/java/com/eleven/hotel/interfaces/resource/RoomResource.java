@@ -1,9 +1,9 @@
 package com.eleven.hotel.interfaces.resource;
 
-import com.eleven.core.interfaces.rest.annonation.AsResourceApi;
-import com.eleven.hotel.api.interfaces.dto.RoomCreateRequest;
-import com.eleven.hotel.api.interfaces.dto.RoomUpdateRequest;
-import com.eleven.hotel.api.interfaces.vo.RoomDto;
+import com.eleven.core.interfaces.web.annonation.AsRestApi;
+import com.eleven.hotel.api.interfaces.request.RoomCreateRequest;
+import com.eleven.hotel.api.interfaces.request.RoomUpdateRequest;
+import com.eleven.hotel.api.interfaces.dto.RoomDto;
 import com.eleven.hotel.application.service.RoomService;
 import com.eleven.hotel.domain.model.hotel.RoomKey;
 import com.eleven.hotel.interfaces.convert.RoomConvertor;
@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
-@AsResourceApi
+@AsRestApi
 @RequiredArgsConstructor
 @Tag(name = "room")
 @RequestMapping("/hotels/{hotelId:[0-9]+}/rooms")

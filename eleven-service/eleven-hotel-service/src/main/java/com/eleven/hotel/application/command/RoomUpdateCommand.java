@@ -6,11 +6,14 @@ import com.eleven.hotel.domain.model.hotel.RoomOccupancy;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.Set;
+
 @Getter
 @Builder
 public class RoomUpdateCommand {
     private RoomBasic basic;
-    private DateRange stayPeriod;
     private RoomOccupancy restriction;
-    private Integer count;
+    private Integer quantity;
+    private DateRange availablePeriod;
+    private Set<String> images;
 }

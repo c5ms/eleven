@@ -1,5 +1,6 @@
 package com.eleven.hotel.domain.manager;
 
+import com.eleven.hotel.domain.errors.HotelErrors;
 import com.eleven.hotel.domain.model.hotel.Hotel;
 import com.eleven.hotel.domain.model.hotel.HotelValidator;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ public class HotelManager {
 
     public void validate(Hotel hotel) {
         hotelValidators.forEach(validator -> validator.validate(hotel));
+        throw HotelErrors.REGISTER_NOT_REVIEWABLE.toException();
     }
 
 }

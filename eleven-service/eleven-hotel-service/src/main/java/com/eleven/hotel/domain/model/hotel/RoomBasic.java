@@ -16,19 +16,23 @@ import org.apache.commons.lang3.Validate;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public final class RoomBasic {
 
-    @Column(name = "room_name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "room_desc")
+    @Column(name = "desc")
     private String desc;
 
-    @Column(name = "room_pic_url")
-    private String headPicUrl;
+    @Column(name = "area")
+    private Integer area;
 
-    public RoomBasic(String name,  String desc, String headPicUrl) {
+    @Column(name = "floor")
+    private Integer floor;
+
+    public RoomBasic(String name,  String desc,Integer area, Integer floor) {
         Validate.notNull(name, "name must not null");
         this.name = name;
         this.desc = desc;
-        this.headPicUrl = headPicUrl;
+        this.area = area;
+        this.floor = floor;
     }
 }
