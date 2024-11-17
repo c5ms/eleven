@@ -1,4 +1,4 @@
-package com.eleven.hotel.domain.model.hotel;
+package com.eleven.hotel.domain.model.hotel.values;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -11,15 +11,15 @@ import lombok.experimental.FieldNameConstants;
 @Embeddable
 @FieldNameConstants
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public final class RoomOccupancy {
+public final class Occupancy {
 
-    @Column(name = "restrict_max_person")
+    @Column(name = "occupancy_max")
     private Integer maxPerson;
 
-    @Column(name = "restrict_min_person")
+    @Column(name = "occupancy_min")
     private Integer minPerson;
 
-    public RoomOccupancy(Integer minPerson, Integer maxPerson) {
+    public Occupancy(Integer minPerson, Integer maxPerson) {
         this.maxPerson = maxPerson;
         this.minPerson = minPerson;
     }

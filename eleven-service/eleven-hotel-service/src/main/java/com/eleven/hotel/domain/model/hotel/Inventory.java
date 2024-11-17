@@ -33,13 +33,13 @@ public class Inventory extends AbstractEntity {
     }
 
     @Builder
-    public static Inventory of(Room room, LocalDate date) {
-        var inventoryKey = InventoryKey.of(room.toKey(), date);
+    public static Inventory of(RoomKey roomKey, LocalDate date,StockAmount stock) {
+        var inventoryKey = InventoryKey.of(roomKey, date);
 
         var inventory = new Inventory();
         inventory.setKey(inventoryKey);
-        inventory.setStockTotal(StockAmount.of(room.getQuantity()));
-        inventory.setStockLeft(StockAmount.of(room.getQuantity()));
+        inventory.setStockTotal(stock);
+        inventory.setStockLeft(stock);
         inventory.setIsValid(true);
         return inventory;
     }

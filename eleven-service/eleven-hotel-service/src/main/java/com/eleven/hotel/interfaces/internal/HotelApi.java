@@ -9,8 +9,9 @@ import com.eleven.hotel.application.service.PlanService;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.domain.model.plan.PlanKey;
 import com.eleven.hotel.domain.model.plan.ProductKey;
-import com.eleven.hotel.interfaces.convert.HotelConvertor;
-import com.eleven.hotel.interfaces.convert.PlanConvertor;
+import com.eleven.hotel.interfaces.assembler.HotelAssembler;
+import com.eleven.hotel.interfaces.converter.HotelConverter;
+import com.eleven.hotel.interfaces.converter.PlanConverter;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -27,20 +28,20 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class HotelApi implements HotelClient {
 
-    private final HotelConvertor hotelConvertor;
     private final HotelRepository hotelRepository;
     private final PlanService planService;
-    private final PlanConvertor planConvertor;
+    private final PlanConverter planConverter;
+    private final HotelAssembler hotelAssembler;
 
     @Override
     public Optional<HotelDto> readHotel(@RequestParam("hotelId") Long hotelId) {
-        return hotelRepository.findById(hotelId).map(hotelConvertor::toDto);
+        return hotelRepository.findById(hotelId).map(hotelAssembler::assembleDto);
     }
 
     @Override
     public Optional<PlanDto> readPlan(@RequestParam("hotelId") Long hotelId, @RequestParam("planId") Long planId) {
         var planKye= PlanKey.of(hotelId, planId);
-        return planService.readPlan(planKye).map(planConvertor::toDetail);
+        return planService.readPlan(planKye).map(planConverter::toDetail);
     }
 
     @Override

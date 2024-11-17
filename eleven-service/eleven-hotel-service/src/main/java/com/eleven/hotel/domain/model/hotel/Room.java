@@ -1,6 +1,7 @@
 package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.hotel.api.domain.values.DateRange;
+import com.eleven.hotel.api.domain.values.StockAmount;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
@@ -33,18 +34,8 @@ public class Room extends AbstractEntity {
     @Column(name = "hotel_id")
     private Long hotelId;
 
-    @Setter
-    @Embedded
-    private RoomBasic basic;
-
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "room_image", joinColumns = @JoinColumn(name = "room_id", referencedColumnName = "room_id"))
-    @Column(name = "image_url", length = 200)
-    private Set<String> images = new HashSet<>();
-
-    @Setter
-    @Embedded
-    private RoomOccupancy occupancy;
+    @Column(name = "active")
+    private Boolean active = true;
 
     @Column(name = "quantity")
     private Integer quantity;
@@ -54,24 +45,31 @@ public class Room extends AbstractEntity {
     @AttributeOverride(name = "end", column = @Column(name = "available_period_end"))
     private DateRange availablePeriod;
 
-    protected Room() {
+    @Setter
+    @Embedded
+    private RoomBasic basic;
 
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "room_image", joinColumns = @JoinColumn(name = "room_id", referencedColumnName = "room_id"))
+    @Column(name = "image_url", length = 200)
+    private Set<String> images = new HashSet<>();
+
+    protected Room() {
     }
 
     @Builder
     public static Room of(Long hotelId,
-                          RoomBasic basic,
-                          RoomOccupancy restriction,
                           DateRange availablePeriod,
+                          RoomBasic basic,
                           Set<String> images,
                           Integer quantity) {
         var room = new Room();
         room.setHotelId(hotelId);
         room.setBasic(basic);
-        room.setOccupancy(restriction);
         room.setQuantity(quantity);
         room.setAvailablePeriod(availablePeriod);
         room.setImages(images);
+        room.setActive(true);
         return room;
     }
 
@@ -80,13 +78,22 @@ public class Room extends AbstractEntity {
             return new ArrayList<>();
         }
         var inventoryBuilder = Inventory.builder()
-            .room(this);
+            .roomKey(this.toKey())
+            .stock(StockAmount.of(this.quantity));
         return getAvailablePeriod()
             .dates()
             .filter(localDate -> localDate.isAfter(LocalDate.now()))
             .map(inventoryBuilder::date)
             .map(Inventory.InventoryBuilder::build)
             .collect(Collectors.toList());
+    }
+
+    public void deactivate() {
+        this.active=false;
+    }
+
+    public void active() {
+        this.active=true;
     }
 
     @Nonnull

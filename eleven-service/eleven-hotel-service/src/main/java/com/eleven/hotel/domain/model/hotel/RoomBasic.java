@@ -1,10 +1,11 @@
 package com.eleven.hotel.domain.model.hotel;
 
+import com.eleven.hotel.domain.model.hotel.values.Occupancy;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.Embedded;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
@@ -28,11 +29,16 @@ public final class RoomBasic {
     @Column(name = "floor")
     private Integer floor;
 
-    public RoomBasic(String name,  String desc,Integer area, Integer floor) {
+    @Embedded
+    private Occupancy occupancy;
+
+    @Builder
+    public RoomBasic(String name, String desc, Integer area, Integer floor, Occupancy occupancy) {
         Validate.notNull(name, "name must not null");
         this.name = name;
         this.desc = desc;
         this.area = area;
         this.floor = floor;
+        this.occupancy = occupancy;
     }
 }

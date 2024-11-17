@@ -42,7 +42,6 @@ public class RoomService {
             .basic(command.getBasic())
             .availablePeriod(command.getAvailablePeriod())
             .quantity(command.getQuantity())
-            .restriction(command.getRestriction())
             .images(command.getImages())
             .build();
         roomManager.validate(room);
@@ -68,8 +67,6 @@ public class RoomService {
     public Room updateRoom(RoomKey roomKey, RoomUpdateCommand command) {
         var room = roomRepository.findByRoomKey(roomKey).orElseThrow(HotelContext::noPrincipalException);
 
-        Optional.ofNullable(command.getBasic()).ifPresent(room::setBasic);
-        Optional.ofNullable(command.getRestriction()).ifPresent(room::setOccupancy);
         roomManager.validate(room);
         roomRepository.saveAndFlush(room);
 

@@ -1,4 +1,4 @@
-package com.eleven.hotel.interfaces.convert;
+package com.eleven.hotel.interfaces.converter;
 
 import com.eleven.hotel.api.domain.values.DateRange;
 import com.eleven.hotel.api.domain.values.DateTimeRange;
@@ -27,8 +27,7 @@ import java.util.Optional;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class PlanConvertor {
-    public final ValuesConvertor values;
+public class PlanConverter {
     private final ModelMapper modelMapper;
     private final RoomRepository roomRepository;
 
@@ -82,8 +81,6 @@ public class PlanConvertor {
             .setRoomId(product.getKey().getRoomId())
             .setName(product.getRoom().getBasic().getName())
             .setDesc(product.getRoom().getBasic().getDesc())
-            .setMinPerson(product.getRoom().getOccupancy().getMinPerson())
-            .setMaxPerson(product.getRoom().getOccupancy().getMaxPerson())
             .setStock(product.getStock().getCount())
             .setChargeType(product.getChargeType())
             .setSaleState(product.getSaleState())
