@@ -1,6 +1,6 @@
 package com.eleven.hotel.interfaces.convert;
 
-import com.eleven.hotel.api.application.constants.HotelConstants;
+import com.eleven.hotel.api.interfaces.constants.HotelConstants;
 import com.eleven.hotel.api.interfaces.dto.HotelDto;
 import com.eleven.hotel.api.interfaces.request.HotelCreateRequest;
 import com.eleven.hotel.api.interfaces.request.HotelUpdateRequest;
@@ -71,8 +71,8 @@ public class HotelConvertor {
                         request.getAddress()
                 ))
                 .checkPolicy(new CheckPolicy(
-                        LocalTime.parse(request.getCheckIn(), HotelConstants.FORMATTER_HOUR_MINUTES),
-                        LocalTime.parse(request.getCheckOut(), HotelConstants.FORMATTER_HOUR_MINUTES)
+                        LocalTime.parse(request.getCheckIn(), HotelConstants.FORMATTER_HH_MM),
+                        LocalTime.parse(request.getCheckOut(), HotelConstants.FORMATTER_HH_MM)
                 ))
                 .build();
     }

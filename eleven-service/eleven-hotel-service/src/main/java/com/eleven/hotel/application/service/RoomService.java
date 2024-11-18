@@ -3,9 +3,10 @@ package com.eleven.hotel.application.service;
 import com.eleven.core.application.authorize.NoPrincipalException;
 import com.eleven.hotel.application.command.RoomCreateCommand;
 import com.eleven.hotel.application.command.RoomUpdateCommand;
+import com.eleven.hotel.application.query.RoomQuery;
 import com.eleven.hotel.application.support.HotelContext;
-import com.eleven.hotel.domain.service.RoomManager;
 import com.eleven.hotel.domain.model.hotel.*;
+import com.eleven.hotel.domain.service.RoomManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,15 +23,7 @@ public class RoomService {
     private final HotelRepository hotelRepository;
     private final InventoryRepository inventoryRepository;
 
-    @Transactional(readOnly = true)
-    public Collection<Room> listRoom(Long hotelId) {
-        return roomRepository.findByHotelId(hotelId);
-    }
 
-    @Transactional(readOnly = true)
-    public Optional<Room> readRoom(RoomKey roomKey) {
-        return roomRepository.findByRoomKey(roomKey);
-    }
 
     @Transactional(rollbackFor = Exception.class)
     public Room createRoom(Long hotelId, RoomCreateCommand command) {

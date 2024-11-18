@@ -1,5 +1,6 @@
 package com.eleven.core.interfaces.web;
 
+import com.eleven.core.interfaces.model.PageResponse;
 import com.eleven.core.interfaces.web.annonation.AsInnerApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
@@ -20,6 +21,7 @@ import java.util.Optional;
 @ControllerAdvice
 @RequiredArgsConstructor
 public class ElevenResponseHandler implements ResponseBodyAdvice<Object> {
+    public static final String HTTP_HEADER_TOTAL_COUNT = "X-Total-Count";
 
     @Override
     public boolean supports(@NonNull MethodParameter returnType,
@@ -74,6 +76,12 @@ public class ElevenResponseHandler implements ResponseBodyAdvice<Object> {
                 response.setStatusCode(HttpStatus.ACCEPTED);
             }
         }
+
+        if (body instanceof PageResponse<?> pageResponse) {
+            response.getHeaders().set(HTTP_HEADER_TOTAL_COUNT, String.valueOf(pageResponse.getTotal()));
+            body = pageResponse.getItems();
+        }
+
         return body;
     }
 
