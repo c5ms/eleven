@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class HotelQueryRequest {
+public class HotelQueryRequest  {
 
     @Schema(description = "hotel name")
     private String hotelName;

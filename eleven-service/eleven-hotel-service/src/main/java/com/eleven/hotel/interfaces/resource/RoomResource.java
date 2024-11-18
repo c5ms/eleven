@@ -1,9 +1,9 @@
 package com.eleven.hotel.interfaces.resource;
 
 import com.eleven.core.interfaces.web.annonation.AsRestApi;
+import com.eleven.hotel.api.interfaces.dto.RoomDto;
 import com.eleven.hotel.api.interfaces.request.RoomCreateRequest;
 import com.eleven.hotel.api.interfaces.request.RoomUpdateRequest;
-import com.eleven.hotel.api.interfaces.dto.RoomDto;
 import com.eleven.hotel.application.service.RoomService;
 import com.eleven.hotel.domain.model.hotel.RoomKey;
 import com.eleven.hotel.interfaces.convert.RoomConvertor;
@@ -32,9 +32,9 @@ public class RoomResource {
     @GetMapping
     public List<RoomDto> listRoom(@PathVariable("hotelId") Long hotelId) {
         return roomService.listRoom(hotelId)
-            .stream()
-            .map(roomConvertor::toDto)
-            .collect(Collectors.toList());
+                .stream()
+                .map(roomConvertor::toDto)
+                .collect(Collectors.toList());
     }
 
     @Operation(summary = "read room")

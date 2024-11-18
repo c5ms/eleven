@@ -1,14 +1,16 @@
 package com.eleven.hotel.interfaces.resource;
 
-import com.eleven.core.application.query.PageResult;
+import com.eleven.core.interfaces.model.PageRequest;
+import com.eleven.core.interfaces.model.PageResponse;
 import com.eleven.core.interfaces.web.Rests;
 import com.eleven.core.interfaces.web.annonation.AsRestApi;
+import com.eleven.hotel.api.interfaces.dto.HotelDto;
 import com.eleven.hotel.api.interfaces.request.HotelCreateRequest;
 import com.eleven.hotel.api.interfaces.request.HotelQueryRequest;
 import com.eleven.hotel.api.interfaces.request.HotelUpdateRequest;
-import com.eleven.hotel.api.interfaces.dto.HotelDto;
-import com.eleven.hotel.application.command.HotelQuery;
 import com.eleven.hotel.application.service.HotelService;
+import com.eleven.hotel.application.query.HotelQuery;
+import com.eleven.hotel.application.query.filter.HotelFilter;
 import com.eleven.hotel.application.support.HotelContext;
 import com.eleven.hotel.interfaces.convert.HotelConvertor;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,23 +31,26 @@ import java.util.Optional;
 @RequestMapping("/hotels")
 public class HotelResource {
 
+    private final HotelQuery hotelQuery;
     private final HotelService hotelService;
     private final HotelConvertor hotelConvertor;
 
     @Operation(summary = "query hotel")
     @GetMapping
-    public PageResult<HotelDto> queryHotel(@ParameterObject @Validated HotelQueryRequest request) {
-        var command = HotelQuery.builder()
-            .hotelName(request.getHotelName())
-            .build();
-        return hotelService.query(command).map(hotelConvertor::toDto);
+    public PageResponse<HotelDto> queryHotel(@ParameterObject @Validated HotelQueryRequest request,
+                                             @ParameterObject @Validated PageRequest pageRequest) {
+        var filter = HotelFilter.builder()
+                .hotelName(request.getHotelName())
+                .build();
+        var page = hotelQuery.queryPage(filter, pageRequest.toPagerequest()).map(hotelConvertor::toDto);
+        return PageResponse.of(page.getContent(), page.getTotalElements());
     }
 
 
     @Operation(summary = "read hotel")
     @GetMapping("/{hotelId:[0-9]+}")
     public Optional<HotelDto> readHotel(@PathVariable("hotelId") Long hotelId) {
-        return hotelService.read(hotelId).map(hotelConvertor::toDto);
+        return hotelQuery.read(hotelId).map(hotelConvertor::toDto);
     }
 
 
@@ -68,15 +73,18 @@ public class HotelResource {
     @Operation(summary = "open hotel")
     @PostMapping("/{hotelId:[0-9]+}/commands/open")
     public void openHotel(@PathVariable("hotelId") Long hotelId) {
+        hotelQuery.read(hotelId)
+                .filter(HotelContext::mustWritable)
+                .orElseThrow(Rests::throw404);
         hotelService.open(hotelId);
     }
 
     @Operation(summary = "close hotel")
     @PostMapping("/{hotelId:[0-9]+]}/commands/close")
     public void closeHotel(@PathVariable("hotelId") Long hotelId) {
-        hotelService.read(hotelId)
-            .filter(HotelContext::mustWritable)
-            .orElseThrow(Rests::throw404);
+        hotelQuery.read(hotelId)
+                .filter(HotelContext::mustWritable)
+                .orElseThrow(Rests::throw404);
         hotelService.close(hotelId);
     }
 }

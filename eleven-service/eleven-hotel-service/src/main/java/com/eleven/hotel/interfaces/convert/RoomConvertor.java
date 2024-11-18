@@ -1,9 +1,8 @@
 package com.eleven.hotel.interfaces.convert;
 
-import com.eleven.hotel.api.domain.values.DateRange;
+import com.eleven.hotel.api.interfaces.dto.RoomDto;
 import com.eleven.hotel.api.interfaces.request.RoomCreateRequest;
 import com.eleven.hotel.api.interfaces.request.RoomUpdateRequest;
-import com.eleven.hotel.api.interfaces.dto.RoomDto;
 import com.eleven.hotel.api.interfaces.vo.DateRangeVo;
 import com.eleven.hotel.application.command.RoomCreateCommand;
 import com.eleven.hotel.application.command.RoomUpdateCommand;
@@ -22,37 +21,37 @@ public class RoomConvertor {
 
     public RoomDto toDto(Room room) {
         return new RoomDto()
-            .setRoomId(room.getRoomId())
-            .setHotelId(room.getHotelId())
-            .setQuantity(room.getQuantity())
-            .setImages(room.getImages())
-            .setAvailablePeriod(DateRangeVo.from(room.getAvailablePeriod()))
-            .setName(room.getBasic().getName())
-            .setDesc(room.getBasic().getDesc())
-            .setArea(room.getBasic().getArea())
-            .setFloor(room.getBasic().getFloor())
-            .setMinPerson(room.getOccupancy().getMinPerson())
-            .setMaxPerson(room.getOccupancy().getMaxPerson())
-            ;
+                .setRoomId(room.getRoomId())
+                .setHotelId(room.getHotelId())
+                .setQuantity(room.getQuantity())
+                .setImages(room.getImages())
+                .setAvailablePeriod(DateRangeVo.from(room.getAvailablePeriod()))
+                .setName(room.getBasic().getName())
+                .setDesc(room.getBasic().getDesc())
+                .setArea(room.getBasic().getArea())
+                .setFloor(room.getBasic().getFloor())
+                .setMinPerson(room.getOccupancy().getMinPerson())
+                .setMaxPerson(room.getOccupancy().getMaxPerson())
+                ;
     }
 
     public RoomCreateCommand toCommand(RoomCreateRequest request) {
         return RoomCreateCommand.builder()
-            .basic(new RoomBasic(request.getName(), request.getDesc(),request.getArea(),request.getFloor()))
-            .restriction(new RoomOccupancy(request.getMinPerson(), request.getMaxPerson()))
-            .availablePeriod(request.getAvailablePeriod().toDateRange())
-            .images(request.getImages())
-            .quantity(request.getQuantity())
-            .build();
+                .basic(new RoomBasic(request.getName(), request.getDesc(), request.getArea(), request.getFloor()))
+                .restriction(new RoomOccupancy(request.getMinPerson(), request.getMaxPerson()))
+                .availablePeriod(request.getAvailablePeriod().toDateRange())
+                .images(request.getImages())
+                .quantity(request.getQuantity())
+                .build();
     }
 
     public RoomUpdateCommand toCommand(RoomUpdateRequest request) {
         return RoomUpdateCommand.builder()
-            .basic(new RoomBasic(request.getName(), request.getDesc(),request.getArea(),request.getFloor()))
-            .restriction(new RoomOccupancy(request.getMinPerson(), request.getMaxPerson()))
-            .availablePeriod(request.getAvailablePeriod().toDateRange())
-            .images(request.getImages())
-            .quantity(request.getQuantity())
-            .build();
+                .basic(new RoomBasic(request.getName(), request.getDesc(), request.getArea(), request.getFloor()))
+                .restriction(new RoomOccupancy(request.getMinPerson(), request.getMaxPerson()))
+                .availablePeriod(request.getAvailablePeriod().toDateRange())
+                .images(request.getImages())
+                .quantity(request.getQuantity())
+                .build();
     }
 }

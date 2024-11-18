@@ -1,7 +1,7 @@
 package com.eleven.core.interfaces.web.log;
 
 import cn.hutool.json.JSONUtil;
-import com.eleven.core.application.query.PageResult;
+import com.eleven.core.interfaces.model.PageResponse;
 import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
@@ -35,8 +35,8 @@ public class RequestLogResponseBodyAdvice implements ResponseBodyAdvice<Object> 
         RequestLog log = RequestLogContext.getLog();
         log.getResponse().setContentType(selectedContentType.toString());
         if (null != body) {
-            if (body instanceof PageResult<?>) {
-                log.getResponse().setBody(JSONUtil.toJsonStr(((PageResult<?>) body).withItems(Collections.emptyList())));
+            if (body instanceof PageResponse<?>) {
+                log.getResponse().setBody(JSONUtil.toJsonStr(((PageResponse<?>) body).withItems(Collections.emptyList())));
             } else {
                 log.getResponse().setBody(JSONUtil.toJsonStr(body));
             }

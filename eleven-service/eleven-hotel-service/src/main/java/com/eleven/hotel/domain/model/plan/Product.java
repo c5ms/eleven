@@ -6,9 +6,9 @@ import com.eleven.hotel.api.domain.enums.ChargeType;
 import com.eleven.hotel.api.domain.enums.SaleChannel;
 import com.eleven.hotel.api.domain.enums.SaleState;
 import com.eleven.hotel.api.domain.enums.SaleType;
+import com.eleven.hotel.api.domain.values.StockAmount;
 import com.eleven.hotel.domain.errors.PlanErrors;
 import com.eleven.hotel.domain.model.hotel.Room;
-import com.eleven.hotel.api.domain.values.StockAmount;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -106,20 +106,20 @@ public class Product {
                          BigDecimal fivePersonPrice) {
         DomainValidator.must(this.saleChannels.contains(saleChannel), PlanErrors.UN_SUPPORTED_CHANNEL);
         var price = Price.byPerson(this.getKey(),
-            saleChannel,
-            onePersonPrice,
-            twoPersonPrice,
-            threePersonPrice,
-            fourPersonPrice,
-            fivePersonPrice);
+                saleChannel,
+                onePersonPrice,
+                twoPersonPrice,
+                threePersonPrice,
+                fourPersonPrice,
+                fivePersonPrice);
         this.prices.put(price.getKey(), price);
         this.setChargeType(price.getChargeType());
     }
 
     public Optional<Price> priceOf(SaleChannel channel) {
         return getPrices().stream()
-            .filter(price -> price.is(channel))
-            .findFirst();
+                .filter(price -> price.is(channel))
+                .findFirst();
     }
 
     public ImmutableValues<SaleChannel> getSaleChannels() {
@@ -129,10 +129,6 @@ public class Product {
     public ImmutableValues<Price> getPrices() {
         return ImmutableValues.of(prices.values());
     }
-
-
-
-
 
 
     public StockAmount getStock() {

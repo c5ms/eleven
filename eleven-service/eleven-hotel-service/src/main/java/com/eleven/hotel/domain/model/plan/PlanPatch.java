@@ -1,8 +1,8 @@
 package com.eleven.hotel.domain.model.plan;
 
+import com.eleven.hotel.api.domain.enums.SaleChannel;
 import com.eleven.hotel.api.domain.values.DateRange;
 import com.eleven.hotel.api.domain.values.DateTimeRange;
-import com.eleven.hotel.api.domain.enums.SaleChannel;
 import com.eleven.hotel.api.domain.values.StockAmount;
 import lombok.Builder;
 import lombok.Getter;

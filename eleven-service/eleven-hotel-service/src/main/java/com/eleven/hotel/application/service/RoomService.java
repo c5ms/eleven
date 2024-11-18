@@ -4,7 +4,7 @@ import com.eleven.core.application.authorize.NoPrincipalException;
 import com.eleven.hotel.application.command.RoomCreateCommand;
 import com.eleven.hotel.application.command.RoomUpdateCommand;
 import com.eleven.hotel.application.support.HotelContext;
-import com.eleven.hotel.domain.manager.RoomManager;
+import com.eleven.hotel.domain.service.RoomManager;
 import com.eleven.hotel.domain.model.hotel.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,13 +38,13 @@ public class RoomService {
 
         // create the room
         var room = Room.builder()
-            .hotelId(hotel.getHotelId())
-            .basic(command.getBasic())
-            .availablePeriod(command.getAvailablePeriod())
-            .quantity(command.getQuantity())
-            .restriction(command.getRestriction())
-            .images(command.getImages())
-            .build();
+                .hotelId(hotel.getHotelId())
+                .basic(command.getBasic())
+                .availablePeriod(command.getAvailablePeriod())
+                .quantity(command.getQuantity())
+                .restriction(command.getRestriction())
+                .images(command.getImages())
+                .build();
         roomManager.validate(room);
         roomRepository.save(room);
 
