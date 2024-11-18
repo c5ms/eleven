@@ -23,7 +23,7 @@ public class PlanKey implements Serializable {
     @Column(name = "plan_id", updatable = false, insertable = false)
     private Long planId;
 
-    public static PlanKey of(@NotNull Long hotelId,@NotNull Long planId) {
+    public static PlanKey of(@NotNull Long hotelId, @NotNull Long planId) {
         return new PlanKey(hotelId, planId);
     }
 

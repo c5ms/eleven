@@ -3,9 +3,10 @@ package com.eleven.hotel.application.service;
 import com.eleven.core.application.authorize.NoPrincipalException;
 import com.eleven.hotel.application.command.RoomCreateCommand;
 import com.eleven.hotel.application.command.RoomUpdateCommand;
+import com.eleven.hotel.application.query.RoomQuery;
 import com.eleven.hotel.application.support.HotelContext;
-import com.eleven.hotel.domain.manager.RoomManager;
 import com.eleven.hotel.domain.model.hotel.*;
+import com.eleven.hotel.domain.service.RoomManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,15 +23,7 @@ public class RoomService {
     private final HotelRepository hotelRepository;
     private final InventoryRepository inventoryRepository;
 
-    @Transactional(readOnly = true)
-    public Collection<Room> listRoom(Long hotelId) {
-        return roomRepository.findByHotelId(hotelId);
-    }
 
-    @Transactional(readOnly = true)
-    public Optional<Room> readRoom(RoomKey roomKey) {
-        return roomRepository.findByRoomKey(roomKey);
-    }
 
     @Transactional(rollbackFor = Exception.class)
     public Room createRoom(Long hotelId, RoomCreateCommand command) {
@@ -38,12 +31,12 @@ public class RoomService {
 
         // create the room
         var room = Room.builder()
-            .hotelId(hotel.getHotelId())
-            .basic(command.getBasic())
-            .availablePeriod(command.getAvailablePeriod())
-            .quantity(command.getQuantity())
-            .images(command.getImages())
-            .build();
+                .hotelId(hotel.getHotelId())
+                .basic(command.getBasic())
+                .availablePeriod(command.getAvailablePeriod())
+                .quantity(command.getQuantity())
+                .images(command.getImages())
+                .build();
         roomManager.validate(room);
         roomRepository.save(room);
 

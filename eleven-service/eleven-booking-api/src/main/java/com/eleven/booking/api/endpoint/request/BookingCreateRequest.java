@@ -1,6 +1,5 @@
 package com.eleven.booking.api.endpoint.request;
 
-import com.eleven.hotel.api.domain.values.SaleChannel;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,7 +28,5 @@ public class BookingCreateRequest {
     @NotNull
     private LocalDate checkOutDate;
 
-    @NotNull
-    private SaleChannel saleChannel;
 
 }

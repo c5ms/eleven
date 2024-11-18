@@ -2,7 +2,6 @@ package com.eleven.booking.domain.model.booking;
 
 import com.eleven.booking.domain.core.AbstractEntity;
 import com.eleven.hotel.api.domain.values.DateRange;
-import com.eleven.hotel.api.domain.values.SaleChannel;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

@@ -22,6 +22,6 @@ public class CheckPolicy {
     private LocalTime checkOutTime;
 
     public static CheckPolicy empty() {
-        return  new CheckPolicy();
+        return new CheckPolicy();
     }
 }

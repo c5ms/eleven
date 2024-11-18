@@ -23,6 +23,4 @@ public class Rests {
         return new ResponseStatusException(HttpStatus.FORBIDDEN);
     }
 
-
-
 }

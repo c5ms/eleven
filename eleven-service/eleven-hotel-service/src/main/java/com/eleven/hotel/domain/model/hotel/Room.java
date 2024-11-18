@@ -78,14 +78,14 @@ public class Room extends AbstractEntity {
             return new ArrayList<>();
         }
         var inventoryBuilder = Inventory.builder()
-            .roomKey(this.toKey())
+                .roomKey(this.toKey())
             .stock(StockAmount.of(this.quantity));
         return getAvailablePeriod()
-            .dates()
-            .filter(localDate -> localDate.isAfter(LocalDate.now()))
-            .map(inventoryBuilder::date)
-            .map(Inventory.InventoryBuilder::build)
-            .collect(Collectors.toList());
+                .dates()
+                .filter(localDate -> localDate.isAfter(LocalDate.now()))
+                .map(inventoryBuilder::date)
+                .map(Inventory.InventoryBuilder::build)
+                .collect(Collectors.toList());
     }
 
     public void deactivate() {

@@ -19,6 +19,11 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>com.demacia</groupId>
+            <artifactId>eleven-core</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
 
         <dependency>
             <groupId>com.demacia</groupId>

@@ -1,7 +1,7 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import com.eleven.hotel.domain.core.AbstractEntity;
 import com.eleven.hotel.api.domain.values.StockAmount;
+import com.eleven.hotel.domain.core.AbstractEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

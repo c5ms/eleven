@@ -39,7 +39,7 @@ public class PlanInventoryKey implements Serializable {
         this.setDate(date);
     }
 
-    public PlanInventoryKey(PlanKey planKey,RoomKey roomKey, LocalDate date) {
+    public PlanInventoryKey(PlanKey planKey, RoomKey roomKey, LocalDate date) {
         this.setHotelId(planKey.getHotelId());
         this.setPlanId(planKey.getPlanId());
         this.setRoomId(roomKey.getRoomId());
@@ -51,7 +51,7 @@ public class PlanInventoryKey implements Serializable {
     }
 
     public static PlanInventoryKey of(PlanKey planKey, RoomKey roomKey, LocalDate date) {
-        return new PlanInventoryKey(planKey,roomKey, date);
+        return new PlanInventoryKey(planKey, roomKey, date);
     }
 
     public PlanKey toPlanKey() {

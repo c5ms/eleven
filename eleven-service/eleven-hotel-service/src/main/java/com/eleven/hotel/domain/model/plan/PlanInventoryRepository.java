@@ -17,5 +17,5 @@ public interface PlanInventoryRepository extends JpaRepository<PlanInventory, Pl
 
     @Modifying
     @Query("delete PlanInventory where key.hotelId=:#{#key.hotelId} and key.planId=:#{#key.planId} ")
-    void deleteByPlanKey(@Param("key")PlanKey key);
+    void deleteByPlanKey(@Param("key") PlanKey key);
 }

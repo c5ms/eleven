@@ -1,16 +1,18 @@
 package com.eleven.hotel.interfaces.resource;
 
-import com.eleven.core.application.query.PageResult;
+import com.eleven.core.interfaces.model.PageResponse;
 import com.eleven.core.interfaces.web.annonation.AsRestApi;
 import com.eleven.hotel.api.domain.enums.ChargeType;
 import com.eleven.hotel.api.domain.enums.SaleChannel;
-import com.eleven.hotel.api.interfaces.request.PlanCreateRequest;
-import com.eleven.hotel.api.interfaces.request.PlanQueryRequest;
-import com.eleven.hotel.api.interfaces.request.PlanUpdateRequest;
 import com.eleven.hotel.api.interfaces.dto.PlanDetail;
 import com.eleven.hotel.api.interfaces.dto.PlanDto;
-import com.eleven.hotel.application.command.PlanSetPriceCommand;
+import com.eleven.hotel.api.interfaces.request.PlanCreateRequest;
+import com.eleven.hotel.api.interfaces.request.PlanRequestRequest;
+import com.eleven.hotel.api.interfaces.request.PlanUpdateRequest;
 import com.eleven.hotel.application.service.PlanService;
+import com.eleven.hotel.application.command.PlanSetPriceCommand;
+import com.eleven.hotel.application.query.PlanQuery;
+import com.eleven.hotel.application.query.filter.PlanFilter;
 import com.eleven.hotel.domain.model.plan.PlanKey;
 import com.eleven.hotel.interfaces.converter.PlanConverter;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,19 +36,24 @@ public class PlanResource {
 
     private final PlanService planService;
     private final PlanConverter planConverter;
+    private final PlanQuery planQuery;
 
     @Operation(summary = "query plan")
     @GetMapping
-    public PageResult<PlanDto> queryPlan(@PathVariable("hotelId") Long hotelId, @ParameterObject @Validated PlanQueryRequest request) {
-        var query = planConverter.toQuery(request);
-        return planService.queryPage(hotelId, query, request.toPagerequest()).map(planConverter::toDto);
+    public PageResponse<PlanDto> queryPlan(@PathVariable("hotelId") Long hotelId, @ParameterObject @Validated PlanRequestRequest request) {
+        var filter = PlanFilter.builder()
+                .hotelId(hotelId)
+                .planName(request.getPlanName())
+                .build();
+        var page = planQuery.queryPage(filter, request.toPagerequest()).map(planConvertor::toDto);
+        return PageResponse.of(page.getContent(), page.getTotalElements());
     }
 
     @Operation(summary = "read plan")
     @GetMapping("/{planId:[0-9]+}")
     public Optional<PlanDetail> readPlan(@PathVariable("hotelId") Long hotelId, @PathVariable("planId") Long planId) {
         var plankey = PlanKey.of(hotelId, planId);
-        return planService.readPlan(plankey).map(planConverter::toDetail);
+        return planQuery.readPlan(plankey).map(planConverter::toDetail);
     }
 
     @Operation(summary = "create plan")
@@ -83,10 +90,10 @@ public class PlanResource {
                          @PathVariable("roomId") Long roomId) {
         // todo
         var command = PlanSetPriceCommand.builder()
-            .chargeType(ChargeType.BY_ROOM)
-            .saleChannel(SaleChannel.DP)
-            .wholeRoomPrice(BigDecimal.valueOf(200))
-            .build();
+                .chargeType(ChargeType.BY_ROOM)
+                .saleChannel(SaleChannel.DP)
+                .wholeRoomPrice(BigDecimal.valueOf(200))
+                .build();
         var planKey = PlanKey.of(hotelId, planId);
         planService.setPrice(planKey, roomId, command);
     }

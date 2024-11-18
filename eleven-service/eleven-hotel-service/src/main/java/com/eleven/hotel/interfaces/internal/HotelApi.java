@@ -5,6 +5,7 @@ import com.eleven.hotel.api.domain.enums.SaleChannel;
 import com.eleven.hotel.api.interfaces.client.HotelClient;
 import com.eleven.hotel.api.interfaces.dto.HotelDto;
 import com.eleven.hotel.api.interfaces.dto.PlanDto;
+import com.eleven.hotel.application.query.PlanQuery;
 import com.eleven.hotel.application.service.PlanService;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.domain.model.plan.PlanKey;
@@ -29,6 +30,8 @@ import java.util.Optional;
 public class HotelApi implements HotelClient {
 
     private final HotelRepository hotelRepository;
+
+    private final PlanQuery planQuery;
     private final PlanService planService;
     private final PlanConverter planConverter;
     private final HotelAssembler hotelAssembler;
@@ -40,8 +43,8 @@ public class HotelApi implements HotelClient {
 
     @Override
     public Optional<PlanDto> readPlan(@RequestParam("hotelId") Long hotelId, @RequestParam("planId") Long planId) {
-        var planKye= PlanKey.of(hotelId, planId);
-        return planService.readPlan(planKye).map(planConverter::toDetail);
+        var planKye = PlanKey.of(hotelId, planId);
+        return planQuery.readPlan(planKye).map(planConverter::toDetail);
     }
 
     @Override

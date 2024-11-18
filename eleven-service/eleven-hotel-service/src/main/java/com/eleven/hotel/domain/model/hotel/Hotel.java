@@ -6,12 +6,14 @@ import com.eleven.hotel.domain.model.hotel.values.CheckPolicy;
 import com.eleven.hotel.domain.model.hotel.values.Position;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldNameConstants;
 
 @Table(name = "hotel")
 @Entity
 @Getter
 @Setter(AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@FieldNameConstants
 public class Hotel extends AbstractEntity {
 
     @Id
@@ -45,10 +47,10 @@ public class Hotel extends AbstractEntity {
     }
 
     public void deactivate() {
-        this.active=false;
+        this.active = false;
     }
 
     public void active() {
-        this.active=true;
+        this.active = true;
     }
 }
