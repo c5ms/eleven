@@ -10,8 +10,7 @@ import com.eleven.hotel.application.service.PlanService;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.domain.model.plan.PlanKey;
 import com.eleven.hotel.domain.model.plan.ProductKey;
-import com.eleven.hotel.interfaces.assembler.HotelAssembler;
-import com.eleven.hotel.interfaces.converter.HotelConverter;
+import com.eleven.hotel.interfaces.converter.HotelConvertor;
 import com.eleven.hotel.interfaces.converter.PlanConverter;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -34,11 +33,11 @@ public class HotelApi implements HotelClient {
     private final PlanQuery planQuery;
     private final PlanService planService;
     private final PlanConverter planConverter;
-    private final HotelAssembler hotelAssembler;
+    private final HotelConvertor hotelConvertor;
 
     @Override
     public Optional<HotelDto> readHotel(@RequestParam("hotelId") Long hotelId) {
-        return hotelRepository.findById(hotelId).map(hotelAssembler::assembleDto);
+        return hotelRepository.findById(hotelId).map(hotelConvertor::assembleDto);
     }
 
     @Override

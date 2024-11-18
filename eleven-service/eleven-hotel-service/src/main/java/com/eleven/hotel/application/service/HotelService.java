@@ -4,15 +4,13 @@ import com.eleven.core.domain.event.DomainEvents;
 import com.eleven.hotel.application.command.HotelCreateCommand;
 import com.eleven.hotel.application.command.HotelUpdateCommand;
 import com.eleven.hotel.application.support.HotelContext;
-import com.eleven.hotel.domain.service.HotelManager;
 import com.eleven.hotel.domain.model.hotel.Hotel;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.domain.model.hotel.HotelUpdatedEvent;
+import com.eleven.hotel.domain.service.HotelManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,11 +22,9 @@ public class HotelService {
 
     public Hotel create(HotelCreateCommand command) {
         var hotel = Hotel.builder()
-                .basic(command.getBasic())
-                .position(command.getPosition())
-                .address(command.getAddress())
-                .checkPolicy(command.getCheckPolicy())
-                .build();
+            .basic(command.getBasic())
+            .checkPolicy(command.getCheckPolicy())
+            .build();
         hotelManager.validate(hotel);
         hotelRepository.saveAndFlush(hotel);
         return hotel;
@@ -36,8 +32,7 @@ public class HotelService {
 
     public void update(Long hotelId, HotelUpdateCommand command) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
-        Optional.ofNullable(command.getBasic()).ifPresent(hotel::setBasic);
-        Optional.ofNullable(command.getPosition()).ifPresent(hotel::setPosition);
+// todo update hotel
         hotelManager.validate(hotel);
         hotelRepository.saveAndFlush(hotel);
         DomainEvents.publish(HotelUpdatedEvent.of(hotel));

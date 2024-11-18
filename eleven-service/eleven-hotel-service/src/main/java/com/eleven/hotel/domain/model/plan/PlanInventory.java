@@ -1,7 +1,7 @@
 package com.eleven.hotel.domain.model.plan;
 
 import com.eleven.core.domain.error.DomainValidator;
-import com.eleven.hotel.api.domain.values.StockAmount;
+import com.eleven.hotel.domain.model.hotel.values.StockAmount;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import com.eleven.hotel.domain.errors.PlanErrors;
 import jakarta.persistence.*;

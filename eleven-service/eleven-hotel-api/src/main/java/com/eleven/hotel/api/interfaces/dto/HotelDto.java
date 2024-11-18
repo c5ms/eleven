@@ -1,5 +1,9 @@
 package com.eleven.hotel.api.interfaces.dto;
 
+import com.eleven.hotel.api.interfaces.vo.AddressVo;
+import com.eleven.hotel.api.interfaces.vo.CheckPolicyVo;
+import com.eleven.hotel.api.interfaces.vo.HotelBasicVo;
+import com.eleven.hotel.api.interfaces.vo.PositionVo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,23 +19,8 @@ public class HotelDto {
 
     private Long hotelId;
     private Boolean active;
-
-    private String name;
-    private String description;
-    private Integer totalRoomQuantity;
-    private String phone;
-    private String email;
-
-    private LocalTime checkIn;
-    private LocalTime checkOut;
-
-    private String country;
-    private String province;
-    private String city;
-    private String location;
-    private String address;
-
-    private Double latitude;
-    private Double longitude;
-
+    private HotelBasicVo hotelBasic;
+    private AddressVo address;
+    private PositionVo position;
+    private CheckPolicyVo checkPolicy;
 }

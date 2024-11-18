@@ -1,4 +1,4 @@
-package com.eleven.hotel.api.domain.values;
+package com.eleven.hotel.domain.model.hotel.values;
 
 import jakarta.persistence.Embeddable;
 import lombok.Data;

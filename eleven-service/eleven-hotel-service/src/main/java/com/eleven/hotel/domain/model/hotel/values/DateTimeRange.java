@@ -1,4 +1,4 @@
-package com.eleven.hotel.api.domain.values;
+package com.eleven.hotel.domain.model.hotel.values;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Embeddable;
@@ -6,7 +6,6 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
 import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.Validate;
 
 import java.time.LocalDateTime;
 

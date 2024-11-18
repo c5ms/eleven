@@ -1,6 +1,5 @@
 package com.eleven.hotel.api.interfaces.request;
 
-import com.eleven.hotel.api.interfaces.dto.RoomDto;
 import com.eleven.hotel.api.interfaces.vo.DateRangeVo;
 import com.eleven.hotel.api.interfaces.vo.RoomBasicVo;
 import jakarta.validation.constraints.*;

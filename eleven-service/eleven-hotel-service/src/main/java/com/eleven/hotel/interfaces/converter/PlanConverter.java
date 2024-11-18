@@ -1,9 +1,9 @@
 package com.eleven.hotel.interfaces.converter;
 
 import com.eleven.hotel.api.domain.enums.SaleChannel;
-import com.eleven.hotel.api.domain.values.DateRange;
-import com.eleven.hotel.api.domain.values.DateTimeRange;
-import com.eleven.hotel.api.domain.values.StockAmount;
+import com.eleven.hotel.domain.model.hotel.values.DateRange;
+import com.eleven.hotel.domain.model.hotel.values.DateTimeRange;
+import com.eleven.hotel.domain.model.hotel.values.StockAmount;
 import com.eleven.hotel.api.interfaces.dto.PlanDetail;
 import com.eleven.hotel.api.interfaces.dto.PlanDto;
 import com.eleven.hotel.api.interfaces.request.PlanCreateRequest;

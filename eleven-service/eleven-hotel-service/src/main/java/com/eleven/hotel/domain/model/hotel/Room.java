@@ -1,7 +1,7 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import com.eleven.hotel.api.domain.values.DateRange;
-import com.eleven.hotel.api.domain.values.StockAmount;
+import com.eleven.hotel.domain.model.hotel.values.DateRange;
+import com.eleven.hotel.domain.model.hotel.values.StockAmount;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;

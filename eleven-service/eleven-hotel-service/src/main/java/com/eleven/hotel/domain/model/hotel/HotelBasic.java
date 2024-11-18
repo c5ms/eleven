@@ -1,17 +1,18 @@
 package com.eleven.hotel.domain.model.hotel;
 
+import com.eleven.hotel.domain.model.hotel.values.Address;
+import com.eleven.hotel.domain.model.hotel.values.Position;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.Embedded;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.YearMonth;
 
 @Embeddable
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class HotelBasic implements Serializable {

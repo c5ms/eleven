@@ -5,6 +5,9 @@ import com.eleven.hotel.api.interfaces.dto.RoomDto;
 import com.eleven.hotel.api.interfaces.request.RoomCreateRequest;
 import com.eleven.hotel.api.interfaces.request.RoomUpdateRequest;
 import com.eleven.hotel.api.interfaces.dto.RoomDto;
+import com.eleven.hotel.application.command.RoomCreateCommand;
+import com.eleven.hotel.application.command.RoomUpdateCommand;
+import com.eleven.hotel.application.query.RoomQuery;
 import com.eleven.hotel.application.service.RoomService;
 import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.model.hotel.RoomKey;
@@ -55,7 +58,7 @@ public class RoomResource {
     public RoomDto createRoom(@PathVariable("hotelId") Long hotelId, @RequestBody @Validated RoomCreateRequest request) {
         var command = RoomCreateCommand.builder()
             .basic(RoomConverter.toRoomBasic(request.getBasic()))
-            .availablePeriod(request.getAvailablePeriod().toDateRange())
+//            .availablePeriod(request.getAvailablePeriod().toDateRange())
             .images(request.getImages())
             .quantity(request.getQuantity())
             .build();
@@ -70,7 +73,7 @@ public class RoomResource {
                               @RequestBody @Validated RoomUpdateRequest request) {
         var command = RoomUpdateCommand.builder()
             .basic(RoomConverter.toRoomBasic(request.getBasic()))
-            .availablePeriod(request.getAvailablePeriod().toDateRange())
+//            .availablePeriod(request.getAvailablePeriod().toDateRange())
             .images(request.getImages())
             .quantity(request.getQuantity())
             .build();

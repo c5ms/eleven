@@ -1,10 +1,7 @@
 package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.hotel.domain.model.hotel.values.Occupancy;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

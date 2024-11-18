@@ -39,10 +39,8 @@ public class Hotel extends AbstractEntity {
     private CheckPolicy checkPolicy = CheckPolicy.empty();
 
     @Builder
-    public Hotel(HotelBasic basic, Position position, Address address, CheckPolicy checkPolicy) {
+    public Hotel(HotelBasic basic, CheckPolicy checkPolicy) {
         this.basic = basic;
-        this.position = position;
-        this.address = address;
         this.checkPolicy = checkPolicy;
     }
 

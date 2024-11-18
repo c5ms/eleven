@@ -45,7 +45,7 @@ public class PlanResource {
                 .hotelId(hotelId)
                 .planName(request.getPlanName())
                 .build();
-        var page = planQuery.queryPage(filter, request.toPagerequest()).map(planConvertor::toDto);
+        var page = planQuery.queryPage(filter, request.toPagerequest()).map(planConverter::toDto);
         return PageResponse.of(page.getContent(), page.getTotalElements());
     }
 

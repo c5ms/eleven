@@ -4,21 +4,17 @@ import com.eleven.core.interfaces.model.PageRequest;
 import com.eleven.core.interfaces.model.PageResponse;
 import com.eleven.core.interfaces.web.Rests;
 import com.eleven.core.interfaces.web.annonation.AsRestApi;
+import com.eleven.hotel.api.interfaces.dto.HotelDto;
 import com.eleven.hotel.api.interfaces.request.HotelCreateRequest;
 import com.eleven.hotel.api.interfaces.request.HotelQueryRequest;
 import com.eleven.hotel.api.interfaces.request.HotelUpdateRequest;
-import com.eleven.hotel.api.interfaces.dto.HotelDto;
-import com.eleven.hotel.application.command.HotelQuery;
-import com.eleven.hotel.application.service.HotelService;
+import com.eleven.hotel.application.command.HotelCreateCommand;
+import com.eleven.hotel.application.command.HotelUpdateCommand;
 import com.eleven.hotel.application.query.HotelQuery;
 import com.eleven.hotel.application.query.filter.HotelFilter;
+import com.eleven.hotel.application.service.HotelService;
 import com.eleven.hotel.application.support.HotelContext;
-import com.eleven.hotel.domain.model.hotel.HotelBasic;
-import com.eleven.hotel.domain.model.hotel.values.Address;
-import com.eleven.hotel.domain.model.hotel.values.CheckPolicy;
-import com.eleven.hotel.domain.model.hotel.values.Position;
-import com.eleven.hotel.interfaces.assembler.HotelAssembler;
-import com.eleven.hotel.interfaces.converter.HotelConverter;
+import com.eleven.hotel.interfaces.converter.HotelConvertor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +23,6 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalTime;
 import java.util.Optional;
 
 
@@ -40,16 +35,16 @@ public class HotelResource {
 
     private final HotelQuery hotelQuery;
     private final HotelService hotelService;
-    private final HotelAssembler hotelAssembler;
+    private final HotelConvertor hotelConvertor;
 
     @Operation(summary = "query hotel")
     @GetMapping
     public PageResponse<HotelDto> queryHotel(@ParameterObject @Validated HotelQueryRequest request,
                                              @ParameterObject @Validated PageRequest pageRequest) {
         var filter = HotelFilter.builder()
-                .hotelName(request.getHotelName())
-                .build();
-        var page = hotelQuery.queryPage(filter, pageRequest.toPagerequest()).map(hotelAssembler::assembleDto);
+            .hotelName(request.getHotelName())
+            .build();
+        var page = hotelQuery.queryPage(filter, pageRequest.toPagerequest()).map(hotelConvertor::assembleDto);
         return PageResponse.of(page.getContent(), page.getTotalElements());
     }
 
@@ -57,7 +52,7 @@ public class HotelResource {
     @Operation(summary = "read hotel")
     @GetMapping("/{hotelId:[0-9]+}")
     public Optional<HotelDto> readHotel(@PathVariable("hotelId") Long hotelId) {
-        return hotelQuery.read(hotelId).map(hotelAssembler::assembleDto);
+        return hotelQuery.read(hotelId).map(hotelConvertor::assembleDto);
     }
 
 
@@ -65,69 +60,20 @@ public class HotelResource {
     @PostMapping
     public HotelDto createHotel(@Validated @RequestBody HotelCreateRequest request) {
         var command = HotelCreateCommand.builder()
-            .basic(new HotelBasic(
-                request.getName(),
-                request.getDescription(),
-                request.getEmail(),
-                request.getPhone(),
-                request.getTotalRoomQuantity(),
-                request.getWhenBuilt(),
-                request.getLastRenovation(),
-                request.getStarRating(),
-                request.getBuildingArea()
-            ))
-            .position(new Position(
-                request.getLatitude(),
-                request.getLongitude()
-            ))
-            .address(new Address(
-                request.getCountry(),
-                request.getProvince(),
-                request.getCity(),
-                request.getLocation(),
-                request.getAddress()
-            ))
-            .checkPolicy(new CheckPolicy(
-                LocalTime.parse(request.getCheckIn(), HotelConstants.FORMATTER_HOUR_MINUTES),
-                LocalTime.parse(request.getCheckOut(), HotelConstants.FORMATTER_HOUR_MINUTES)
-            ))
+            .basic(hotelConvertor.toHotelBasic(request.getHotelBasic()))
+            .address(hotelConvertor.toAddress(request.getAddress()))
+            .position(hotelConvertor.toPosition(request.getPosition()))
+            .checkPolicy(hotelConvertor.toCheckPolicy(request.getCheckPolicy()) )
             .build();
         var hotel = hotelService.create(command);
-        return hotelAssembler.assembleDto(hotel);
+        return hotelConvertor.assembleDto(hotel);
     }
 
 
     @Operation(summary = "update hotel")
     @PostMapping("/{hotelId:[0-9]+}")
     public void update(@PathVariable("hotelId") Long hotelId, @RequestBody @Validated HotelUpdateRequest request) {
-        var command = HotelUpdateCommand.builder()
-            .basic(new HotelBasic(
-                request.getName(),
-                request.getDescription(),
-                request.getEmail(),
-                request.getPhone(),
-                request.getTotalRoomQuantity(),
-                request.getWhenBuilt(),
-                request.getLastRenovation(),
-                request.getStarRating(),
-                request.getBuildingArea()
-            ))
-            .position(new Position(
-                request.getLatitude(),
-                request.getLongitude()
-            ))
-            .address(new Address(
-                request.getCountry(),
-                request.getProvince(),
-                request.getCity(),
-                request.getLocation(),
-                request.getAddress()
-            ))
-            .checkPolicy(new CheckPolicy(
-                request.getCheckIn(),
-                request.getCheckOut()
-            ))
-            .build();
+        var command = hotelConvertor.toHotelUpdateCommand(request);
         hotelService.update(hotelId, command);
     }
 
@@ -135,8 +81,8 @@ public class HotelResource {
     @PostMapping("/{hotelId:[0-9]+}/commands/open")
     public void openHotel(@PathVariable("hotelId") Long hotelId) {
         hotelQuery.read(hotelId)
-                .filter(HotelContext::mustWritable)
-                .orElseThrow(Rests::throw404);
+            .filter(HotelContext::mustWritable)
+            .orElseThrow(Rests::throw404);
         hotelService.open(hotelId);
     }
 
@@ -144,8 +90,8 @@ public class HotelResource {
     @PostMapping("/{hotelId:[0-9]+]}/commands/close")
     public void closeHotel(@PathVariable("hotelId") Long hotelId) {
         hotelQuery.read(hotelId)
-                .filter(HotelContext::mustWritable)
-                .orElseThrow(Rests::throw404);
+            .filter(HotelContext::mustWritable)
+            .orElseThrow(Rests::throw404);
         hotelService.close(hotelId);
     }
 }

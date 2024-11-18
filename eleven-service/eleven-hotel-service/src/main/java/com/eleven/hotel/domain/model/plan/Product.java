@@ -6,7 +6,7 @@ import com.eleven.hotel.api.domain.enums.ChargeType;
 import com.eleven.hotel.api.domain.enums.SaleChannel;
 import com.eleven.hotel.api.domain.enums.SaleState;
 import com.eleven.hotel.api.domain.enums.SaleType;
-import com.eleven.hotel.api.domain.values.StockAmount;
+import com.eleven.hotel.domain.model.hotel.values.StockAmount;
 import com.eleven.hotel.domain.errors.PlanErrors;
 import com.eleven.hotel.domain.model.hotel.Room;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
