@@ -50,7 +50,7 @@ public class PlanService {
 
         planManager.validate(plan);
         planRepository.saveAndFlush(plan);
-        planManager.initializeInventoryFor(plan);
+        planManager.takeStock(plan);
         return plan;
     }
 
@@ -67,7 +67,7 @@ public class PlanService {
 
         planManager.validate(plan);
         planRepository.saveAndFlush(plan);
-        planManager.initializeInventoryFor(plan);
+        planManager.takeStock(plan);
         return plan;
     }
 

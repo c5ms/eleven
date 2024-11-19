@@ -25,7 +25,7 @@ public class PlanManager {
         }
     }
 
-    public void initializeInventoryFor(Plan plan) {
+    public void takeStock(Plan plan) {
         var existingInventories = planInventoryRepository.findByPlanKey(plan.toKey());
         var merger = PlanInventoryMigration.of(plan, existingInventories);
 
