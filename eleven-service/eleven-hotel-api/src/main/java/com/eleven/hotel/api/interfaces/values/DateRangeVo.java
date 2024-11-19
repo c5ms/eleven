@@ -12,7 +12,10 @@ import java.time.LocalDate;
 @Accessors(chain = true)
 public class DateRangeVo {
 
+    @Schema(example = "2025-01-01")
     private LocalDate start;
+
+    @Schema(example = "2025-03-31")
     private LocalDate end;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

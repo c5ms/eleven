@@ -2,8 +2,7 @@ package com.eleven.core.configure;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.datatype.hibernate6.Hibernate6Module;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -67,6 +66,8 @@ class ElevenCoreConfigure {
                 .deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(properties.getDatetimeFormat())))
                 .deserializerByType(YearMonth.class, new YearMonthDeserializer(DateTimeFormatter.ofPattern(properties.getYearMonthFormat())))
 
+//                .propertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
+
                 .timeZone(properties.getTimeZone())
                 .featuresToDisable(
                         SerializationFeature.FAIL_ON_EMPTY_BEANS,
@@ -74,9 +75,11 @@ class ElevenCoreConfigure {
                         DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES
                 )
                 .featuresToEnable(
+
                         JsonParser.Feature.ALLOW_SINGLE_QUOTES,
                         JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES,
                         SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS,
+                        MapperFeature.SORT_CREATOR_PROPERTIES_FIRST,
                         JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(),
                         JsonReadFeature.ALLOW_SINGLE_QUOTES.mappedFeature(),
                         JsonReadFeature.ALLOW_UNQUOTED_FIELD_NAMES.mappedFeature()

@@ -59,6 +59,11 @@ public class RoomService {
     @Transactional(rollbackFor = Exception.class)
     public Room updateRoom(RoomKey roomKey, RoomUpdateCommand command) {
         var room = roomRepository.findByRoomKey(roomKey).orElseThrow(HotelContext::noPrincipalException);
+        room.setBasic(command.getBasic());
+        room.setOccupancy(command.getOccupancy());
+        room.setAvailablePeriod(command.getAvailablePeriod());
+        room.setQuantity(command.getQuantity());
+        room.setImages(command.getImages());
 
         roomManager.validate(room);
         roomRepository.saveAndFlush(room);

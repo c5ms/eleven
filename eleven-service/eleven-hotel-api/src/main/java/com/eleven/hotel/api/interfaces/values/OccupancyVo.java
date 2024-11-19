@@ -10,6 +10,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class OccupancyVo {
 
+    @Schema(example = "1")
     private Integer minPerson;
+
+    @Schema(example = "5")
     private Integer maxPerson;
 }

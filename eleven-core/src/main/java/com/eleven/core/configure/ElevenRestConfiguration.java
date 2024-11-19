@@ -3,6 +3,9 @@ package com.eleven.core.configure;
 import com.eleven.core.interfaces.web.annonation.AsInnerApi;
 import com.eleven.core.interfaces.web.annonation.AsRestApi;
 import com.eleven.core.interfaces.web.utils.AnnotationPredicate;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import io.swagger.v3.core.jackson.ModelResolver;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
@@ -38,6 +41,11 @@ public class ElevenRestConfiguration implements WebMvcConfigurer {
     }
 
     @Bean
+    public ModelResolver modelResolver(ObjectMapper objectMapper) {
+        return new ModelResolver(objectMapper);
+    }
+
+    @Bean
     public GroupedOpenApi restApi() {
         return GroupedOpenApi.builder()
             .group("resource-api")
@@ -68,7 +76,6 @@ public class ElevenRestConfiguration implements WebMvcConfigurer {
             .type("string")
             .format(coreProperties.getJson().getTimeFormat())
             .example(LocalTime.of(20, 0, 0).format(DateTimeFormatter.ofPattern(coreProperties.getJson().getTimeFormat()))));
-
 
         SpringDocUtils.getConfig().replaceWithSchema(LocalDateTime.class, new Schema<LocalDateTime>()
             .type("string")

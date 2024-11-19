@@ -1,5 +1,6 @@
 package com.eleven.hotel.domain.model.hotel;
 
+import com.eleven.core.domain.values.ImmutableValues;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.Occupancy;
@@ -38,9 +39,11 @@ public class Room extends AbstractEntity {
     @Column(name = "active")
     private Boolean active = true;
 
+    @Setter
     @Column(name = "quantity")
     private Integer quantity;
 
+    @Setter
     @Embedded
     @AttributeOverride(name = "start", column = @Column(name = "available_period_start"))
     @AttributeOverride(name = "end", column = @Column(name = "available_period_end"))
@@ -54,6 +57,7 @@ public class Room extends AbstractEntity {
     @Embedded
     private Occupancy occupancy;
 
+    @Setter
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "room_image", joinColumns = @JoinColumn(name = "room_id", referencedColumnName = "room_id"))
     @Column(name = "image_url", length = 200)
@@ -63,12 +67,7 @@ public class Room extends AbstractEntity {
     }
 
     @Builder
-    public Room(Long hotelId,
-                DateRange availablePeriod,
-                RoomBasic basic,
-                Occupancy occupancy,
-                Set<String> images,
-                Integer quantity) {
+    public Room(Long hotelId, RoomBasic basic, Integer quantity, Occupancy occupancy, DateRange availablePeriod, Set<String> images) {
         this.setHotelId(hotelId);
         this.setBasic(basic);
         this.setOccupancy(occupancy);
@@ -104,5 +103,9 @@ public class Room extends AbstractEntity {
     @Nonnull
     public RoomKey toKey() {
         return RoomKey.of(hotelId, roomId);
+    }
+
+    public ImmutableValues<String> getImages() {
+        return ImmutableValues.of(images);
     }
 }

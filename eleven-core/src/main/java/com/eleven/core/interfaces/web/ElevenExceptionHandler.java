@@ -14,6 +14,7 @@ import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpMediaTypeException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -32,10 +33,14 @@ public class ElevenExceptionHandler {
     @ApiResponse(description = "Bad Request", responseCode = "400")
     @ApiResponse(description = "No Authority", responseCode = "403")
     @ApiResponse(description = "Not Found", responseCode = "404")
-    @ApiResponse(description = "Method Not Allowed", responseCode = "405")
-    @ApiResponse(description = "Unsupported Media Type", responseCode = "415")
+//    @ApiResponse(description = "Method Not Allowed", responseCode = "405")
+//    @ApiResponse(description = "Unsupported Media Type", responseCode = "415")
     @ApiResponse(description = "Internal Server Error", responseCode = "500")
-    @ExceptionHandler({Exception.class})
+    @ExceptionHandler({
+            Exception.class,
+//            NoPrincipalException.class,
+//            NoAuthorityException.class
+    })
     public ResponseEntity<Problem> on(Exception e) {
         HttpStatus status;
 
@@ -68,11 +73,13 @@ public class ElevenExceptionHandler {
         }
 
         // 415 405
-        else if (e instanceof HttpMediaTypeNotSupportedException) {
+        else if (e instanceof HttpMediaTypeException) {
             status = HttpStatus.UNSUPPORTED_MEDIA_TYPE;
         } else if (e instanceof HttpRequestMethodNotSupportedException) {
             status = HttpStatus.METHOD_NOT_ALLOWED;
         }
+
+
 
         // dynamic
         else if (e instanceof ResponseStatusException ex) {

@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 @Schema(name = "Address")
 @Accessors(chain = true)
 public class AddressVo {
+
     @Schema(example = "中国大陆")
     private String country;
 

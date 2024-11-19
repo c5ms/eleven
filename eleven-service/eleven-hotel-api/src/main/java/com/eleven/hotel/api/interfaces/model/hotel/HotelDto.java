@@ -6,6 +6,7 @@ import com.eleven.hotel.api.interfaces.values.HotelBasicVo;
 import com.eleven.hotel.api.interfaces.values.PositionVo;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -20,15 +21,19 @@ public class HotelDto {
 
     private Boolean active;
 
-    @JsonUnwrapped(prefix = "hotel_")
+    @NotNull
+    @JsonUnwrapped
     private HotelBasicVo basic;
 
+    @NotNull
     @JsonUnwrapped(prefix = "address_")
     private AddressVo address;
 
+    @NotNull
     @JsonUnwrapped(prefix = "position_")
     private PositionVo position;
 
+    @NotNull
     @JsonUnwrapped(prefix = "checkPolicy_")
     private CheckPolicyVo checkPolicy;
 }

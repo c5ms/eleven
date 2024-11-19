@@ -25,7 +25,7 @@ public class RoomConverter {
         return new RoomDto()
                 .setRoomId(room.getRoomId())
                 .setQuantity(room.getQuantity())
-                .setImages(room.getImages())
+                .setImages(room.getImages().toSet())
                 .setAvailablePeriod(modelMapper.map(room.getAvailablePeriod(), DateRangeVo.class))
                 .setBasic(modelMapper.map(room.getBasic(), RoomBasicVo.class))
                 .setOccupancy(modelMapper.map(room.getOccupancy(), OccupancyVo.class));

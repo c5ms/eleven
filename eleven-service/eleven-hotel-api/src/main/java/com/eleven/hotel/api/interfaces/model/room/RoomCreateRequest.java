@@ -6,6 +6,7 @@ import com.eleven.hotel.api.interfaces.values.RoomBasicVo;
 import com.fasterxml.jackson.annotation.JsonRawValue;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,6 +32,7 @@ public class RoomCreateRequest {
 
     @Min(0)
     @Max(999)
+    @Schema(example = "20")
     private Integer quantity;
 
 

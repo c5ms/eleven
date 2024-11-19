@@ -1,6 +1,5 @@
 package com.eleven.hotel.interfaces.converter;
 
-import com.eleven.hotel.api.interfaces.constants.HotelInterfaceConstants;
 import com.eleven.hotel.api.interfaces.model.hotel.HotelCreateRequest;
 import com.eleven.hotel.api.interfaces.model.hotel.HotelDto;
 import com.eleven.hotel.api.interfaces.model.hotel.HotelUpdateRequest;
@@ -21,6 +20,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 
 @Component
@@ -32,8 +32,8 @@ public class HotelConvertor implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
         modelMapper.createTypeMap(CheckPolicyVo.class, CheckPolicy.class).setConverter(context -> new CheckPolicy(
-                LocalTime.parse(context.getSource().getCheckInTime(), HotelInterfaceConstants.FORMATTER_HH_MM),
-                LocalTime.parse(context.getSource().getCheckOutTime(), HotelInterfaceConstants.FORMATTER_HH_MM)
+                LocalTime.parse(context.getSource().getCheckInTime(), DateTimeFormatter.ofPattern(CheckPolicyVo.FORMAT_HH_MM)),
+                LocalTime.parse(context.getSource().getCheckOutTime(), DateTimeFormatter.ofPattern(CheckPolicyVo.FORMAT_HH_MM))
         ));
     }
 
