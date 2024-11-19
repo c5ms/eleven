@@ -6,8 +6,7 @@ import com.eleven.hotel.application.command.PlanSetPriceCommand;
 import com.eleven.hotel.application.command.PlanUpdateCommand;
 import com.eleven.hotel.application.support.HotelContext;
 import com.eleven.hotel.domain.errors.HotelErrors;
-import com.eleven.hotel.domain.service.InventoryManager;
-import com.eleven.hotel.domain.service.PlanManager;
+import com.eleven.hotel.domain.manager.PlanManager;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.domain.model.hotel.RoomKey;
 import com.eleven.hotel.domain.model.hotel.RoomRepository;
@@ -31,7 +30,6 @@ public class PlanService {
 
     private final PlanManager planManager;
     private final RoomRepository roomRepository;
-    private final InventoryManager inventoryManager;
 
     public Plan createPlan(Long hotelId, PlanCreateCommand command) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
@@ -52,7 +50,7 @@ public class PlanService {
 
         planManager.validate(plan);
         planRepository.saveAndFlush(plan);
-        inventoryManager.initializeInventoryFor(plan);
+        planManager.initializeInventoryFor(plan);
         return plan;
     }
 
@@ -69,7 +67,7 @@ public class PlanService {
 
         planManager.validate(plan);
         planRepository.saveAndFlush(plan);
-        inventoryManager.initializeInventoryFor(plan);
+        planManager.initializeInventoryFor(plan);
         return plan;
     }
 

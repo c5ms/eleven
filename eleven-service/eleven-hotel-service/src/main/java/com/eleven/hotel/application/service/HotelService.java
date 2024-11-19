@@ -1,13 +1,12 @@
 package com.eleven.hotel.application.service;
 
-import com.eleven.core.domain.event.DomainEvents;
 import com.eleven.hotel.application.command.HotelCreateCommand;
 import com.eleven.hotel.application.command.HotelUpdateCommand;
 import com.eleven.hotel.application.support.HotelContext;
+import com.eleven.hotel.domain.manager.HotelManager;
 import com.eleven.hotel.domain.model.hotel.Hotel;
+import com.eleven.hotel.domain.model.hotel.HotelPatch;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
-import com.eleven.hotel.domain.model.hotel.HotelUpdatedEvent;
-import com.eleven.hotel.domain.service.HotelManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,24 +34,29 @@ public class HotelService {
 
     public Hotel update(Long hotelId, HotelUpdateCommand command) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
-        hotel.setBasic(command.getBasic());
-        hotel.setPosition(command.getPosition());
-        hotel.setCheckPolicy(command.getCheckPolicy());
-        hotel.setAddress(command.getAddress());
+
+        var patch = HotelPatch.builder()
+                .address(command.getAddress())
+                .checkPolicy(command.getCheckPolicy())
+                .checkPolicy(command.getCheckPolicy())
+                .position(command.getPosition())
+                .build();
+        hotel.update(patch);
         hotelManager.validate(hotel);
         hotelRepository.saveAndFlush(hotel);
-        DomainEvents.publish(HotelUpdatedEvent.of(hotel));
         return hotel;
     }
 
     public void open(Long hotelId) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
+
         hotel.active();
         hotelRepository.saveAndFlush(hotel);
     }
 
     public void close(Long hotelId) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
+
         hotel.deactivate();
         hotelRepository.saveAndFlush(hotel);
     }

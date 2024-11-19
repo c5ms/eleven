@@ -3,31 +3,29 @@ package com.eleven.hotel.application.service;
 import com.eleven.core.application.authorize.NoPrincipalException;
 import com.eleven.hotel.application.command.RoomCreateCommand;
 import com.eleven.hotel.application.command.RoomUpdateCommand;
-import com.eleven.hotel.application.query.RoomQuery;
 import com.eleven.hotel.application.support.HotelContext;
+import com.eleven.hotel.domain.manager.HotelManager;
 import com.eleven.hotel.domain.model.hotel.*;
-import com.eleven.hotel.domain.service.RoomManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.Optional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(rollbackFor = Exception.class)
 public class RoomService {
 
-    private final RoomManager roomManager;
+    private final HotelManager hotelManager;
+
     private final RoomRepository roomRepository;
     private final HotelRepository hotelRepository;
     private final InventoryRepository inventoryRepository;
 
-    @Transactional(rollbackFor = Exception.class)
     public Room createRoom(Long hotelId, RoomCreateCommand command) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(NoPrincipalException::new);
 
-        // create the room
         var room = Room.builder()
                 .hotelId(hotel.getHotelId())
                 .basic(command.getBasic())
@@ -37,40 +35,40 @@ public class RoomService {
                 .images(command.getImages())
                 .build();
 
-        roomManager.validate(room);
+        hotelManager.validate(room);
         roomRepository.save(room);
 
-        // initialize the inventories
-        var inventories = room.createInventories();
-        inventoryRepository.saveAllAndFlush(inventories);
+        hotelManager.takeStock(room);
 
         return room;
     }
 
-    @Transactional(rollbackFor = Exception.class)
     public void deleteRoom(RoomKey roomKey) {
         var room = roomRepository.findByRoomKey(roomKey).orElseThrow(HotelContext::noPrincipalException);
         roomRepository.delete(room);
-
-        // drop the inventories
         inventoryRepository.deleteByRoomKey(roomKey);
     }
 
-    @Transactional(rollbackFor = Exception.class)
     public Room updateRoom(RoomKey roomKey, RoomUpdateCommand command) {
         var room = roomRepository.findByRoomKey(roomKey).orElseThrow(HotelContext::noPrincipalException);
-        room.setBasic(command.getBasic());
-        room.setOccupancy(command.getOccupancy());
-        room.setAvailablePeriod(command.getAvailablePeriod());
-        room.setQuantity(command.getQuantity());
-        room.setImages(command.getImages());
 
-        roomManager.validate(room);
+        var patch = RoomPatch.builder()
+                .basic(command.getBasic())
+                .images(command.getImages())
+                .quantity(command.getQuantity())
+                .occupancy(command.getOccupancy())
+                .availablePeriod(command.getAvailablePeriod())
+                .build();
+
+        room.update(patch);
+        hotelManager.validate(room);
         roomRepository.saveAndFlush(room);
 
-        // todo align the inventory
-
+        hotelManager.takeStock(room);
         return room;
     }
+
+
+
 
 }

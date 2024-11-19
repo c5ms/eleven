@@ -1,6 +1,10 @@
 package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.hotel.domain.core.AbstractEntity;
+import com.eleven.hotel.domain.model.hotel.event.HotelActiveEvent;
+import com.eleven.hotel.domain.model.hotel.event.HotelCreatedEvent;
+import com.eleven.hotel.domain.model.hotel.event.HotelDeactivateEvent;
+import com.eleven.hotel.domain.model.hotel.event.HotelUpdatedEvent;
 import com.eleven.hotel.domain.values.Address;
 import com.eleven.hotel.domain.values.CheckPolicy;
 import com.eleven.hotel.domain.values.Position;
@@ -26,19 +30,15 @@ public class Hotel extends AbstractEntity {
     @Column(name = "active")
     private Boolean active = true;
 
-    @Setter
     @Embedded
     private HotelBasic basic = HotelBasic.empty();
 
-    @Setter
     @Embedded
     private Address address = Address.empty();
 
-    @Setter
     @Embedded
     private Position position = Position.empty();
 
-    @Setter
     @Embedded
     private CheckPolicy checkPolicy = CheckPolicy.empty();
 
@@ -46,19 +46,32 @@ public class Hotel extends AbstractEntity {
     }
 
     @Builder
-    public Hotel(CheckPolicy checkPolicy, Position position, Address address, HotelBasic basic) {
-        this.checkPolicy = checkPolicy;
-        this.position = position;
-        this.address = address;
-        this.basic = basic;
-        this.active();
+    public static Hotel of(CheckPolicy checkPolicy, Position position, Address address, HotelBasic basic) {
+        var hotel = new Hotel();
+        hotel.setCheckPolicy(checkPolicy);
+        hotel.setPosition(position);
+        hotel.setAddress(address);
+        hotel.setBasic(basic);
+        hotel.active();
+        hotel.addEvent(HotelCreatedEvent.of(hotel));
+        return hotel;
+    }
+
+    public void update(HotelPatch patch) {
+        this.setBasic(patch.getBasic());
+        this.setPosition(patch.getPosition());
+        this.setCheckPolicy(patch.getCheckPolicy());
+        this.setAddress(patch.getAddress());
+        this.addEvent(HotelUpdatedEvent.of(this));
     }
 
     public void deactivate() {
         this.active = false;
+        this.addEvent(HotelDeactivateEvent.of(this));
     }
 
     public void active() {
         this.active = true;
+        this.addEvent(HotelActiveEvent.of(this));
     }
 }

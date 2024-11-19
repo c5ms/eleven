@@ -34,6 +34,9 @@ public class DateRange {
     }
 
     public Stream<LocalDate> dates() {
+        if(isEmpty()){
+            return Stream.empty();
+        }
         return start.datesUntil(end);
     }
 

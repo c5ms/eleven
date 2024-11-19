@@ -37,4 +37,8 @@ public class InventoryKey implements Serializable {
         return new InventoryKey(roomKey, date);
     }
 
+    public  RoomKey toRoomKey() {
+        return  RoomKey.of(this.getHotelId(), this.getRoomId());
+    }
+
 }

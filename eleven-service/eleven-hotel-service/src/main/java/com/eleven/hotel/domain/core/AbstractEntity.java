@@ -14,11 +14,7 @@ import java.util.Map;
 
 @Getter
 @MappedSuperclass
-//@TableGenerator(table = AbstractEntity.GENERATOR_TABLE, name = AbstractEntity.GENERATOR_NAME, allocationSize = 5)
 public abstract class AbstractEntity {
-
-//    protected static final String GENERATOR_NAME = "hms_generator";
-//    protected static final String GENERATOR_TABLE = "hms_sequences";
 
     private transient final @Transient Map<Class<?>, DomainEvent> domainEvents = new HashMap<>();
 

@@ -1,18 +1,20 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import com.eleven.hotel.domain.model.plan.PlanInventoryKey;
+import com.eleven.hotel.domain.values.DateRange;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.Optional;
+import java.util.Collection;
 
 public interface InventoryRepository extends JpaRepository<Inventory, InventoryKey> {
 
-    Optional<Inventory> findByKey(PlanInventoryKey key);
+    @Query("from Inventory where key.hotelId=:#{#roomKey.hotelId} and key.roomId=:#{#roomKey.roomId} ")
+    Collection<Inventory> findByRoomKey(@Param("roomKey") RoomKey key);
 
     @Modifying
-    @Query("delete Inventory where key.hotelId=:#{#key.hotelId} and key.roomId=:#{#key.roomId} ")
-    void deleteByRoomKey(@Param("key") RoomKey key);
+    @Query("delete Inventory where key.hotelId=:#{#roomKey.hotelId} and key.roomId=:#{#roomKey.roomId} ")
+    long deleteByRoomKey(@Param("roomKey") RoomKey key);
+
 }
