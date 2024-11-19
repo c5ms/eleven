@@ -1,31 +1,28 @@
 package com.eleven.hotel.domain.values;
 
 import jakarta.persistence.Embeddable;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldNameConstants;
 
 
-@Data
 @Embeddable
-@EqualsAndHashCode
+@Getter
+@FieldNameConstants
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class StockAmount {
 
-    private Integer count;
-
-    public static StockAmount of(Integer amount) {
-        return new StockAmount(amount);
-    }
-
-    protected StockAmount() {
-        this.count = 0;
-    }
-
-    private StockAmount(Integer count) {
-        this.count = count;
-    }
+    private Integer count = 0;
 
     public static StockAmount zero() {
         return new StockAmount();
+    }
+
+    public static StockAmount of(Integer quantity) {
+        return new StockAmount(quantity);
     }
 
     public boolean isEmpty() {

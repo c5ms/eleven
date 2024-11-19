@@ -29,7 +29,7 @@ public class Room extends AbstractEntity {
 
     @Id
     @Column(name = "room_id")
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = GENERATOR_NAME)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long roomId;
 
     @Column(name = "hotel_id")

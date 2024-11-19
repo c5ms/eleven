@@ -7,6 +7,7 @@ import com.eleven.hotel.api.interfaces.model.hotel.HotelUpdateRequest;
 import com.eleven.hotel.api.interfaces.values.AddressVo;
 import com.eleven.hotel.api.interfaces.values.CheckPolicyVo;
 import com.eleven.hotel.api.interfaces.values.HotelBasicVo;
+import com.eleven.hotel.api.interfaces.values.PositionVo;
 import com.eleven.hotel.application.command.HotelCreateCommand;
 import com.eleven.hotel.application.command.HotelUpdateCommand;
 import com.eleven.hotel.domain.model.hotel.Hotel;
@@ -42,7 +43,7 @@ public class HotelConvertor implements InitializingBean {
                 .setActive(hotel.getActive())
                 .setBasic(modelMapper.map(hotel.getBasic(), HotelBasicVo.class))
                 .setAddress(modelMapper.map(hotel.getAddress(), AddressVo.class))
-                .setPosition(modelMapper.map(hotel.getPosition(), AddressVo.PositionVo.class))
+                .setPosition(modelMapper.map(hotel.getPosition(), PositionVo.class))
                 .setCheckPolicy(modelMapper.map(hotel.getCheckPolicy(), CheckPolicyVo.class));
     }
 

@@ -9,9 +9,9 @@ import java.io.Serializable;
 
 @Embeddable
 @Getter
+@FieldNameConstants
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@FieldNameConstants
 public class Position implements Serializable {
 
     @Column(name = "position_lat")

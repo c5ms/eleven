@@ -9,10 +9,9 @@ import java.io.Serializable;
 
 @Embeddable
 @Getter
-@Setter(AccessLevel.PROTECTED)
+@FieldNameConstants
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@FieldNameConstants
 public class Address implements Serializable {
 
     @Column(name = "addr_country")

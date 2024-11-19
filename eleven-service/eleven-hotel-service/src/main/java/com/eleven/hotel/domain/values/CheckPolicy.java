@@ -9,9 +9,9 @@ import java.time.LocalTime;
 
 @Embeddable
 @Getter
+@FieldNameConstants
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@FieldNameConstants
 public class CheckPolicy {
 
     @Column(name = "check_in_time")

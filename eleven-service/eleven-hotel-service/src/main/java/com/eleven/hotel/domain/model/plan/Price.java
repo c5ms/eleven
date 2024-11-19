@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 
 
 @Entity
-@Table(name = "hms_plan_price")
+@Table(name = "plan_price")
 @Getter
 @Setter(AccessLevel.PROTECTED)
 @AllArgsConstructor

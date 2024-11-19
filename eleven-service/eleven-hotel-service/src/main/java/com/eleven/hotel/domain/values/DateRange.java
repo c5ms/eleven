@@ -2,9 +2,8 @@ package com.eleven.hotel.domain.values;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Embeddable;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldNameConstants;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.Validate;
 
@@ -12,27 +11,15 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.stream.Stream;
 
-@Data
 @Embeddable
-@Setter(AccessLevel.PROTECTED)
+@Getter
+@FieldNameConstants
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DateRange {
 
     private LocalDate start;
     private LocalDate end;
-
-    protected DateRange() {
-        this.start = null;
-        this.end = null;
-    }
-
-    public DateRange(LocalDate start, LocalDate end) {
-        if (null != start && null != end) {
-            Validate.isTrue(start.isBefore(end), "start must before end");
-        }
-
-        this.start = start;
-        this.end = end;
-    }
 
     public static DateRange of(LocalDate start, LocalDate end) {
         return new DateRange(start, end);

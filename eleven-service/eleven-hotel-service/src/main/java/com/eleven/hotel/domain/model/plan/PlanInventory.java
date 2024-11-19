@@ -14,7 +14,7 @@ import org.apache.commons.lang3.ObjectUtils;
 
 import java.time.LocalDate;
 
-@Table(name = "hms_plan_inventory")
+@Table(name = "plan_inventory")
 @Entity
 @Getter
 @Setter(AccessLevel.PROTECTED)

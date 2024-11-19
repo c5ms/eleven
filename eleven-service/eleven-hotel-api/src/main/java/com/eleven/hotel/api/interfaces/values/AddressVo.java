@@ -23,15 +23,4 @@ public class AddressVo {
     @Schema(example = "大连开发区海青岛街道东行300米")
     private String address;
 
-    @Data
-    @Schema(name = "Position")
-    @Accessors(chain = true)
-    public static class PositionVo{
-
-        @Schema(example = "100.56666")
-        private Double latitude;
-
-        @Schema(example = "110.9876")
-        private Double longitude;
-    }
 }

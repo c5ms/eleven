@@ -3,6 +3,7 @@ package com.eleven.hotel.api.interfaces.model.hotel;
 import com.eleven.hotel.api.interfaces.values.AddressVo;
 import com.eleven.hotel.api.interfaces.values.CheckPolicyVo;
 import com.eleven.hotel.api.interfaces.values.HotelBasicVo;
+import com.eleven.hotel.api.interfaces.values.PositionVo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,6 @@ import lombok.Setter;
 public class HotelUpdateRequest {
     private HotelBasicVo basic;
     private AddressVo address;
-    private AddressVo.PositionVo position;
+    private PositionVo position;
     private CheckPolicyVo checkPolicy;
 }

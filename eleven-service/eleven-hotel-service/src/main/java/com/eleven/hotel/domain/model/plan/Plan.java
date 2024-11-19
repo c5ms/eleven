@@ -27,7 +27,7 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-@Table(name = "hms_plan")
+@Table(name = "plan")
 @Entity
 @Getter
 @Setter(AccessLevel.PROTECTED)
@@ -36,7 +36,7 @@ public class Plan extends AbstractEntity {
 
     @Id
     @Column(name = "plan_id")
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = GENERATOR_NAME)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long planId;
 
     @Column(name = "hotel_id")

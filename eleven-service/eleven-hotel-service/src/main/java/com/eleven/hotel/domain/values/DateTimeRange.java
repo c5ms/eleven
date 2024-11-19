@@ -2,30 +2,21 @@ package com.eleven.hotel.domain.values;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Embeddable;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldNameConstants;
 import org.apache.commons.lang3.ObjectUtils;
 
 import java.time.LocalDateTime;
 
-@Data
 @Embeddable
-@Setter(AccessLevel.PROTECTED)
+@Getter
+@FieldNameConstants
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DateTimeRange {
 
     private LocalDateTime start;
     private LocalDateTime end;
-
-    protected DateTimeRange() {
-        this.start = null;
-        this.end = null;
-    }
-
-    public DateTimeRange(LocalDateTime start, LocalDateTime end) {
-        this.start = start;
-        this.end = end;
-    }
 
     public static DateTimeRange of(LocalDateTime start, LocalDateTime end) {
         return new DateTimeRange(start, end);

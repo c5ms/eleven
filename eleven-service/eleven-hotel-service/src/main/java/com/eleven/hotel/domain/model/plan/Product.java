@@ -18,7 +18,7 @@ import org.hibernate.annotations.Type;
 import java.math.BigDecimal;
 import java.util.*;
 
-@Table(name = "hms_plan_room")
+@Table(name = "plan_room")
 @Entity
 @Getter
 @Setter(AccessLevel.PROTECTED)
