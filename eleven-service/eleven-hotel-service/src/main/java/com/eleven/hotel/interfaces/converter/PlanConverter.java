@@ -1,13 +1,13 @@
 package com.eleven.hotel.interfaces.converter;
 
 import com.eleven.hotel.api.domain.enums.SaleChannel;
-import com.eleven.hotel.domain.model.hotel.values.DateRange;
-import com.eleven.hotel.domain.model.hotel.values.DateTimeRange;
-import com.eleven.hotel.domain.model.hotel.values.StockAmount;
-import com.eleven.hotel.api.interfaces.dto.PlanDetail;
-import com.eleven.hotel.api.interfaces.dto.PlanDto;
-import com.eleven.hotel.api.interfaces.request.PlanCreateRequest;
-import com.eleven.hotel.api.interfaces.request.PlanUpdateRequest;
+import com.eleven.hotel.domain.values.DateRange;
+import com.eleven.hotel.domain.values.DateTimeRange;
+import com.eleven.hotel.domain.values.StockAmount;
+import com.eleven.hotel.api.interfaces.model.plan.PlanDetail;
+import com.eleven.hotel.api.interfaces.model.plan.PlanDto;
+import com.eleven.hotel.api.interfaces.model.plan.PlanCreateRequest;
+import com.eleven.hotel.api.interfaces.model.plan.PlanUpdateRequest;
 import com.eleven.hotel.application.command.PlanCreateCommand;
 import com.eleven.hotel.application.command.PlanUpdateCommand;
 import com.eleven.hotel.domain.model.hotel.RoomRepository;
@@ -27,7 +27,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PlanConverter {
     private final ModelMapper modelMapper;
-    private final RoomRepository roomRepository;
 
     public PlanDto toDto(Plan plan) {
         var dto = new PlanDto();

@@ -47,14 +47,14 @@ public class ElevenRestConfiguration implements WebMvcConfigurer {
     }
 
 
-    @Bean
-    public GroupedOpenApi innerApi() {
-        return GroupedOpenApi.builder()
-            .group("inner-api")
-            .displayName("internal")
-            .pathsToMatch(API_PREFIX_INTERNAL + "/**")
-            .build();
-    }
+//    @Bean
+//    public GroupedOpenApi innerApi() {
+//        return GroupedOpenApi.builder()
+//            .group("inner-api")
+//            .displayName("internal")
+//            .pathsToMatch(API_PREFIX_INTERNAL + "/**")
+//            .build();
+//    }
 
     @Bean
     public OpenAPI openAPI() {

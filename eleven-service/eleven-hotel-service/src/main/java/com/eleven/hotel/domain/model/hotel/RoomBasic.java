@@ -1,6 +1,6 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import com.eleven.hotel.domain.model.hotel.values.Occupancy;
+import com.eleven.hotel.domain.values.Occupancy;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

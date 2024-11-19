@@ -33,6 +33,7 @@ spring:
       'hibernate.order_updates': true
       'hibernate.jdbc.batch_size': 50
       'hibernate.globally_quoted_identifiers' : true
+      'hibernate.globally_quoted_identifiers_skip_column_definitions': true
 
 eleven:
   cache:

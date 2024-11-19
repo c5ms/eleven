@@ -3,8 +3,8 @@ package com.eleven.hotel.interfaces.internal;
 import com.eleven.core.interfaces.web.annonation.AsInnerApi;
 import com.eleven.hotel.api.domain.enums.SaleChannel;
 import com.eleven.hotel.api.interfaces.client.HotelClient;
-import com.eleven.hotel.api.interfaces.dto.HotelDto;
-import com.eleven.hotel.api.interfaces.dto.PlanDto;
+import com.eleven.hotel.api.interfaces.model.hotel.HotelDto;
+import com.eleven.hotel.api.interfaces.model.plan.PlanDto;
 import com.eleven.hotel.application.query.PlanQuery;
 import com.eleven.hotel.application.service.PlanService;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
@@ -37,7 +37,7 @@ public class HotelApi implements HotelClient {
 
     @Override
     public Optional<HotelDto> readHotel(@RequestParam("hotelId") Long hotelId) {
-        return hotelRepository.findById(hotelId).map(hotelConvertor::assembleDto);
+        return hotelRepository.findById(hotelId).map(hotelConvertor::toDto);
     }
 
     @Override

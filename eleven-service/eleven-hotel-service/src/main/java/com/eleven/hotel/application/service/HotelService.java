@@ -22,20 +22,27 @@ public class HotelService {
 
     public Hotel create(HotelCreateCommand command) {
         var hotel = Hotel.builder()
-            .basic(command.getBasic())
-            .checkPolicy(command.getCheckPolicy())
-            .build();
+                .basic(command.getBasic())
+                .address(command.getAddress())
+                .checkPolicy(command.getCheckPolicy())
+                .position(command.getPosition())
+                .checkPolicy(command.getCheckPolicy())
+                .build();
         hotelManager.validate(hotel);
         hotelRepository.saveAndFlush(hotel);
         return hotel;
     }
 
-    public void update(Long hotelId, HotelUpdateCommand command) {
+    public Hotel update(Long hotelId, HotelUpdateCommand command) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
-// todo update hotel
+        hotel.setBasic(command.getBasic());
+        hotel.setPosition(command.getPosition());
+        hotel.setCheckPolicy(command.getCheckPolicy());
+        hotel.setAddress(command.getAddress());
         hotelManager.validate(hotel);
         hotelRepository.saveAndFlush(hotel);
         DomainEvents.publish(HotelUpdatedEvent.of(hotel));
+        return hotel;
     }
 
     public void open(Long hotelId) {

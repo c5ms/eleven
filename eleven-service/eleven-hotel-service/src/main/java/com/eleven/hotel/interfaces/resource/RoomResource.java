@@ -1,27 +1,22 @@
 package com.eleven.hotel.interfaces.resource;
 
 import com.eleven.core.interfaces.web.annonation.AsRestApi;
-import com.eleven.hotel.api.interfaces.dto.RoomDto;
-import com.eleven.hotel.api.interfaces.request.RoomCreateRequest;
-import com.eleven.hotel.api.interfaces.request.RoomUpdateRequest;
-import com.eleven.hotel.api.interfaces.dto.RoomDto;
+import com.eleven.hotel.api.interfaces.model.room.RoomDto;
+import com.eleven.hotel.api.interfaces.model.room.RoomCreateRequest;
+import com.eleven.hotel.api.interfaces.model.room.RoomUpdateRequest;
 import com.eleven.hotel.application.command.RoomCreateCommand;
 import com.eleven.hotel.application.command.RoomUpdateCommand;
 import com.eleven.hotel.application.query.RoomQuery;
 import com.eleven.hotel.application.service.RoomService;
-import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.model.hotel.RoomKey;
-import com.eleven.hotel.interfaces.assembler.RoomAssembler;
 import com.eleven.hotel.interfaces.converter.RoomConverter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,14 +30,14 @@ public class RoomResource {
 
     private final RoomQuery roomQuery;
     private final RoomService roomService;
-    private final RoomAssembler roomAssembler;
+    private final RoomConverter roomConverter;
 
     @Operation(summary = "list room")
     @GetMapping
     public List<RoomDto> listRoom(@PathVariable("hotelId") Long hotelId) {
         return roomQuery.listRoom(hotelId)
                 .stream()
-                .map(roomAssembler::assembleDto)
+                .map(roomConverter::assembleDto)
                 .collect(Collectors.toList());
     }
 
@@ -50,7 +45,7 @@ public class RoomResource {
     @GetMapping("/{roomId:[0-9]+}")
     public Optional<RoomDto> readRoom(@PathVariable("hotelId") Long hotelId, @PathVariable("roomId") Long roomId) {
         var roomKey = RoomKey.of(hotelId, roomId);
-        return roomQuery.readRoom(roomKey).map(roomAssembler::assembleDto);
+        return roomQuery.readRoom(roomKey).map(roomConverter::assembleDto);
     }
 
     @Operation(summary = "create room")
@@ -63,7 +58,7 @@ public class RoomResource {
             .quantity(request.getQuantity())
             .build();
         var room = roomService.createRoom(hotelId, command);
-        return roomAssembler.assembleDto(room);
+        return roomConverter.assembleDto(room);
     }
 
     @Operation(summary = "update room")
@@ -79,7 +74,7 @@ public class RoomResource {
             .build();
         var roomKey = RoomKey.of(hotelId, roomId);
         var room = roomService.updateRoom(roomKey, command);
-        return roomAssembler.assembleDto(room);
+        return roomConverter.assembleDto(room);
     }
 
     @Operation(summary = "delete room")

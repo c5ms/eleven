@@ -1,8 +1,8 @@
 package com.eleven.hotel.api.interfaces.client;
 
 import com.eleven.hotel.api.domain.enums.SaleChannel;
-import com.eleven.hotel.api.interfaces.dto.HotelDto;
-import com.eleven.hotel.api.interfaces.dto.PlanDto;
+import com.eleven.hotel.api.interfaces.model.hotel.HotelDto;
+import com.eleven.hotel.api.interfaces.model.plan.PlanDto;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Primary;
