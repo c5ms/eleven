@@ -9,6 +9,7 @@ import java.io.Serializable;
 
 @Embeddable
 @Getter
+@Setter(AccessLevel.PROTECTED)
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @FieldNameConstants

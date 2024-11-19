@@ -23,8 +23,6 @@ public class RoomService {
     private final HotelRepository hotelRepository;
     private final InventoryRepository inventoryRepository;
 
-
-
     @Transactional(rollbackFor = Exception.class)
     public Room createRoom(Long hotelId, RoomCreateCommand command) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(NoPrincipalException::new);
@@ -33,10 +31,12 @@ public class RoomService {
         var room = Room.builder()
                 .hotelId(hotel.getHotelId())
                 .basic(command.getBasic())
+                .occupancy(command.getOccupancy())
                 .availablePeriod(command.getAvailablePeriod())
                 .quantity(command.getQuantity())
                 .images(command.getImages())
                 .build();
+
         roomManager.validate(room);
         roomRepository.save(room);
 

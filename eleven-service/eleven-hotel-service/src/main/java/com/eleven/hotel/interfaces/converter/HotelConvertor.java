@@ -1,6 +1,6 @@
 package com.eleven.hotel.interfaces.converter;
 
-import com.eleven.hotel.api.interfaces.constants.HotelConstants;
+import com.eleven.hotel.api.interfaces.constants.HotelInterfaceConstants;
 import com.eleven.hotel.api.interfaces.model.hotel.HotelCreateRequest;
 import com.eleven.hotel.api.interfaces.model.hotel.HotelDto;
 import com.eleven.hotel.api.interfaces.model.hotel.HotelUpdateRequest;
@@ -31,8 +31,8 @@ public class HotelConvertor implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
         modelMapper.createTypeMap(CheckPolicyVo.class, CheckPolicy.class).setConverter(context -> new CheckPolicy(
-                LocalTime.parse(context.getSource().getCheckInTime(), HotelConstants.FORMATTER_HH_MM),
-                LocalTime.parse(context.getSource().getCheckOutTime(), HotelConstants.FORMATTER_HH_MM)
+                LocalTime.parse(context.getSource().getCheckInTime(), HotelInterfaceConstants.FORMATTER_HH_MM),
+                LocalTime.parse(context.getSource().getCheckOutTime(), HotelInterfaceConstants.FORMATTER_HH_MM)
         ));
     }
 
@@ -40,7 +40,7 @@ public class HotelConvertor implements InitializingBean {
         return new HotelDto()
                 .setHotelId(hotel.getHotelId())
                 .setActive(hotel.getActive())
-                .setHotelBasic(modelMapper.map(hotel.getBasic(), HotelBasicVo.class))
+                .setBasic(modelMapper.map(hotel.getBasic(), HotelBasicVo.class))
                 .setAddress(modelMapper.map(hotel.getAddress(), AddressVo.class))
                 .setPosition(modelMapper.map(hotel.getPosition(), AddressVo.PositionVo.class))
                 .setCheckPolicy(modelMapper.map(hotel.getCheckPolicy(), CheckPolicyVo.class));

@@ -1,6 +1,11 @@
 package com.eleven.hotel.api.interfaces.model.room;
 
 import com.eleven.hotel.api.interfaces.values.DateRangeVo;
+import com.eleven.hotel.api.interfaces.values.OccupancyVo;
+import com.eleven.hotel.api.interfaces.values.RoomBasicVo;
+import com.fasterxml.jackson.annotation.JsonRawValue;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,14 +18,21 @@ import java.util.Set;
 public class RoomCreateRequest {
 
     @NotNull
+    @JsonUnwrapped(prefix = "room_")
     private RoomBasicVo basic;
 
-    @Min(0)
-    @Max(999999)
-    private Integer quantity;
+    @NotNull
+    @JsonUnwrapped(prefix = "available_")
+    private DateRangeVo availablePeriod;
 
     @NotNull
-    private DateRangeVo availablePeriod;
+    @JsonUnwrapped(prefix = "occupancy_")
+    private OccupancyVo occupancy;
+
+    @Min(0)
+    @Max(999)
+    private Integer quantity;
+
 
     @NotEmpty
     @Size(min = 1, max = 10)

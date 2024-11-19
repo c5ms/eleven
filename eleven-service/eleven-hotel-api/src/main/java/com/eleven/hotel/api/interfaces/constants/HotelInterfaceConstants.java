@@ -5,7 +5,7 @@ import lombok.experimental.UtilityClass;
 import java.time.format.DateTimeFormatter;
 
 @UtilityClass
-public class HotelConstants {
+public class HotelInterfaceConstants {
 
     public static final String REGEXP_HH_MM = "\\d{2}:\\d{2}";
     public static final String REGEXP_YYYY_MM = "\\d{4}-\\d{2}";

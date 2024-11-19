@@ -1,11 +1,9 @@
 package com.eleven.hotel.interfaces.resource;
 
 import com.eleven.core.interfaces.web.annonation.AsRestApi;
-import com.eleven.hotel.api.interfaces.model.room.RoomDto;
 import com.eleven.hotel.api.interfaces.model.room.RoomCreateRequest;
+import com.eleven.hotel.api.interfaces.model.room.RoomDto;
 import com.eleven.hotel.api.interfaces.model.room.RoomUpdateRequest;
-import com.eleven.hotel.application.command.RoomCreateCommand;
-import com.eleven.hotel.application.command.RoomUpdateCommand;
 import com.eleven.hotel.application.query.RoomQuery;
 import com.eleven.hotel.application.service.RoomService;
 import com.eleven.hotel.domain.model.hotel.RoomKey;
@@ -37,7 +35,7 @@ public class RoomResource {
     public List<RoomDto> listRoom(@PathVariable("hotelId") Long hotelId) {
         return roomQuery.listRoom(hotelId)
                 .stream()
-                .map(roomConverter::assembleDto)
+                .map(roomConverter::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -45,20 +43,15 @@ public class RoomResource {
     @GetMapping("/{roomId:[0-9]+}")
     public Optional<RoomDto> readRoom(@PathVariable("hotelId") Long hotelId, @PathVariable("roomId") Long roomId) {
         var roomKey = RoomKey.of(hotelId, roomId);
-        return roomQuery.readRoom(roomKey).map(roomConverter::assembleDto);
+        return roomQuery.readRoom(roomKey).map(roomConverter::toDto);
     }
 
     @Operation(summary = "create room")
     @PostMapping
     public RoomDto createRoom(@PathVariable("hotelId") Long hotelId, @RequestBody @Validated RoomCreateRequest request) {
-        var command = RoomCreateCommand.builder()
-            .basic(RoomConverter.toRoomBasic(request.getBasic()))
-//            .availablePeriod(request.getAvailablePeriod().toDateRange())
-            .images(request.getImages())
-            .quantity(request.getQuantity())
-            .build();
+        var command = roomConverter.toCommand(request);
         var room = roomService.createRoom(hotelId, command);
-        return roomConverter.assembleDto(room);
+        return roomConverter.toDto(room);
     }
 
     @Operation(summary = "update room")
@@ -66,15 +59,10 @@ public class RoomResource {
     public RoomDto updateRoom(@PathVariable("hotelId") Long hotelId,
                               @PathVariable("roomId") Long roomId,
                               @RequestBody @Validated RoomUpdateRequest request) {
-        var command = RoomUpdateCommand.builder()
-            .basic(RoomConverter.toRoomBasic(request.getBasic()))
-//            .availablePeriod(request.getAvailablePeriod().toDateRange())
-            .images(request.getImages())
-            .quantity(request.getQuantity())
-            .build();
+        var command = roomConverter.toCommand(request);
         var roomKey = RoomKey.of(hotelId, roomId);
         var room = roomService.updateRoom(roomKey, command);
-        return roomConverter.assembleDto(room);
+        return roomConverter.toDto(room);
     }
 
     @Operation(summary = "delete room")

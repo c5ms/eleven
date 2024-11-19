@@ -1,7 +1,6 @@
-package com.eleven.hotel.api.interfaces.model.room;
+package com.eleven.hotel.api.interfaces.values;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,27 +13,20 @@ import lombok.experimental.Accessors;
 public class RoomBasicVo {
 
     @NotBlank
+    @Schema(example = "level one room")
     private String name;
 
-    private String desc;
+    @Schema(example = "the soft room you should have")
+    private String description;
 
     @Min(1)
     @NotNull
+    @Schema(example = "24")
     private Integer area;
 
     @Min(1)
     @NotNull
+    @Schema(example = "3")
     private Integer floor;
-
-    @Min(1)
-    @Max(5)
-    @NotNull
-    private Integer minPerson;
-
-    @Min(1)
-    @Max(5)
-    @NotNull
-    private Integer maxPerson;
-
 
 }

@@ -10,7 +10,6 @@ import com.eleven.hotel.api.interfaces.model.plan.PlanCreateRequest;
 import com.eleven.hotel.api.interfaces.model.plan.PlanUpdateRequest;
 import com.eleven.hotel.application.command.PlanCreateCommand;
 import com.eleven.hotel.application.command.PlanUpdateCommand;
-import com.eleven.hotel.domain.model.hotel.RoomRepository;
 import com.eleven.hotel.domain.model.plan.Plan;
 import com.eleven.hotel.domain.model.plan.PlanBasic;
 import com.eleven.hotel.domain.model.plan.PlanPatch;
@@ -77,7 +76,7 @@ public class PlanConverter {
         return new PlanDetail.Room()
                 .setRoomId(product.getKey().getRoomId())
                 .setName(product.getRoom().getBasic().getName())
-                .setDesc(product.getRoom().getBasic().getDesc())
+                .setDesc(product.getRoom().getBasic().getDescription())
                 .setStock(product.getStock().getCount())
                 .setChargeType(product.getChargeType())
                 .setSaleState(product.getSaleState())

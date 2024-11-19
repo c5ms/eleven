@@ -1,8 +1,9 @@
 package com.eleven.hotel.domain.model.hotel;
 
-import com.eleven.hotel.domain.values.DateRange;
-import com.eleven.hotel.domain.values.StockAmount;
 import com.eleven.hotel.domain.core.AbstractEntity;
+import com.eleven.hotel.domain.values.DateRange;
+import com.eleven.hotel.domain.values.Occupancy;
+import com.eleven.hotel.domain.values.StockAmount;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -49,6 +50,10 @@ public class Room extends AbstractEntity {
     @Embedded
     private RoomBasic basic;
 
+    @Setter
+    @Embedded
+    private Occupancy occupancy;
+
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "room_image", joinColumns = @JoinColumn(name = "room_id", referencedColumnName = "room_id"))
     @Column(name = "image_url", length = 200)
@@ -58,19 +63,19 @@ public class Room extends AbstractEntity {
     }
 
     @Builder
-    public static Room of(Long hotelId,
-                          DateRange availablePeriod,
-                          RoomBasic basic,
-                          Set<String> images,
-                          Integer quantity) {
-        var room = new Room();
-        room.setHotelId(hotelId);
-        room.setBasic(basic);
-        room.setQuantity(quantity);
-        room.setAvailablePeriod(availablePeriod);
-        room.setImages(images);
-        room.setActive(true);
-        return room;
+    public Room(Long hotelId,
+                DateRange availablePeriod,
+                RoomBasic basic,
+                Occupancy occupancy,
+                Set<String> images,
+                Integer quantity) {
+        this.setHotelId(hotelId);
+        this.setBasic(basic);
+        this.setOccupancy(occupancy);
+        this.setQuantity(quantity);
+        this.setAvailablePeriod(availablePeriod);
+        this.setImages(images);
+        this.setActive(true);
     }
 
     public List<Inventory> createInventories() {
@@ -79,7 +84,7 @@ public class Room extends AbstractEntity {
         }
         var inventoryBuilder = Inventory.builder()
                 .roomKey(this.toKey())
-            .stock(StockAmount.of(this.quantity));
+                .stock(StockAmount.of(this.quantity));
         return getAvailablePeriod()
                 .dates()
                 .filter(localDate -> localDate.isAfter(LocalDate.now()))
@@ -89,11 +94,11 @@ public class Room extends AbstractEntity {
     }
 
     public void deactivate() {
-        this.active=false;
+        this.active = false;
     }
 
     public void active() {
-        this.active=true;
+        this.active = true;
     }
 
     @Nonnull

@@ -1,10 +1,16 @@
 package com.eleven.hotel.interfaces.converter;
 
-import com.eleven.hotel.api.interfaces.model.room.RoomBasicVo;
+import com.eleven.hotel.api.interfaces.values.RoomBasicVo;
+import com.eleven.hotel.api.interfaces.model.room.RoomCreateRequest;
 import com.eleven.hotel.api.interfaces.model.room.RoomDto;
+import com.eleven.hotel.api.interfaces.model.room.RoomUpdateRequest;
 import com.eleven.hotel.api.interfaces.values.DateRangeVo;
+import com.eleven.hotel.api.interfaces.values.OccupancyVo;
+import com.eleven.hotel.application.command.RoomCreateCommand;
+import com.eleven.hotel.application.command.RoomUpdateCommand;
 import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.model.hotel.RoomBasic;
+import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.Occupancy;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -15,34 +21,33 @@ import org.springframework.stereotype.Component;
 public class RoomConverter {
     private final ModelMapper modelMapper;
 
-    public RoomDto assembleDto(Room room) {
+    public RoomDto toDto(Room room) {
         return new RoomDto()
-            .setRoomId(room.getRoomId())
-            .setQuantity(room.getQuantity())
-            .setImages(room.getImages())
-            .setAvailablePeriod(modelMapper.map(room.getAvailablePeriod(), DateRangeVo.class))
-            .setBasic(toRoomBasicVo(room.getBasic()));
+                .setRoomId(room.getRoomId())
+                .setQuantity(room.getQuantity())
+                .setImages(room.getImages())
+                .setAvailablePeriod(modelMapper.map(room.getAvailablePeriod(), DateRangeVo.class))
+                .setBasic(modelMapper.map(room.getBasic(), RoomBasicVo.class))
+                .setOccupancy(modelMapper.map(room.getOccupancy(), OccupancyVo.class));
     }
 
-    public static RoomBasic toRoomBasic(RoomBasicVo vo) {
-        return RoomBasic.builder()
-                .area(vo.getArea())
-                .desc(vo.getDesc())
-                .floor(vo.getFloor())
-                .name(vo.getName())
-                .occupancy(new Occupancy(vo.getMinPerson(), vo.getMaxPerson()))
+    public RoomUpdateCommand toCommand(RoomUpdateRequest request) {
+        return RoomUpdateCommand.builder()
+                .quantity(request.getQuantity())
+                .images(request.getImages())
+                .availablePeriod(modelMapper.map(request.getAvailablePeriod(), DateRange.class))
+                .basic(modelMapper.map(request.getBasic(), RoomBasic.class))
+                .occupancy(modelMapper.map(request.getOccupancy(), Occupancy.class))
                 .build();
     }
 
-    public static RoomBasicVo toRoomBasicVo(RoomBasic roomBasic) {
-        return new RoomBasicVo()
-                .setName(roomBasic.getName())
-                .setArea(roomBasic.getArea())
-                .setDesc(roomBasic.getDesc())
-                .setFloor(roomBasic.getFloor())
-                .setMinPerson(roomBasic.getOccupancy().getMinPerson())
-                .setMaxPerson(roomBasic.getOccupancy().getMaxPerson());
+    public RoomCreateCommand toCommand(RoomCreateRequest request) {
+        return RoomCreateCommand.builder()
+                .quantity(request.getQuantity())
+                .images(request.getImages())
+                .availablePeriod(modelMapper.map(request.getAvailablePeriod(), DateRange.class))
+                .basic(modelMapper.map(request.getBasic(), RoomBasic.class))
+                .occupancy(modelMapper.map(request.getOccupancy(), Occupancy.class))
+                .build();
     }
-
-
 }
