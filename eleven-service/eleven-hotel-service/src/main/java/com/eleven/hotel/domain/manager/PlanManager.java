@@ -3,10 +3,10 @@ package com.eleven.hotel.domain.manager;
 import com.eleven.hotel.domain.errors.HotelErrors;
 import com.eleven.hotel.domain.model.hotel.RoomKey;
 import com.eleven.hotel.domain.model.hotel.RoomRepository;
-import com.eleven.hotel.domain.model.plan.Plan;
-import com.eleven.hotel.domain.model.plan.PlanValidator;
-import com.eleven.hotel.domain.model.plan.Product;
-import com.eleven.hotel.domain.model.plan.ProductRepository;
+import com.eleven.hotel.domain.model.hotel.Plan;
+import com.eleven.hotel.domain.model.hotel.PlanValidator;
+import com.eleven.hotel.domain.model.hotel.Product;
+import com.eleven.hotel.domain.model.hotel.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -30,11 +30,6 @@ public class PlanManager {
         }
     }
 
-    public void takeStock(Plan plan) {
-
-    }
-
-
     public void createProducts(Plan plan, Set<Long> rooms) {
         var products = productRepository.findByPlan(plan);
 
@@ -50,7 +45,6 @@ public class PlanManager {
             var product = Product.of(plan, room);
             productRepository.save(product);
         }
-
     }
 
 }

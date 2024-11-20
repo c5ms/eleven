@@ -1,11 +1,15 @@
 package com.eleven.hotel.domain.model.hotel;
 
+import com.eleven.hotel.domain.values.Address;
+import com.eleven.hotel.domain.values.CheckPolicy;
+import com.eleven.hotel.domain.values.Position;
+
 public interface HotelPatch {
     HotelBasic getBasic();
 
-    com.eleven.hotel.domain.values.Address getAddress();
+    Address getAddress();
 
-    com.eleven.hotel.domain.values.Position getPosition();
+    Position getPosition();
 
-    com.eleven.hotel.domain.values.CheckPolicy getCheckPolicy();
+    CheckPolicy getCheckPolicy();
 }

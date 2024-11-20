@@ -7,18 +7,13 @@ import com.eleven.hotel.api.interfaces.values.DateRangeVo;
 import com.eleven.hotel.api.interfaces.values.DateTimeRangeVo;
 import com.eleven.hotel.api.interfaces.values.PlanBasicVo;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -33,16 +28,19 @@ public class PlanDto implements Serializable {
     private SaleState state;
     private Boolean isOnSale;
 
-    @JsonUnwrapped(prefix = "basic_")
+    @NotNull
+    @JsonUnwrapped(prefix = "basic")
     private PlanBasicVo basic;
 
-    @JsonUnwrapped(prefix = "preSalePeriod_")
+    @JsonUnwrapped(prefix = "perSalePeriod")
     private DateTimeRangeVo preSalePeriod;
 
-    @JsonUnwrapped(prefix = "salePeriod_")
+    @NotNull
+    @JsonUnwrapped(prefix = "salePeriod")
     private DateTimeRangeVo salePeriod;
 
-    @JsonUnwrapped(prefix = "stayPeriod_")
+    @NotNull
+    @JsonUnwrapped(prefix = "stayPeriod")
     private DateRangeVo stayPeriod;
 
     private List<SaleChannel> channels;

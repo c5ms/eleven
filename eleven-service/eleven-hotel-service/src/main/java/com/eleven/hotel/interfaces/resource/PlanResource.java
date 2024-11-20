@@ -12,7 +12,7 @@ import com.eleven.hotel.application.service.PlanService;
 import com.eleven.hotel.application.command.PlanSetPriceCommand;
 import com.eleven.hotel.application.query.PlanQuery;
 import com.eleven.hotel.application.query.filter.PlanFilter;
-import com.eleven.hotel.domain.model.plan.PlanKey;
+import com.eleven.hotel.domain.model.hotel.PlanKey;
 import com.eleven.hotel.interfaces.converter.PlanConverter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

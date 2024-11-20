@@ -1,11 +1,9 @@
-package com.eleven.hotel.domain.model.plan;
+package com.eleven.hotel.domain.model.hotel;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
 
 @Embeddable

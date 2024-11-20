@@ -3,6 +3,7 @@ package com.eleven.hotel.domain.model.hotel;
 import com.eleven.core.domain.values.ImmutableValues;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import com.eleven.hotel.domain.model.hotel.event.*;
+import com.eleven.hotel.domain.model.inventory.RoomInventory;
 import com.eleven.hotel.domain.values.Occupancy;
 import com.google.common.base.Predicates;
 import jakarta.annotation.Nonnull;
@@ -77,9 +78,9 @@ public class Room extends AbstractEntity {
 
     public boolean isBookable(RoomInventory roomInventory) {
         return Predicates.<RoomInventory>notNull()
-                .and(theInv -> theInv.getRoomKey().equals(toKey()))
-                .and(theInv -> getStock().getAvailablePeriod().contains(theInv.getKey().getDate()))
-                .test(roomInventory);
+            .and(theInv -> theInv.getRoomKey().equals(toKey()))
+            .and(theInv -> getStock().getAvailablePeriod().contains(theInv.getKey().getDate()))
+            .test(roomInventory);
     }
 
     public void deactivate() {
@@ -106,14 +107,6 @@ public class Room extends AbstractEntity {
         this.addEvent(RoomStockChangedEvent.of(this));
     }
 
-    public void setImages(Set<String> images) {
-        if (null == this.images) {
-            this.images = new HashSet<>();
-        }
-        this.images.clear();
-        this.images.addAll(images);
-    }
-
     @Nonnull
     public RoomKey toKey() {
         return RoomKey.of(hotelId, roomId);
@@ -121,6 +114,14 @@ public class Room extends AbstractEntity {
 
     public ImmutableValues<String> getImages() {
         return ImmutableValues.of(images);
+    }
+
+    public void setImages(Set<String> images) {
+        if (null == this.images) {
+            this.images = new HashSet<>();
+        }
+        this.images.clear();
+        this.images.addAll(images);
     }
 
 

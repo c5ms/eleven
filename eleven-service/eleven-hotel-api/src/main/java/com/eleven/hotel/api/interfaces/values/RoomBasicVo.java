@@ -4,13 +4,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
-@Data
+@Getter
+@Setter
 @Schema(name = "RoomBasic")
 @Accessors(chain = true)
-public class RoomBasicVo {
+public class RoomBasicVo extends AbstractVo {
 
     @NotBlank
     @Schema(example = "level one room")

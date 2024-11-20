@@ -1,7 +1,11 @@
-package com.eleven.hotel.domain.model.hotel;
+package com.eleven.hotel.domain.model.inventory;
 
 import com.eleven.hotel.domain.core.AbstractEntity;
-import jakarta.persistence.*;
+import com.eleven.hotel.domain.model.hotel.RoomKey;
+import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.*;
 
 import java.time.LocalDate;

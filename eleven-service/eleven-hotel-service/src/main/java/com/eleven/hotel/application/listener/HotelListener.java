@@ -4,6 +4,7 @@ import cn.hutool.json.JSONUtil;
 import com.eleven.core.application.event.ApplicationEvent;
 import com.eleven.core.domain.error.DomainEvent;
 import com.eleven.hotel.domain.manager.HotelManager;
+import com.eleven.hotel.domain.manager.InventoryManager;
 import com.eleven.hotel.domain.model.hotel.event.RoomStockChangedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class HotelListener {
 
-    private final HotelManager hotelManager;
+    private final InventoryManager inventoryManager;
 
     @EventListener
     public void on(DomainEvent event) {
@@ -29,6 +30,6 @@ public class HotelListener {
 
     @EventListener(RoomStockChangedEvent.class)
     public void on(RoomStockChangedEvent event) {
-        hotelManager.takeStock(event.getRoom());
+        inventoryManager.takeStock(event.getRoom());
     }
 }

@@ -1,5 +1,6 @@
-package com.eleven.hotel.domain.model.hotel;
+package com.eleven.hotel.domain.model.inventory;
 
+import com.eleven.hotel.domain.model.hotel.RoomKey;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

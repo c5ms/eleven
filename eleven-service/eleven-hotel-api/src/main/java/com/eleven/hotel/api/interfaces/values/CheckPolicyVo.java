@@ -3,12 +3,15 @@ package com.eleven.hotel.api.interfaces.values;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
-@Data
+@Getter
+@Setter
 @Schema(name = "CheckPolicy")
 @Accessors(chain = true)
-public class CheckPolicyVo {
+public class CheckPolicyVo extends AbstractVo {
 
     public static final String REGEXP_HH_MM = "\\d{2}:\\d{2}";
     public static final String FORMAT_HH_MM = "HH:mm";

@@ -8,8 +8,8 @@ import com.eleven.hotel.api.interfaces.values.DateTimeRangeVo;
 import com.eleven.hotel.api.interfaces.values.PlanBasicVo;
 import com.eleven.hotel.application.command.PlanCreateCommand;
 import com.eleven.hotel.application.command.PlanUpdateCommand;
-import com.eleven.hotel.domain.model.plan.Plan;
-import com.eleven.hotel.domain.model.plan.PlanBasic;
+import com.eleven.hotel.domain.model.hotel.Plan;
+import com.eleven.hotel.domain.model.hotel.PlanBasic;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +43,7 @@ public class PlanConverter {
         return PlanCreateCommand.builder()
                 .basic(modelMapper.map(request.getBasic(), PlanBasic.class))
                 .stock(request.getStock())
-                .preSalePeriod(modelMapper.map(request.getPerSalePeriod(), DateTimeRange.class))
+                .preSalePeriod(modelMapper.map(request.getPreSalePeriod(), DateTimeRange.class))
                 .salePeriod(modelMapper.map(request.getSalePeriod(), DateTimeRange.class))
                 .stayPeriod(modelMapper.map(request.getStayPeriod(), DateRange.class))
                 .rooms(request.getRooms())
@@ -56,7 +56,7 @@ public class PlanConverter {
         return PlanUpdateCommand.builder()
                 .basic(modelMapper.map(request.getBasic(), PlanBasic.class))
                 .stock(request.getStock())
-                .preSalePeriod(modelMapper.map(request.getPerSalePeriod(), DateTimeRange.class))
+                .preSalePeriod(modelMapper.map(request.getPreSalePeriod(), DateTimeRange.class))
                 .salePeriod(modelMapper.map(request.getSalePeriod(), DateTimeRange.class))
                 .stayPeriod(modelMapper.map(request.getStayPeriod(), DateRange.class))
                 .rooms(request.getRooms())

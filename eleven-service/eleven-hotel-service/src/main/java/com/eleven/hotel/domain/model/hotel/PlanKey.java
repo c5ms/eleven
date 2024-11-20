@@ -1,4 +1,4 @@
-package com.eleven.hotel.domain.model.plan;
+package com.eleven.hotel.domain.model.hotel;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

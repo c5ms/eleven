@@ -1,4 +1,4 @@
-package com.eleven.hotel.domain.model.plan;
+package com.eleven.hotel.domain.model.hotel;
 
 public interface PlanPatch {
     PlanBasic getBasic();

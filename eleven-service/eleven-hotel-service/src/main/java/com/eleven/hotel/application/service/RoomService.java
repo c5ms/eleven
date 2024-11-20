@@ -6,6 +6,7 @@ import com.eleven.hotel.application.command.RoomUpdateCommand;
 import com.eleven.hotel.application.support.HotelContext;
 import com.eleven.hotel.domain.manager.HotelManager;
 import com.eleven.hotel.domain.model.hotel.*;
+import com.eleven.hotel.domain.model.inventory.RoomInventoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

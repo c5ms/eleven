@@ -21,14 +21,14 @@ public class RoomDto {
     private Long hotelId;
     private Long roomId;
 
-    @JsonUnwrapped(prefix = "room_")
+    @JsonUnwrapped(prefix = "room")
     private RoomBasicVo basic;
 
-    @JsonUnwrapped(prefix = "occupancy_")
+    @JsonUnwrapped(prefix = "occupancy")
     private OccupancyVo occupancy;
 
     @NotNull
-    @JsonUnwrapped(prefix = "stock_")
+    @JsonUnwrapped(prefix = "stock")
     private RoomStockVo stock;
 
     private Set<String> images = new HashSet<>();

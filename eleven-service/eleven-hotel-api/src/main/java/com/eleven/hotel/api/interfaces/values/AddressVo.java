@@ -2,12 +2,15 @@ package com.eleven.hotel.api.interfaces.values;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
-@Data
+@Getter
+@Setter
 @Schema(name = "Address")
 @Accessors(chain = true)
-public class AddressVo {
+public class AddressVo extends AbstractVo {
 
     @Schema(example = "中国大陆")
     private String country;

@@ -1,4 +1,4 @@
-package com.eleven.hotel.domain.model.plan;
+package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.core.domain.error.DomainValidator;
 import com.eleven.core.domain.values.ImmutableValues;
@@ -7,7 +7,6 @@ import com.eleven.hotel.api.domain.enums.SaleChannel;
 import com.eleven.hotel.api.domain.enums.SaleState;
 import com.eleven.hotel.api.domain.enums.SaleType;
 import com.eleven.hotel.domain.errors.PlanErrors;
-import com.eleven.hotel.domain.model.hotel.Room;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -66,13 +65,6 @@ public class Product {
     @Column(name = "sale_state")
     private SaleState saleState;
 
-    @PrePersist
-    protected void complete() {
-        for (Price price : this.getPrices()) {
-            price.getKey().apply(getKey());
-        }
-    }
-
     protected Product(@NonNull Plan plan, @NonNull Room room) {
         this.key = ProductKey.of(plan.toKey(), room.getRoomId());
         this.room = room;
@@ -87,6 +79,12 @@ public class Product {
         return new Product(plan, room);
     }
 
+    @PrePersist
+    protected void complete() {
+        for (Price price : this.getPrices()) {
+            price.getKey().apply(getKey());
+        }
+    }
 
     public boolean isOnSale() {
         return this.saleState.isOnSale();
@@ -108,20 +106,20 @@ public class Product {
                          BigDecimal fivePersonPrice) {
         DomainValidator.must(this.saleChannels.contains(saleChannel), PlanErrors.UN_SUPPORTED_CHANNEL);
         var price = Price.byPerson(this.getKey(),
-                saleChannel,
-                onePersonPrice,
-                twoPersonPrice,
-                threePersonPrice,
-                fourPersonPrice,
-                fivePersonPrice);
+            saleChannel,
+            onePersonPrice,
+            twoPersonPrice,
+            threePersonPrice,
+            fourPersonPrice,
+            fivePersonPrice);
         this.prices.put(price.getKey(), price);
         this.setChargeType(price.getChargeType());
     }
 
     public Optional<Price> priceOf(SaleChannel channel) {
         return getPrices().stream()
-                .filter(price -> price.is(channel))
-                .findFirst();
+            .filter(price -> price.is(channel))
+            .findFirst();
     }
 
     public ImmutableValues<SaleChannel> getSaleChannels() {

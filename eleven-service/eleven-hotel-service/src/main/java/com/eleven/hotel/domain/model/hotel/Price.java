@@ -1,4 +1,4 @@
-package com.eleven.hotel.domain.model.plan;
+package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.hotel.api.domain.enums.ChargeType;
 import com.eleven.hotel.api.domain.enums.SaleChannel;

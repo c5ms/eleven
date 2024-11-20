@@ -7,14 +7,10 @@ import com.eleven.hotel.api.interfaces.values.PlanBasicVo;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,18 +19,18 @@ import java.util.Set;
 public class PlanCreateRequest {
 
     @NotNull
-    @JsonUnwrapped(prefix = "basic_")
+    @JsonUnwrapped(prefix = "basic")
     private PlanBasicVo basic;
 
-    @JsonUnwrapped(prefix = "perSale_")
-    private DateTimeRangeVo perSalePeriod;
+    @JsonUnwrapped(prefix = "preSalePeriod")
+    private DateTimeRangeVo preSalePeriod;
 
     @NotNull
-    @JsonUnwrapped(prefix = "sale_")
+    @JsonUnwrapped(prefix = "salePeriod")
     private DateTimeRangeVo salePeriod;
 
     @NotNull
-    @JsonUnwrapped(prefix = "stay_")
+    @JsonUnwrapped(prefix = "stayPeriod")
     private DateRangeVo stayPeriod;
 
     @NotNull

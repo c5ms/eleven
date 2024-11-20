@@ -10,15 +10,18 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
-@Data
+@Getter
+@Setter
 @Schema(name = "RoomStock")
 @Accessors(chain = true)
-public class RoomStockVo {
+public class RoomStockVo extends AbstractVo {
 
     @NotNull
-    @JsonUnwrapped(prefix = "available_")
+    @JsonUnwrapped(prefix = "Available")
     private DateRangeVo availablePeriod;
 
     @Min(0)

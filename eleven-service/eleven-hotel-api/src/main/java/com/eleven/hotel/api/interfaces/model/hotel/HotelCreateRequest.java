@@ -7,7 +7,6 @@ import com.eleven.hotel.api.interfaces.values.PositionVo;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.NonNull;
 
 @Data
 public class HotelCreateRequest {

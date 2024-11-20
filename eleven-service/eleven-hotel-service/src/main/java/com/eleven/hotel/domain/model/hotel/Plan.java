@@ -1,4 +1,4 @@
-package com.eleven.hotel.domain.model.plan;
+package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.core.domain.error.DomainValidator;
 import com.eleven.core.domain.values.ImmutableValues;
@@ -7,8 +7,8 @@ import com.eleven.hotel.api.domain.enums.SaleState;
 import com.eleven.hotel.api.domain.enums.SaleType;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import com.eleven.hotel.domain.errors.PlanErrors;
-import com.eleven.hotel.domain.model.plan.event.PlanCreatedEvent;
-import com.eleven.hotel.domain.model.plan.event.PlanStayPeriodChangedEvent;
+import com.eleven.hotel.domain.model.hotel.event.PlanCreatedEvent;
+import com.eleven.hotel.domain.model.hotel.event.PlanStayPeriodChangedEvent;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
@@ -131,6 +131,13 @@ public class Plan extends AbstractEntity {
         return Optional.ofNullable(stayPeriod).orElseGet(DateRange::empty);
     }
 
+    private void setStayPeriod(DateRange stayPeriod) {
+        if (null != this.stayPeriod && !Objects.equals(this.stayPeriod, stayPeriod)) {
+            this.addEvent(PlanStayPeriodChangedEvent.of(this));
+        }
+        this.stayPeriod = stayPeriod;
+    }
+
     @Nullable
     public DateTimeRange getPreSalePeriod() {
         return Optional.ofNullable(preSalePeriod).orElseGet(DateTimeRange::empty);
@@ -151,6 +158,10 @@ public class Plan extends AbstractEntity {
         return ImmutableValues.of(saleChannels);
     }
 
+    private void setSaleChannels(Set<SaleChannel> saleChannels) {
+        this.saleChannels = saleChannels;
+    }
+
     @Nonnull
     public PlanKey toKey() {
         return PlanKey.of(hotelId, planId);
@@ -166,19 +177,8 @@ public class Plan extends AbstractEntity {
         return getSalePeriod().isCurrent();
     }
 
-    private void setSaleChannels(Set<SaleChannel> saleChannels) {
-        this.saleChannels = saleChannels;
-    }
-
     private void setStock(Integer stock) {
         this.stock = stock;
-    }
-
-    private void setStayPeriod(DateRange stayPeriod) {
-        if (null != this.stayPeriod && !Objects.equals(this.stayPeriod, stayPeriod)) {
-            this.addEvent(PlanStayPeriodChangedEvent.of(this));
-        }
-        this.stayPeriod = stayPeriod;
     }
 
     private void validate() {

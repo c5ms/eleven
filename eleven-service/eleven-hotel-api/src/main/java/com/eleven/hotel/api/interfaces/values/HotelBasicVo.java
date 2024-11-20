@@ -2,14 +2,17 @@ package com.eleven.hotel.api.interfaces.values;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.time.YearMonth;
 
-@Data
+@Getter
+@Setter
 @Schema(name = "HotelBasic")
 @Accessors(chain = true)
-public class HotelBasicVo {
+public class HotelBasicVo extends AbstractVo {
 
     @Schema(example = "ross hotel")
     private String name;

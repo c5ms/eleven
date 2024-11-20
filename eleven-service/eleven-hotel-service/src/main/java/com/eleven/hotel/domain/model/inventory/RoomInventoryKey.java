@@ -1,5 +1,6 @@
-package com.eleven.hotel.domain.model.hotel;
+package com.eleven.hotel.domain.model.inventory;
 
+import com.eleven.hotel.domain.model.hotel.RoomKey;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.*;
@@ -37,8 +38,8 @@ public class RoomInventoryKey implements Serializable {
         return new RoomInventoryKey(roomKey, date);
     }
 
-    public  RoomKey toRoomKey() {
-        return  RoomKey.of(this.getHotelId(), this.getRoomId());
+    public RoomKey toRoomKey() {
+        return RoomKey.of(this.getHotelId(), this.getRoomId());
     }
 
 }

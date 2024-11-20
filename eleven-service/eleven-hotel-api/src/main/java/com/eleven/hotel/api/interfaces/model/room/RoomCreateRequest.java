@@ -4,8 +4,6 @@ import com.eleven.hotel.api.interfaces.values.OccupancyVo;
 import com.eleven.hotel.api.interfaces.values.RoomBasicVo;
 import com.eleven.hotel.api.interfaces.values.RoomStockVo;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -20,15 +18,15 @@ import java.util.Set;
 public class RoomCreateRequest {
 
     @NotNull
-    @JsonUnwrapped(prefix = "room_")
+    @JsonUnwrapped(prefix = "room")
     private RoomBasicVo basic;
 
     @NotNull
-    @JsonUnwrapped(prefix = "occupancy_")
+    @JsonUnwrapped(prefix = "occupancy")
     private OccupancyVo occupancy;
 
     @NotNull
-    @JsonUnwrapped(prefix = "stock_")
+    @JsonUnwrapped(prefix = "stock")
     private RoomStockVo stock;
 
     @NotEmpty
