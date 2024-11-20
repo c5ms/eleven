@@ -26,10 +26,8 @@ public class PlanService {
 
     private final PlanRepository planRepository;
     private final HotelRepository hotelRepository;
-    private final PlanInventoryRepository planInventoryRepository;
 
     private final PlanManager planManager;
-    private final RoomRepository roomRepository;
 
     public Plan createPlan(Long hotelId, PlanCreateCommand command) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
@@ -42,71 +40,57 @@ public class PlanService {
                 .stock(command.getStock())
                 .saleChannels(command.getChannels())
                 .create();
-
-        command.getRooms().stream()
-                .map(roomId -> RoomKey.of(hotelId, roomId))
-                .map(roomKey -> roomRepository.findByRoomKey(roomKey).orElseThrow(HotelErrors.ROOM_NOT_FOUND::toException))
-                .forEach(plan::addRoom);
-
         planManager.validate(plan);
         planRepository.saveAndFlush(plan);
-        planManager.takeStock(plan);
+        planManager.createProducts(plan, command.getRooms());
         return plan;
     }
 
     public Plan updatePlan(PlanKey planKey, PlanUpdateCommand command) {
         var plan = planRepository.findByKey(planKey).orElseThrow(HotelContext::noPrincipalException);
-        plan.update(command.getPatch());
-
-        command.getRooms().stream()
-                .filter(roomId -> plan.findRoom(roomId).isEmpty())
-                .map(roomId -> RoomKey.of(planKey.getHotelId(), roomId))
-                .map(roomKey -> roomRepository.findByRoomKey(roomKey).orElseThrow(HotelErrors.ROOM_NOT_FOUND::toException))
-                .forEach(plan::addRoom);
-        plan.removeRoom(product -> !command.getRooms().contains(product.getKey().getRoomId()));
-
+        plan.update(command);
         planManager.validate(plan);
         planRepository.saveAndFlush(plan);
-        planManager.takeStock(plan);
+        planManager.createProducts(plan, command.getRooms());
         return plan;
     }
 
     public void deletePlan(PlanKey planKey) {
         var plan = planRepository.findByKey(planKey).orElseThrow(HotelContext::noPrincipalException);
         planRepository.delete(plan);
-        planInventoryRepository.deleteByPlanKey(plan.toKey());
     }
 
     public void startSale(PlanKey planKey, Long roomId) {
         var plan = planRepository.findByKey(planKey).orElseThrow(HotelContext::noPrincipalException);
-        plan.findRoom(roomId).orElseThrow(HotelContext::noPrincipalException);
-        plan.startSale(roomId);
+//        plan.findRoom(roomId).orElseThrow(HotelContext::noPrincipalException);
+//        plan.startSale(roomId);
         planRepository.saveAndFlush(plan);
     }
 
     public void stopSale(PlanKey planKey, Long roomId) {
         var plan = planRepository.findByKey(planKey).orElseThrow(HotelContext::noPrincipalException);
-        plan.findRoom(roomId).orElseThrow(HotelContext::noPrincipalException);
-        plan.stopSale(roomId);
+//        plan.findRoom(roomId).orElseThrow(HotelContext::noPrincipalException);
+//        plan.stopSale(roomId);
         planRepository.saveAndFlush(plan);
     }
 
     public void setPrice(PlanKey planKey, Long roomId, PlanSetPriceCommand command) {
         var plan = planRepository.findByKey(planKey).orElseThrow(HotelContext::noPrincipalException);
-        var room = plan.findRoom(roomId).orElseThrow(HotelContext::noPrincipalException);
-        switch (command.getChargeType()) {
-            case BY_PERSON ->
-                    room.setPrice(command.getSaleChannel(), command.getOnePersonPrice(), command.getTwoPersonPrice(),
-                            command.getThreePersonPrice(), command.getFourPersonPrice(), command.getFivePersonPrice());
-            case BY_ROOM -> room.setPrice(command.getSaleChannel(), command.getWholeRoomPrice());
-        }
+//        var room = plan.findRoom(roomId).orElseThrow(HotelContext::noPrincipalException);
+//        switch (command.getChargeType()) {
+//            case BY_PERSON ->
+//                    room.setPrice(command.getSaleChannel(), command.getOnePersonPrice(), command.getTwoPersonPrice(),
+//                            command.getThreePersonPrice(), command.getFourPersonPrice(), command.getFivePersonPrice());
+//            case BY_ROOM -> room.setPrice(command.getSaleChannel(), command.getWholeRoomPrice());
+//        }
         planRepository.saveAndFlush(plan);
     }
 
     public BigDecimal chargeRoom(ProductKey productKey, SaleChannel saleChannel, int persons) {
         var plan = planRepository.findByKey(productKey.toPlanKey()).orElseThrow(HotelContext::noPrincipalException);
-        var product = plan.findRoom(productKey.getRoomId()).orElseThrow(HotelContext::noPrincipalException);
-        return product.priceOf(saleChannel).map(price -> price.charge(persons)).orElse(BigDecimal.ZERO);
+//        var product = plan.findRoom(productKey.getRoomId()).orElseThrow(HotelContext::noPrincipalException);
+//        return product.priceOf(saleChannel).map(price -> price.charge(persons)).orElse(BigDecimal.ZERO);
+        return BigDecimal.ZERO;
     }
 
 }

@@ -4,10 +4,9 @@ import com.eleven.core.interfaces.model.PageResponse;
 import com.eleven.core.interfaces.web.annonation.AsRestApi;
 import com.eleven.hotel.api.domain.enums.ChargeType;
 import com.eleven.hotel.api.domain.enums.SaleChannel;
-import com.eleven.hotel.api.interfaces.model.plan.PlanDetail;
 import com.eleven.hotel.api.interfaces.model.plan.PlanDto;
 import com.eleven.hotel.api.interfaces.model.plan.PlanCreateRequest;
-import com.eleven.hotel.api.interfaces.model.plan.PlanQuerytRequest;
+import com.eleven.hotel.api.interfaces.model.plan.PlanQueryRequest;
 import com.eleven.hotel.api.interfaces.model.plan.PlanUpdateRequest;
 import com.eleven.hotel.application.service.PlanService;
 import com.eleven.hotel.application.command.PlanSetPriceCommand;
@@ -40,7 +39,7 @@ public class PlanResource {
 
     @Operation(summary = "query plan")
     @GetMapping
-    public PageResponse<PlanDto> queryPlan(@PathVariable("hotelId") Long hotelId, @ParameterObject @Validated PlanQuerytRequest request) {
+    public PageResponse<PlanDto> queryPlan(@PathVariable("hotelId") Long hotelId, @ParameterObject @Validated PlanQueryRequest request) {
         var filter = PlanFilter.builder()
                 .hotelId(hotelId)
                 .planName(request.getPlanName())
@@ -51,17 +50,17 @@ public class PlanResource {
 
     @Operation(summary = "read plan")
     @GetMapping("/{planId:[0-9]+}")
-    public Optional<PlanDetail> readPlan(@PathVariable("hotelId") Long hotelId, @PathVariable("planId") Long planId) {
+    public Optional<PlanDto> readPlan(@PathVariable("hotelId") Long hotelId, @PathVariable("planId") Long planId) {
         var plankey = PlanKey.of(hotelId, planId);
-        return planQuery.readPlan(plankey).map(planConverter::toDetail);
+        return planQuery.readPlan(plankey).map(planConverter::toDto);
     }
 
     @Operation(summary = "create plan")
     @PostMapping
-    public PlanDetail createPlan(@PathVariable("hotelId") Long hotelId, @RequestBody @Validated PlanCreateRequest request) {
+    public PlanDto createPlan(@PathVariable("hotelId") Long hotelId, @RequestBody @Validated PlanCreateRequest request) {
         var command = planConverter.toCommand(request);
         var plan = planService.createPlan(hotelId, command);
-        return planConverter.toDetail(plan);
+        return planConverter.toDto(plan);
     }
 
     @Operation(summary = "delete plan")
@@ -74,13 +73,13 @@ public class PlanResource {
 
     @Operation(summary = "update plan")
     @PutMapping("/{planId:[0-9]+}")
-    public PlanDetail updatePlan(@PathVariable("hotelId") Long hotelId,
+    public PlanDto updatePlan(@PathVariable("hotelId") Long hotelId,
                                  @PathVariable("planId") Long planId,
                                  @RequestBody @Validated PlanUpdateRequest request) {
         var command = planConverter.toCommand(request);
         var plankey = PlanKey.of(hotelId, planId);
         var plan = planService.updatePlan(plankey, command);
-        return planConverter.toDetail(plan);
+        return planConverter.toDto(plan);
     }
 
     @Operation(summary = "set price")

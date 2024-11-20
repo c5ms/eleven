@@ -11,11 +11,11 @@ import java.time.LocalDate;
 @Getter
 @Setter(AccessLevel.PROTECTED)
 @EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
-public class Inventory extends AbstractEntity {
+public class RoomInventory extends AbstractEntity {
 
     @EmbeddedId
     @EqualsAndHashCode.Include
-    private InventoryKey key;
+    private RoomInventoryKey key;
 
     @Column(name = "is_enabled")
     private Boolean isEnabled;
@@ -26,14 +26,14 @@ public class Inventory extends AbstractEntity {
     @Column(name = "stock_booked")
     private Integer stockBooked;
 
-    protected Inventory() {
+    protected RoomInventory() {
     }
 
     @Builder
-    public static Inventory of(RoomKey roomKey, LocalDate date, Integer stock) {
-        var inventoryKey = InventoryKey.of(roomKey, date);
+    public static RoomInventory of(RoomKey roomKey, LocalDate date, Integer stock) {
+        var inventoryKey = RoomInventoryKey.of(roomKey, date);
 
-        var inventory = new Inventory();
+        var inventory = new RoomInventory();
         inventory.setKey(inventoryKey);
         inventory.setStockTotal(stock);
         inventory.setStockBooked(stock);

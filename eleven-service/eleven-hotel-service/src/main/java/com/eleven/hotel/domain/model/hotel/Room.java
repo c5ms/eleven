@@ -75,11 +75,11 @@ public class Room extends AbstractEntity {
         this.addEvent(RoomUpdatedEvent.of(this));
     }
 
-    public boolean isBookable(Inventory inventory) {
-        return Predicates.<Inventory>notNull()
+    public boolean isBookable(RoomInventory roomInventory) {
+        return Predicates.<RoomInventory>notNull()
                 .and(theInv -> theInv.getRoomKey().equals(toKey()))
                 .and(theInv -> getStock().getAvailablePeriod().contains(theInv.getKey().getDate()))
-                .test(inventory);
+                .test(roomInventory);
     }
 
     public void deactivate() {

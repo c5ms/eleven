@@ -15,9 +15,12 @@ import lombok.experimental.FieldNameConstants;
 import org.hibernate.annotations.Type;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
-@Table(name = "plan_room")
+@Table(name = "product")
 @Entity
 @Getter
 @Setter(AccessLevel.PROTECTED)
@@ -52,7 +55,7 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private Set<SaleChannel> saleChannels;
 
-    @Column(name = "stock_amount")
+    @Column(name = "stock")
     private Integer stock;
 
     @Enumerated(EnumType.STRING)
@@ -70,17 +73,18 @@ public class Product {
         }
     }
 
-    protected Product(@NonNull Plan plan,
-                      @NonNull Room room,
-                      @NonNull SaleType saleType,
-                      @NonNull Collection<SaleChannel> saleChannels,
-                      @NonNull Integer stock) {
+    protected Product(@NonNull Plan plan, @NonNull Room room) {
         this.key = ProductKey.of(plan.toKey(), room.getRoomId());
         this.room = room;
-        this.stock = stock;
-        this.saleType = saleType;
+        this.plan = plan;
+        this.stock = room.getStock().getQuantity();
+        this.saleType = plan.getSaleType();
         this.saleState = SaleState.STOPPED;
-        this.saleChannels = new HashSet<>(saleChannels);
+        this.saleChannels = plan.getSaleChannels().toSet();
+    }
+
+    public static Product of(@NonNull Plan plan, @NonNull Room room) {
+        return new Product(plan, room);
     }
 
 

@@ -13,7 +13,7 @@ import java.util.List;
 public class HotelManager {
     private final List<RoomValidator> roomValidators;
     private final List<HotelValidator> hotelValidators;
-    private final InventoryRepository inventoryRepository;
+    private final RoomInventoryRepository roomInventoryRepository;
 
     public void validate(Hotel hotel) {
         hotelValidators.forEach(validator -> validator.validate(hotel));
@@ -24,26 +24,26 @@ public class HotelManager {
     }
 
     public void takeStock(Room room) {
-        var inventories = inventoryRepository.findByRoomKey(room.toKey());
+        var inventories = roomInventoryRepository.findByRoomKey(room.toKey());
         var dates = room.getStock().getAvailableDates();
-        var inventoryBuilder = Inventory.builder()
+        var inventoryBuilder = RoomInventory.builder()
                 .roomKey(room.toKey())
                 .stock(room.getStock().getQuantity());
 
-        inventories.forEach(inventory -> dates.remove(inventory.getKey().getDate()));
-        for (Inventory inventory : inventories) {
-            if (room.isBookable(inventory)) {
-                inventory.enable();
+        inventories.forEach(roomInventory -> dates.remove(roomInventory.getKey().getDate()));
+        for (RoomInventory roomInventory : inventories) {
+            if (room.isBookable(roomInventory)) {
+                roomInventory.enable();
             } else {
-                inventory.disable();
+                roomInventory.disable();
             }
         }
 
         dates.stream()
                 .map(inventoryBuilder::date)
-                .map(Inventory.InventoryBuilder::build)
+                .map(RoomInventory.RoomInventoryBuilder::build)
                 .forEach(inventories::add);
-        inventoryRepository.saveAllAndFlush(inventories);
+        roomInventoryRepository.saveAllAndFlush(inventories);
     }
 
 }

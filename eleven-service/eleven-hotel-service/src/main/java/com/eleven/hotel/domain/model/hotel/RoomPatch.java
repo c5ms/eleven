@@ -1,21 +1,15 @@
 package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.hotel.domain.values.Occupancy;
-import lombok.Builder;
-import lombok.Data;
 
 import java.util.Set;
 
-@Data
-@Builder
-public class RoomPatch {
+public interface RoomPatch {
+    RoomStock getStock();
 
-    private RoomStock stock;
+    RoomBasic getBasic();
 
-    private RoomBasic basic;
+    Occupancy getOccupancy();
 
-    private Occupancy occupancy;
-
-    private Set<String> images;
-
+    Set<String> getImages();
 }

@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @EqualsAndHashCode
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class InventoryKey implements Serializable {
+public class RoomInventoryKey implements Serializable {
 
     @NonNull
     @Column(name = "hotel_id")
@@ -27,14 +27,14 @@ public class InventoryKey implements Serializable {
     @Column(name = "sale_date")
     private LocalDate date;
 
-    public InventoryKey(RoomKey roomKey, LocalDate date) {
+    public RoomInventoryKey(RoomKey roomKey, LocalDate date) {
         this.setHotelId(roomKey.getHotelId());
         this.setRoomId(roomKey.getRoomId());
         this.setDate(date);
     }
 
-    public static InventoryKey of(RoomKey roomKey, LocalDate date) {
-        return new InventoryKey(roomKey, date);
+    public static RoomInventoryKey of(RoomKey roomKey, LocalDate date) {
+        return new RoomInventoryKey(roomKey, date);
     }
 
     public  RoomKey toRoomKey() {

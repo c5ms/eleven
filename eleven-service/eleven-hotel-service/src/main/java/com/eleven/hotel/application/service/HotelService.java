@@ -5,7 +5,6 @@ import com.eleven.hotel.application.command.HotelUpdateCommand;
 import com.eleven.hotel.application.support.HotelContext;
 import com.eleven.hotel.domain.manager.HotelManager;
 import com.eleven.hotel.domain.model.hotel.Hotel;
-import com.eleven.hotel.domain.model.hotel.HotelPatch;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,14 +33,7 @@ public class HotelService {
 
     public Hotel update(Long hotelId, HotelUpdateCommand command) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
-
-        var patch = HotelPatch.builder()
-                .address(command.getAddress())
-                .checkPolicy(command.getCheckPolicy())
-                .checkPolicy(command.getCheckPolicy())
-                .position(command.getPosition())
-                .build();
-        hotel.update(patch);
+        hotel.update(command);
         hotelManager.validate(hotel);
         hotelRepository.saveAndFlush(hotel);
         return hotel;

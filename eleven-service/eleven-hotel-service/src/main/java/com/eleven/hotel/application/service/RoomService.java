@@ -10,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 @Transactional(rollbackFor = Exception.class)
@@ -21,7 +19,7 @@ public class RoomService {
 
     private final RoomRepository roomRepository;
     private final HotelRepository hotelRepository;
-    private final InventoryRepository inventoryRepository;
+    private final RoomInventoryRepository roomInventoryRepository;
 
     public Room createRoom(Long hotelId, RoomCreateCommand command) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(NoPrincipalException::new);
@@ -42,20 +40,12 @@ public class RoomService {
     public void deleteRoom(RoomKey roomKey) {
         var room = roomRepository.findByRoomKey(roomKey).orElseThrow(HotelContext::noPrincipalException);
         roomRepository.delete(room);
-        inventoryRepository.deleteByRoomKey(roomKey);
+        roomInventoryRepository.deleteByRoomKey(roomKey);
     }
 
     public Room updateRoom(RoomKey roomKey, RoomUpdateCommand command) {
         var room = roomRepository.findByRoomKey(roomKey).orElseThrow(HotelContext::noPrincipalException);
-
-        var patch = RoomPatch.builder()
-                .basic(command.getBasic())
-                .images(command.getImages())
-                .stock(command.getStock())
-                .occupancy(command.getOccupancy())
-                .build();
-
-        room.update(patch);
+        room.update(command);
         hotelManager.validate(room);
         roomRepository.saveAndFlush(room);
         return room;

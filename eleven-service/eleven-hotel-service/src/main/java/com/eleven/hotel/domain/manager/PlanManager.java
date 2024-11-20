@@ -1,14 +1,18 @@
 package com.eleven.hotel.domain.manager;
 
+import com.eleven.hotel.domain.errors.HotelErrors;
+import com.eleven.hotel.domain.model.hotel.RoomKey;
+import com.eleven.hotel.domain.model.hotel.RoomRepository;
 import com.eleven.hotel.domain.model.plan.Plan;
-import com.eleven.hotel.domain.model.plan.PlanInventoryMigration;
-import com.eleven.hotel.domain.model.plan.PlanInventoryRepository;
 import com.eleven.hotel.domain.model.plan.PlanValidator;
+import com.eleven.hotel.domain.model.plan.Product;
+import com.eleven.hotel.domain.model.plan.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
 
 
 @Slf4j
@@ -17,7 +21,8 @@ import java.util.List;
 public class PlanManager {
 
     private final List<PlanValidator> planValidators;
-    private final PlanInventoryRepository planInventoryRepository;
+    private final ProductRepository productRepository;
+    private final RoomRepository roomRepository;
 
     public void validate(Plan plan) {
         for (PlanValidator validator : planValidators) {
@@ -26,17 +31,26 @@ public class PlanManager {
     }
 
     public void takeStock(Plan plan) {
-        var existingInventories = planInventoryRepository.findByPlanKey(plan.toKey());
-        var merger = PlanInventoryMigration.of(plan, existingInventories);
 
-        // remove inventory which has never been used and is invalid now.
-        planInventoryRepository.deleteAllInBatch(merger.removes());
+    }
 
-        // update invalid status
-        planInventoryRepository.saveAllAndFlush(merger.updates());
 
-        // add new inventories
-        planInventoryRepository.saveAllAndFlush(merger.adds());
+    public void createProducts(Plan plan, Set<Long> rooms) {
+        var products = productRepository.findByPlan(plan);
+
+        for (Product product : products) {
+            if (!rooms.contains(product.getKey().getRoomId())) {
+                productRepository.delete(product);
+            }
+        }
+
+        for (Long roomId : rooms) {
+            var roomKey = RoomKey.of(plan.getHotelId(), roomId);
+            var room = roomRepository.findByRoomKey(roomKey).orElseThrow(HotelErrors.ROOM_NOT_FOUND::toException);
+            var product = Product.of(plan, room);
+            productRepository.save(product);
+        }
+
     }
 
 }

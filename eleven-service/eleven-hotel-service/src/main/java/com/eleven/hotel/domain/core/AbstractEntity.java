@@ -2,7 +2,6 @@ package com.eleven.hotel.domain.core;
 
 import com.eleven.core.domain.error.DomainEvent;
 import jakarta.persistence.MappedSuperclass;
-import lombok.Getter;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.AfterDomainEventPublication;
 import org.springframework.data.domain.DomainEvents;
@@ -11,7 +10,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-@Getter
 @MappedSuperclass
 public abstract class AbstractEntity {
 
