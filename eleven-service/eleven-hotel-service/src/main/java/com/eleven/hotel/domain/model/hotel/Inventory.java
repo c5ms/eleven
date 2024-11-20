@@ -1,7 +1,6 @@
 package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.hotel.domain.core.AbstractEntity;
-import com.eleven.hotel.domain.values.StockAmount;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,19 +20,17 @@ public class Inventory extends AbstractEntity {
     @Column(name = "is_valid")
     private Boolean isValid;
 
-    @Embedded
-    @AttributeOverride(name = "count", column = @Column(name = "stock_total"))
-    private StockAmount stockTotal;
+    @Column(name = "stock_total")
+    private Integer stockTotal;
 
-    @Embedded
-    @AttributeOverride(name = "count", column = @Column(name = "stock_booked"))
-    private StockAmount stockBooked;
+    @Column(name = "stock_booked")
+    private Integer stockBooked;
 
     protected Inventory() {
     }
 
     @Builder
-    public static Inventory of(RoomKey roomKey, LocalDate date, StockAmount stock) {
+    public static Inventory of(RoomKey roomKey, LocalDate date, Integer stock) {
         var inventoryKey = InventoryKey.of(roomKey, date);
 
         var inventory = new Inventory();

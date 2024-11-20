@@ -9,7 +9,6 @@ import com.eleven.hotel.domain.model.plan.event.PlanCreatedEvent;
 import com.eleven.hotel.domain.model.plan.event.PlanStayPeriodChangedEvent;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
-import com.eleven.hotel.domain.values.StockAmount;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import com.eleven.hotel.domain.errors.PlanErrors;
 import com.eleven.hotel.domain.model.hotel.Room;

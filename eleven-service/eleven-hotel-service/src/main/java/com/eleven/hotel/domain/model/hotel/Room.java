@@ -2,11 +2,12 @@ package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.core.domain.values.ImmutableValues;
 import com.eleven.hotel.domain.core.AbstractEntity;
+import com.eleven.hotel.domain.model.hotel.event.RoomActiveEvent;
 import com.eleven.hotel.domain.model.hotel.event.RoomCreatedEvent;
+import com.eleven.hotel.domain.model.hotel.event.RoomDeactivateEvent;
 import com.eleven.hotel.domain.model.hotel.event.RoomUpdatedEvent;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.Occupancy;
-import com.eleven.hotel.domain.values.StockAmount;
 import com.google.common.base.Predicates;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
@@ -17,7 +18,9 @@ import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -99,7 +102,7 @@ public class Room extends AbstractEntity {
         return Inventory.builder()
                 .roomKey(this.toKey())
                 .date(date)
-                .stock(StockAmount.of(this.quantity))
+                .stock(this.quantity)
                 .build();
     }
 
@@ -111,11 +114,17 @@ public class Room extends AbstractEntity {
     }
 
     public void deactivate() {
-        this.active = false;
+        if(this.active){
+            this.setActive(false);
+            this.addEvent(RoomDeactivateEvent.of(this));
+        }
     }
 
     public void active() {
-        this.active = true;
+        if(!this.active){
+            this.setActive(true);
+            this.addEvent(RoomActiveEvent.of(this));
+        }
     }
 
     public void setImages(Set<String> images) {
