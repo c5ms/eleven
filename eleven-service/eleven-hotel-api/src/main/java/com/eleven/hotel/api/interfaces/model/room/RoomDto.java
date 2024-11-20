@@ -1,6 +1,5 @@
 package com.eleven.hotel.api.interfaces.model.room;
 
-import com.eleven.hotel.api.interfaces.values.DateRangeVo;
 import com.eleven.hotel.api.interfaces.values.OccupancyVo;
 import com.eleven.hotel.api.interfaces.values.RoomBasicVo;
 import com.eleven.hotel.api.interfaces.values.RoomStockVo;
@@ -19,6 +18,7 @@ import java.util.Set;
 @Schema(name = "Room")
 @Accessors(chain = true)
 public class RoomDto {
+    private Long hotelId;
     private Long roomId;
 
     @JsonUnwrapped(prefix = "room_")

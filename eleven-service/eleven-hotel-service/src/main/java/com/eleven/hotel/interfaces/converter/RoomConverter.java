@@ -25,6 +25,7 @@ public class RoomConverter {
 
     public RoomDto toDto(Room room) {
         return new RoomDto()
+                .setHotelId(room.getHotelId())
                 .setRoomId(room.getRoomId())
                 .setImages(room.getImages().toSet())
                 .setStock(modelMapper.map(room.getStock(), RoomStockVo.class))

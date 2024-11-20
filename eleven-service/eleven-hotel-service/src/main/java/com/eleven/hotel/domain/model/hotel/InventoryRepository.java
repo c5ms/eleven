@@ -17,4 +17,8 @@ public interface InventoryRepository extends JpaRepository<Inventory, InventoryK
     @Query("delete Inventory where key.hotelId=:#{#roomKey.hotelId} and key.roomId=:#{#roomKey.roomId} ")
     long deleteByRoomKey(@Param("roomKey") RoomKey key);
 
+//    @Modifying
+//    @Query("update Inventory set isValid=false where key.hotelId=:#{#roomKey.hotelId} and key.roomId=:#{#roomKey.roomId} " +
+//            "and (key.date < :#{#range.start}  or key.date > :#{#range.end})")
+//    void invalidOutOf(@Param("roomKey") RoomKey key, @Param("range")  DateRange range);
 }

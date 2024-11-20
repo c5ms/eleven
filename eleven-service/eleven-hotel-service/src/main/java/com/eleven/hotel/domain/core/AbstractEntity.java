@@ -2,7 +2,6 @@ package com.eleven.hotel.domain.core;
 
 import com.eleven.core.domain.error.DomainEvent;
 import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.TableGenerator;
 import lombok.Getter;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.AfterDomainEventPublication;
@@ -19,7 +18,7 @@ public abstract class AbstractEntity {
     private transient final @Transient Map<Class<?>, DomainEvent> domainEvents = new HashMap<>();
 
     @DomainEvents
-    protected Collection<DomainEvent> domainEvents() {
+    protected Collection<DomainEvent> events() {
         return domainEvents.values();
     }
 

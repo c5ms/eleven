@@ -39,7 +39,7 @@ public class PlanService {
                 .preSellPeriod(command.getPreSalePeriod())
                 .stayPeriod(command.getStayPeriod())
                 .basic(command.getBasic())
-                .stockAmount(command.getStock())
+                .stock(command.getStock())
                 .saleChannels(command.getChannels())
                 .create();
 

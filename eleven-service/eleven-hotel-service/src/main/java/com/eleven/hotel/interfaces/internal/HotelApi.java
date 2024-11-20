@@ -43,7 +43,7 @@ public class HotelApi implements HotelClient {
     @Override
     public Optional<PlanDto> readPlan(@RequestParam("hotelId") Long hotelId, @RequestParam("planId") Long planId) {
         var planKye = PlanKey.of(hotelId, planId);
-        return planQuery.readPlan(planKye).map(planConverter::toDetail);
+        return planQuery.readPlan(planKye).map(planConverter::toDto);
     }
 
     @Override

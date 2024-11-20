@@ -1,11 +1,16 @@
 package com.eleven.hotel.api.interfaces.model.plan;
 
 import com.eleven.hotel.api.domain.enums.SaleChannel;
+import com.eleven.hotel.api.interfaces.values.DateRangeVo;
+import com.eleven.hotel.api.interfaces.values.DateTimeRangeVo;
+import com.eleven.hotel.api.interfaces.values.PlanBasicVo;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -17,44 +22,28 @@ import java.util.Set;
 @Setter
 public class PlanCreateRequest {
 
-    @NotBlank
-    @Schema(example = "example plan")
-    private String name;
+    @NotNull
+    @JsonUnwrapped(prefix = "basic_")
+    private PlanBasicVo basic;
 
-    @NotBlank
-    @Schema(example = "example plan description")
-    private String desc;
+    @JsonUnwrapped(prefix = "perSale_")
+    private DateTimeRangeVo perSalePeriod;
+
+    @NotNull
+    @JsonUnwrapped(prefix = "sale_")
+    private DateTimeRangeVo salePeriod;
+
+    @NotNull
+    @JsonUnwrapped(prefix = "stay_")
+    private DateRangeVo stayPeriod;
 
     @NotNull
     @Min(1)
     @Schema(example = "200")
     private Integer stock;
 
-    @Schema(type = "string",format = "date-time", example = "2024-01-01 00:00:00")
-    private LocalDateTime preSaleStartDate;
-
-    @Schema(type = "string",format = "date-time",example = "2024-01-02 08:00:00")
-    private LocalDateTime preSaleEndDate;
-
-    @NotNull
-    @Schema(type = "string",format = "date-time",example = "2024-01-30 00:00:00")
-    private LocalDateTime saleStartDate;
-
-    @NotNull
-    @Schema(type = "string",format = "date-time",example = "2024-05-30 00:00:00")
-    private LocalDateTime saleEndDate;
-
-    @NotNull
-    @Schema(example = "2024-05-30")
-    private LocalDate stayStartDate;
-
-    @NotNull
-    @Schema(example = "2024-05-30")
-    private LocalDate stayEndDate;
-
     private Set<SaleChannel> channels = new HashSet<>();
 
     private Set<Long> rooms = new HashSet<>();
-
 
 }

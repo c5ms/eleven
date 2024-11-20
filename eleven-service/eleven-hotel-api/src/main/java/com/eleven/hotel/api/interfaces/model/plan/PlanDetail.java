@@ -3,6 +3,7 @@ package com.eleven.hotel.api.interfaces.model.plan;
 import com.eleven.hotel.api.domain.enums.ChargeType;
 import com.eleven.hotel.api.domain.enums.SaleState;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import jakarta.annotation.Nullable;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,9 +16,11 @@ import java.util.List;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class PlanDetail extends PlanDto {
+public class PlanDetail  {
 
-    @Nullable
+    @JsonUnwrapped
+    private PlanDto plan;
+
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<Room> rooms = new ArrayList<>();
 

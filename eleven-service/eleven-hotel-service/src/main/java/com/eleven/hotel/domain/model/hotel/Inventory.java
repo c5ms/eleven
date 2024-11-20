@@ -17,8 +17,8 @@ public class Inventory extends AbstractEntity {
     @EqualsAndHashCode.Include
     private InventoryKey key;
 
-    @Column(name = "is_valid")
-    private Boolean isValid;
+    @Column(name = "is_enabled")
+    private Boolean isEnabled;
 
     @Column(name = "stock_total")
     private Integer stockTotal;
@@ -37,7 +37,7 @@ public class Inventory extends AbstractEntity {
         inventory.setKey(inventoryKey);
         inventory.setStockTotal(stock);
         inventory.setStockBooked(stock);
-        inventory.setIsValid(true);
+        inventory.setIsEnabled(true);
         return inventory;
     }
 
@@ -45,11 +45,11 @@ public class Inventory extends AbstractEntity {
         return this.getKey().toRoomKey();
     }
 
-    public void active() {
-        this.isValid = true;
+    public void enable() {
+        this.setIsEnabled(true);
     }
 
-    public void inactive() {
-        this.isValid = false;
+    public void disable() {
+        this.setIsEnabled(false);
     }
 }

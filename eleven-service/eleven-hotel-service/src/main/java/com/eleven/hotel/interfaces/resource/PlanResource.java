@@ -7,7 +7,7 @@ import com.eleven.hotel.api.domain.enums.SaleChannel;
 import com.eleven.hotel.api.interfaces.model.plan.PlanDetail;
 import com.eleven.hotel.api.interfaces.model.plan.PlanDto;
 import com.eleven.hotel.api.interfaces.model.plan.PlanCreateRequest;
-import com.eleven.hotel.api.interfaces.model.plan.PlanRequestRequest;
+import com.eleven.hotel.api.interfaces.model.plan.PlanQuerytRequest;
 import com.eleven.hotel.api.interfaces.model.plan.PlanUpdateRequest;
 import com.eleven.hotel.application.service.PlanService;
 import com.eleven.hotel.application.command.PlanSetPriceCommand;
@@ -40,7 +40,7 @@ public class PlanResource {
 
     @Operation(summary = "query plan")
     @GetMapping
-    public PageResponse<PlanDto> queryPlan(@PathVariable("hotelId") Long hotelId, @ParameterObject @Validated PlanRequestRequest request) {
+    public PageResponse<PlanDto> queryPlan(@PathVariable("hotelId") Long hotelId, @ParameterObject @Validated PlanQuerytRequest request) {
         var filter = PlanFilter.builder()
                 .hotelId(hotelId)
                 .planName(request.getPlanName())

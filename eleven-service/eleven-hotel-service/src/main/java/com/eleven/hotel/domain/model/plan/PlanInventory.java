@@ -28,13 +28,11 @@ public class PlanInventory extends AbstractEntity {
     @Column(name = "is_valid")
     private Boolean isValid;
 
-    @Embedded
-    @AttributeOverride(name = "count", column = @Column(name = "stock_total"))
-    private StockAmount stockTotal;
+    @Column(name = "stock_total")
+    private Integer stockTotal;
 
-    @Embedded
-    @AttributeOverride(name = "count", column = @Column(name = "stock_left"))
-    private StockAmount stockLeft;
+    @Column(name = "stock_left")
+    private Integer stockLeft;
 
     protected PlanInventory() {
     }
@@ -51,19 +49,19 @@ public class PlanInventory extends AbstractEntity {
     }
 
     public boolean hasEnoughStock(int amount) {
-        return this.stockLeft.greaterThan(amount);
+        return this.stockLeft >=amount;
     }
 
     public boolean hasBeenBooked() {
         if (ObjectUtils.anyNull(this.stockLeft, this.stockTotal)) {
             return false;
         }
-        return this.stockLeft.lessThan(this.stockTotal);
+        return this.stockLeft<=this.stockTotal;
     }
 
     public void reduce(int amount) {
         DomainValidator.must(this.hasEnoughStock(amount), PlanErrors.INVENTORY_NOT_ENOUGH);
-        this.setStockLeft(this.stockLeft.reduce(amount));
+        this.setStockLeft(this.stockLeft-amount);
     }
 
 }

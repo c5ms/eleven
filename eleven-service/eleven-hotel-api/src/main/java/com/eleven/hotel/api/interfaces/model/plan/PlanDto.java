@@ -3,6 +3,13 @@ package com.eleven.hotel.api.interfaces.model.plan;
 import com.eleven.hotel.api.domain.enums.SaleChannel;
 import com.eleven.hotel.api.domain.enums.SaleState;
 import com.eleven.hotel.api.domain.enums.SaleType;
+import com.eleven.hotel.api.interfaces.values.DateRangeVo;
+import com.eleven.hotel.api.interfaces.values.DateTimeRangeVo;
+import com.eleven.hotel.api.interfaces.values.PlanBasicVo;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -20,27 +27,22 @@ public class PlanDto implements Serializable {
     private Long planId;
     private Long hotelId;
 
-    private String name;
-    private String desc;
     private Integer stock;
     private SaleType type;
     private SaleState state;
-
-    private List<SaleChannel> channels;
-
     private Boolean isOnSale;
 
-    private Boolean isPreSale;
-    private Boolean isPreSalePeriodOngoing;
-    private LocalDateTime preSaleStartDate;
-    private LocalDateTime preSaleEndDate;
+    @JsonUnwrapped(prefix = "basic_")
+    private PlanBasicVo basic;
 
-    private Boolean isSalePeriodOngoing;
-    private LocalDateTime saleStartDate;
-    private LocalDateTime saleEndDate;
+    @JsonUnwrapped(prefix = "preSalePeriod_")
+    private DateTimeRangeVo preSalePeriod;
 
-    private Boolean isStayPeriodOngoing;
-    private LocalDate stayStartDate;
-    private LocalDate stayEndDate;
+    @JsonUnwrapped(prefix = "salePeriod_")
+    private DateTimeRangeVo salePeriod;
 
+    @JsonUnwrapped(prefix = "stayPeriod_")
+    private DateRangeVo stayPeriod;
+
+    private List<SaleChannel> channels;
 }

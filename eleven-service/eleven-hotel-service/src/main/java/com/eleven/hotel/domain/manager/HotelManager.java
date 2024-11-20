@@ -26,17 +26,24 @@ public class HotelManager {
     public void takeStock(Room room) {
         var inventories = inventoryRepository.findByRoomKey(room.toKey());
         var dates = room.getStock().getAvailableDates();
+        var inventoryBuilder = Inventory.builder()
+                .roomKey(room.toKey())
+                .stock(room.getStock().getQuantity());
 
+        inventories.forEach(inventory -> dates.remove(inventory.getKey().getDate()));
         for (Inventory inventory : inventories) {
-            if (room.isApplicable(inventory)) {
-                inventory.active();
+            if (room.isBookable(inventory)) {
+                inventory.enable();
             } else {
-                inventory.inactive();
+                inventory.disable();
             }
-            dates.remove(inventory.getKey().getDate());
         }
 
-        dates.stream().map(room::createInventory).forEach(inventories::add);
+        dates.stream()
+                .map(inventoryBuilder::date)
+                .map(Inventory.InventoryBuilder::build)
+                .forEach(inventories::add);
         inventoryRepository.saveAllAndFlush(inventories);
     }
+
 }

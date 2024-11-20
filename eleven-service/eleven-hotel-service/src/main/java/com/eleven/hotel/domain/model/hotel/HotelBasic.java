@@ -10,7 +10,6 @@ import java.time.YearMonth;
 
 @Embeddable
 @Getter
-@Setter(AccessLevel.PROTECTED)
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @FieldNameConstants

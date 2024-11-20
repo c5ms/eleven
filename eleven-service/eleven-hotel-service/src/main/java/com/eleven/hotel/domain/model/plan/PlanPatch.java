@@ -14,7 +14,7 @@ import java.util.Set;
 public class PlanPatch {
 
     private PlanBasic basic;
-    private StockAmount stock;
+    private Integer stock;
     private DateTimeRange salePeriod;
     private DateTimeRange preSalePeriod;
     private DateRange stayPeriod;

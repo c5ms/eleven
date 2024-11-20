@@ -36,9 +36,6 @@ public class RoomService {
 
         hotelManager.validate(room);
         roomRepository.save(room);
-
-        hotelManager.takeStock(room);
-
         return room;
     }
 
@@ -61,8 +58,6 @@ public class RoomService {
         room.update(patch);
         hotelManager.validate(room);
         roomRepository.saveAndFlush(room);
-
-        hotelManager.takeStock(room);
         return room;
     }
 

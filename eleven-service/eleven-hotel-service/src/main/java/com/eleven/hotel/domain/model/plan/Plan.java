@@ -5,13 +5,13 @@ import com.eleven.core.domain.values.ImmutableValues;
 import com.eleven.hotel.api.domain.enums.SaleChannel;
 import com.eleven.hotel.api.domain.enums.SaleState;
 import com.eleven.hotel.api.domain.enums.SaleType;
+import com.eleven.hotel.domain.core.AbstractEntity;
+import com.eleven.hotel.domain.errors.PlanErrors;
+import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.model.plan.event.PlanCreatedEvent;
 import com.eleven.hotel.domain.model.plan.event.PlanStayPeriodChangedEvent;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
-import com.eleven.hotel.domain.core.AbstractEntity;
-import com.eleven.hotel.domain.errors.PlanErrors;
-import com.eleven.hotel.domain.model.hotel.Room;
 import com.google.common.base.Predicates;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.annotation.Nonnull;
@@ -71,9 +71,8 @@ public class Plan extends AbstractEntity {
     @AttributeOverride(name = "end", column = @Column(name = "stay_period_end"))
     private DateRange stayPeriod;
 
-    @Embedded
-    @AttributeOverride(name = "count", column = @Column(name = "stock_count"))
-    private StockAmount stock;
+    @Column(name = "stock_count")
+    private Integer stock;
 
     @Type(JsonType.class)
     @Column(name = "sale_channels", columnDefinition = "json")
@@ -93,21 +92,21 @@ public class Plan extends AbstractEntity {
     @SuppressWarnings("unused")
     @Builder(builderClassName = "Normal", builderMethodName = "normal", buildMethodName = "create")
     protected static Plan createNormal(Long hotelId,
-                                       StockAmount stockAmount,
-                                       DateRange stayPeriod,
+                                       Integer stock,
                                        Set<SaleChannel> saleChannels,
+                                       DateRange stayPeriod,
                                        DateTimeRange salePeriod,
                                        DateTimeRange preSellPeriod,
                                        PlanBasic basic) {
 
         Validate.notNull(hotelId, "hotelId must not be null");
         Validate.notNull(stayPeriod, "sale period must not be null");
-        Validate.notNull(stockAmount, "stock must not be null");
-        Validate.isTrue(stockAmount.greaterThanZero(), "total must gather than zero");
+        Validate.notNull(stock, "stock must not be null");
+        Validate.isTrue(stock > 0, "stock must gather than zero");
 
         var plan = new Plan();
         plan.setHotelId(hotelId);
-        plan.setStock(stockAmount);
+        plan.setStock(stock);
         plan.setSalePeriod(salePeriod);
         plan.setStayPeriod(stayPeriod);
         plan.setPreSalePeriod(preSellPeriod);
@@ -258,7 +257,7 @@ public class Plan extends AbstractEntity {
         }
     }
 
-    private void setStock(StockAmount stock) {
+    private void setStock(Integer stock) {
         this.stock = stock;
         for (Product value : this.products) {
             value.setStock(stock);

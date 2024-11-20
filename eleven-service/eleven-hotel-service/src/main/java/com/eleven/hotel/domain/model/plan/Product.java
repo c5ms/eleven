@@ -52,9 +52,8 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private Set<SaleChannel> saleChannels;
 
-    @Embedded
-    @AttributeOverride(name = "count", column = @Column(name = "stock_amount"))
-    private StockAmount stock;
+    @Column(name = "stock_amount")
+    private Integer stock;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "sale_type")
@@ -75,7 +74,7 @@ public class Product {
                       @NonNull Room room,
                       @NonNull SaleType saleType,
                       @NonNull Collection<SaleChannel> saleChannels,
-                      @NonNull StockAmount stock) {
+                      @NonNull Integer stock) {
         this.key = ProductKey.of(plan.toKey(), room.getRoomId());
         this.room = room;
         this.stock = stock;
@@ -130,9 +129,9 @@ public class Product {
     }
 
 
-    public StockAmount getStock() {
+    public Integer getStock() {
         if (null == this.stock) {
-            return StockAmount.zero();
+            return 0;
         }
         return stock;
     }

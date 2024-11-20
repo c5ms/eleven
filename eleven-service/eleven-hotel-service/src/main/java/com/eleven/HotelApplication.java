@@ -1,5 +1,6 @@
 package com.eleven;
 
+import cn.hutool.core.lang.ConsoleTable;
 import com.eleven.core.configure.*;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;

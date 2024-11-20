@@ -2,11 +2,7 @@ package com.eleven.hotel.domain.model.hotel;
 
 import com.eleven.core.domain.values.ImmutableValues;
 import com.eleven.hotel.domain.core.AbstractEntity;
-import com.eleven.hotel.domain.model.hotel.event.RoomActiveEvent;
-import com.eleven.hotel.domain.model.hotel.event.RoomCreatedEvent;
-import com.eleven.hotel.domain.model.hotel.event.RoomDeactivateEvent;
-import com.eleven.hotel.domain.model.hotel.event.RoomUpdatedEvent;
-import com.eleven.hotel.domain.values.DateRange;
+import com.eleven.hotel.domain.model.hotel.event.*;
 import com.eleven.hotel.domain.values.Occupancy;
 import com.google.common.base.Predicates;
 import jakarta.annotation.Nonnull;
@@ -17,11 +13,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
 
-import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 
 @Table(name = "room")
@@ -60,7 +55,7 @@ public class Room extends AbstractEntity {
     }
 
     @Builder
-    public static Room of(Long hotelId, RoomBasic basic,  Occupancy occupancy,RoomStock stock, Set<String> images) {
+    public static Room of(Long hotelId, RoomBasic basic, Occupancy occupancy, RoomStock stock, Set<String> images) {
         Room room = new Room();
         room.setHotelId(hotelId);
         room.setBasic(basic);
@@ -80,12 +75,7 @@ public class Room extends AbstractEntity {
         this.addEvent(RoomUpdatedEvent.of(this));
     }
 
-
-    public Inventory createInventory(LocalDate date) {
-        return Inventory.of(this.toKey(), date, getStock().getQuantity());
-    }
-
-    public boolean isApplicable(Inventory inventory) {
+    public boolean isBookable(Inventory inventory) {
         return Predicates.<Inventory>notNull()
                 .and(theInv -> theInv.getRoomKey().equals(toKey()))
                 .and(theInv -> getStock().getAvailablePeriod().contains(theInv.getKey().getDate()))
@@ -93,17 +83,27 @@ public class Room extends AbstractEntity {
     }
 
     public void deactivate() {
-        if(this.active){
-            this.setActive(false);
-            this.addEvent(RoomDeactivateEvent.of(this));
+        if (!this.active) {
+            return;
         }
+        this.setActive(false);
+        this.addEvent(RoomDeactivateEvent.of(this));
     }
 
     public void active() {
-        if(!this.active){
-            this.setActive(true);
-            this.addEvent(RoomActiveEvent.of(this));
+        if (this.active) {
+            return;
         }
+        this.setActive(true);
+        this.addEvent(RoomActiveEvent.of(this));
+    }
+
+    public void setStock(RoomStock stock) {
+        if (Objects.equals(stock, this.stock)) {
+            return;
+        }
+        this.stock = stock;
+        this.addEvent(RoomStockChangedEvent.of(this));
     }
 
     public void setImages(Set<String> images) {

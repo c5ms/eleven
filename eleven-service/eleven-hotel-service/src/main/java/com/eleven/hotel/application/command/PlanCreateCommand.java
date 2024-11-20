@@ -15,9 +15,10 @@ import java.util.Set;
 public class PlanCreateCommand {
 
     private PlanBasic basic;
-    private StockAmount stock;
     private DateTimeRange salePeriod;
     private DateTimeRange preSalePeriod;
+
+    private Integer stock;
     private DateRange stayPeriod;
 
     @Builder.Default
