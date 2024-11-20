@@ -30,8 +30,7 @@ public class RoomService {
                 .hotelId(hotel.getHotelId())
                 .basic(command.getBasic())
                 .occupancy(command.getOccupancy())
-                .availablePeriod(command.getAvailablePeriod())
-                .quantity(command.getQuantity())
+                .stock(command.getStock())
                 .images(command.getImages())
                 .build();
 
@@ -55,9 +54,8 @@ public class RoomService {
         var patch = RoomPatch.builder()
                 .basic(command.getBasic())
                 .images(command.getImages())
-                .quantity(command.getQuantity())
+                .stock(command.getStock())
                 .occupancy(command.getOccupancy())
-                .availablePeriod(command.getAvailablePeriod())
                 .build();
 
         room.update(patch);

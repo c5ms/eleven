@@ -1,5 +1,6 @@
 package com.eleven.hotel.application.command;
 
+import com.eleven.hotel.domain.model.hotel.RoomStock;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.model.hotel.RoomBasic;
 import com.eleven.hotel.domain.values.Occupancy;
@@ -12,8 +13,7 @@ import java.util.Set;
 @Builder
 public class RoomUpdateCommand {
     private RoomBasic basic;
-    private Integer quantity;
+    private RoomStock stock;
     private Occupancy occupancy;
-    private DateRange availablePeriod;
     private Set<String> images;
 }

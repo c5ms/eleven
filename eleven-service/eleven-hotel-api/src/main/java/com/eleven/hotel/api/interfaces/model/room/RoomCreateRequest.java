@@ -1,13 +1,12 @@
 package com.eleven.hotel.api.interfaces.model.room;
 
-import com.eleven.hotel.api.interfaces.values.DateRangeVo;
 import com.eleven.hotel.api.interfaces.values.OccupancyVo;
 import com.eleven.hotel.api.interfaces.values.RoomBasicVo;
-import com.fasterxml.jackson.annotation.JsonRawValue;
+import com.eleven.hotel.api.interfaces.values.RoomStockVo;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,18 +21,14 @@ public class RoomCreateRequest {
     @JsonUnwrapped(prefix = "room_")
     private RoomBasicVo basic;
 
-    @NotNull
-    @JsonUnwrapped(prefix = "available_")
-    private DateRangeVo availablePeriod;
 
     @NotNull
     @JsonUnwrapped(prefix = "occupancy_")
     private OccupancyVo occupancy;
 
-    @Min(0)
-    @Max(999)
-    @Schema(example = "20")
-    private Integer quantity;
+    @NotNull
+    @JsonUnwrapped(prefix = "stock_")
+    private RoomStockVo stock;
 
 
     @NotEmpty

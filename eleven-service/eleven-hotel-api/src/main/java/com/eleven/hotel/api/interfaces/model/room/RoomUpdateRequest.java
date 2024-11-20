@@ -3,6 +3,7 @@ package com.eleven.hotel.api.interfaces.model.room;
 import com.eleven.hotel.api.interfaces.values.DateRangeVo;
 import com.eleven.hotel.api.interfaces.values.OccupancyVo;
 import com.eleven.hotel.api.interfaces.values.RoomBasicVo;
+import com.eleven.hotel.api.interfaces.values.RoomStockVo;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -20,16 +21,12 @@ public class RoomUpdateRequest {
     private RoomBasicVo basic;
 
     @NotNull
-    @JsonUnwrapped(prefix = "available_")
-    private DateRangeVo availablePeriod;
+    @JsonUnwrapped(prefix = "stock_")
+    private RoomStockVo stock;
 
     @NotNull
     @JsonUnwrapped(prefix = "occupancy_")
     private OccupancyVo occupancy;
-
-    @Min(0)
-    @Max(999)
-    private Integer quantity;
 
     @NotEmpty
     @Size(min = 1, max = 10)

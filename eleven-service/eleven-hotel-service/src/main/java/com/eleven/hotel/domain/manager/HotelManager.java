@@ -25,7 +25,7 @@ public class HotelManager {
 
     public void takeStock(Room room) {
         var inventories = inventoryRepository.findByRoomKey(room.toKey());
-        var dates = room.getAvailableDates();
+        var dates = room.getStock().getAvailableDates();
 
         for (Inventory inventory : inventories) {
             if (room.isApplicable(inventory)) {

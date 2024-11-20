@@ -6,10 +6,12 @@ import com.eleven.hotel.api.interfaces.model.room.RoomDto;
 import com.eleven.hotel.api.interfaces.model.room.RoomUpdateRequest;
 import com.eleven.hotel.api.interfaces.values.DateRangeVo;
 import com.eleven.hotel.api.interfaces.values.OccupancyVo;
+import com.eleven.hotel.api.interfaces.values.RoomStockVo;
 import com.eleven.hotel.application.command.RoomCreateCommand;
 import com.eleven.hotel.application.command.RoomUpdateCommand;
 import com.eleven.hotel.domain.model.hotel.Room;
 import com.eleven.hotel.domain.model.hotel.RoomBasic;
+import com.eleven.hotel.domain.model.hotel.RoomStock;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.Occupancy;
 import lombok.RequiredArgsConstructor;
@@ -24,30 +26,27 @@ public class RoomConverter {
     public RoomDto toDto(Room room) {
         return new RoomDto()
                 .setRoomId(room.getRoomId())
-                .setQuantity(room.getQuantity())
                 .setImages(room.getImages().toSet())
-                .setAvailablePeriod(modelMapper.map(room.getAvailablePeriod(), DateRangeVo.class))
+                .setStock(modelMapper.map(room.getStock(), RoomStockVo.class))
                 .setBasic(modelMapper.map(room.getBasic(), RoomBasicVo.class))
                 .setOccupancy(modelMapper.map(room.getOccupancy(), OccupancyVo.class));
     }
 
     public RoomUpdateCommand toCommand(RoomUpdateRequest request) {
         return RoomUpdateCommand.builder()
-                .quantity(request.getQuantity())
-                .images(request.getImages())
-                .availablePeriod(modelMapper.map(request.getAvailablePeriod(), DateRange.class))
+                .stock(modelMapper.map(request.getStock(), RoomStock.class))
                 .basic(modelMapper.map(request.getBasic(), RoomBasic.class))
                 .occupancy(modelMapper.map(request.getOccupancy(), Occupancy.class))
+                .images(request.getImages())
                 .build();
     }
 
     public RoomCreateCommand toCommand(RoomCreateRequest request) {
         return RoomCreateCommand.builder()
-                .quantity(request.getQuantity())
-                .images(request.getImages())
-                .availablePeriod(modelMapper.map(request.getAvailablePeriod(), DateRange.class))
+                .stock(modelMapper.map(request.getStock(), RoomStock.class))
                 .basic(modelMapper.map(request.getBasic(), RoomBasic.class))
                 .occupancy(modelMapper.map(request.getOccupancy(), Occupancy.class))
+                .images(request.getImages())
                 .build();
     }
 }

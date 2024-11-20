@@ -42,13 +42,8 @@ public class Room extends AbstractEntity {
     @Column(name = "active")
     private Boolean active = true;
 
-    @Column(name = "quantity")
-    private Integer quantity;
-
     @Embedded
-    @AttributeOverride(name = "start", column = @Column(name = "available_period_start"))
-    @AttributeOverride(name = "end", column = @Column(name = "available_period_end"))
-    private DateRange availablePeriod;
+    private RoomStock stock;
 
     @Embedded
     private RoomBasic basic;
@@ -65,13 +60,12 @@ public class Room extends AbstractEntity {
     }
 
     @Builder
-    public static Room of(Long hotelId, RoomBasic basic, Integer quantity, Occupancy occupancy, DateRange availablePeriod, Set<String> images) {
+    public static Room of(Long hotelId, RoomBasic basic,  Occupancy occupancy,RoomStock stock, Set<String> images) {
         Room room = new Room();
         room.setHotelId(hotelId);
         room.setBasic(basic);
         room.setOccupancy(occupancy);
-        room.setQuantity(quantity);
-        room.setAvailablePeriod(availablePeriod);
+        room.setStock(stock);
         room.setImages(images);
         room.active();
         room.addEvent(RoomCreatedEvent.of(room));
@@ -81,35 +75,20 @@ public class Room extends AbstractEntity {
     public void update(RoomPatch patch) {
         Optional.ofNullable(patch.getBasic()).ifPresent(this::setBasic);
         Optional.ofNullable(patch.getOccupancy()).ifPresent(this::setOccupancy);
-        Optional.ofNullable(patch.getAvailablePeriod()).ifPresent(this::setAvailablePeriod);
-        Optional.ofNullable(patch.getQuantity()).ifPresent(this::setQuantity);
         Optional.ofNullable(patch.getImages()).ifPresent(this::setImages);
-
+        Optional.ofNullable(patch.getStock()).ifPresent(this::setStock);
         this.addEvent(RoomUpdatedEvent.of(this));
     }
 
-    public Set<LocalDate> getAvailableDates() {
-        if (null == availablePeriod) {
-            return new HashSet<>();
-        }
-        return getAvailablePeriod()
-                .dates()
-                .filter(localDate -> localDate.isAfter(LocalDate.now()))
-                .collect(Collectors.toSet());
-    }
 
     public Inventory createInventory(LocalDate date) {
-        return Inventory.builder()
-                .roomKey(this.toKey())
-                .date(date)
-                .stock(this.quantity)
-                .build();
+        return Inventory.of(this.toKey(), date, getStock().getQuantity());
     }
 
     public boolean isApplicable(Inventory inventory) {
         return Predicates.<Inventory>notNull()
                 .and(theInv -> theInv.getRoomKey().equals(toKey()))
-                .and(theInv -> getAvailablePeriod().contains(theInv.getKey().getDate()))
+                .and(theInv -> getStock().getAvailablePeriod().contains(theInv.getKey().getDate()))
                 .test(inventory);
     }
 
