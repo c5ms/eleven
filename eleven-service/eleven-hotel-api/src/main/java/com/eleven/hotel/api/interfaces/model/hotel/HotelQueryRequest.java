@@ -7,6 +7,6 @@ import lombok.experimental.Accessors;
 
 @Getter
 @Setter
-public class HotelQueryRequest {
+public final class  HotelQueryRequest {
     private String hotelName;
 }

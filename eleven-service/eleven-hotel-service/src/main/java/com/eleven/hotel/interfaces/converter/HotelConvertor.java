@@ -10,9 +10,9 @@ import com.eleven.hotel.api.interfaces.values.PositionVo;
 import com.eleven.hotel.application.command.HotelCreateCommand;
 import com.eleven.hotel.application.command.HotelUpdateCommand;
 import com.eleven.hotel.domain.model.hotel.Hotel;
-import com.eleven.hotel.domain.values.HotelBasic;
 import com.eleven.hotel.domain.values.Address;
 import com.eleven.hotel.domain.values.CheckPolicy;
+import com.eleven.hotel.domain.values.HotelBasic;
 import com.eleven.hotel.domain.values.Position;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -31,7 +31,7 @@ public class HotelConvertor implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() {
-        modelMapper.createTypeMap(CheckPolicyVo.class, CheckPolicy.class).setConverter(context -> new CheckPolicy(
+        modelMapper.createTypeMap(CheckPolicyVo.class, CheckPolicy.class).setConverter(context -> CheckPolicy.of(
                 LocalTime.parse(context.getSource().getCheckInTime(), DateTimeFormatter.ofPattern(CheckPolicyVo.FORMAT_HH_MM)),
                 LocalTime.parse(context.getSource().getCheckOutTime(), DateTimeFormatter.ofPattern(CheckPolicyVo.FORMAT_HH_MM))
         ));

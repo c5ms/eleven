@@ -12,10 +12,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class PlanListener {
 
-
     @EventListener
     public void on(PlanCreatedEvent event) {
-        var plan = event.getPlan();
         log.debug("handle plan created event: {}", JSONUtil.toJsonStr(event));
     }
 

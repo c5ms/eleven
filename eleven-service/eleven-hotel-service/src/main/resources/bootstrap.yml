@@ -10,18 +10,6 @@ spring:
     url: ${db.hotel.url}
     username: ${db.hotel.username}
     password: ${db.hotel.password}
-  cloud:
-    nacos:
-      config:
-        enabled: ${ENABLE_NACOS:false}
-        group: ${NACOS_GROUP}
-        namespace: ${NACOS_NS}
-        server-addr: ${NACOS_HOST}
-      discovery:
-        enabled: ${ENABLE_NACOS:false}
-        group: ${NACOS_GROUP}
-        namespace: ${NACOS_NS}
-        server-addr: ${NACOS_HOST}
 
   liquibase:
     database-change-log-table: 001_DATABASECHANGELOG
@@ -29,11 +17,10 @@ spring:
 
   jpa:
     generate-ddl: true
-    properties:
-      'hibernate.order_updates': true
-      'hibernate.jdbc.batch_size': 50
-      'hibernate.globally_quoted_identifiers' : true
-      'hibernate.globally_quoted_identifiers_skip_column_definitions': true
+#    properties:
+#      'hibernate.order_updates': true
+#      'hibernate.order_inserts': true
+#      'hibernate.jdbc.batch_size': 50
 
 eleven:
   cache:

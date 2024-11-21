@@ -27,8 +27,4 @@ public class HotelListener {
         log.debug("handle application event {}: {}", event.getClass().getSimpleName(), JSONUtil.toJsonStr(event));
     }
 
-    @EventListener(RoomStockChangedEvent.class)
-    public void on(RoomStockChangedEvent event) {
-        inventoryManager.takeStock(event.getRoom());
-    }
 }

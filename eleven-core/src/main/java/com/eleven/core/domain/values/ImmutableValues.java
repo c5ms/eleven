@@ -10,7 +10,9 @@ public class ImmutableValues<T> implements Iterable<T> {
     private final List<T> values;
 
     public ImmutableValues(Collection<T> values) {
-        this.values = new ArrayList<>(values);
+        this.values = Optional.ofNullable(values)
+                .map(ArrayList::new)
+                .orElseGet(ArrayList::new);
     }
 
     public static <T> ImmutableValues<T> of(Collection<T> collection) {

@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 @Getter
 @Setter
-public class HotelUpdateRequest {
+public final class  HotelUpdateRequest {
     @NotNull
     @JsonUnwrapped(prefix = "hotel_")
     private HotelBasicVo basic;

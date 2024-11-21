@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 @Setter
 @Schema(name = "Hotel")
 @Accessors(chain = true)
-public class HotelDto {
+public final class HotelDto {
 
     private Long hotelId;
 

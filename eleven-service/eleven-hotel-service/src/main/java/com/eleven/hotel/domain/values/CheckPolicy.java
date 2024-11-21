@@ -27,4 +27,8 @@ public final class CheckPolicy  implements Serializable {
     public static CheckPolicy empty() {
         return new CheckPolicy();
     }
+
+    public static  CheckPolicy of (LocalTime checkInTime, LocalTime checkOutTime) {
+        return new CheckPolicy(checkInTime, checkOutTime);
+    }
 }

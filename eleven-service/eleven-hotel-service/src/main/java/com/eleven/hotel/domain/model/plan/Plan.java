@@ -1,12 +1,10 @@
 package com.eleven.hotel.domain.model.plan;
 
-import com.eleven.core.domain.error.DomainValidator;
 import com.eleven.core.domain.values.ImmutableValues;
 import com.eleven.hotel.api.domain.enums.SaleChannel;
 import com.eleven.hotel.api.domain.enums.SaleState;
 import com.eleven.hotel.api.domain.enums.SaleType;
 import com.eleven.hotel.domain.core.AbstractEntity;
-import com.eleven.hotel.domain.errors.PlanErrors;
 import com.eleven.hotel.domain.model.plan.event.PlanCreatedEvent;
 import com.eleven.hotel.domain.model.plan.event.PlanStayPeriodChangedEvent;
 import com.eleven.hotel.domain.values.DateRange;
@@ -14,17 +12,16 @@ import com.eleven.hotel.domain.values.DateTimeRange;
 import com.eleven.hotel.domain.values.PlanBasic;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.Validate;
 import org.hibernate.annotations.Type;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -49,22 +46,22 @@ public class Plan extends AbstractEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "sale_state")
-    private SaleState saleState;
+    private SaleState saleState = SaleState.STOPPED;
 
     @Embedded
     @AttributeOverride(name = "start", column = @Column(name = "sale_period_start"))
     @AttributeOverride(name = "end", column = @Column(name = "sale_period_end"))
-    private DateTimeRange salePeriod;
+    private DateTimeRange salePeriod = DateTimeRange.empty();
 
     @Embedded
     @AttributeOverride(name = "start", column = @Column(name = "pre_sale_period_start"))
     @AttributeOverride(name = "end", column = @Column(name = "pre_sale_period_end"))
-    private DateTimeRange preSalePeriod;
+    private DateTimeRange preSalePeriod = DateTimeRange.empty();
 
     @Embedded
     @AttributeOverride(name = "start", column = @Column(name = "stay_period_start"))
     @AttributeOverride(name = "end", column = @Column(name = "stay_period_end"))
-    private DateRange stayPeriod;
+    private DateRange stayPeriod = DateRange.empty();
 
     @Column(name = "stock_count")
     private Integer stock;
@@ -72,16 +69,10 @@ public class Plan extends AbstractEntity {
     @Type(JsonType.class)
     @Column(name = "sale_channels", columnDefinition = "json")
     @Enumerated(EnumType.STRING)
-    private Set<SaleChannel> saleChannels;
+    private Set<SaleChannel> saleChannels = new HashSet<>();
 
     @Embedded
-    private PlanBasic basic;
-
-    protected Plan() {
-        this.saleChannels = new HashSet<>();
-        this.saleType = SaleType.NORMAL;
-        this.addEvent(PlanCreatedEvent.of(this));
-    }
+    private PlanBasic basic = PlanBasic.empty();
 
     @SuppressWarnings("unused")
     @Builder(builderClassName = "Normal", builderMethodName = "normal", buildMethodName = "create")
@@ -92,30 +83,20 @@ public class Plan extends AbstractEntity {
                                        DateTimeRange salePeriod,
                                        DateTimeRange preSellPeriod,
                                        PlanBasic basic) {
-
-        Validate.notNull(hotelId, "hotelId must not be null");
-        Validate.notNull(stayPeriod, "sale period must not be null");
-        Validate.notNull(stock, "stock must not be null");
-        Validate.isTrue(stock > 0, "stock must gather than zero");
-
         var plan = new Plan();
         plan.setHotelId(hotelId);
+        plan.setSaleType(SaleType.NORMAL);
+        plan.setSaleState(SaleState.STOPPED);
         plan.setStock(stock);
         plan.setSalePeriod(salePeriod);
         plan.setStayPeriod(stayPeriod);
-        plan.setPreSalePeriod(preSellPeriod);
-        plan.setSaleType(SaleType.NORMAL);
-        plan.setSaleState(SaleState.STOPPED);
+        plan.setPreSalePeriod(Optional.ofNullable(preSellPeriod).orElseGet(DateTimeRange::empty));
+        plan.setBasic(Optional.ofNullable(basic).orElseGet(PlanBasic::empty));
         plan.setSaleChannels(saleChannels);
-        plan.setBasic(basic);
-        plan.validate();
+        plan.addEvent(PlanCreatedEvent.of(plan));
         return plan;
     }
 
-    @PrePersist
-    protected void beforePersist() {
-        validate();
-    }
 
     public void update(PlanPatch patch) {
         Optional.ofNullable(patch.getBasic()).ifPresent(this::setBasic);
@@ -126,41 +107,12 @@ public class Plan extends AbstractEntity {
         Optional.ofNullable(patch.getChannels()).ifPresent(this::setSaleChannels);
     }
 
-    @Nonnull
-    public DateRange getStayPeriod() {
-        return Optional.ofNullable(stayPeriod).orElseGet(DateRange::empty);
-    }
-
-    private void setStayPeriod(DateRange stayPeriod) {
-        if (null != this.stayPeriod && !Objects.equals(this.stayPeriod, stayPeriod)) {
-            this.addEvent(PlanStayPeriodChangedEvent.of(this));
-        }
-        this.stayPeriod = stayPeriod;
-    }
-
-    @Nullable
-    public DateTimeRange getPreSalePeriod() {
-        return Optional.ofNullable(preSalePeriod).orElseGet(DateTimeRange::empty);
-    }
-
-    @Nonnull
-    public DateTimeRange getSalePeriod() {
-        return Optional.ofNullable(salePeriod).orElseGet(DateTimeRange::empty);
-    }
-
-    @Nonnull
-    public PlanBasic getBasic() {
-        return Optional.ofNullable(basic).orElseGet(PlanBasic::empty);
-    }
 
     @Nonnull
     public ImmutableValues<SaleChannel> getSaleChannels() {
         return ImmutableValues.of(saleChannels);
     }
 
-    private void setSaleChannels(Set<SaleChannel> saleChannels) {
-        this.saleChannels = saleChannels;
-    }
 
     @Nonnull
     public PlanKey toKey() {
@@ -171,20 +123,55 @@ public class Plan extends AbstractEntity {
         if (!this.getSaleState().isOnSale()) {
             return false;
         }
-        if (null != getPreSalePeriod() && getPreSalePeriod().isCurrent()) {
-            return true;
-        }
-        return getSalePeriod().isCurrent();
+        return BooleanUtils.or(new boolean[]{
+                getSalePeriod().isCurrent(),
+                getPreSalePeriod().isCurrent(),
+        });
+    }
+
+    public boolean isPreSale() {
+        return !this.preSalePeriod.isEmpty();
     }
 
     private void setStock(Integer stock) {
+        Validate.notNull(stock, "stock must not be null");
+        Validate.isTrue(stock > 0, "stock must gather than zero");
         this.stock = stock;
     }
 
-    private void validate() {
-        if (null != getPreSalePeriod() && getPreSalePeriod().isNotEmpty()) {
-            DomainValidator.must(getPreSalePeriod().isBefore(getSalePeriod()), PlanErrors.PRE_SALE_PERIOD_ERROR);
+    public void setSalePeriod(DateTimeRange salePeriod) {
+        Validate.notNull(salePeriod, "salePeriod must not be null");
+        Validate.isTrue(!salePeriod.isEmpty(), "salePeriod must not be empty");
+        this.salePeriod = salePeriod;
+    }
+
+    private void setSaleChannels(Set<SaleChannel> saleChannels) {
+        Validate.notEmpty(saleChannels, "saleChannels can not be empty");
+        this.saleChannels = saleChannels;
+    }
+
+    private void setStayPeriod(DateRange stayPeriod) {
+        Validate.notNull(stayPeriod, "stayPeriod must not be null");
+        Validate.isTrue(!stayPeriod.isEmpty(), "stayPeriod must not be empty");
+
+        if (!stayPeriod.equals(this.stayPeriod)) {
+            this.addEvent(PlanStayPeriodChangedEvent.of(this));
+            this.stayPeriod = stayPeriod;
         }
     }
+
+    public void setHotelId(Long hotelId) {
+        Validate.notNull(hotelId, "hotelId must not be null");
+        this.hotelId = hotelId;
+    }
+
+    public void startSale() {
+        this.setSaleState(SaleState.STARTED);
+    }
+
+    public void stopSale() {
+        this.setSaleState(SaleState.STOPPED);
+    }
+
 
 }
