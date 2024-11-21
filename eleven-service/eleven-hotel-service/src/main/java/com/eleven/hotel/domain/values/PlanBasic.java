@@ -9,22 +9,22 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
 
 import java.io.Serializable;
-import java.time.LocalTime;
 
 @Embeddable
 @Getter
 @FieldNameConstants
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public final class CheckPolicy  implements Serializable {
+public final class PlanBasic   implements Serializable {
 
-    @Column(name = "check_in_time")
-    private LocalTime checkInTime;
+    @Column(name = "plan_name")
+    private String name;
 
-    @Column(name = "check_out_time")
-    private LocalTime checkOutTime;
+    @Column(name = "plan_desc")
+    private String desc;
 
-    public static CheckPolicy empty() {
-        return new CheckPolicy();
+    public static PlanBasic empty() {
+        return new PlanBasic();
     }
+
 }

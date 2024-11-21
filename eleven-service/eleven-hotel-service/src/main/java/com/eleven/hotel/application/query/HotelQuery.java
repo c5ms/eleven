@@ -4,7 +4,7 @@ import com.eleven.core.infrastructure.jpa.Specifications;
 import com.eleven.hotel.application.query.filter.HotelFilter;
 import com.eleven.hotel.domain.model.hotel.Hotel;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
-import com.eleven.hotel.domain.model.hotel.PlanBasic;
+import com.eleven.hotel.domain.values.PlanBasic;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;

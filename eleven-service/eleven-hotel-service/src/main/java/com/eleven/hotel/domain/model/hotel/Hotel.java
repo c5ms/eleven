@@ -7,6 +7,7 @@ import com.eleven.hotel.domain.model.hotel.event.HotelDeactivateEvent;
 import com.eleven.hotel.domain.model.hotel.event.HotelUpdatedEvent;
 import com.eleven.hotel.domain.values.Address;
 import com.eleven.hotel.domain.values.CheckPolicy;
+import com.eleven.hotel.domain.values.HotelBasic;
 import com.eleven.hotel.domain.values.Position;
 import jakarta.persistence.*;
 import lombok.AccessLevel;

@@ -10,7 +10,7 @@ import com.eleven.hotel.api.interfaces.values.PositionVo;
 import com.eleven.hotel.application.command.HotelCreateCommand;
 import com.eleven.hotel.application.command.HotelUpdateCommand;
 import com.eleven.hotel.domain.model.hotel.Hotel;
-import com.eleven.hotel.domain.model.hotel.HotelBasic;
+import com.eleven.hotel.domain.values.HotelBasic;
 import com.eleven.hotel.domain.values.Address;
 import com.eleven.hotel.domain.values.CheckPolicy;
 import com.eleven.hotel.domain.values.Position;

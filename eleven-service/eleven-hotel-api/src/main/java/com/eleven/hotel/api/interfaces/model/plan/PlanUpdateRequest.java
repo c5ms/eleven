@@ -16,7 +16,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class PlanUpdateRequest {
+public final class PlanUpdateRequest {
 
     @NotNull
     @JsonUnwrapped(prefix = "basic")

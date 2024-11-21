@@ -1,17 +1,16 @@
 package com.eleven.hotel.api.interfaces.values;
 
+import com.eleven.hotel.api.interfaces.model.core.AbstractVo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.Accessors;
 
 @Getter
 @Setter
 @Schema(name = "RoomBasic")
-@Accessors(chain = true)
 public class RoomBasicVo extends AbstractVo {
 
     @NotBlank

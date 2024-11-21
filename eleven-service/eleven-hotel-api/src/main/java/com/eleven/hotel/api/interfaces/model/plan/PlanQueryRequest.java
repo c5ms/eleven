@@ -6,6 +6,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PlanQueryRequest extends PageRequest {
+public final class PlanQueryRequest extends PageRequest {
     private String planName;
 }

@@ -18,14 +18,14 @@ import java.util.List;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class PlanDto implements Serializable {
+public final class PlanDto implements Serializable {
 
     private Long planId;
     private Long hotelId;
 
     private Integer stock;
-    private SaleType type;
-    private SaleState state;
+    private SaleType saleType;
+    private SaleState saleState;
     private Boolean isOnSale;
 
     @NotNull

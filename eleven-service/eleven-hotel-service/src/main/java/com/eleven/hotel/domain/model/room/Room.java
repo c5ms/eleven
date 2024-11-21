@@ -1,10 +1,12 @@
-package com.eleven.hotel.domain.model.hotel;
+package com.eleven.hotel.domain.model.room;
 
 import com.eleven.core.domain.values.ImmutableValues;
 import com.eleven.hotel.domain.core.AbstractEntity;
-import com.eleven.hotel.domain.model.hotel.event.*;
 import com.eleven.hotel.domain.model.inventory.RoomInventory;
+import com.eleven.hotel.domain.model.room.event.*;
 import com.eleven.hotel.domain.values.Occupancy;
+import com.eleven.hotel.domain.values.RoomBasic;
+import com.eleven.hotel.domain.values.RoomStock;
 import com.google.common.base.Predicates;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
@@ -39,13 +41,13 @@ public class Room extends AbstractEntity {
     private Boolean active = true;
 
     @Embedded
-    private RoomStock stock;
+    private RoomStock stock = RoomStock.empty();
 
     @Embedded
-    private RoomBasic basic;
+    private RoomBasic basic = RoomBasic.empty();
 
     @Embedded
-    private Occupancy occupancy;
+    private Occupancy occupancy = Occupancy.empty();
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "room_image", joinColumns = @JoinColumn(name = "room_id", referencedColumnName = "room_id"))
@@ -78,9 +80,9 @@ public class Room extends AbstractEntity {
 
     public boolean isBookable(RoomInventory roomInventory) {
         return Predicates.<RoomInventory>notNull()
-            .and(theInv -> theInv.getRoomKey().equals(toKey()))
-            .and(theInv -> getStock().getAvailablePeriod().contains(theInv.getKey().getDate()))
-            .test(roomInventory);
+                .and(theInv -> theInv.getRoomKey().equals(toKey()))
+                .and(theInv -> getStock().getAvailablePeriod().contains(theInv.getKey().getDate()))
+                .test(roomInventory);
     }
 
     public void deactivate() {
@@ -123,6 +125,5 @@ public class Room extends AbstractEntity {
         this.images.clear();
         this.images.addAll(images);
     }
-
 
 }

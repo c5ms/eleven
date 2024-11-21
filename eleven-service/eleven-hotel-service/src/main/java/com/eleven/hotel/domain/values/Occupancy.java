@@ -8,12 +8,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
 
+import java.io.Serializable;
+
 @Embeddable
 @Getter
 @FieldNameConstants
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public final class Occupancy {
+public final class Occupancy   implements Serializable {
 
     @Column(name = "occupancy_max")
     private Integer maxPerson;
@@ -21,5 +23,7 @@ public final class Occupancy {
     @Column(name = "occupancy_min")
     private Integer minPerson;
 
-
+    public static Occupancy empty() {
+        return new Occupancy();
+    }
 }

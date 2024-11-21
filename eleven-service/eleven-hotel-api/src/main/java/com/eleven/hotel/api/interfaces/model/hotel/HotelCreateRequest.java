@@ -7,9 +7,13 @@ import com.eleven.hotel.api.interfaces.values.PositionVo;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
-@Data
-public class HotelCreateRequest {
+@Getter
+@Setter
+public final class HotelCreateRequest {
 
     @NotNull
     @JsonUnwrapped(prefix = "hotel_")

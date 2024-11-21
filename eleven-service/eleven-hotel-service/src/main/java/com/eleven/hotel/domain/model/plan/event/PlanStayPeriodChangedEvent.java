@@ -1,7 +1,7 @@
-package com.eleven.hotel.domain.model.hotel.event;
+package com.eleven.hotel.domain.model.plan.event;
 
 import com.eleven.core.domain.error.DomainEvent;
-import com.eleven.hotel.domain.model.hotel.Plan;
+import com.eleven.hotel.domain.model.plan.Plan;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

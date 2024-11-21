@@ -17,7 +17,7 @@ import java.util.Set;
 @Setter
 @Schema(name = "Room")
 @Accessors(chain = true)
-public class RoomDto {
+public final class RoomDto {
     private Long hotelId;
     private Long roomId;
 

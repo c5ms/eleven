@@ -1,4 +1,4 @@
-package com.eleven.hotel.domain.model.hotel;
+package com.eleven.hotel.domain.model.room;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -15,16 +15,16 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PlanKey implements Serializable {
+public class RoomKey implements Serializable {
 
     @Column(name = "hotel_id", updatable = false, insertable = false)
     private Long hotelId;
 
-    @Column(name = "plan_id", updatable = false, insertable = false)
-    private Long planId;
+    @Column(name = "room_id", updatable = false, insertable = false)
+    private Long roomId;
 
-    public static PlanKey of(@NotNull Long hotelId, @NotNull Long planId) {
-        return new PlanKey(hotelId, planId);
+    public static RoomKey of(@NotNull Long hotelId, @NotNull Long roomId) {
+        return new RoomKey(hotelId, roomId);
     }
 
 }

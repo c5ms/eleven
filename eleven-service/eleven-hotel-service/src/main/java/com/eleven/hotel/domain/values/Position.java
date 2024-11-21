@@ -2,7 +2,10 @@ package com.eleven.hotel.domain.values;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
 
 import java.io.Serializable;
@@ -10,9 +13,9 @@ import java.io.Serializable;
 @Embeddable
 @Getter
 @FieldNameConstants
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Position implements Serializable {
+public final class Position implements Serializable {
 
     @Column(name = "position_lat")
     private Double latitude;

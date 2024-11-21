@@ -1,7 +1,7 @@
 package com.eleven.hotel.domain.model.inventory;
 
 import com.eleven.hotel.domain.core.AbstractEntity;
-import com.eleven.hotel.domain.model.hotel.RoomKey;
+import com.eleven.hotel.domain.model.room.RoomKey;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -14,7 +14,6 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter(AccessLevel.PROTECTED)
-@EqualsAndHashCode(callSuper = false, onlyExplicitlyIncluded = true)
 public class RoomInventory extends AbstractEntity {
 
     @EmbeddedId

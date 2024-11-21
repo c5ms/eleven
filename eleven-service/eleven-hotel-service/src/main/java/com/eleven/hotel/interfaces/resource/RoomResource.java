@@ -6,7 +6,7 @@ import com.eleven.hotel.api.interfaces.model.room.RoomDto;
 import com.eleven.hotel.api.interfaces.model.room.RoomUpdateRequest;
 import com.eleven.hotel.application.query.RoomQuery;
 import com.eleven.hotel.application.service.RoomService;
-import com.eleven.hotel.domain.model.hotel.RoomKey;
+import com.eleven.hotel.domain.model.room.RoomKey;
 import com.eleven.hotel.interfaces.converter.RoomConverter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

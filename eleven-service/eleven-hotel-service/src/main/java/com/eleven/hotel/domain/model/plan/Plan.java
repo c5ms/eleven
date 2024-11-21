@@ -1,4 +1,4 @@
-package com.eleven.hotel.domain.model.hotel;
+package com.eleven.hotel.domain.model.plan;
 
 import com.eleven.core.domain.error.DomainValidator;
 import com.eleven.core.domain.values.ImmutableValues;
@@ -7,15 +7,15 @@ import com.eleven.hotel.api.domain.enums.SaleState;
 import com.eleven.hotel.api.domain.enums.SaleType;
 import com.eleven.hotel.domain.core.AbstractEntity;
 import com.eleven.hotel.domain.errors.PlanErrors;
-import com.eleven.hotel.domain.model.hotel.event.PlanCreatedEvent;
-import com.eleven.hotel.domain.model.hotel.event.PlanStayPeriodChangedEvent;
+import com.eleven.hotel.domain.model.plan.event.PlanCreatedEvent;
+import com.eleven.hotel.domain.model.plan.event.PlanStayPeriodChangedEvent;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
+import com.eleven.hotel.domain.values.PlanBasic;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,7 +31,7 @@ import java.util.Set;
 @Table(name = "plan")
 @Entity
 @Getter
-@Setter(AccessLevel.PROTECTED)
+@Setter
 @FieldNameConstants
 public class Plan extends AbstractEntity {
 
@@ -150,7 +150,7 @@ public class Plan extends AbstractEntity {
 
     @Nonnull
     public PlanBasic getBasic() {
-        return Optional.ofNullable(basic).orElseGet(PlanBasic::new);
+        return Optional.ofNullable(basic).orElseGet(PlanBasic::empty);
     }
 
     @Nonnull

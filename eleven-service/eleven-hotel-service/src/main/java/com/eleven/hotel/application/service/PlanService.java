@@ -6,11 +6,12 @@ import com.eleven.hotel.application.command.PlanSetPriceCommand;
 import com.eleven.hotel.application.command.PlanUpdateCommand;
 import com.eleven.hotel.application.support.HotelContext;
 import com.eleven.hotel.domain.manager.PlanManager;
+import com.eleven.hotel.domain.manager.ProductManager;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.domain.model.hotel.ProductKey;
-import com.eleven.hotel.domain.model.hotel.Plan;
-import com.eleven.hotel.domain.model.hotel.PlanKey;
-import com.eleven.hotel.domain.model.hotel.PlanRepository;
+import com.eleven.hotel.domain.model.plan.Plan;
+import com.eleven.hotel.domain.model.plan.PlanKey;
+import com.eleven.hotel.domain.model.plan.PlanRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ public class PlanService {
     private final HotelRepository hotelRepository;
 
     private final PlanManager planManager;
+    private final ProductManager productManager;
 
     public Plan createPlan(Long hotelId, PlanCreateCommand command) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(HotelContext::noPrincipalException);
@@ -42,7 +44,7 @@ public class PlanService {
                 .create();
         planManager.validate(plan);
         planRepository.saveAndFlush(plan);
-        planManager.createProducts(plan, command.getRooms());
+        productManager.createProducts(plan, command.getRooms());
         return plan;
     }
 
@@ -51,7 +53,7 @@ public class PlanService {
         plan.update(command);
         planManager.validate(plan);
         planRepository.saveAndFlush(plan);
-        planManager.createProducts(plan, command.getRooms());
+        productManager.createProducts(plan, command.getRooms());
         return plan;
     }
 

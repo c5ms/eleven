@@ -15,7 +15,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class RoomCreateRequest {
+public final class RoomCreateRequest {
 
     @NotNull
     @JsonUnwrapped(prefix = "room")

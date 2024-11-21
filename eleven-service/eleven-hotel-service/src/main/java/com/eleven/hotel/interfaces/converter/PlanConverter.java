@@ -8,8 +8,8 @@ import com.eleven.hotel.api.interfaces.values.DateTimeRangeVo;
 import com.eleven.hotel.api.interfaces.values.PlanBasicVo;
 import com.eleven.hotel.application.command.PlanCreateCommand;
 import com.eleven.hotel.application.command.PlanUpdateCommand;
-import com.eleven.hotel.domain.model.hotel.Plan;
-import com.eleven.hotel.domain.model.hotel.PlanBasic;
+import com.eleven.hotel.domain.model.plan.Plan;
+import com.eleven.hotel.domain.values.PlanBasic;
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +28,8 @@ public class PlanConverter {
                 .setPlanId(plan.getPlanId())
                 .setHotelId(plan.getHotelId())
                 .setStock(plan.getStock())
-                .setType(plan.getSaleType())
-                .setState(plan.getSaleState())
+                .setSaleType(plan.getSaleType())
+                .setSaleState(plan.getSaleState())
                 .setIsOnSale(plan.isOnSale())
                 .setChannels(plan.getSaleChannels().toList())
                 .setBasic(modelMapper.map(plan.getBasic(), PlanBasicVo.class))

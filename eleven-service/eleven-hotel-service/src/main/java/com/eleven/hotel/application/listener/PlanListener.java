@@ -1,7 +1,7 @@
 package com.eleven.hotel.application.listener;
 
 import cn.hutool.json.JSONUtil;
-import com.eleven.hotel.domain.model.hotel.event.PlanCreatedEvent;
+import com.eleven.hotel.domain.model.plan.event.PlanCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;

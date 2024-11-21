@@ -2,18 +2,22 @@ package com.eleven.hotel.domain.values;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Embeddable;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
 import org.apache.commons.lang3.ObjectUtils;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Embeddable
 @Getter
 @FieldNameConstants
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class DateTimeRange {
+public final class DateTimeRange   implements Serializable {
 
     private LocalDateTime start;
     private LocalDateTime end;

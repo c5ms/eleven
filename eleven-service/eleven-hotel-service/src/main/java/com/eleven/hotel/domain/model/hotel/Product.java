@@ -7,6 +7,8 @@ import com.eleven.hotel.api.domain.enums.SaleChannel;
 import com.eleven.hotel.api.domain.enums.SaleState;
 import com.eleven.hotel.api.domain.enums.SaleType;
 import com.eleven.hotel.domain.errors.PlanErrors;
+import com.eleven.hotel.domain.model.plan.Plan;
+import com.eleven.hotel.domain.model.room.Room;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.*;

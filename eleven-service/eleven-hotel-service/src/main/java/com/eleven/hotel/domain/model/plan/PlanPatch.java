@@ -1,4 +1,6 @@
-package com.eleven.hotel.domain.model.hotel;
+package com.eleven.hotel.domain.model.plan;
+
+import com.eleven.hotel.domain.values.PlanBasic;
 
 public interface PlanPatch {
     PlanBasic getBasic();

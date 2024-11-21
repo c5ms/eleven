@@ -1,5 +1,7 @@
 package com.eleven.hotel.domain.model.hotel;
 
+import com.eleven.hotel.domain.model.plan.PlanKey;
+import com.eleven.hotel.domain.model.room.RoomKey;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;

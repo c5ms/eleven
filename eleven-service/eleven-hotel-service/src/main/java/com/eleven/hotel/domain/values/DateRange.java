@@ -2,11 +2,14 @@ package com.eleven.hotel.domain.values;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Embeddable;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
 import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.Validate;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.stream.Stream;
@@ -14,9 +17,9 @@ import java.util.stream.Stream;
 @Embeddable
 @Getter
 @FieldNameConstants
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class DateRange {
+public final class DateRange  implements Serializable {
 
     private LocalDate start;
     private LocalDate end;
@@ -34,7 +37,7 @@ public class DateRange {
     }
 
     public Stream<LocalDate> dates() {
-        if(isEmpty()){
+        if (isEmpty()) {
             return Stream.empty();
         }
         return start.datesUntil(end);
@@ -94,6 +97,6 @@ public class DateRange {
 
 
     public Period toPeriod() {
-        return  Period.between(this.start, this.end);
+        return Period.between(this.start, this.end);
     }
 }

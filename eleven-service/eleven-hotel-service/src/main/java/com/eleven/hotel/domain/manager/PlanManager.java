@@ -1,10 +1,10 @@
 package com.eleven.hotel.domain.manager;
 
 import com.eleven.hotel.domain.errors.HotelErrors;
-import com.eleven.hotel.domain.model.hotel.RoomKey;
-import com.eleven.hotel.domain.model.hotel.RoomRepository;
-import com.eleven.hotel.domain.model.hotel.Plan;
-import com.eleven.hotel.domain.model.hotel.PlanValidator;
+import com.eleven.hotel.domain.model.room.RoomKey;
+import com.eleven.hotel.domain.model.room.RoomRepository;
+import com.eleven.hotel.domain.model.plan.Plan;
+import com.eleven.hotel.domain.model.plan.PlanValidator;
 import com.eleven.hotel.domain.model.hotel.Product;
 import com.eleven.hotel.domain.model.hotel.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +21,7 @@ import java.util.Set;
 public class PlanManager {
 
     private final List<PlanValidator> planValidators;
-    private final ProductRepository productRepository;
-    private final RoomRepository roomRepository;
+
 
     public void validate(Plan plan) {
         for (PlanValidator validator : planValidators) {
@@ -30,21 +29,5 @@ public class PlanManager {
         }
     }
 
-    public void createProducts(Plan plan, Set<Long> rooms) {
-        var products = productRepository.findByPlan(plan);
-
-        for (Product product : products) {
-            if (!rooms.contains(product.getKey().getRoomId())) {
-                productRepository.delete(product);
-            }
-        }
-
-        for (Long roomId : rooms) {
-            var roomKey = RoomKey.of(plan.getHotelId(), roomId);
-            var room = roomRepository.findByRoomKey(roomKey).orElseThrow(HotelErrors.ROOM_NOT_FOUND::toException);
-            var product = Product.of(plan, room);
-            productRepository.save(product);
-        }
-    }
 
 }
