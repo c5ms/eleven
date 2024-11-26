@@ -53,7 +53,6 @@ public class HotelResource {
         return hotelQuery.read(hotelId).map(hotelConvertor::toDto);
     }
 
-
     @Operation(summary = "create hotel")
     @PostMapping
     public HotelDto createHotel(@Validated @RequestBody HotelCreateRequest request) {

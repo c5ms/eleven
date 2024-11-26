@@ -97,7 +97,6 @@ public class Plan extends AbstractEntity {
         return plan;
     }
 
-
     public void update(PlanPatch patch) {
         Optional.ofNullable(patch.getBasic()).ifPresent(this::setBasic);
         Optional.ofNullable(patch.getStock()).ifPresent(this::setStock);

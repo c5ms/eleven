@@ -1,4 +1,4 @@
-package com.eleven.hotel.domain.model.hotel;
+package com.eleven.hotel.domain.model.product;
 
 import com.eleven.hotel.domain.model.plan.Plan;
 import org.springframework.data.jpa.repository.JpaRepository;

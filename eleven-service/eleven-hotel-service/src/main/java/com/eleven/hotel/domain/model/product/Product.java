@@ -1,4 +1,4 @@
-package com.eleven.hotel.domain.model.hotel;
+package com.eleven.hotel.domain.model.product;
 
 import com.eleven.core.domain.error.DomainValidator;
 import com.eleven.core.domain.values.ImmutableValues;

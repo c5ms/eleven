@@ -1,16 +1,14 @@
 package com.eleven.hotel.application.service;
 
-import com.eleven.core.domain.error.DomainValidator;
 import com.eleven.hotel.api.domain.enums.SaleChannel;
 import com.eleven.hotel.application.command.PlanCreateCommand;
 import com.eleven.hotel.application.command.PlanSetPriceCommand;
 import com.eleven.hotel.application.command.PlanUpdateCommand;
 import com.eleven.hotel.application.support.HotelContext;
-import com.eleven.hotel.domain.errors.PlanErrors;
 import com.eleven.hotel.domain.manager.PlanManager;
 import com.eleven.hotel.domain.manager.ProductManager;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
-import com.eleven.hotel.domain.model.hotel.ProductKey;
+import com.eleven.hotel.domain.model.product.ProductKey;
 import com.eleven.hotel.domain.model.plan.Plan;
 import com.eleven.hotel.domain.model.plan.PlanKey;
 import com.eleven.hotel.domain.model.plan.PlanRepository;

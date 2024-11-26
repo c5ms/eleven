@@ -16,7 +16,6 @@ import java.util.List;
 public class HotelManager {
     private final List<RoomValidator> roomValidators;
     private final List<HotelValidator> hotelValidators;
-    private final RoomInventoryRepository roomInventoryRepository;
 
     public void validate(Hotel hotel) {
         hotelValidators.forEach(validator -> validator.validate(hotel));

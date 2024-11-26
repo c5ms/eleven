@@ -1,8 +1,8 @@
 package com.eleven.hotel.domain.manager;
 
 import com.eleven.hotel.domain.errors.HotelErrors;
-import com.eleven.hotel.domain.model.hotel.Product;
-import com.eleven.hotel.domain.model.hotel.ProductRepository;
+import com.eleven.hotel.domain.model.product.Product;
+import com.eleven.hotel.domain.model.product.ProductRepository;
 import com.eleven.hotel.domain.model.plan.Plan;
 import com.eleven.hotel.domain.model.room.RoomKey;
 import com.eleven.hotel.domain.model.room.RoomRepository;
@@ -17,8 +17,8 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class ProductManager {
 
-    private final ProductRepository productRepository;
     private final RoomRepository roomRepository;
+    private final ProductRepository productRepository;
 
     public void createProducts(Plan plan, Set<Long> rooms) {
         var products = productRepository.findByPlan(plan);
