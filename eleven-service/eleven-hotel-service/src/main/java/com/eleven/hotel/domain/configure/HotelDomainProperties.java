@@ -1,4 +1,4 @@
-package com.eleven.hotel.application.configure;
+package com.eleven.hotel.domain.configure;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,6 +6,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "eleven.hotel")
-public class HotelProperties {
+@ConfigurationProperties(prefix = "eleven.hotel.domain")
+public class HotelDomainProperties {
 }

@@ -7,6 +7,7 @@ import com.eleven.hotel.interfaces.support.MerchantSecurityInterceptor;
 import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.models.GroupedOpenApi;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -16,7 +17,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @RequiredArgsConstructor
 @Configuration(proxyBeanMethods = false)
-public class HotelWebAutoconfiguration implements WebMvcConfigurer {
+@EnableConfigurationProperties(HotelInterfacesProperties.class)
+public class HotelInterfacesAutoconfiguration implements WebMvcConfigurer {
+
     private final static String API_PREFIX_ADMIN = "/api/admin";
     private final static String API_PREFIX_MERCHANT = "/api/merchant";
 
