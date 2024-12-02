@@ -1,17 +1,22 @@
 package com.eleven.hotel.domain.model.plan;
 
+import com.eleven.hotel.api.domain.enums.SaleChannel;
+import com.eleven.hotel.domain.values.DateRange;
+import com.eleven.hotel.domain.values.DateTimeRange;
 import com.eleven.hotel.domain.values.PlanBasic;
+
+import java.util.Set;
 
 public interface PlanPatch {
     PlanBasic getBasic();
 
     Integer getStock();
 
-    com.eleven.hotel.domain.values.DateTimeRange getSalePeriod();
+    DateTimeRange getSalePeriod();
 
-    com.eleven.hotel.domain.values.DateTimeRange getPreSalePeriod();
+    DateTimeRange getPreSalePeriod();
 
-    com.eleven.hotel.domain.values.DateRange getStayPeriod();
+    DateRange getStayPeriod();
 
-    java.util.Set<com.eleven.hotel.api.domain.enums.SaleChannel> getChannels();
+    Set<SaleChannel> getChannels();
 }
