@@ -22,12 +22,7 @@ import java.time.LocalDate;
 @EqualsAndHashCode(callSuper = false, of = "inventoryKey")
 public class Inventory extends AbstractEntity {
 
-    @Id
-    @Column(name = "inventory_id")
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = GENERATOR_NAME)
-    private Long inventoryId;
-
-    @Embedded
+    @EmbeddedId
     private InventoryKey inventoryKey;
 
     @Embedded
@@ -57,12 +52,10 @@ public class Inventory extends AbstractEntity {
 
     public static Inventory of(ProductKey productKey, LocalDate date, StockAmount stockAmount) {
         var inventoryKey = InventoryKey.of(productKey, date);
-        var planKey = PlanKey.of(inventoryKey.getHotelId(), inventoryKey.getPlanId());
-
         var inventory = new Inventory();
         inventory.setInventoryKey(inventoryKey);
-        inventory.setPlanKey(planKey);
-        inventory.setProductKey(productKey);
+        inventory.setPlanKey(productKey.toPlanKey());
+        inventory.setProductKey(inventoryKey.toProductKey());
         inventory.setStockTotal(stockAmount);
         inventory.setStockLeft(stockAmount);
         inventory.setIsValid(true);
@@ -78,10 +71,6 @@ public class Inventory extends AbstractEntity {
             return false;
         }
         return this.stockLeft.lessThan(this.stockTotal);
-    }
-
-    public boolean isNew() {
-        return this.inventoryId == null;
     }
 
     public void reduce(int amount) {

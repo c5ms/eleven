@@ -19,15 +19,15 @@ import java.io.Serializable;
 public class PriceKey implements Serializable {
 
     @Nonnull
-    @Column(name = "hotel_id", insertable = false, updatable = false)
+    @Column(name = "hotel_id")
     private Long hotelId;
 
     @Nonnull
-    @Column(name = "plan_id", insertable = false, updatable = false)
+    @Column(name = "plan_id")
     private Long planId;
 
     @Nonnull
-    @Column(name = "room_id", insertable = false, updatable = false)
+    @Column(name = "room_id")
     private Long roomId;
 
     @Nonnull
@@ -42,5 +42,11 @@ public class PriceKey implements Serializable {
         priceKey.roomId = productKey.getRoomId();
         priceKey.saleChannel = saleChannel;
         return priceKey;
+    }
+
+    public void apply(ProductKey productKey){
+        this.setHotelId(productKey.getHotelId());
+        this.setPlanId(productKey.getPlanId());
+        this.setRoomId(productKey.getRoomId());
     }
 }

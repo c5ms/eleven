@@ -37,7 +37,7 @@ public class RoomMerchantApi {
     }
 
     @Operation(summary = "read room")
-    @GetMapping()
+    @GetMapping("/{roomId:[0-9]+}")
     public Optional<RoomDto> readRoom(@PathVariable("hotelId") Long hotelId, @PathVariable("roomId") Long roomId) {
         return roomService.readRoom(hotelId, roomId)
                 .map(roomConvertor::toDto);

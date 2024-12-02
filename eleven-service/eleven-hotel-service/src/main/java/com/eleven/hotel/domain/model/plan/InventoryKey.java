@@ -47,7 +47,7 @@ public class InventoryKey implements Serializable {
     }
 
     public ProductKey toProductKey() {
-        return ProductKey.of(this.hotelId, this.planId, this.roomId);
+        return ProductKey.of(toPlanKey(), this.roomId);
     }
 
 }

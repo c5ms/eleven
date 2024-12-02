@@ -21,10 +21,10 @@ public class InventoryManager {
         inventoryRepository.deleteAllInBatch(merger.removes());
 
         // update invalid status
-        inventoryRepository.updateAllAndFlush(merger.invalids());
+        inventoryRepository.updateAllAndFlush(merger.updates());
 
         // add new inventories
-        inventoryRepository.persistAll(merger.adds());
+        inventoryRepository.persistAllAndFlush(merger.adds());
     }
 
 }

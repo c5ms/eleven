@@ -1,21 +1,21 @@
 package com.eleven.hotel.application.service.manager;
 
 import com.eleven.hotel.api.domain.errors.HotelErrors;
-import com.eleven.hotel.application.command.PlanAddRoomCommand;
 import com.eleven.hotel.application.command.PlanCreateCommand;
 import com.eleven.hotel.application.command.PlanSetPriceCommand;
 import com.eleven.hotel.application.command.PlanUpdateCommand;
 import com.eleven.hotel.domain.model.hotel.Hotel;
 import com.eleven.hotel.domain.model.hotel.RoomRepository;
-import com.eleven.hotel.domain.model.plan.*;
+import com.eleven.hotel.domain.model.plan.Plan;
+import com.eleven.hotel.domain.model.plan.PlanValidator;
+import com.eleven.hotel.domain.model.plan.Product;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
+import java.util.Set;
 
 
 @Slf4j
@@ -24,7 +24,6 @@ import java.util.function.Predicate;
 public class PlanManager {
 
     private final List<PlanValidator> planValidators;
-    private final PlanRepository planRepository;
     private final RoomRepository roomRepository;
 
     public void validate(Plan plan) {
@@ -35,20 +34,20 @@ public class PlanManager {
 
     public Plan createPlan(Hotel hotel, PlanCreateCommand command) {
         var plan = Plan.normal()
-                .hotelId(hotel.getHotelId())
-                .salePeriod(command.getSalePeriod())
-                .preSellPeriod(command.getPreSalePeriod())
-                .stayPeriod(command.getStayPeriod())
-                .basic(command.getBasic())
-                .stockAmount(command.getStock())
-                .saleChannels(command.getChannels())
-                .create();
+            .hotelId(hotel.getHotelId())
+            .salePeriod(command.getSalePeriod())
+            .preSellPeriod(command.getPreSalePeriod())
+            .stayPeriod(command.getStayPeriod())
+            .basic(command.getBasic())
+            .stockAmount(command.getStock())
+            .saleChannels(command.getChannels())
+            .create();
 
-        // persist for generated id is necessary
-        validate(plan);
-        planRepository.persist(plan);
+        for (Long roomId : command.getRooms()) {
+            var room = roomRepository.findByHotelIdAndRoomId(plan.getHotelId(), roomId).orElseThrow(HotelErrors.ROOM_NOT_FOUND::toException);
+            plan.addRoom(room.getRoomId());
+        }
 
-        setRooms(plan, command.getRooms());
         return plan;
     }
 
@@ -59,36 +58,29 @@ public class PlanManager {
         Optional.ofNullable(command.getSalePeriod()).ifPresent(plan::setSalePeriod);
         Optional.ofNullable(command.getPreSalePeriod()).ifPresent(plan::setPreSalePeriod);
         Optional.ofNullable(command.getChannels()).ifPresent(plan::setSaleChannels);
-        setRooms(plan, command.getRooms());
+
+        command.getRooms().stream()
+            .filter(roomId -> plan.findRoom(roomId).isEmpty())
+            .map(roomId -> roomRepository.findByHotelIdAndRoomId(plan.getHotelId(), roomId).orElseThrow(HotelErrors.ROOM_NOT_FOUND::toException))
+            .forEach(room -> plan.addRoom(room.getRoomId()));
+        plan.removeRoom(product -> !command.getRooms().contains(product.getProductKey().getRoomId()));
     }
 
     public void setPrice(Product room, PlanSetPriceCommand command) {
         switch (command.getChargeType()) {
             case BY_PERSON -> room.setPrice(
-                    command.getSaleChannel(),
-                    command.getOnePersonPrice(),
-                    command.getTwoPersonPrice(),
-                    command.getThreePersonPrice(),
-                    command.getFourPersonPrice(),
-                    command.getFivePersonPrice()
+                command.getSaleChannel(),
+                command.getOnePersonPrice(),
+                command.getTwoPersonPrice(),
+                command.getThreePersonPrice(),
+                command.getFourPersonPrice(),
+                command.getFivePersonPrice()
             );
             case BY_ROOM -> room.setPrice(
-                    command.getSaleChannel(),
-                    command.getWholeRoomPrice()
+                command.getSaleChannel(),
+                command.getWholeRoomPrice()
             );
         }
     }
-
-    public void setRooms(Plan plan, List<PlanAddRoomCommand> commands) {
-        var keys = new HashSet<ProductKey>();
-        for (PlanAddRoomCommand addRoomCommand : commands) {
-            var room = roomRepository.findByHotelIdAndRoomId(plan.getHotelId(), addRoomCommand.getRoomId()).orElseThrow(HotelErrors.ROOM_NOT_FOUND::toException);
-            plan.addRoom(room.getRoomId(), addRoomCommand.getStock());
-            keys.add(plan.getProductKey(room.getRoomId()));
-        }
-        var isUseless = (Predicate<Product>) product -> !keys.contains(product.getProductKey());
-        plan.removeRoom(isUseless);
-    }
-
 
 }

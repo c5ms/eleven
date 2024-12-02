@@ -14,8 +14,16 @@ public class ImmutableValues<T> implements Iterable<T> {
         this.values = new ArrayList<>(values);
     }
 
-    public static <T> ImmutableValues<T> of(Collection<T> vs) {
-        return new ImmutableValues<>(vs);
+    public static <T> ImmutableValues<T> of(Collection<T> collection) {
+        return new ImmutableValues<>(collection);
+    }
+
+    public static <T> ImmutableValues<T> of(Map<?,T> map) {
+        return new ImmutableValues<>(map.values());
+    }
+
+    public static <T> ImmutableValues<T> of(Set<T> set) {
+        return new ImmutableValues<>(set);
     }
 
     public static <T> ImmutableValues<T> empty(Class<T> ignored) {

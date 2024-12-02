@@ -28,7 +28,7 @@ public class InventoryMerge {
                 .collect(Collectors.toSet());
     }
 
-    public Collection<Inventory> invalids() {
+    public Collection<Inventory> updates() {
         return existingInventories.stream()
                 .filter(Inventory::hasBeenBooked)
                 .peek(inventory -> {
@@ -39,12 +39,12 @@ public class InventoryMerge {
     }
 
     public Collection<Inventory> adds() {
-        var allInventories = new HashMap<InventoryKey, Inventory>();
-        currentInventories.forEach(inventory -> allInventories.put(inventory.getInventoryKey(), inventory));
-        existingInventories.forEach(inventory -> allInventories.put(inventory.getInventoryKey(), inventory));
-        return allInventories.values()
+        var adding = new HashMap<InventoryKey, Inventory>();
+        currentInventories.forEach(inventory -> adding.put(inventory.getInventoryKey(), inventory));
+        existingInventories.stream().map(Inventory::getInventoryKey).forEach(adding::remove);
+
+        return adding.values()
                 .stream()
-                .filter(Inventory::isNew)
                 .filter(plan::isApplicable)
                 .collect(Collectors.toList());
     }

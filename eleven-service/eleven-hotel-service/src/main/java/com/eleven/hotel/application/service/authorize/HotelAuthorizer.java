@@ -1,4 +1,4 @@
-package com.eleven.hotel.application.service;
+package com.eleven.hotel.application.service.authorize;
 
 import com.eleven.core.application.authorize.TypedObjectAuthorizer;
 import com.eleven.hotel.domain.model.hotel.Hotel;
@@ -13,11 +13,11 @@ public class HotelAuthorizer extends TypedObjectAuthorizer<Hotel> {
 
     @Override
     protected boolean checkIsReadable(Hotel hotel) {
-        return true;
+        return false;
     }
 
     @Override
     protected boolean checkIsWritable(Hotel hotel) {
-        return true;
+        return false;
     }
 }

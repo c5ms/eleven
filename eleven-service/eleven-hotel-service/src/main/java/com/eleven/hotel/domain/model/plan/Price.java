@@ -21,12 +21,7 @@ import static com.eleven.hotel.domain.core.AbstractEntity.GENERATOR_NAME;
 @FieldNameConstants
 public class Price {
 
-    @Id
-    @Column(name = "price_id")
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = GENERATOR_NAME)
-    private Long priceId;
-
-    @Embedded
+    @EmbeddedId
     private PriceKey priceKey;
 
     @Column(name = "charge_type")
