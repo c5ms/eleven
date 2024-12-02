@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @FieldNameConstants
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public final class DateTimeRange   implements Serializable {
+public final class DateTimeRange implements Serializable {
 
     private LocalDateTime start;
     private LocalDateTime end;

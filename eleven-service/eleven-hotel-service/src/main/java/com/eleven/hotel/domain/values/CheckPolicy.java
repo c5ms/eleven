@@ -16,7 +16,7 @@ import java.time.LocalTime;
 @FieldNameConstants
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public final class CheckPolicy  implements Serializable {
+public final class CheckPolicy implements Serializable {
 
     @Column(name = "check_in_time")
     private LocalTime checkInTime;
@@ -28,7 +28,7 @@ public final class CheckPolicy  implements Serializable {
         return new CheckPolicy();
     }
 
-    public static  CheckPolicy of (LocalTime checkInTime, LocalTime checkOutTime) {
+    public static CheckPolicy of(LocalTime checkInTime, LocalTime checkOutTime) {
         return new CheckPolicy(checkInTime, checkOutTime);
     }
 }

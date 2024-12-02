@@ -4,14 +4,14 @@ import com.eleven.core.interfaces.model.PageResponse;
 import com.eleven.core.interfaces.web.annonation.AsRestApi;
 import com.eleven.hotel.api.domain.enums.ChargeType;
 import com.eleven.hotel.api.domain.enums.SaleChannel;
-import com.eleven.hotel.api.interfaces.model.plan.PlanDto;
 import com.eleven.hotel.api.interfaces.model.plan.PlanCreateRequest;
+import com.eleven.hotel.api.interfaces.model.plan.PlanDto;
 import com.eleven.hotel.api.interfaces.model.plan.PlanQueryRequest;
 import com.eleven.hotel.api.interfaces.model.plan.PlanUpdateRequest;
-import com.eleven.hotel.application.service.PlanService;
 import com.eleven.hotel.application.command.PlanSetPriceCommand;
 import com.eleven.hotel.application.query.PlanQuery;
 import com.eleven.hotel.application.query.filter.PlanFilter;
+import com.eleven.hotel.application.service.PlanService;
 import com.eleven.hotel.domain.model.plan.PlanKey;
 import com.eleven.hotel.interfaces.converter.PlanConverter;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -74,8 +73,8 @@ public class PlanResource {
     @Operation(summary = "update plan")
     @PutMapping("/{planId:[0-9]+}")
     public PlanDto updatePlan(@PathVariable("hotelId") Long hotelId,
-                                 @PathVariable("planId") Long planId,
-                                 @RequestBody @Validated PlanUpdateRequest request) {
+                              @PathVariable("planId") Long planId,
+                              @RequestBody @Validated PlanUpdateRequest request) {
         var command = planConverter.toCommand(request);
         var plankey = PlanKey.of(hotelId, planId);
         var plan = planService.updatePlan(plankey, command);

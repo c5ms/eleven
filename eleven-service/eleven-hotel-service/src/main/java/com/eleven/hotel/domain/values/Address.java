@@ -15,7 +15,7 @@ import java.io.Serializable;
 @FieldNameConstants
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public final class Address  implements Serializable {
+public final class Address implements Serializable {
 
     @Column(name = "addr_country")
     private String country;

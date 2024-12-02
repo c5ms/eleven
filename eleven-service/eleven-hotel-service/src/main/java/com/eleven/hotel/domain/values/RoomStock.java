@@ -4,7 +4,10 @@ import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
 
 import java.io.Serializable;
@@ -18,7 +21,7 @@ import java.util.stream.Collectors;
 @FieldNameConstants
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public final class RoomStock   implements Serializable {
+public final class RoomStock implements Serializable {
 
     @Embedded
     @AttributeOverride(name = "start", column = @Column(name = "available_period_start"))

@@ -108,20 +108,20 @@ public class Product {
                          BigDecimal fivePersonPrice) {
         DomainValidator.must(this.saleChannels.contains(saleChannel), PlanErrors.UN_SUPPORTED_CHANNEL);
         var price = Price.byPerson(this.getKey(),
-            saleChannel,
-            onePersonPrice,
-            twoPersonPrice,
-            threePersonPrice,
-            fourPersonPrice,
-            fivePersonPrice);
+                saleChannel,
+                onePersonPrice,
+                twoPersonPrice,
+                threePersonPrice,
+                fourPersonPrice,
+                fivePersonPrice);
         this.prices.put(price.getKey(), price);
         this.setChargeType(price.getChargeType());
     }
 
     public Optional<Price> priceOf(SaleChannel channel) {
         return getPrices().stream()
-            .filter(price -> price.is(channel))
-            .findFirst();
+                .filter(price -> price.is(channel))
+                .findFirst();
     }
 
     public ImmutableValues<SaleChannel> getSaleChannels() {

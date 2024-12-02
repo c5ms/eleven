@@ -6,6 +6,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "eleven.hotel")
-public class HotelProperties {
+@ConfigurationProperties(prefix = "eleven.hotel.infrastructure")
+public class HotelInfrastructureProperties {
 }

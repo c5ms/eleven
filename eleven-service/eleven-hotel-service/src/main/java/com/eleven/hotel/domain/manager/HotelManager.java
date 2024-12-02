@@ -1,7 +1,7 @@
 package com.eleven.hotel.domain.manager;
 
-import com.eleven.hotel.domain.model.hotel.*;
-import com.eleven.hotel.domain.model.inventory.RoomInventoryRepository;
+import com.eleven.hotel.domain.model.hotel.Hotel;
+import com.eleven.hotel.domain.model.hotel.HotelValidator;
 import com.eleven.hotel.domain.model.room.Room;
 import com.eleven.hotel.domain.model.room.RoomValidator;
 import lombok.RequiredArgsConstructor;

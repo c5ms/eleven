@@ -4,7 +4,6 @@ import cn.hutool.json.JSONUtil;
 import com.eleven.core.application.event.ApplicationEvent;
 import com.eleven.core.domain.error.DomainEvent;
 import com.eleven.hotel.domain.manager.InventoryManager;
-import com.eleven.hotel.domain.model.room.event.RoomStockChangedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;

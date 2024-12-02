@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 @FieldNameConstants
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public final class DateRange  implements Serializable {
+public final class DateRange implements Serializable {
 
     private LocalDate start;
     private LocalDate end;

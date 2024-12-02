@@ -15,7 +15,7 @@ import java.io.Serializable;
 @FieldNameConstants
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public final class PlanBasic   implements Serializable {
+public final class PlanBasic implements Serializable {
 
     @Column(name = "plan_name")
     private String name;

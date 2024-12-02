@@ -15,7 +15,7 @@ import java.io.Serializable;
 @FieldNameConstants
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public final class Occupancy   implements Serializable {
+public final class Occupancy implements Serializable {
 
     @Column(name = "occupancy_max")
     private Integer maxPerson;
