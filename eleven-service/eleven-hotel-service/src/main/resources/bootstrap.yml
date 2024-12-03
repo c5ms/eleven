@@ -17,10 +17,7 @@ spring:
 
   jpa:
     generate-ddl: true
-#    properties:
-#      'hibernate.order_updates': true
-#      'hibernate.order_inserts': true
-#      'hibernate.jdbc.batch_size': 50
+
 
 eleven:
   cache:
@@ -43,5 +40,6 @@ eleven:
       license:
         name: Apache 2.0
         url: https://www.demcia.com/
+
 
 
