@@ -11,6 +11,7 @@ import com.eleven.hotel.domain.model.room.Room;
 import com.eleven.hotel.domain.model.room.RoomKey;
 import com.eleven.hotel.domain.model.room.RoomRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,0 +1,21 @@
+{
+  "name": "ross hotel",
+  "description": "ross hotel is very nice",
+  "phone": "83768888",
+  "email": "ross@hotel.com",
+  "totalRoomQuantity": 200,
+  "whenBuilt": "2024-01",
+  "lastRenovation": "{{$date.past|format('yyyy-MM')}}",
+  "starRating": 3,
+  "buildingArea": 800,
+  "checkIn": "13:00",
+  "checkOut": "11:00",
+  "country": "中国大陆",
+  "province": "辽宁",
+  "city": "大连",
+  "location": "开发区",
+  "address": "大连开发区海青岛街道东行300米",
+  "latitude": 100.56666,
+  "longitude": 110.9876,
+  "localDate": "2024-01-01"
+}
