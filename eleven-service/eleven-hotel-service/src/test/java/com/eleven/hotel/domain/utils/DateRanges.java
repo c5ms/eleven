@@ -1,4 +1,4 @@
-package com.eleven.core.test.utils;
+package com.eleven.hotel.domain.utils;
 
 import com.eleven.hotel.domain.values.DateRange;
 import com.eleven.hotel.domain.values.DateTimeRange;

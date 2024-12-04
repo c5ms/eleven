@@ -26,4 +26,8 @@ public final class Position implements Serializable {
     public static Position empty() {
         return new Position();
     }
+
+    public static Position of(Double latitude, Double longitude) {
+        return new Position(latitude, longitude);
+    }
 }

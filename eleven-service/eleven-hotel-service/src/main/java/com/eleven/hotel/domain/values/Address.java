@@ -36,4 +36,8 @@ public final class Address implements Serializable {
         return new Address();
     }
 
+    public static Address of(String country, String province, String city, String location, String address) {
+        return new Address(country, province, city, location, address);
+    }
+
 }

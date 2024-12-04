@@ -42,8 +42,9 @@ public class HotelResource {
         var filter = HotelFilter.builder()
                 .hotelName(request.getHotelName())
                 .build();
-        var page = hotelQuery.queryPage(filter, pageRequest.toPagerequest()).map(hotelConvertor::toDto);
-        return PageResponse.of(page.getContent(), page.getTotalElements());
+        var page = pageRequest.toPagerequest();
+        var result = hotelQuery.queryPage(filter, page).map(hotelConvertor::toDto);
+        return PageResponse.of(result.getContent(), result.getTotalElements());
     }
 
 
@@ -64,7 +65,7 @@ public class HotelResource {
 
     @Operation(summary = "update hotel")
     @PostMapping("/{hotelId:[0-9]+}")
-    public HotelDto update(@PathVariable("hotelId") Long hotelId, @RequestBody @Validated HotelUpdateRequest request) {
+    public HotelDto updateHotel(@PathVariable("hotelId") Long hotelId, @RequestBody @Validated HotelUpdateRequest request) {
         var command = hotelConvertor.toCommand(request);
         var hotel = hotelService.update(hotelId, command);
         return hotelConvertor.toDto(hotel);

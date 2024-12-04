@@ -48,4 +48,17 @@ public final class HotelBasic implements Serializable {
     public static HotelBasic empty() {
         return new HotelBasic();
     }
+
+
+    public static HotelBasic of(String name,
+                                String description,
+                                String email,
+                                String phone,
+                                Integer totalRoomQuantity,
+                                YearMonth whenBuilt,
+                                YearMonth lastRenovation,
+                                Integer starRating,
+                                Integer buildingArea) {
+        return new HotelBasic(name, description, email, phone, totalRoomQuantity, whenBuilt, lastRenovation, starRating, buildingArea);
+    }
 }

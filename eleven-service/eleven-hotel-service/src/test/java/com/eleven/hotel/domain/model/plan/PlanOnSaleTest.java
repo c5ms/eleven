@@ -1,7 +1,7 @@
 package com.eleven.hotel.domain.model.plan;
 
-import com.eleven.core.test.utils.DateRanges;
-import com.eleven.core.test.utils.Domains;
+import com.eleven.hotel.domain.utils.DateRanges;
+import com.eleven.hotel.domain.utils.Domains;
 import com.eleven.hotel.api.domain.enums.SaleChannel;
 import com.eleven.hotel.domain.model.plan.testcase.SalePlanTestCase;
 import com.eleven.hotel.domain.values.DateRange;
@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.Set;
 
 
-class PlanTest {
+class PlanOnSaleTest {
 
     @Test
     void plan_initialize() {
@@ -53,7 +53,6 @@ class PlanTest {
         plan.setPreSalePeriod(DateRanges.empty());
         Assertions.assertFalse(plan.isPreSale());
     }
-
 
     @Test
     void plan_isOnSale() {

@@ -1,4 +1,4 @@
-package com.eleven.core.test.utils;
+package com.eleven.hotel.domain.utils;
 
 import lombok.experimental.UtilityClass;
 import org.springframework.beans.BeanUtils;

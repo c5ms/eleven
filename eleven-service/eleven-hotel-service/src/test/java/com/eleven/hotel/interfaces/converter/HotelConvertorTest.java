@@ -1,0 +1,61 @@
+package com.eleven.hotel.interfaces.converter;
+
+import com.eleven.hotel.domain.model.hotel.Hotel;
+import com.eleven.hotel.domain.values.Address;
+import com.eleven.hotel.domain.values.CheckPolicy;
+import com.eleven.hotel.domain.values.HotelBasic;
+import com.eleven.hotel.domain.values.Position;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.time.LocalTime;
+import java.time.YearMonth;
+
+@SpringBootTest
+class HotelConvertorTest {
+
+    @Autowired
+    HotelConvertor hotelConvertor;
+
+    @Test
+    void toDto() {
+        var hotel = Hotel.of(
+                CheckPolicy.of(LocalTime.of(12, 0), LocalTime.of(13, 0)),
+                Position.of(113.00001D, 114.00001D),
+                Address.of("china", "liaoning", "dalian", "high tech street", "32#"),
+                HotelBasic.of("test hotel", "test hotel desc", "test@test.com", "87960606", 20, YearMonth.of(2024, 1), YearMonth.of(2024, 5), 5, 900)
+        );
+        var dto = hotelConvertor.toDto(hotel);
+        Assertions.assertNotNull(dto);
+        Assertions.assertEquals(true, dto.getActive());
+        Assertions.assertNull(dto.getHotelId());
+        Assertions.assertEquals("12:00", dto.getCheckPolicy().getCheckInTime());
+        Assertions.assertEquals("13:00", dto.getCheckPolicy().getCheckOutTime());
+        Assertions.assertEquals(113.00001D, dto.getPosition().getLatitude());
+        Assertions.assertEquals(114.00001D, dto.getPosition().getLongitude());
+        Assertions.assertEquals("china", dto.getAddress().getCountry());
+        Assertions.assertEquals("liaoning", dto.getAddress().getProvince());
+        Assertions.assertEquals("dalian", dto.getAddress().getCity());
+        Assertions.assertEquals("high tech street", dto.getAddress().getLocation());
+        Assertions.assertEquals("32#", dto.getAddress().getAddress());
+        Assertions.assertEquals("test hotel", dto.getBasic().getName());
+        Assertions.assertEquals("test hotel desc", dto.getBasic().getDescription());
+        Assertions.assertEquals("87960606", dto.getBasic().getPhone());
+        Assertions.assertEquals(900, dto.getBasic().getBuildingArea());
+        Assertions.assertEquals(5, dto.getBasic().getStarRating());
+        Assertions.assertEquals(YearMonth.of(2024, 1), dto.getBasic().getWhenBuilt());
+        Assertions.assertEquals(YearMonth.of(2024, 5), dto.getBasic().getLastRenovation());
+        Assertions.assertEquals(20, dto.getBasic().getTotalRoomQuantity());
+        Assertions.assertEquals("test@test.com", dto.getBasic().getEmail());
+    }
+
+    @Test
+    void toCommand() {
+    }
+
+    @Test
+    void testToCommand() {
+    }
+}
