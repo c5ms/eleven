@@ -44,6 +44,7 @@ public class RequestLogFilter extends OncePerRequestFilter {
 
     private final String serverIp = NetUtil.getLocalhostStr();
     private final List<RequestLogAppender> logAppender;
+    private final Optional<Tracer> tracer = Optional.empty();
 
     @Override
     protected void doFilterInternal(@Nonnull HttpServletRequest request,
@@ -107,7 +108,7 @@ public class RequestLogFilter extends OncePerRequestFilter {
         requestLog.setUserId(subject.getUserId());
 
         // 追踪 + 身份
-        SpringUtil.getBeanFactory().getBeanProvider(Tracer.class).stream().findFirst().map(Tracer::currentSpan).ifPresent(span -> {
+        tracer.map(Tracer::currentSpan).ifPresent(span -> {
             requestLog.setTraceId(span.context().traceId());
 
             var spanName = request.getMethod() + " " + request.getServletPath();

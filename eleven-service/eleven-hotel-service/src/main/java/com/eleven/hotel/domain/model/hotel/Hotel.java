@@ -18,7 +18,6 @@ import lombok.experimental.FieldNameConstants;
 @Getter
 @Setter(AccessLevel.PROTECTED)
 @FieldNameConstants
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Hotel extends AbstractEntity {
 

@@ -1,6 +1,8 @@
 package com.eleven.hotel.interfaces.resource;
 
 import com.eleven.core.application.authorize.NoPrincipalException;
+import com.eleven.core.configure.EnableElevenSecurity;
+import com.eleven.core.configure.EnableElevenRest;
 import com.eleven.hotel.api.interfaces.model.hotel.HotelDto;
 import com.eleven.hotel.application.query.HotelQuery;
 import com.eleven.hotel.application.service.HotelService;
@@ -13,7 +15,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.test.web.servlet.MockMvc;
@@ -25,7 +27,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
+@WebMvcTest(HotelResource.class)
+//@EnableElevenRest
+@EnableElevenSecurity
 @AutoConfigureMockMvc
 class HotelResourceTest {
 
@@ -84,7 +88,7 @@ class HotelResourceTest {
     @ParameterizedTest
     @ValueSource(strings = "requests/hotel/updateHotel_01.json")
     void updateHotel_notfound(String filename) throws Exception {
-        Mockito.when(hotelService.update(Mockito.anyLong(),Mockito.any())).thenThrow(NoPrincipalException.class);
+        Mockito.when(hotelService.update(Mockito.anyLong(), Mockito.any())).thenThrow(NoPrincipalException.class);
         var request = MvcTestUtils.withContent(post("/hotels/{hotelId}", 1), filename);
         this.mockMvc.perform(request).andExpect(status().isNotFound());
     }

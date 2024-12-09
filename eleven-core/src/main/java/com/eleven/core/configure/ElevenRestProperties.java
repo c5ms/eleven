@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Data
 @ConfigurationProperties(prefix = "eleven.web")
-class ElevenWebProperties {
+class ElevenRestProperties {
 
     private ElevenOpenapiProperties openapi = new ElevenOpenapiProperties();
 
@@ -16,8 +16,8 @@ class ElevenWebProperties {
         private String description;
         private String termsOfService;
 
-        private Contact contact;
-        private License license;
+        private Contact contact = new Contact();
+        private License license= new License();
 
         @Data
         public static class Contact {

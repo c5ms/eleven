@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import(ElevenAuthenticationConfigure.class)
-public @interface EnableElevenAuthentication {
+@Import({ElevenSecurityConfigure.class,ElevenCoreConfigure.class})
+public @interface EnableElevenSecurity {
 
 }
