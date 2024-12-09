@@ -21,12 +21,12 @@ class HotelConvertorTest {
 
     @Test
     void toDto() {
-        var hotel = Hotel.of(
-                CheckPolicy.of(LocalTime.of(12, 0), LocalTime.of(13, 0)),
-                Position.of(113.00001D, 114.00001D),
-                Address.of("china", "liaoning", "dalian", "high tech street", "32#"),
-                HotelBasic.of("test hotel", "test hotel desc", "test@test.com", "87960606", 20, YearMonth.of(2024, 1), YearMonth.of(2024, 5), 5, 900)
-        );
+        var hotel = Hotel.builder()
+                .basic(HotelBasic.of("test hotel", "test hotel desc", "test@test.com", "87960606", 20, YearMonth.of(2024, 1), YearMonth.of(2024, 5), 5, 900))
+                .address(Address.of("china", "liaoning", "dalian", "high tech street", "32#"))
+                .position(Position.of(113.00001D, 114.00001D))
+                .checkPolicy(CheckPolicy.of(LocalTime.of(12, 0), LocalTime.of(13, 0)))
+                .build();
         var dto = hotelConvertor.toDto(hotel);
         Assertions.assertNotNull(dto);
         Assertions.assertEquals(true, dto.getActive());

@@ -32,4 +32,8 @@ public final class RoomBasic implements Serializable {
     public static RoomBasic empty() {
         return new RoomBasic();
     }
+
+    public static RoomBasic of(String name, String description, Integer area, Integer floor) {
+        return new RoomBasic(name, description, area, floor);
+    }
 }

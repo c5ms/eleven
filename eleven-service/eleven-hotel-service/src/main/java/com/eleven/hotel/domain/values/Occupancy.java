@@ -17,13 +17,18 @@ import java.io.Serializable;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public final class Occupancy implements Serializable {
 
-    @Column(name = "occupancy_max")
-    private Integer maxPerson;
-
     @Column(name = "occupancy_min")
     private Integer minPerson;
 
+
+    @Column(name = "occupancy_max")
+    private Integer maxPerson;
+
     public static Occupancy empty() {
         return new Occupancy();
+    }
+
+    public static Occupancy of(Integer maxPerson, Integer minPerson) {
+        return new Occupancy(maxPerson, minPerson);
     }
 }

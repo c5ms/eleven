@@ -10,10 +10,7 @@ import com.eleven.hotel.domain.values.CheckPolicy;
 import com.eleven.hotel.domain.values.HotelBasic;
 import com.eleven.hotel.domain.values.Position;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldNameConstants;
 
 @Table(name = "hotel")
@@ -21,6 +18,8 @@ import lombok.experimental.FieldNameConstants;
 @Getter
 @Setter(AccessLevel.PROTECTED)
 @FieldNameConstants
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Hotel extends AbstractEntity {
 
     @Id
@@ -43,17 +42,15 @@ public class Hotel extends AbstractEntity {
     @Embedded
     private CheckPolicy checkPolicy = CheckPolicy.empty();
 
-    protected Hotel() {
-    }
-
     @Builder
-    public static Hotel of(CheckPolicy checkPolicy, Position position, Address address, HotelBasic basic) {
+    @SuppressWarnings("unused")
+    private static Hotel of(CheckPolicy checkPolicy, Position position, Address address, HotelBasic basic) {
         var hotel = new Hotel();
         hotel.setCheckPolicy(checkPolicy);
         hotel.setPosition(position);
         hotel.setAddress(address);
         hotel.setBasic(basic);
-        hotel.active();
+        hotel.setActive(false);
         hotel.addEvent(HotelCreatedEvent.of(hotel));
         return hotel;
     }
@@ -67,11 +64,17 @@ public class Hotel extends AbstractEntity {
     }
 
     public void deactivate() {
+        if (!this.active) {
+            return;
+        }
         this.active = false;
         this.addEvent(HotelDeactivateEvent.of(this));
     }
 
     public void active() {
+        if (this.active) {
+            return;
+        }
         this.active = true;
         this.addEvent(HotelActiveEvent.of(this));
     }

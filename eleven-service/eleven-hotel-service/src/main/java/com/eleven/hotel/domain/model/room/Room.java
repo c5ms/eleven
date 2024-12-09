@@ -58,14 +58,14 @@ public class Room extends AbstractEntity {
     }
 
     @Builder
-    public static Room of(Long hotelId, RoomBasic basic, Occupancy occupancy, RoomStock stock, Set<String> images) {
+    private static Room of(Long hotelId, RoomBasic basic, Occupancy occupancy, RoomStock stock, Set<String> images) {
         Room room = new Room();
         room.setHotelId(hotelId);
         room.setBasic(basic);
         room.setOccupancy(occupancy);
         room.setStock(stock);
         room.setImages(images);
-        room.active();
+        room.setActive(false);
         room.addEvent(RoomCreatedEvent.of(room));
         return room;
     }

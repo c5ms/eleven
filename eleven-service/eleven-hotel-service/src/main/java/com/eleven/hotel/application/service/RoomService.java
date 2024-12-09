@@ -5,6 +5,7 @@ import com.eleven.hotel.application.command.RoomCreateCommand;
 import com.eleven.hotel.application.command.RoomUpdateCommand;
 import com.eleven.hotel.application.support.HotelContext;
 import com.eleven.hotel.domain.manager.HotelManager;
+import com.eleven.hotel.domain.manager.RoomManager;
 import com.eleven.hotel.domain.model.hotel.HotelRepository;
 import com.eleven.hotel.domain.model.inventory.RoomInventoryRepository;
 import com.eleven.hotel.domain.model.room.Room;
@@ -20,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = Exception.class)
 public class RoomService {
 
-    private final HotelManager hotelManager;
+    private final RoomManager roomManager;
 
     private final RoomRepository roomRepository;
     private final HotelRepository hotelRepository;
@@ -37,7 +38,7 @@ public class RoomService {
                 .images(command.getImages())
                 .build();
 
-        hotelManager.validate(room);
+        roomManager.validate(room);
         roomRepository.save(room);
         return room;
     }
@@ -51,7 +52,7 @@ public class RoomService {
     public Room updateRoom(RoomKey roomKey, RoomUpdateCommand command) {
         var room = roomRepository.findByRoomKey(roomKey).orElseThrow(HotelContext::noPrincipalException);
         room.update(command);
-        hotelManager.validate(room);
+        roomManager.validate(room);
         roomRepository.saveAndFlush(room);
         return room;
     }

@@ -29,4 +29,10 @@ public abstract class AbstractEntity {
         this.domainEvents.put(event.getClass(), event);
     }
 
+    // commonly for test
+    public boolean hasEvents(Class<?> eventClass) {
+        return domainEvents.containsKey(eventClass);
+    }
+
+
 }
