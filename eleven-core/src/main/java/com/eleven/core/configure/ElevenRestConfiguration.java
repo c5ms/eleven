@@ -1,15 +1,10 @@
 package com.eleven.core.configure;
 
 import com.eleven.core.interfaces.web.DownloadHttpMessageConverter;
-import com.eleven.core.interfaces.web.ElevenExceptionHandler;
-import com.eleven.core.interfaces.web.ElevenResponseHandler;
 import com.eleven.core.interfaces.web.annonation.AsInnerApi;
 import com.eleven.core.interfaces.web.annonation.AsRestApi;
-import com.eleven.core.interfaces.web.log.RequestLogAppender;
-import com.eleven.core.interfaces.web.log.RequestLogFilter;
 import com.eleven.core.interfaces.web.utils.AnnotationPredicate;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.micrometer.tracing.Tracer;
 import io.swagger.v3.core.jackson.ModelResolver;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
@@ -21,8 +16,10 @@ import lombok.RequiredArgsConstructor;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springdoc.core.utils.SpringDocUtils;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
@@ -33,10 +30,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
+@EnableConfigurationProperties(ElevenRestProperties.class)
 @RequiredArgsConstructor
 public class ElevenRestConfiguration implements WebMvcConfigurer {
 
@@ -53,6 +49,7 @@ public class ElevenRestConfiguration implements WebMvcConfigurer {
     }
 
     @Bean
+    @ConditionalOnBean(ObjectMapper.class)
     ModelResolver modelResolver(ObjectMapper objectMapper) {
         return new ModelResolver(objectMapper);
     }
@@ -124,17 +121,7 @@ public class ElevenRestConfiguration implements WebMvcConfigurer {
     }
 
     @Bean
-    ElevenExceptionHandler exceptionHandler(){
-        return new ElevenExceptionHandler();
-    }
-
-    @Bean
-    ElevenResponseHandler responseHandler(){
-        return new ElevenResponseHandler();
-    }
-
-    @Bean
-    DownloadHttpMessageConverter downloadHttpMessageConverter(){
+    DownloadHttpMessageConverter downloadHttpMessageConverter() {
         return new DownloadHttpMessageConverter();
     }
 

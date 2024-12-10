@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+@Component
 public class DownloadHttpMessageConverter extends AbstractHttpMessageConverter<Download> {
 
     public DownloadHttpMessageConverter() {

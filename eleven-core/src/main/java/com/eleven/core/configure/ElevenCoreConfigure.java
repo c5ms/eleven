@@ -31,12 +31,11 @@ import java.time.LocalTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 
-
-@Configuration(proxyBeanMethods = false)
+@Configuration
 @PropertySource("classpath:/config/application-core.properties")
 @EnableConfigurationProperties(ElevenCoreProperties.class)
 @RequiredArgsConstructor
-class ElevenCoreConfigure {
+public class ElevenCoreConfigure {
     private final ElevenCoreProperties coreProperties;
 
     @Bean

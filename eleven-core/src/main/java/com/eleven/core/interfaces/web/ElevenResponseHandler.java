@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import java.util.Optional;
 
-
+@ControllerAdvice
 @RequiredArgsConstructor
 public class ElevenResponseHandler implements ResponseBodyAdvice<Object> {
     public static final String HTTP_HEADER_TOTAL_COUNT = "X-Total-Count";

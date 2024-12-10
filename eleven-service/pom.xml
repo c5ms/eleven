@@ -27,10 +27,9 @@
     </properties>
 
     <modules>
-        <module>eleven-hotel-api</module>
         <module>eleven-hotel-service</module>
-<!--        <module>eleven-booking-api</module>-->
-<!--        <module>eleven-booking-service</module>-->
+        <!--        <module>eleven-booking-api</module>-->
+        <!--        <module>eleven-booking-service</module>-->
     </modules>
 
 

@@ -1,0 +1,42 @@
+package com.eleven.domain.plan;
+
+import com.eleven.common.domain.*;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.util.List;
+
+@Getter
+@Setter
+@Accessors(chain = true)
+public final class PlanDto implements Serializable {
+
+    private Long planId;
+    private Long hotelId;
+
+    private Integer stock;
+    private SaleType saleType;
+    private SaleState saleState;
+    private Boolean isOnSale;
+
+    @NotNull
+    @JsonUnwrapped(prefix = "basic")
+    private PlanBasicVo basic;
+
+    @JsonUnwrapped(prefix = "perSalePeriod")
+    private DateTimeRangeVo preSalePeriod;
+
+    @NotNull
+    @JsonUnwrapped(prefix = "salePeriod")
+    private DateTimeRangeVo salePeriod;
+
+    @NotNull
+    @JsonUnwrapped(prefix = "stayPeriod")
+    private DateRangeVo stayPeriod;
+
+    private List<SaleChannel> channels;
+}

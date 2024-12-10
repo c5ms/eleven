@@ -24,6 +24,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 
 @Slf4j
+@ControllerAdvice
 public class ElevenExceptionHandler {
 
     @ResponseBody
