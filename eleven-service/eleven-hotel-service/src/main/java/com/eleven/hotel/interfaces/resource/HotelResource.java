@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,13 +48,13 @@ public class HotelResource {
         return PageResponse.of(result.getContent(), result.getTotalElements());
     }
 
-
     @Operation(summary = "read hotel")
     @GetMapping("/{hotelId:[0-9]+}")
     public Optional<HotelDto> readHotel(@PathVariable("hotelId") Long hotelId) {
         return hotelQuery.read(hotelId).map(hotelConvertor::toDto);
     }
 
+    @PreAuthorize("hasRole('HOTEL')")
     @Operation(summary = "create hotel")
     @PostMapping
     public HotelDto createHotel(@Validated @RequestBody HotelCreateRequest request) {
@@ -61,7 +62,6 @@ public class HotelResource {
         var hotel = hotelService.create(command);
         return hotelConvertor.toDto(hotel);
     }
-
 
     @Operation(summary = "update hotel")
     @PostMapping("/{hotelId:[0-9]+}")

@@ -25,23 +25,23 @@ public class PageResponse<T> implements Iterable<T> {
 
     public static <T> PageResponse<T> of(List<T> items, long total) {
         return new PageResponse<T>()
-            .setItems(items)
-            .setTotal(total)
-            ;
+                .setItems(items)
+                .setTotal(total)
+                ;
     }
 
     public static <T> PageResponse<T> of(List<T> items) {
         return new PageResponse<T>()
-            .setItems(items)
-            .setTotal(items.size())
-            ;
+                .setItems(items)
+                .setTotal(items.size())
+                ;
     }
 
     public <R> PageResponse<R> map(Function<T, R> mapper) {
         return new PageResponse<R>()
-            .setItems(this.getItems().stream().map(mapper).collect(Collectors.toList()))
-            .setTotal(this.total)
-            ;
+                .setItems(this.getItems().stream().map(mapper).collect(Collectors.toList()))
+                .setTotal(this.total)
+                ;
     }
 
     public Stream<T> stream() {

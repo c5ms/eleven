@@ -8,8 +8,8 @@ public class Specifications<T> {
 
     private Specification<T> spec = (root, query, criteriaBuilder) -> criteriaBuilder.conjunction();
 
-    public static <T> Specifications<T> query(Class<T> tClass) {
-        return new Specifications<T>();
+    public static <T> Specifications<T> query(Class<T> ignored) {
+        return new Specifications<>();
     }
 
     public Specifications<T> and(Boolean enable, Specification<T> spec) {

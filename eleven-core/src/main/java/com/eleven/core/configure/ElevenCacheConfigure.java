@@ -29,19 +29,19 @@ class ElevenCacheConfigure {
     RedisCacheConfiguration defaultCacheConfig(RedisSerializer<Object> redisSerializer) {
         var prefix = SpringUtil.getApplicationName();
         return RedisCacheConfiguration.defaultCacheConfig()
-            .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
-            .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer))
-            .entryTtl(properties.getDuration())
-            .prefixCacheNameWith(prefix + ":");
+                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer))
+                .entryTtl(properties.getDuration())
+                .prefixCacheNameWith(prefix + ":");
     }
 
     @Bean
     CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory, RedisCacheConfiguration defaultCacheConfig) {
         return RedisCacheManager.builder(redisConnectionFactory)
-            .cacheDefaults(defaultCacheConfig)
-            .enableCreateOnMissingCache()
-            .transactionAware()
-            .build();
+                .cacheDefaults(defaultCacheConfig)
+                .enableCreateOnMissingCache()
+                .transactionAware()
+                .build();
     }
 
 }

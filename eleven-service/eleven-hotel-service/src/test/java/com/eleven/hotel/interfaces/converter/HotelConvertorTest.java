@@ -27,9 +27,10 @@ class HotelConvertorTest {
                 .position(Position.of(113.00001D, 114.00001D))
                 .checkPolicy(CheckPolicy.of(LocalTime.of(12, 0), LocalTime.of(13, 0)))
                 .build();
+
         var dto = hotelConvertor.toDto(hotel);
         Assertions.assertNotNull(dto);
-        Assertions.assertEquals(true, dto.getActive());
+        Assertions.assertEquals(hotel.getActive(), dto.getActive());
         Assertions.assertNull(dto.getHotelId());
         Assertions.assertEquals("12:00", dto.getCheckPolicy().getCheckInTime());
         Assertions.assertEquals("13:00", dto.getCheckPolicy().getCheckOutTime());
@@ -51,11 +52,4 @@ class HotelConvertorTest {
         Assertions.assertEquals("test@test.com", dto.getBasic().getEmail());
     }
 
-    @Test
-    void toCommand() {
-    }
-
-    @Test
-    void testToCommand() {
-    }
 }

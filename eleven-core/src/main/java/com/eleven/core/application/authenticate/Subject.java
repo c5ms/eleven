@@ -20,10 +20,10 @@ public class Subject implements Serializable {
     private static final Set<String> ANONYMOUS_AUTHORITIES = Set.of("ROLE_anonymous");
 
     public static final Subject ANONYMOUS_INSTANCE = new Subject(
-        ANONYMOUS_SUBJECT_USER_ID,
-        ANONYMOUS_SUBJECT_NICK_NAME,
-        null,
-        ANONYMOUS_AUTHORITIES
+            ANONYMOUS_SUBJECT_USER_ID,
+            ANONYMOUS_SUBJECT_NICK_NAME,
+            null,
+            ANONYMOUS_AUTHORITIES
     );
 
     /**

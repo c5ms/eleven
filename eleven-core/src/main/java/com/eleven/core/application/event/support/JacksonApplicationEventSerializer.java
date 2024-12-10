@@ -35,14 +35,14 @@ public class JacksonApplicationEventSerializer implements ApplicationEventSerial
 
     public JacksonApplicationEventSerializer() {
         this.objectMapper = JsonMapper.builder()
-            .configure(MapperFeature.USE_ANNOTATIONS, true)
-            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-            .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
-            .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
-            .serializationInclusion(JsonInclude.Include.USE_DEFAULTS)
-            .visibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY)
-            .addModules(new Jdk8Module(), new JavaTimeModule())
-            .build();
+                .configure(MapperFeature.USE_ANNOTATIONS, true)
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
+                .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+                .serializationInclusion(JsonInclude.Include.USE_DEFAULTS)
+                .visibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY)
+                .addModules(new Jdk8Module(), new JavaTimeModule())
+                .build();
     }
 
 

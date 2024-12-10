@@ -2,7 +2,9 @@ package com.eleven.core.configure;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
-import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.hibernate6.Hibernate6Module;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -87,8 +89,7 @@ class ElevenCoreConfigure {
                 .modules(
                         new Jdk8Module(),
                         new JavaTimeModule(),
-                        new Hibernate6Module()
-                                .enable(Hibernate6Module.Feature.FORCE_LAZY_LOADING)
+                        new Hibernate6Module().enable(Hibernate6Module.Feature.FORCE_LAZY_LOADING)
                 );
     }
 

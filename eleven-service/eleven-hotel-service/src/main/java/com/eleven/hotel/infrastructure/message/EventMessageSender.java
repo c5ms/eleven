@@ -1,4 +1,4 @@
-package com.eleven.hotel.interfaces.message;
+package com.eleven.hotel.infrastructure.message;
 
 import cn.hutool.json.JSONUtil;
 import com.eleven.core.application.event.ApplicationEventMessage;

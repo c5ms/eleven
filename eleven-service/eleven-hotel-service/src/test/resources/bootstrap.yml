@@ -1,8 +1,6 @@
 server:
   port: 9000
 
-spring:
-
 logging:
   level:
     root: info

@@ -8,14 +8,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeException;
-import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -51,11 +49,11 @@ public class ElevenExceptionHandler {
         } else if (e instanceof BindException ex) {
             var problem = ValidationProblem.empty();
             ex.getAllErrors()
-                .stream()
-                .filter(objectError -> objectError instanceof FieldError)
-                .map(objectError -> (FieldError) objectError)
-                .map(fieldError -> new ValidationProblem.Field(fieldError.getField(), fieldError.getCode(), fieldError.getDefaultMessage()))
-                .forEach(problem::addField);
+                    .stream()
+                    .filter(objectError -> objectError instanceof FieldError)
+                    .map(objectError -> (FieldError) objectError)
+                    .map(fieldError -> new ValidationProblem.Field(fieldError.getField(), fieldError.getCode(), fieldError.getDefaultMessage()))
+                    .forEach(problem::addField);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
         }
 
@@ -78,7 +76,6 @@ public class ElevenExceptionHandler {
         } else if (e instanceof HttpRequestMethodNotSupportedException) {
             status = HttpStatus.METHOD_NOT_ALLOWED;
         }
-
 
 
         // dynamic

@@ -21,8 +21,8 @@ public class DomainAuditorAware implements AuditorAware<String>, DateTimeProvide
             return Optional.of(Subject.ANONYMOUS_INSTANCE.getUserId());
         }
         return Optional.of(AuthenticContext.getCurrentSubject())
-            .map(Subject::getPrincipal)
-            .map(Principal::identity);
+                .map(Subject::getPrincipal)
+                .map(Principal::identity);
     }
 
     @Override

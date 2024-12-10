@@ -17,7 +17,7 @@ class ElevenRestProperties {
         private String termsOfService;
 
         private Contact contact = new Contact();
-        private License license= new License();
+        private License license = new License();
 
         @Data
         public static class Contact {

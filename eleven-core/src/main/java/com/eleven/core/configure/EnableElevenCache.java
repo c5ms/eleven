@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @EnableCaching
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({ElevenCoreConfigure.class,ElevenCacheConfigure.class})
+@Import({ElevenCoreConfigure.class, ElevenCacheConfigure.class})
 public @interface EnableElevenCache {
 
 }

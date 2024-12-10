@@ -15,14 +15,14 @@ public class ObjectSecurityManager {
 
     public boolean isReadable(Object resource) {
         return authorizers.stream()
-            .filter(aggregateAuthorizer -> aggregateAuthorizer.support(resource))
-            .allMatch(aggregateAuthorizer -> aggregateAuthorizer.isReadable(resource));
+                .filter(aggregateAuthorizer -> aggregateAuthorizer.support(resource))
+                .allMatch(aggregateAuthorizer -> aggregateAuthorizer.isReadable(resource));
     }
 
     public boolean isWritable(Object resource) {
         return authorizers.stream()
-            .filter(aggregateAuthorizer -> aggregateAuthorizer.support(resource))
-            .allMatch(aggregateAuthorizer -> aggregateAuthorizer.isWritable(resource));
+                .filter(aggregateAuthorizer -> aggregateAuthorizer.support(resource))
+                .allMatch(aggregateAuthorizer -> aggregateAuthorizer.isWritable(resource));
     }
 
     public boolean mustReadable(Object resource) throws NoReadAuthorityException {

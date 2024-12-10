@@ -25,10 +25,10 @@ public class OpaqueTokenCreator implements TokenCreator {
     public Token create(Principal principal, TokenDetail detail) {
         var value = IdUtil.fastSimpleUUID();
         return new Token()
-            .setIssuer(getIssuer())
-            .setExpireAt(getExpireAt())
-            .setPrincipal(principal)
-            .setDetail(detail)
-            .setValue(value);
+                .setIssuer(getIssuer())
+                .setExpireAt(getExpireAt())
+                .setPrincipal(principal)
+                .setDetail(detail)
+                .setValue(value);
     }
 }

@@ -34,9 +34,9 @@ public class AuthenticContext {
      */
     public static Token getToken() {
         return Optional.ofNullable(getAuthentication())
-            .filter(authentication -> authentication instanceof ElevenAuthentication)
-            .map(authentication -> (Token) authentication.getCredentials())
-            .orElse(null);
+                .filter(authentication -> authentication instanceof ElevenAuthentication)
+                .map(authentication -> (Token) authentication.getCredentials())
+                .orElse(null);
     }
 
     /**
@@ -47,10 +47,10 @@ public class AuthenticContext {
     @Nonnull
     public static Subject getCurrentSubject() {
         return Optional.ofNullable(getAuthentication())
-            .map(Authentication::getDetails)
-            .filter(Subject.class::isInstance)
-            .map(Subject.class::cast)
-            .orElse(Subject.ANONYMOUS_INSTANCE);
+                .map(Authentication::getDetails)
+                .filter(Subject.class::isInstance)
+                .map(Subject.class::cast)
+                .orElse(Subject.ANONYMOUS_INSTANCE);
     }
 
     /**
@@ -60,9 +60,9 @@ public class AuthenticContext {
      */
     public static Optional<Principal> getPrincipal() {
         return Optional.ofNullable(getAuthentication())
-            .map(Authentication::getPrincipal)
-            .filter(Principal.class::isInstance)
-            .map(Principal.class::cast);
+                .map(Authentication::getPrincipal)
+                .filter(Principal.class::isInstance)
+                .map(Principal.class::cast);
     }
 
 

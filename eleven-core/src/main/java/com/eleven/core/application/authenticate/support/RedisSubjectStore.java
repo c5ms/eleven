@@ -41,7 +41,7 @@ public class RedisSubjectStore implements SubjectStore {
         var key = toKey(principal);
         var valueStr = redisTemplate.opsForValue().get(key);
         return Optional.ofNullable(valueStr)
-            .filter(StringUtils::isNotBlank)
-            .map(s -> JSONUtil.toBean(s, Subject.class));
+                .filter(StringUtils::isNotBlank)
+                .map(s -> JSONUtil.toBean(s, Subject.class));
     }
 }

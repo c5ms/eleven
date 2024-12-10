@@ -6,7 +6,7 @@ import com.eleven.core.domain.identity.IdentityGenerator;
 public class NanoIdGenerator implements IdentityGenerator {
 
     private static final char[] DEFAULT_ALPHABET =
-        "ABCDEF1234567890".toCharArray();
+            "ABCDEF1234567890".toCharArray();
 
     @Override
     public String next() {

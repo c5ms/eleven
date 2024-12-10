@@ -42,7 +42,7 @@ public class RedisTokenStore implements TokenStore {
         var key = toKey(tokenValue);
         var valueStr = redisTemplate.opsForValue().get(key);
         return Optional.ofNullable(valueStr)
-            .filter(StringUtils::isNotBlank)
-            .map(s -> JSONUtil.toBean(s, Token.class));
+                .filter(StringUtils::isNotBlank)
+                .map(s -> JSONUtil.toBean(s, Token.class));
     }
 }

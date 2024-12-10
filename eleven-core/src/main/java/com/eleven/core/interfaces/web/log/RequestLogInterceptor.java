@@ -22,7 +22,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class RequestLogInterceptor implements HandlerInterceptor {
 
 
-
     @Override
     public boolean preHandle(@Nonnull HttpServletRequest request, @Nonnull HttpServletResponse response, @Nonnull Object handler) {
         if (handler instanceof HandlerMethod handlerMethod) {
@@ -53,8 +52,8 @@ public class RequestLogInterceptor implements HandlerInterceptor {
             var subject = AuthenticContext.getCurrentSubject();
             var logger = LoggerFactory.getLogger(RequestLogContext.getHandler());
             logger.debug("request {} begin by {}",
-                RequestLogContext.getLog().getOperation(),
-                subject.getNickName()
+                    RequestLogContext.getLog().getOperation(),
+                    subject.getNickName()
             );
         }
 
