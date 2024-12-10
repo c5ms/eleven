@@ -31,42 +31,42 @@ public class HotelConvertor implements InitializingBean {
     @Override
     public void afterPropertiesSet() {
         modelMapper.createTypeMap(CheckPolicyVo.class, CheckPolicy.class).setConverter(context -> {
-            if(StringUtils.isAnyBlank(context.getSource().getCheckInTime(),context.getSource().getCheckOutTime())){
+            if (StringUtils.isAnyBlank(context.getSource().getCheckInTime(), context.getSource().getCheckOutTime())) {
                 return CheckPolicy.empty();
             }
             return CheckPolicy.of(
-                    LocalTime.parse(context.getSource().getCheckInTime(), DateTimeFormatter.ofPattern(CheckPolicyVo.FORMAT_HH_MM)),
-                    LocalTime.parse(context.getSource().getCheckOutTime(), DateTimeFormatter.ofPattern(CheckPolicyVo.FORMAT_HH_MM))
+                LocalTime.parse(context.getSource().getCheckInTime(), DateTimeFormatter.ofPattern(CheckPolicyVo.FORMAT_HH_MM)),
+                LocalTime.parse(context.getSource().getCheckOutTime(), DateTimeFormatter.ofPattern(CheckPolicyVo.FORMAT_HH_MM))
             );
         });
     }
 
     public HotelDto toDto(Hotel hotel) {
-        return new HotelDto()
-                .setHotelId(hotel.getHotelId())
-                .setActive(hotel.getActive())
-                .setBasic(modelMapper.map(hotel.getBasic(), HotelBasicVo.class))
-                .setAddress(modelMapper.map(hotel.getAddress(), AddressVo.class))
-                .setPosition(modelMapper.map(hotel.getPosition(), PositionVo.class))
-                .setCheckPolicy(modelMapper.map(hotel.getCheckPolicy(), CheckPolicyVo.class));
+        return null == hotel ? null : new HotelDto()
+            .setHotelId(hotel.getHotelId())
+            .setActive(hotel.getActive())
+            .setBasic(modelMapper.map(hotel.getBasic(), HotelBasicVo.class))
+            .setAddress(modelMapper.map(hotel.getAddress(), AddressVo.class))
+            .setPosition(modelMapper.map(hotel.getPosition(), PositionVo.class))
+            .setCheckPolicy(modelMapper.map(hotel.getCheckPolicy(), CheckPolicyVo.class));
     }
 
     public HotelUpdateCommand toCommand(HotelUpdateRequest request) {
         return HotelUpdateCommand.builder()
-                .basic(modelMapper.map(request.getBasic(), HotelBasic.class))
-                .address(modelMapper.map(request.getAddress(), Address.class))
-                .position(modelMapper.map(request.getPosition(), Position.class))
-                .checkPolicy(modelMapper.map(request.getCheckPolicy(), CheckPolicy.class))
-                .build();
+            .basic(modelMapper.map(request.getBasic(), HotelBasic.class))
+            .address(modelMapper.map(request.getAddress(), Address.class))
+            .position(modelMapper.map(request.getPosition(), Position.class))
+            .checkPolicy(modelMapper.map(request.getCheckPolicy(), CheckPolicy.class))
+            .build();
     }
 
     public HotelCreateCommand toCommand(HotelCreateRequest request) {
         return HotelCreateCommand.builder()
-                .basic(modelMapper.map(request.getBasic(), HotelBasic.class))
-                .address(modelMapper.map(request.getAddress(), Address.class))
-                .position(modelMapper.map(request.getPosition(), Position.class))
-                .checkPolicy(modelMapper.map(request.getCheckPolicy(), CheckPolicy.class))
-                .build();
+            .basic(modelMapper.map(request.getBasic(), HotelBasic.class))
+            .address(modelMapper.map(request.getAddress(), Address.class))
+            .position(modelMapper.map(request.getPosition(), Position.class))
+            .checkPolicy(modelMapper.map(request.getCheckPolicy(), CheckPolicy.class))
+            .build();
     }
 
 

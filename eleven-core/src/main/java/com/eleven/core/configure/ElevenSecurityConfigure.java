@@ -31,7 +31,7 @@ import java.util.List;
 @EnableMethodSecurity(jsr250Enabled = true, securedEnabled = true)
 @RequiredArgsConstructor
 @EnableConfigurationProperties({ElevenRestProperties.class})
-class ElevenSecurityConfigure {
+final class ElevenSecurityConfigure {
 
     @Bean
     @Order(1)
@@ -75,9 +75,9 @@ class ElevenSecurityConfigure {
                                      TokenStore tokenStore,
                                      SubjectStore subjectStore) {
         return new AuthenticSupport(tokenCreator,
-                subjectCreator,
-                tokenStore,
-                subjectStore);
+            subjectCreator,
+            tokenStore,
+            subjectStore);
     }
 
     @Bean
@@ -100,25 +100,25 @@ class ElevenSecurityConfigure {
     @Order(Ordered.HIGHEST_PRECEDENCE)
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
-                .csrf(AbstractHttpConfigurer::disable)
-                .cors(AbstractHttpConfigurer::disable)
-                .logout(AbstractHttpConfigurer::disable)
-                .formLogin(AbstractHttpConfigurer::disable)
-                .httpBasic(AbstractHttpConfigurer::disable)
-                .rememberMe(AbstractHttpConfigurer::disable)
-                .oauth2Login(AbstractHttpConfigurer::disable)
-                .headers(c -> c.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
-                .anonymous(c -> c.principal(Subject.ANONYMOUS_INSTANCE))
-                .authorizeHttpRequests(c -> c.anyRequest().permitAll())
-                .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.NEVER))
+            .csrf(AbstractHttpConfigurer::disable)
+            .cors(AbstractHttpConfigurer::disable)
+            .logout(AbstractHttpConfigurer::disable)
+            .formLogin(AbstractHttpConfigurer::disable)
+            .httpBasic(AbstractHttpConfigurer::disable)
+            .rememberMe(AbstractHttpConfigurer::disable)
+            .oauth2Login(AbstractHttpConfigurer::disable)
+            .headers(c -> c.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
+            .anonymous(c -> c.principal(Subject.ANONYMOUS_INSTANCE))
+            .authorizeHttpRequests(c -> c.anyRequest().permitAll())
+            .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.NEVER))
 //                .oauth2ResourceServer(oauth2 -> {
 //                    oauth2.bearerTokenResolver(new ElevenTokenResolver()).opaqueToken(c -> c.authenticationManager(authenticationManager));
 //                })
-                .exceptionHandling((exceptions) -> exceptions
-                        .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
-                        .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
-                )
-                .build();
+            .exceptionHandling((exceptions) -> exceptions
+                .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
+                .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
+            )
+            .build();
     }
 
 

@@ -1,6 +1,5 @@
 package com.eleven.core.configure;
 
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -8,7 +7,7 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import({ElevenCoreConfigure.class, ElevenRestConfiguration.class})
-public @interface EnableElevenRest {
+@Import({ ElevenCoreConfigure.class})
+public @interface EnableElevenCore {
 
 }

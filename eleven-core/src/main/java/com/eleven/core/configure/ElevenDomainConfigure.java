@@ -14,7 +14,7 @@ import org.springframework.core.annotation.Order;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @RequiredArgsConstructor
 @EnableConfigurationProperties(ElevenDomainProperties.class)
-class ElevenDomainConfigure {
+final class ElevenDomainConfigure {
 
     private final ElevenDomainProperties elevenDomainProperties;
 

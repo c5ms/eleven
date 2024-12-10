@@ -9,6 +9,6 @@ import java.time.Duration;
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "eleven.cache")
-class ElevenCacheProperties {
+final class ElevenCacheProperties {
     private Duration duration = Duration.parse("PT8H");
 }

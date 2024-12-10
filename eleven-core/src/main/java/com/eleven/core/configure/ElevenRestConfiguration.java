@@ -32,9 +32,11 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 
+
+@EnableElevenCore
 @EnableConfigurationProperties(ElevenRestProperties.class)
 @RequiredArgsConstructor
-public class ElevenRestConfiguration implements WebMvcConfigurer {
+final class ElevenRestConfiguration implements WebMvcConfigurer {
 
     public final static String API_PREFIX_INTERNAL = "/inner";
     public final static String API_PREFIX_REST = "/api";
@@ -63,10 +65,10 @@ public class ElevenRestConfiguration implements WebMvcConfigurer {
     @Bean
     GroupedOpenApi restApi() {
         return GroupedOpenApi.builder()
-                .group("resource-api")
-                .displayName("resource")
-                .pathsToMatch(API_PREFIX_REST + "/**")
-                .build();
+            .group("resource-api")
+            .displayName("resource")
+            .pathsToMatch(API_PREFIX_REST + "/**")
+            .build();
     }
 
 //    @Bean
@@ -83,41 +85,41 @@ public class ElevenRestConfiguration implements WebMvcConfigurer {
     OpenAPI openAPI() {
 
         SpringDocUtils.getConfig().replaceWithSchema(LocalDate.class, new Schema<LocalDate>()
-                .type("string")
-                .format(coreProperties.getJson().getTimeFormat())
-                .example(LocalDate.of(2024, 1, 1).format(DateTimeFormatter.ofPattern(coreProperties.getJson().getDateFormat()))));
+            .type("string")
+            .format(coreProperties.getJson().getTimeFormat())
+            .example(LocalDate.of(2024, 1, 1).format(DateTimeFormatter.ofPattern(coreProperties.getJson().getDateFormat()))));
 
         SpringDocUtils.getConfig().replaceWithSchema(LocalTime.class, new Schema<LocalTime>()
-                .type("string")
-                .format(coreProperties.getJson().getTimeFormat())
-                .example(LocalTime.of(20, 0, 0).format(DateTimeFormatter.ofPattern(coreProperties.getJson().getTimeFormat()))));
+            .type("string")
+            .format(coreProperties.getJson().getTimeFormat())
+            .example(LocalTime.of(20, 0, 0).format(DateTimeFormatter.ofPattern(coreProperties.getJson().getTimeFormat()))));
 
         SpringDocUtils.getConfig().replaceWithSchema(LocalDateTime.class, new Schema<LocalDateTime>()
-                .type("string")
-                .format(coreProperties.getJson().getTimeFormat())
-                .example(LocalDateTime.of(2024, 1, 1, 20, 0, 0).format(DateTimeFormatter.ofPattern(coreProperties.getJson().getDatetimeFormat()))));
+            .type("string")
+            .format(coreProperties.getJson().getTimeFormat())
+            .example(LocalDateTime.of(2024, 1, 1, 20, 0, 0).format(DateTimeFormatter.ofPattern(coreProperties.getJson().getDatetimeFormat()))));
 
         SpringDocUtils.getConfig().replaceWithSchema(YearMonth.class, new Schema<YearMonth>()
-                .type("string")
-                .format(coreProperties.getJson().getTimeFormat())
-                .example(YearMonth.of(2024, 1).format(DateTimeFormatter.ofPattern(coreProperties.getJson().getYearMonthFormat()))));
+            .type("string")
+            .format(coreProperties.getJson().getTimeFormat())
+            .example(YearMonth.of(2024, 1).format(DateTimeFormatter.ofPattern(coreProperties.getJson().getYearMonthFormat()))));
 
         var openApiProperties = properties.getOpenapi();
 
         return new OpenAPI()
-                .info(new Info()
-                        .version(openApiProperties.getVersion())
-                        .title(openApiProperties.getTitle())
-                        .description(openApiProperties.getDescription())
-                        .termsOfService(openApiProperties.getTermsOfService())
-                        .contact(new Contact()
-                                .name(openApiProperties.getContact().getName())
-                                .url(openApiProperties.getContact().getUrl())
-                                .email(openApiProperties.getContact().getEmail()))
-                        .license(new License()
-                                .name(openApiProperties.getLicense().getName())
-                                .url(openApiProperties.getLicense().getUrl()))
-                );
+            .info(new Info()
+                .version(openApiProperties.getVersion())
+                .title(openApiProperties.getTitle())
+                .description(openApiProperties.getDescription())
+                .termsOfService(openApiProperties.getTermsOfService())
+                .contact(new Contact()
+                    .name(openApiProperties.getContact().getName())
+                    .url(openApiProperties.getContact().getUrl())
+                    .email(openApiProperties.getContact().getEmail()))
+                .license(new License()
+                    .name(openApiProperties.getLicense().getName())
+                    .url(openApiProperties.getLicense().getUrl()))
+            );
     }
 
     @Bean
