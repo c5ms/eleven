@@ -1,9 +1,15 @@
 package com.eleven.core.configure;
 
+import com.eleven.core.interfaces.web.DownloadHttpMessageConverter;
+import com.eleven.core.interfaces.web.ElevenExceptionHandler;
+import com.eleven.core.interfaces.web.ElevenResponseHandler;
 import com.eleven.core.interfaces.web.annonation.AsInnerApi;
 import com.eleven.core.interfaces.web.annonation.AsRestApi;
+import com.eleven.core.interfaces.web.log.RequestLogAppender;
+import com.eleven.core.interfaces.web.log.RequestLogFilter;
 import com.eleven.core.interfaces.web.utils.AnnotationPredicate;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.micrometer.tracing.Tracer;
 import io.swagger.v3.core.jackson.ModelResolver;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
@@ -27,6 +33,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -63,7 +71,6 @@ public class ElevenRestConfiguration implements WebMvcConfigurer {
                 .pathsToMatch(API_PREFIX_REST + "/**")
                 .build();
     }
-
 
 //    @Bean
 //     GroupedOpenApi innerApi() {
@@ -115,5 +122,21 @@ public class ElevenRestConfiguration implements WebMvcConfigurer {
                                 .url(openApiProperties.getLicense().getUrl()))
                 );
     }
+
+    @Bean
+    ElevenExceptionHandler exceptionHandler(){
+        return new ElevenExceptionHandler();
+    }
+
+    @Bean
+    ElevenResponseHandler responseHandler(){
+        return new ElevenResponseHandler();
+    }
+
+    @Bean
+    DownloadHttpMessageConverter downloadHttpMessageConverter(){
+        return new DownloadHttpMessageConverter();
+    }
+
 
 }

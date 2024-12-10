@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @Configuration(proxyBeanMethods = false)
 @RequiredArgsConstructor
-public class SysLogAutoconfigure implements WebMvcConfigurer {
+public class RequestLogAutoconfigure implements WebMvcConfigurer {
 
     private final RequestLogInterceptor sysLogInterceptor;
 

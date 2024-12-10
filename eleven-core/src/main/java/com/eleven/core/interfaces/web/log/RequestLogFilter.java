@@ -44,7 +44,7 @@ public class RequestLogFilter extends OncePerRequestFilter {
 
     private final String serverIp = NetUtil.getLocalhostStr();
     private final List<RequestLogAppender> logAppender;
-    private final Optional<Tracer> tracer = Optional.empty();
+    private final Optional<Tracer> tracer ;
 
     @Override
     protected void doFilterInternal(@Nonnull HttpServletRequest request,
