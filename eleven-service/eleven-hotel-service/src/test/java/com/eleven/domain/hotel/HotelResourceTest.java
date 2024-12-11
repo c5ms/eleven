@@ -1,9 +1,7 @@
 package com.eleven.domain.hotel;
 
-import com.eleven.base.AsResourceTest;
+import com.eleven.base.AsControllerTest;
 import com.eleven.core.application.authorize.NoPrincipalException;
-import com.eleven.core.configure.ElevenCoreConfigure;
-import com.eleven.core.configure.EnableElevenSecurity;
 import com.eleven.domain.hotel.command.HotelCreateCommand;
 import com.eleven.domain.hotel.command.HotelUpdateCommand;
 import com.eleven.domain.hotel.request.HotelCreateRequest;
@@ -15,11 +13,9 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
 
@@ -32,9 +28,9 @@ import static org.mockito.Mockito.mock;
 
 
 
-@AsResourceTest
+@AsControllerTest
 @WebMvcTest({HotelResource.class})
-class HotelAsResourceTest {
+class HotelResourceTest {
 
     @Autowired
     MockMvcTester mvc;
@@ -49,7 +45,7 @@ class HotelAsResourceTest {
     HotelConvertor hotelConvertor;
 
     @ParameterizedTest
-    @ValueSource(strings = "/hotel/request/createHotel_01.json")
+    @ValueSource(strings = "/hotel/request/200/createHotel_01.json")
     void createHotel_200(String filename) {
         given(hotelConvertor.toCommand(any(HotelCreateRequest.class))).willReturn(mock(HotelCreateCommand.class));
         given(hotelConvertor.toDto(any(Hotel.class))).willReturn(mock(HotelDto.class));
@@ -60,8 +56,26 @@ class HotelAsResourceTest {
                 .content(TestUtils.loadJson(filename))
                 .contentType(MediaType.APPLICATION_JSON)
                 .assertThat()
-                .hasStatusOk()
+                .hasStatus(HttpStatus.OK)
                 .hasContentType(MediaType.APPLICATION_JSON);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = "/hotel/request/400/createHotel_01.json")
+    void createHotel_400(String filename) {
+        given(hotelConvertor.toCommand(any(HotelCreateRequest.class))).willReturn(mock(HotelCreateCommand.class));
+        given(hotelConvertor.toDto(any(Hotel.class))).willReturn(mock(HotelDto.class));
+        given(hotelService.create(any(HotelCreateCommand.class))).willReturn(mock(Hotel.class));
+
+        this.mvc.post()
+                .uri("/api/hotels")
+                .content(TestUtils.loadJson(filename))
+                .contentType(MediaType.APPLICATION_JSON)
+                .assertThat()
+                .hasStatus(HttpStatus.BAD_REQUEST)
+                .hasContentType(MediaType.APPLICATION_JSON)
+                ;
+
     }
 
     @Test
@@ -75,7 +89,7 @@ class HotelAsResourceTest {
                 .queryParam("page", "1")
                 .queryParam("size", "20")
                 .assertThat()
-                .hasStatusOk()
+                .hasStatus(HttpStatus.OK)
                 .hasContentType(MediaType.APPLICATION_JSON);
     }
 
@@ -87,7 +101,7 @@ class HotelAsResourceTest {
         this.mvc.get()
                 .uri("/api/hotels/{hotelId}", 1)
                 .assertThat()
-                .hasStatusOk()
+                .hasStatus(HttpStatus.OK)
                 .hasContentType(MediaType.APPLICATION_JSON);
     }
 
@@ -101,7 +115,7 @@ class HotelAsResourceTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = "/hotel/request/updateHotel_01.json")
+    @ValueSource(strings = "/hotel/request/200/updateHotel_01.json")
     void updateHotel_200(String filename) {
         given(hotelConvertor.toCommand(any(HotelUpdateRequest.class))).willReturn(mock(HotelUpdateCommand.class));
         given(hotelConvertor.toDto(any(Hotel.class))).willReturn(mock(HotelDto.class));
@@ -117,7 +131,23 @@ class HotelAsResourceTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = "/hotel/request/updateHotel_01.json")
+    @ValueSource(strings = "/hotel/request/400/updateHotel_01.json")
+    void updateHotel_400(String filename) {
+        given(hotelConvertor.toCommand(any(HotelUpdateRequest.class))).willReturn(mock(HotelUpdateCommand.class));
+        given(hotelConvertor.toDto(any(Hotel.class))).willReturn(mock(HotelDto.class));
+        given(hotelService.update(any(Long.class), any(HotelUpdateCommand.class))).willReturn(mock(Hotel.class));
+
+        this.mvc.post()
+                .uri("/api/hotels/{hotelId}", 1)
+                .content(TestUtils.loadJson(filename))
+                .contentType(MediaType.APPLICATION_JSON)
+                .assertThat()
+                .hasStatus(HttpStatus.BAD_REQUEST)
+                .hasContentType(MediaType.APPLICATION_JSON);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = "/hotel/request/200/updateHotel_01.json")
     void updateHotel_404(String filename) {
         given(hotelConvertor.toCommand(any(HotelUpdateRequest.class))).willReturn(mock(HotelUpdateCommand.class));
         given(hotelConvertor.toDto(any(Hotel.class))).willReturn(mock(HotelDto.class));

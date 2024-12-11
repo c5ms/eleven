@@ -2,6 +2,7 @@ package com.eleven.domain.plan;
 
 import com.eleven.common.domain.*;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@Schema(name = "Plan")
 @Accessors(chain = true)
 public final class PlanDto implements Serializable {
 

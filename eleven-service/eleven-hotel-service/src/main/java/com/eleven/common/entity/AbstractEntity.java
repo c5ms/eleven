@@ -34,5 +34,4 @@ public abstract class AbstractEntity {
         return domainEvents.containsKey(eventClass);
     }
 
-
 }

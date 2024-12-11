@@ -5,6 +5,7 @@ import com.eleven.domain.hotel.vo.CheckPolicyVo;
 import com.eleven.domain.hotel.vo.HotelBasicVo;
 import com.eleven.domain.hotel.vo.PositionVo;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,19 +15,24 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 public final class HotelUpdateRequest {
+
     @NotNull
-    @JsonUnwrapped(prefix = "hotel_")
+    @Valid
+    @JsonUnwrapped(prefix = "hotel")
     private HotelBasicVo basic;
 
     @NotNull
-    @JsonUnwrapped(prefix = "address_")
+    @Valid
+    @JsonUnwrapped(prefix = "address")
     private AddressVo address;
 
     @NotNull
-    @JsonUnwrapped(prefix = "position_")
+    @Valid
+    @JsonUnwrapped(prefix = "position")
     private PositionVo position;
 
     @NotNull
-    @JsonUnwrapped(prefix = "checkPolicy_")
+    @Valid
+    @JsonUnwrapped(prefix = "checkPolicy")
     private CheckPolicyVo checkPolicy;
 }

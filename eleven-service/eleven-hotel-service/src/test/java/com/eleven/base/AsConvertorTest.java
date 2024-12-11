@@ -2,14 +2,15 @@ package com.eleven.base;
 
 
 import com.eleven.core.configure.EnableElevenCore;
-import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
-import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
 
-//@Import({
-//    JacksonAutoConfiguration.class
-//})
+/**
+ * When we are testing the convertor, we test:
+ * <p>
+ * 1. convert user input (request) into command
+ * 2. convert domain object into Dto
+ */
 @EnableElevenCore
 @Documented
 @Target(ElementType.TYPE)

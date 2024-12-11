@@ -11,7 +11,6 @@ import com.eleven.domain.hotel.vo.AddressVo;
 import com.eleven.domain.hotel.vo.CheckPolicyVo;
 import com.eleven.domain.hotel.vo.HotelBasicVo;
 import com.eleven.domain.hotel.vo.PositionVo;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ import java.time.YearMonth;
 
 @AsConvertorTest
 @SpringBootTest(classes = HotelConvertor.class)
-class HotelAsConvertorTest {
+class HotelConvertorTest {
 
     @Autowired
     HotelConvertor hotelConvertor;

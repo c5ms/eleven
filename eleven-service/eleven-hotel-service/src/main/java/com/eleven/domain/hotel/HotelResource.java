@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +30,7 @@ public class HotelResource {
     private final HotelFinder hotelFinder;
     private final HotelService hotelService;
     private final HotelConvertor hotelConvertor;
+    private final Validator mvcValidator;
 
     @Operation(summary = "query hotel")
     @GetMapping

@@ -1,0 +1,20 @@
+{
+  "hotelName": "test hotel",
+  "hotelDescription": "test hotel is very nice",
+  "hotelPhone": "83768888",
+  "hotelEmail": "test@test.com",
+  "hotelTotalRoomQuantity": 200,
+  "hotelWhenBuilt": "2024-01",
+  "hotelLastRenovation": "2024-01",
+  "hotelStarRating": 3,
+  "hotelBuildingArea": 800,
+  "addressCountry": "中国大陆",
+  "addressProvince": "辽宁",
+  "addressCity": "大连",
+  "addressLocation": "开发区",
+  "addressAddress": "大连开发区海青岛街道东行300米",
+  "positionLatitude": 100.56666,
+  "positionLongitude": 110.9876,
+  "checkPolicyCheckInTime": "13:00",
+  "checkPolicyCheckOutTime": "11:00"
+}

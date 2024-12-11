@@ -1,0 +1,20 @@
+{
+  "hotelName": null,
+  "hotelDescription": null,
+  "hotelPhone": null,
+  "hotelEmail": null,
+  "hotelTotalRoomQuantity": null,
+  "hotelWhenBuilt": null,
+  "hotelLastRenovation": null,
+  "hotelStarRating": null,
+  "hotelBuildingArea": null,
+  "addressCountry": null,
+  "addressProvince": null,
+  "addressCity": null,
+  "addressLocation": null,
+  "addressAddress": null,
+  "positionLatitude": null,
+  "positionLongitude": null,
+  "checkPolicyCheckInTime": null,
+  "checkPolicyCheckOutTime": null
+}
