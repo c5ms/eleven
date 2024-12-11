@@ -1,36 +1,28 @@
-package com.eleven.domain.plan;
+package com.eleven.domain.plan.request;
 
-import com.eleven.common.*;
+import com.eleven.common.DateRangeVo;
+import com.eleven.common.DateTimeRangeVo;
+import com.eleven.common.SaleChannel;
 import com.eleven.domain.plan.vo.PlanBasicVo;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.Accessors;
 
-import java.io.Serializable;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
-@Schema(name = "Plan")
-@Accessors(chain = true)
-public final class PlanDto implements Serializable {
-
-    private Long planId;
-    private Long hotelId;
-
-    private Integer stock;
-    private SaleType saleType;
-    private SaleState saleState;
-    private Boolean isOnSale;
+public final class PlanUpdateRequest {
 
     @NotNull
     @JsonUnwrapped(prefix = "basic")
     private PlanBasicVo basic;
 
-    @JsonUnwrapped(prefix = "perSalePeriod")
+    @JsonUnwrapped(prefix = "preSalePeriod")
     private DateTimeRangeVo preSalePeriod;
 
     @NotNull
@@ -41,5 +33,12 @@ public final class PlanDto implements Serializable {
     @JsonUnwrapped(prefix = "stayPeriod")
     private DateRangeVo stayPeriod;
 
-    private List<SaleChannel> channels;
+    @NotNull
+    @Min(1)
+    @Schema(example = "200")
+    private Integer stock;
+
+    private Set<SaleChannel> channels = new HashSet<>();
+
+    private Set<Long> rooms = new HashSet<>();
 }
