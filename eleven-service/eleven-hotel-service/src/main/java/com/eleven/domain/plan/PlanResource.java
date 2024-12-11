@@ -1,7 +1,7 @@
 package com.eleven.domain.plan;
 
-import com.eleven.common.domain.ChargeType;
-import com.eleven.common.domain.SaleChannel;
+import com.eleven.core.ChargeType;
+import com.eleven.core.SaleChannel;
 import com.eleven.core.interfaces.model.PageResponse;
 import com.eleven.core.interfaces.web.annonation.AsRestApi;
 import com.eleven.domain.plan.command.PlanSetPriceCommand;
@@ -27,9 +27,9 @@ import java.util.Optional;
 @RequestMapping("/hotels/{hotelId:[0-9]+}/plans")
 public class PlanResource {
 
+    private final PlanFinder planFinder;
     private final PlanService planService;
     private final PlanConverter planConverter;
-    private final PlanFinder planFinder;
 
     @Operation(summary = "query plan")
     @GetMapping

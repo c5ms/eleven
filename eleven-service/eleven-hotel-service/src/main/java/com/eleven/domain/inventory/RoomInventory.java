@@ -1,6 +1,6 @@
 package com.eleven.domain.inventory;
 
-import com.eleven.common.entity.AbstractEntity;
+import com.eleven.core.support.DomainEntity;
 import com.eleven.domain.room.RoomKey;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter(AccessLevel.PROTECTED)
-public class RoomInventory extends AbstractEntity {
+public class RoomInventory extends DomainEntity {
 
     @EmbeddedId
     @EqualsAndHashCode.Include

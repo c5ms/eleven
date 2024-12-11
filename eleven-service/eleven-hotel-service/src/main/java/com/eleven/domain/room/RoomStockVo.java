@@ -1,7 +1,7 @@
 package com.eleven.domain.room;
 
-import com.eleven.common.domain.DateRangeVo;
-import com.eleven.common.layer.Vo;
+import com.eleven.core.DateRangeVo;
+import com.eleven.core.layer.Vo;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Max;

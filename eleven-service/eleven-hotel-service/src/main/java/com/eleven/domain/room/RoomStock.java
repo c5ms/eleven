@@ -1,6 +1,6 @@
 package com.eleven.domain.room;
 
-import com.eleven.common.domain.DateRange;
+import com.eleven.core.DateRange;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

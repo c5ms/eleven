@@ -1,6 +1,6 @@
 package com.eleven.domain.hotel;
 
-import com.eleven.common.domain.SaleChannel;
+import com.eleven.core.SaleChannel;
 import com.eleven.domain.plan.PlanDto;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.cloud.openfeign.FeignClient;

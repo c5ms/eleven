@@ -13,8 +13,6 @@ import java.lang.annotation.*;
  * 2. Forward to service layer.
  * 3. Response the system output.
  */
-@EnableElevenSecurity
-@EnableElevenRest
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

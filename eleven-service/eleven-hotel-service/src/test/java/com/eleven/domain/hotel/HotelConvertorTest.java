@@ -1,6 +1,7 @@
 package com.eleven.domain.hotel;
 
 import com.eleven.base.AsConvertorTest;
+import com.eleven.core.configure.ElevenCoreConfigure;
 import com.eleven.domain.hotel.request.HotelCreateRequest;
 import com.eleven.domain.hotel.request.HotelUpdateRequest;
 import com.eleven.domain.hotel.values.Address;
@@ -15,11 +16,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
 import java.time.LocalTime;
 import java.time.YearMonth;
 
 @AsConvertorTest
+@Import(ElevenCoreConfigure.class)
 @SpringBootTest(classes = HotelConvertor.class)
 class HotelConvertorTest {
 
@@ -29,11 +32,11 @@ class HotelConvertorTest {
     @Test
     void toDto() {
         var hotel = Hotel.builder()
-            .basic(HotelBasic.of("test hotel", "test hotel desc", "test@test.com", "87960606", 20, YearMonth.of(2024, 1), YearMonth.of(2024, 5), 5, 900))
-            .address(Address.of("china", "liaoning", "dalian", "high tech street", "32#"))
-            .position(Position.of(113.00001D, 114.00001D))
-            .checkPolicy(CheckPolicy.of(LocalTime.of(12, 0), LocalTime.of(13, 0)))
-            .build();
+                .basic(HotelBasic.of("test hotel", "test hotel desc", "test@test.com", "87960606", 20, YearMonth.of(2024, 1), YearMonth.of(2024, 5), 5, 900))
+                .address(Address.of("china", "liaoning", "dalian", "high tech street", "32#"))
+                .position(Position.of(113.00001D, 114.00001D))
+                .checkPolicy(CheckPolicy.of(LocalTime.of(12, 0), LocalTime.of(13, 0)))
+                .build();
 
         var dto = hotelConvertor.toDto(hotel);
         Assertions.assertNotNull(dto);
@@ -62,29 +65,29 @@ class HotelConvertorTest {
     @Test
     void toCreateHotelCommand() {
         var request = new HotelCreateRequest()
-            .setAddress(new AddressVo()
-                .setAddress("address")
-                .setCity("city")
-                .setCountry("country")
-                .setProvince("province")
-                .setLocation("location"))
-            .setPosition(new PositionVo()
-                .setLatitude(100.1D)
-                .setLongitude(200.2D))
-            .setBasic(new HotelBasicVo()
-                .setName("name")
-                .setDescription("description")
-                .setEmail("test@test.com")
-                .setPhone("phone")
-                .setWhenBuilt(YearMonth.of(2021, 10))
-                .setLastRenovation(YearMonth.of(2021, 10))
-                .setBuildingArea(100)
-                .setStarRating(5)
-                .setTotalRoomQuantity(20))
-            .setCheckPolicy(new CheckPolicyVo()
-                .setCheckInTime("10:00")
-                .setCheckOutTime("11:00")
-            );
+                .setAddress(new AddressVo()
+                        .setAddress("address")
+                        .setCity("city")
+                        .setCountry("country")
+                        .setProvince("province")
+                        .setLocation("location"))
+                .setPosition(new PositionVo()
+                        .setLatitude(100.1D)
+                        .setLongitude(200.2D))
+                .setBasic(new HotelBasicVo()
+                        .setName("name")
+                        .setDescription("description")
+                        .setEmail("test@test.com")
+                        .setPhone("phone")
+                        .setWhenBuilt(YearMonth.of(2021, 10))
+                        .setLastRenovation(YearMonth.of(2021, 10))
+                        .setBuildingArea(100)
+                        .setStarRating(5)
+                        .setTotalRoomQuantity(20))
+                .setCheckPolicy(new CheckPolicyVo()
+                        .setCheckInTime("10:00")
+                        .setCheckOutTime("11:00")
+                );
 
         var command = hotelConvertor.toCommand(request);
 
@@ -104,39 +107,39 @@ class HotelConvertorTest {
         Assertions.assertEquals(20, command.getBasic().getTotalRoomQuantity());
         Assertions.assertEquals("test@test.com", command.getBasic().getEmail());
         Assertions.assertNotNull(command.getPosition());
-        Assertions.assertEquals(100.1D,command.getPosition().getLatitude());
-        Assertions.assertEquals(200.2D,command.getPosition().getLongitude());
-        Assertions.assertEquals(LocalTime.of(10,0) ,command.getCheckPolicy().getCheckInTime());
-        Assertions.assertEquals(LocalTime.of(11,0),command.getCheckPolicy().getCheckOutTime());
+        Assertions.assertEquals(100.1D, command.getPosition().getLatitude());
+        Assertions.assertEquals(200.2D, command.getPosition().getLongitude());
+        Assertions.assertEquals(LocalTime.of(10, 0), command.getCheckPolicy().getCheckInTime());
+        Assertions.assertEquals(LocalTime.of(11, 0), command.getCheckPolicy().getCheckOutTime());
     }
 
 
     @Test
     void toUpdateHotelCommand() {
         var request = new HotelUpdateRequest()
-            .setAddress(new AddressVo()
-                .setAddress("address")
-                .setCity("city")
-                .setCountry("country")
-                .setProvince("province")
-                .setLocation("location"))
-            .setPosition(new PositionVo()
-                .setLatitude(100.1D)
-                .setLongitude(200.2D))
-            .setBasic(new HotelBasicVo()
-                .setName("name")
-                .setDescription("description")
-                .setEmail("test@test.com")
-                .setPhone("phone")
-                .setWhenBuilt(YearMonth.of(2021, 10))
-                .setLastRenovation(YearMonth.of(2021, 10))
-                .setBuildingArea(100)
-                .setStarRating(5)
-                .setTotalRoomQuantity(20))
-            .setCheckPolicy(new CheckPolicyVo()
-                .setCheckInTime("10:00")
-                .setCheckOutTime("11:00")
-            );
+                .setAddress(new AddressVo()
+                        .setAddress("address")
+                        .setCity("city")
+                        .setCountry("country")
+                        .setProvince("province")
+                        .setLocation("location"))
+                .setPosition(new PositionVo()
+                        .setLatitude(100.1D)
+                        .setLongitude(200.2D))
+                .setBasic(new HotelBasicVo()
+                        .setName("name")
+                        .setDescription("description")
+                        .setEmail("test@test.com")
+                        .setPhone("phone")
+                        .setWhenBuilt(YearMonth.of(2021, 10))
+                        .setLastRenovation(YearMonth.of(2021, 10))
+                        .setBuildingArea(100)
+                        .setStarRating(5)
+                        .setTotalRoomQuantity(20))
+                .setCheckPolicy(new CheckPolicyVo()
+                        .setCheckInTime("10:00")
+                        .setCheckOutTime("11:00")
+                );
 
         var command = hotelConvertor.toCommand(request);
 
@@ -156,10 +159,10 @@ class HotelConvertorTest {
         Assertions.assertEquals(20, command.getBasic().getTotalRoomQuantity());
         Assertions.assertEquals("test@test.com", command.getBasic().getEmail());
         Assertions.assertNotNull(command.getPosition());
-        Assertions.assertEquals(100.1D,command.getPosition().getLatitude());
-        Assertions.assertEquals(200.2D,command.getPosition().getLongitude());
-        Assertions.assertEquals(LocalTime.of(10,0) ,command.getCheckPolicy().getCheckInTime());
-        Assertions.assertEquals(LocalTime.of(11,0),command.getCheckPolicy().getCheckOutTime());
+        Assertions.assertEquals(100.1D, command.getPosition().getLatitude());
+        Assertions.assertEquals(200.2D, command.getPosition().getLongitude());
+        Assertions.assertEquals(LocalTime.of(10, 0), command.getCheckPolicy().getCheckInTime());
+        Assertions.assertEquals(LocalTime.of(11, 0), command.getCheckPolicy().getCheckOutTime());
     }
 
 }

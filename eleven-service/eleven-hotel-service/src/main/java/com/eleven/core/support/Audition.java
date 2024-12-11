@@ -1,4 +1,4 @@
-package com.eleven.common.entity;
+package com.eleven.core.support;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

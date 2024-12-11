@@ -1,6 +1,6 @@
-package com.eleven.common.domain;
+package com.eleven.core;
 
-import com.eleven.common.layer.Vo;
+import com.eleven.core.layer.Vo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;

@@ -1,9 +1,9 @@
 package com.eleven.domain.plan.request;
 
-import com.eleven.common.domain.DateRangeVo;
-import com.eleven.common.domain.DateTimeRangeVo;
-import com.eleven.common.domain.SaleChannel;
-import com.eleven.domain.plan.PlanBasicVo;
+import com.eleven.core.DateRangeVo;
+import com.eleven.core.DateTimeRangeVo;
+import com.eleven.core.SaleChannel;
+import com.eleven.domain.plan.vo.PlanBasicVo;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;

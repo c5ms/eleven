@@ -1,4 +1,4 @@
-package com.eleven.common.entity;
+package com.eleven.core.support;
 
 import com.eleven.core.domain.error.DomainEvent;
 import jakarta.persistence.MappedSuperclass;
@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @MappedSuperclass
-public abstract class AbstractEntity {
+public abstract class DomainEntity {
 
     private transient final @Transient Map<Class<?>, DomainEvent> domainEvents = new HashMap<>();
 

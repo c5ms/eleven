@@ -1,7 +1,8 @@
 package com.eleven.domain.plan;
 
-import com.eleven.common.support.ContextSupport;
 import com.eleven.core.infrastructure.jpa.Specifications;
+import com.eleven.core.support.ContextSupport;
+import com.eleven.domain.plan.values.PlanBasic;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;

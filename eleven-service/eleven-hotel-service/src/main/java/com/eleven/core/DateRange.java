@@ -1,4 +1,4 @@
-package com.eleven.common.domain;
+package com.eleven.core;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Embeddable;

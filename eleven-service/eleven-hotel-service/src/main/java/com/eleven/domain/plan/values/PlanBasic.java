@@ -1,4 +1,4 @@
-package com.eleven.domain.plan;
+package com.eleven.domain.plan.values;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

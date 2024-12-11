@@ -1,6 +1,6 @@
 package com.eleven.domain.hotel.vo;
 
-import com.eleven.common.layer.Vo;
+import com.eleven.core.layer.Vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;

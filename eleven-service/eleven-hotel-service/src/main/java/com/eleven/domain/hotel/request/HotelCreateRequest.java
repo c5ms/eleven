@@ -6,7 +6,6 @@ import com.eleven.domain.hotel.vo.HotelBasicVo;
 import com.eleven.domain.hotel.vo.PositionVo;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;

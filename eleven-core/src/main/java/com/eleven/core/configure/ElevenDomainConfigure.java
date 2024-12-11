@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @RequiredArgsConstructor

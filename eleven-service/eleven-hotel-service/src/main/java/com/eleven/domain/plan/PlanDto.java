@@ -1,6 +1,7 @@
 package com.eleven.domain.plan;
 
-import com.eleven.common.domain.*;
+import com.eleven.core.*;
+import com.eleven.domain.plan.vo.PlanBasicVo;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;

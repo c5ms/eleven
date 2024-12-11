@@ -1,13 +1,15 @@
 package com.eleven.domain.plan;
 
-import com.eleven.common.domain.DateRange;
-import com.eleven.common.domain.DateRangeVo;
-import com.eleven.common.domain.DateTimeRange;
-import com.eleven.common.domain.DateTimeRangeVo;
+import com.eleven.core.DateRange;
+import com.eleven.core.DateRangeVo;
+import com.eleven.core.DateTimeRange;
+import com.eleven.core.DateTimeRangeVo;
 import com.eleven.domain.plan.command.PlanCreateCommand;
 import com.eleven.domain.plan.command.PlanUpdateCommand;
 import com.eleven.domain.plan.request.PlanCreateRequest;
 import com.eleven.domain.plan.request.PlanUpdateRequest;
+import com.eleven.domain.plan.values.PlanBasic;
+import com.eleven.domain.plan.vo.PlanBasicVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;

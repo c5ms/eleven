@@ -1,5 +1,0 @@
-- hotel
-- room
-- product
-- RatePlan
--

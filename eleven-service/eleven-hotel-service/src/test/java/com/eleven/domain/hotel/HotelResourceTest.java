@@ -1,6 +1,5 @@
 package com.eleven.domain.hotel;
 
-import com.eleven.base.AsControllerTest;
 import com.eleven.core.application.authorize.NoPrincipalException;
 import com.eleven.domain.hotel.command.HotelCreateCommand;
 import com.eleven.domain.hotel.command.HotelUpdateCommand;
@@ -27,10 +26,9 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 
-
-@AsControllerTest
 @WebMvcTest({HotelResource.class})
 class HotelResourceTest {
+
 
     @Autowired
     MockMvcTester mvc;
@@ -74,7 +72,7 @@ class HotelResourceTest {
                 .assertThat()
                 .hasStatus(HttpStatus.BAD_REQUEST)
                 .hasContentType(MediaType.APPLICATION_JSON)
-                ;
+        ;
 
     }
 

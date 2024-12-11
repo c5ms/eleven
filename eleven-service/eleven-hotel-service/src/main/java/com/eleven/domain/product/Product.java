@@ -1,9 +1,9 @@
 package com.eleven.domain.product;
 
-import com.eleven.common.domain.ChargeType;
-import com.eleven.common.domain.SaleChannel;
-import com.eleven.common.domain.SaleState;
-import com.eleven.common.domain.SaleType;
+import com.eleven.core.ChargeType;
+import com.eleven.core.SaleChannel;
+import com.eleven.core.SaleState;
+import com.eleven.core.SaleType;
 import com.eleven.core.domain.error.DomainValidator;
 import com.eleven.core.domain.values.ImmutableValues;
 import com.eleven.domain.plan.Plan;

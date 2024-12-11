@@ -1,7 +1,7 @@
 package com.eleven.domain.room;
 
-import com.eleven.common.entity.AbstractEntity;
 import com.eleven.core.domain.values.ImmutableValues;
+import com.eleven.core.support.DomainEntity;
 import com.eleven.domain.hotel.values.Occupancy;
 import com.eleven.domain.inventory.RoomInventory;
 import com.eleven.domain.room.event.*;
@@ -25,7 +25,7 @@ import java.util.Set;
 @Getter
 @Setter(AccessLevel.PROTECTED)
 @FieldNameConstants
-public class Room extends AbstractEntity {
+public class Room extends DomainEntity {
 
     @Id
     @Column(name = "room_id")

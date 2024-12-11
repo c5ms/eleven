@@ -11,7 +11,6 @@ import java.lang.annotation.*;
  * 1. convert user input (request) into command
  * 2. convert domain object into Dto
  */
-@EnableElevenCore
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

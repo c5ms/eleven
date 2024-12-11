@@ -1,10 +1,11 @@
 package com.eleven.domain.plan;
 
-import com.eleven.common.domain.*;
-import com.eleven.common.entity.AbstractEntity;
+import com.eleven.core.*;
 import com.eleven.core.domain.values.ImmutableValues;
+import com.eleven.core.support.DomainEntity;
 import com.eleven.domain.plan.event.PlanCreatedEvent;
 import com.eleven.domain.plan.event.PlanStayPeriodChangedEvent;
+import com.eleven.domain.plan.values.PlanBasic;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
@@ -25,7 +26,7 @@ import java.util.Set;
 @Getter
 @Setter
 @FieldNameConstants
-public class Plan extends AbstractEntity {
+public class Plan extends DomainEntity {
 
     @Id
     @Column(name = "plan_id")

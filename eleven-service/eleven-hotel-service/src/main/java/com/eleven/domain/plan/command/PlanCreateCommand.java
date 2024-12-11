@@ -1,9 +1,9 @@
 package com.eleven.domain.plan.command;
 
-import com.eleven.common.domain.DateRange;
-import com.eleven.common.domain.DateTimeRange;
-import com.eleven.common.domain.SaleChannel;
-import com.eleven.domain.plan.PlanBasic;
+import com.eleven.core.DateRange;
+import com.eleven.core.DateTimeRange;
+import com.eleven.core.SaleChannel;
+import com.eleven.domain.plan.values.PlanBasic;
 import lombok.Builder;
 import lombok.Getter;
 

@@ -1,6 +1,6 @@
 package com.eleven.domain.hotel;
 
-import com.eleven.common.entity.AbstractEntity;
+import com.eleven.core.support.DomainEntity;
 import com.eleven.domain.hotel.event.HotelActiveEvent;
 import com.eleven.domain.hotel.event.HotelCreatedEvent;
 import com.eleven.domain.hotel.event.HotelDeactivateEvent;
@@ -19,7 +19,7 @@ import lombok.experimental.FieldNameConstants;
 @Setter(AccessLevel.PROTECTED)
 @FieldNameConstants
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Hotel extends AbstractEntity {
+public class Hotel extends DomainEntity {
 
     @Id
     @Column(name = "hotel_id")

@@ -1,4 +1,4 @@
-package com.eleven.common.message;
+package com.eleven.integration.message;
 
 import cn.hutool.json.JSONUtil;
 import com.eleven.core.application.event.ApplicationEventMessage;

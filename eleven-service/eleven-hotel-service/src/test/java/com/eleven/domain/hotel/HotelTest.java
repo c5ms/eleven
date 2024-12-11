@@ -43,6 +43,7 @@ class HotelTest {
 
     @Test
     void active() {
+        hotel.setActive(false);
         hotel.active();
         assertThat(hotel.getActive()).isTrue();
         assertThat(hotel.hasEvents(HotelActiveEvent.class)).isTrue();
@@ -50,7 +51,7 @@ class HotelTest {
 
     @Test
     void deactivate() {
-        hotel.active();
+        hotel.setActive(true);
         hotel.deactivate();
         assertThat(hotel.getActive()).isFalse();
         assertThat(hotel.hasEvents(HotelDeactivateEvent.class)).isTrue();

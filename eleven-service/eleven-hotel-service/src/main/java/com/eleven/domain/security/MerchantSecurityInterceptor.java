@@ -1,4 +1,4 @@
-package com.eleven.common.security;
+package com.eleven.domain.security;
 
 import com.eleven.domain.hotel.HotelService;
 import jakarta.annotation.Nonnull;
