@@ -1,7 +1,7 @@
 package com.eleven.upms.domain.manager;
 
-import com.eleven.core.domain.DomainException;
-import com.eleven.core.domain.DomainHelper;
+import com.eleven.core.data.DomainException;
+import com.eleven.core.data.DomainHelper;
 import com.eleven.core.authentic.Principal;
 import com.eleven.upms.api.domain.core.UpmsConstants;
 import com.eleven.upms.api.domain.event.UserCreatedEvent;

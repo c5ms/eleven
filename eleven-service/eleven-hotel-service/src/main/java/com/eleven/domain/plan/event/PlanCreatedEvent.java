@@ -1,6 +1,6 @@
 package com.eleven.domain.plan.event;
 
-import com.eleven.core.domain.error.DomainEvent;
+import com.eleven.core.event.DomainEvent;
 import com.eleven.domain.plan.Plan;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

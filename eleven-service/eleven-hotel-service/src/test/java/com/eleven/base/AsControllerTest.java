@@ -1,9 +1,6 @@
 package com.eleven.base;
 
 
-import com.eleven.core.configure.EnableElevenRest;
-import com.eleven.core.configure.EnableElevenSecurity;
-
 import java.lang.annotation.*;
 
 /**

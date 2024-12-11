@@ -1,6 +1,6 @@
 package com.eleven.upms.application.service;
 
-import com.eleven.core.domain.DomainHelper;
+import com.eleven.core.data.DomainHelper;
 import com.eleven.upms.api.application.command.RoleCreateCommand;
 import com.eleven.upms.api.application.command.RoleUpdateCommand;
 import com.eleven.upms.api.application.model.RoleDetail;

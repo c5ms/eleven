@@ -1,8 +1,6 @@
 package com.eleven.base;
 
 
-import com.eleven.core.configure.EnableElevenCore;
-
 import java.lang.annotation.*;
 
 /**

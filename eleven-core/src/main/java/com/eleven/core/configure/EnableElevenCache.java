@@ -1,6 +1,5 @@
 package com.eleven.core.configure;
 
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;

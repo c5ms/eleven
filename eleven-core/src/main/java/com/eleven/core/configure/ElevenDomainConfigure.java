@@ -1,15 +1,15 @@
 package com.eleven.core.configure;
 
 import cn.hutool.core.lang.Snowflake;
-import com.eleven.core.domain.audit.DomainAuditorAware;
-import com.eleven.core.domain.identity.IdentityGenerator;
-import com.eleven.core.domain.identity.support.*;
+import com.eleven.core.data.DomainAuditorAware;
+import com.eleven.core.data.IdentityGenerator;
+import com.eleven.core.application.identity.support.*;
+import com.eleven.core.data.support.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @RequiredArgsConstructor

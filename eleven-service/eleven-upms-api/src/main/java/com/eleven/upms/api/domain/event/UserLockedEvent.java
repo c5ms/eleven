@@ -1,6 +1,6 @@
 package com.eleven.upms.api.domain.event;
 
-import com.eleven.core.domain.DomainEvent;
+import com.eleven.core.data.DomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

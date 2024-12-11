@@ -1,6 +1,6 @@
 package com.eleven.domain.product;
 
-import com.eleven.core.SaleChannel;
+import com.eleven.common.SaleChannel;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

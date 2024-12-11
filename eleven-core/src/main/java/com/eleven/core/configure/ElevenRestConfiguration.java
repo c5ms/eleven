@@ -1,9 +1,9 @@
 package com.eleven.core.configure;
 
-import com.eleven.core.interfaces.web.DownloadHttpMessageConverter;
-import com.eleven.core.interfaces.web.annonation.AsInnerApi;
-import com.eleven.core.interfaces.web.annonation.AsRestApi;
-import com.eleven.core.interfaces.web.utils.AnnotationPredicate;
+import com.eleven.core.web.DownloadHttpMessageConverter;
+import com.eleven.core.web.annonation.AsInnerApi;
+import com.eleven.core.web.annonation.AsRestApi;
+import com.eleven.core.web.utils.AnnotationPredicate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.core.jackson.ModelResolver;
 import io.swagger.v3.oas.models.OpenAPI;

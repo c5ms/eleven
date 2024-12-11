@@ -1,7 +1,7 @@
 package com.eleven.domain.plan;
 
-import com.eleven.core.domain.error.DomainError;
-import com.eleven.core.domain.error.SimpleDomainError;
+import com.eleven.core.error.DomainError;
+import com.eleven.core.error.SimpleDomainError;
 
 public interface PlanErrors {
 

@@ -1,11 +1,10 @@
 package com.eleven.domain.plan;
 
-import com.eleven.core.*;
-import com.eleven.core.domain.values.ImmutableValues;
-import com.eleven.core.support.DomainEntity;
+import com.eleven.common.*;
+import com.eleven.core.utils.ImmutableValues;
+import com.eleven.common.support.DomainEntity;
 import com.eleven.domain.plan.event.PlanCreatedEvent;
 import com.eleven.domain.plan.event.PlanStayPeriodChangedEvent;
-import com.eleven.domain.plan.values.PlanBasic;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;

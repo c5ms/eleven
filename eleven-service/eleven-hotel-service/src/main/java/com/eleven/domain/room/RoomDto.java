@@ -1,6 +1,8 @@
 package com.eleven.domain.room;
 
-import com.eleven.domain.hotel.vo.OccupancyVo;
+import com.eleven.interfaces.hotel.vo.OccupancyVo;
+import com.eleven.interfaces.room.vo.RoomBasicVo;
+import com.eleven.interfaces.room.vo.RoomStockVo;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;

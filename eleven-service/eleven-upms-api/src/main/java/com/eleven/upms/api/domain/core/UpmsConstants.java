@@ -1,7 +1,7 @@
 package com.eleven.upms.api.domain.core;
 
-import com.eleven.core.domain.DomainError;
-import com.eleven.core.domain.SimpleDomainError;
+import com.eleven.core.data.DomainError;
+import com.eleven.core.data.SimpleDomainError;
 
 public interface UpmsConstants {
 

@@ -1,6 +1,6 @@
 package com.eleven.domain.hotel;
 
-import com.eleven.core.application.authorize.TypedObjectAuthorizer;
+import com.eleven.core.authorize.TypedObjectAuthorizer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

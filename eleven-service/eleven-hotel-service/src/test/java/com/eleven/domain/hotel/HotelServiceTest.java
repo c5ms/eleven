@@ -1,7 +1,7 @@
 package com.eleven.domain.hotel;
 
 import com.eleven.base.AsServiceTest;
-import com.eleven.core.application.authorize.NoPrincipalException;
+import com.eleven.core.authorize.NoPrincipalException;
 import com.eleven.domain.hotel.command.HotelCreateCommand;
 import com.eleven.domain.hotel.command.HotelUpdateCommand;
 import org.junit.jupiter.api.Test;

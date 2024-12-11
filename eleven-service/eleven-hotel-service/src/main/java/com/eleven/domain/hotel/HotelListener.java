@@ -1,8 +1,8 @@
 package com.eleven.domain.hotel;
 
 import cn.hutool.json.JSONUtil;
-import com.eleven.core.application.event.ApplicationEvent;
-import com.eleven.core.domain.error.DomainEvent;
+import com.eleven.core.event.ApplicationEvent;
+import com.eleven.core.event.DomainEvent;
 import com.eleven.domain.inventory.InventoryManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

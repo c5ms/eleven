@@ -1,7 +1,7 @@
 package com.eleven.core.configure;
 
 import cn.hutool.extra.spring.SpringUtil;
-import com.eleven.core.application.cache.KryoRedisSerializer;
+import com.eleven.core.cache.KryoRedisSerializer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;

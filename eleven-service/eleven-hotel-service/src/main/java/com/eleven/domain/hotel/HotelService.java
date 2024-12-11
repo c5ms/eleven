@@ -1,6 +1,6 @@
 package com.eleven.domain.hotel;
 
-import com.eleven.core.support.ContextSupport;
+import com.eleven.common.support.ContextSupport;
 import com.eleven.domain.hotel.command.HotelCreateCommand;
 import com.eleven.domain.hotel.command.HotelUpdateCommand;
 import lombok.RequiredArgsConstructor;
