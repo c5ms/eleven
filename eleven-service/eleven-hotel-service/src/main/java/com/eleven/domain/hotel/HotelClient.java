@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 @Primary
-@FeignClient(value = "hotel", path = "/api/internal")
+@FeignClient(value = "hotel", path = "/inner")
 public interface HotelClient {
 
     @Operation(summary = "read hotel")

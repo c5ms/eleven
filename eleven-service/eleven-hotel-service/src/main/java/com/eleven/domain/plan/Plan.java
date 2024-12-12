@@ -1,8 +1,8 @@
 package com.eleven.domain.plan;
 
 import com.eleven.common.*;
-import com.eleven.core.utils.ImmutableValues;
 import com.eleven.common.support.DomainEntity;
+import com.eleven.core.utils.ImmutableValues;
 import com.eleven.domain.plan.event.PlanCreatedEvent;
 import com.eleven.domain.plan.event.PlanStayPeriodChangedEvent;
 import io.hypersistence.utils.hibernate.type.json.JsonType;

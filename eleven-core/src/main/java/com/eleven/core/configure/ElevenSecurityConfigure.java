@@ -1,6 +1,5 @@
 package com.eleven.core.configure;
 
-import com.eleven.core.application.authenticate.support.*;
 import com.eleven.core.security.*;
 import com.eleven.core.security.support.*;
 import lombok.RequiredArgsConstructor;

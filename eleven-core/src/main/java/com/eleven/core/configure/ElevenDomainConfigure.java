@@ -3,7 +3,6 @@ package com.eleven.core.configure;
 import cn.hutool.core.lang.Snowflake;
 import com.eleven.core.data.DomainAuditorAware;
 import com.eleven.core.data.IdentityGenerator;
-import com.eleven.core.application.identity.support.*;
 import com.eleven.core.data.support.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

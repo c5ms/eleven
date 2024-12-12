@@ -2,7 +2,6 @@ package com.eleven.domain.plan;
 
 import com.eleven.common.SaleChannel;
 import com.eleven.common.support.ContextSupport;
-import com.eleven.domain.hotel.HotelAuthorizer;
 import com.eleven.domain.hotel.HotelRepository;
 import com.eleven.domain.plan.command.PlanCreateCommand;
 import com.eleven.domain.plan.command.PlanSetPriceCommand;
