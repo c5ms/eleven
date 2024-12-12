@@ -11,7 +11,7 @@ import lombok.experimental.FieldNameConstants;
 
 import java.math.BigDecimal;
 
-@Table(name = "bk_booking")
+@Table(name = "booking")
 @Entity
 @Getter
 @Setter(AccessLevel.PROTECTED)
