@@ -13,6 +13,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
+import org.apache.catalina.util.ToStringUtil;
+import org.springframework.beans.BeanUtils;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -124,4 +126,15 @@ public class Room extends DomainEntity {
         this.images.addAll(images);
     }
 
+    public RoomStock getStock() {
+        return Optional.ofNullable(stock).orElseGet(RoomStock::empty);
+    }
+
+    public RoomBasic getBasic() {
+        return Optional.ofNullable(basic).orElseGet(RoomBasic::empty);
+    }
+
+    public Occupancy getOccupancy() {
+        return Optional.ofNullable(occupancy).orElseGet(Occupancy::empty);
+    }
 }
