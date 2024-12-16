@@ -1,8 +1,8 @@
 package com.eleven.upms.endpoint.inner;
 
-import com.eleven.core.authentic.Subject;
-import com.eleven.core.authentic.Token;
-import com.eleven.core.interfaces.annonation.AsInternalApi;
+import com.eleven.framework.authentic.Subject;
+import com.eleven.framework.authentic.Token;
+import com.eleven.framework.interfaces.annonation.AsInternalApi;
 import com.eleven.upms.api.application.model.UserDetail;
 import com.eleven.upms.api.endpoint.UpmsClient;
 import com.eleven.upms.application.service.TokenService;

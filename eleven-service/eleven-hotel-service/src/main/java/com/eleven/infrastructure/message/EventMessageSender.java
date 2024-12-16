@@ -1,8 +1,8 @@
 package com.eleven.infrastructure.message;
 
 import cn.hutool.json.JSONUtil;
-import com.eleven.core.event.ApplicationEventMessage;
-import com.eleven.core.event.ApplicationEventMessageSender;
+import com.eleven.framework.event.ApplicationEventMessage;
+import com.eleven.framework.event.ApplicationEventMessageSender;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

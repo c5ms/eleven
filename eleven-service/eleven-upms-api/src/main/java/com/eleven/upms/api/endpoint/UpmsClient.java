@@ -1,8 +1,8 @@
 package com.eleven.upms.api.endpoint;
 
-import com.eleven.core.authentic.Subject;
-import com.eleven.core.authentic.Token;
-import com.eleven.core.interfaces.WebConstants;
+import com.eleven.framework.authentic.Subject;
+import com.eleven.framework.authentic.Token;
+import com.eleven.framework.interfaces.WebConstants;
 import com.eleven.upms.api.application.model.UserDetail;
 import com.eleven.upms.api.domain.core.UpmsConstants;
 import io.swagger.v3.oas.annotations.Operation;

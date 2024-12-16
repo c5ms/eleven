@@ -1,8 +1,8 @@
 package com.eleven.domain.booking;
 
 
-import com.eleven.core.error.DomainError;
-import com.eleven.core.error.SimpleDomainError;
+import com.eleven.framework.error.DomainError;
+import com.eleven.framework.error.SimpleDomainError;
 
 public interface BookingErrors {
 

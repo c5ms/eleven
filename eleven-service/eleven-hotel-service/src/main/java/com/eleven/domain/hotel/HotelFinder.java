@@ -1,6 +1,6 @@
 package com.eleven.domain.hotel;
 
-import com.eleven.core.data.Specifications;
+import com.eleven.framework.data.Specifications;
 import com.eleven.domain.plan.PlanBasic;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;

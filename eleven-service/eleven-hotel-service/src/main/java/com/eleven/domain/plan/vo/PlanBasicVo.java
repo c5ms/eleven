@@ -1,6 +1,6 @@
 package com.eleven.domain.plan.vo;
 
-import com.eleven.common.layer.Vo;
+import com.eleven.core.layer.Vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

@@ -1,6 +1,6 @@
 package com.eleven.upms.domain.model;
 
-import com.eleven.core.data.AbstractEntity;
+import com.eleven.framework.data.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

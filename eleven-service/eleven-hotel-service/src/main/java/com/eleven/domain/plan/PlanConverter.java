@@ -1,9 +1,9 @@
 package com.eleven.domain.plan;
 
-import com.eleven.common.DateRange;
-import com.eleven.common.DateRangeVo;
-import com.eleven.common.DateTimeRange;
-import com.eleven.common.DateTimeRangeVo;
+import com.eleven.core.DateRange;
+import com.eleven.core.DateRangeVo;
+import com.eleven.core.DateTimeRange;
+import com.eleven.core.DateTimeRangeVo;
 import com.eleven.domain.plan.command.PlanCreateCommand;
 import com.eleven.domain.plan.command.PlanUpdateCommand;
 import com.eleven.domain.plan.request.PlanCreateRequest;

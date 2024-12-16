@@ -61,4 +61,5 @@ public final class HotelBasic implements Serializable {
                                 Integer buildingArea) {
         return new HotelBasic(name, description, email, phone, totalRoomQuantity, whenBuilt, lastRenovation, starRating, buildingArea);
     }
+
 }

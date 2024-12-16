@@ -1,6 +1,6 @@
 package com.eleven.upms.domain.manager;
 
-import com.eleven.core.data.DomainException;
+import com.eleven.framework.data.DomainException;
 import com.eleven.upms.api.domain.core.UpmsConstants;
 import com.eleven.upms.domain.model.Role;
 import com.eleven.upms.domain.model.RoleRepository;

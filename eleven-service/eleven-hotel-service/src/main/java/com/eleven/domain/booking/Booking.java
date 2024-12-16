@@ -1,8 +1,8 @@
 package com.eleven.domain.booking;
 
 import cn.hutool.core.date.DateRange;
-import com.eleven.common.SaleChannel;
-import com.eleven.common.support.DomainEntity;
+import com.eleven.core.SaleChannel;
+import com.eleven.core.support.DomainEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

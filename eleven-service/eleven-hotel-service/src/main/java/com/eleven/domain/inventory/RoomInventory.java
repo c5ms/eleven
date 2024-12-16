@@ -1,6 +1,6 @@
 package com.eleven.domain.inventory;
 
-import com.eleven.common.support.DomainEntity;
+import com.eleven.core.support.DomainEntity;
 import com.eleven.domain.room.RoomKey;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;

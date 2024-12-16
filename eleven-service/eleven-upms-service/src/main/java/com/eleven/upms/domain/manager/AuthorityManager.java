@@ -1,6 +1,6 @@
 package com.eleven.upms.domain.manager;
 
-import com.eleven.core.data.DomainHelper;
+import com.eleven.framework.data.DomainHelper;
 import com.eleven.upms.domain.model.Authority;
 import com.eleven.upms.domain.model.AuthorityRepository;
 import com.eleven.upms.domain.model.User;

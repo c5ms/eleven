@@ -1,6 +1,6 @@
 package com.eleven.domain.plan;
 
-import com.eleven.core.web.PageRequest;
+import com.eleven.framework.web.PageRequest;
 import lombok.Builder;
 import lombok.Getter;
 

@@ -1,6 +1,6 @@
 package com.eleven.domain.room;
 
-import com.eleven.core.web.annonation.AsRestApi;
+import com.eleven.framework.web.annonation.AsRestApi;
 import com.eleven.domain.room.request.RoomCreateRequest;
 import com.eleven.domain.room.request.RoomUpdateRequest;
 import io.swagger.v3.oas.annotations.Operation;

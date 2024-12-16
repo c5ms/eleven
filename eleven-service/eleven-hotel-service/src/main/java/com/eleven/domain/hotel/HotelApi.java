@@ -1,7 +1,7 @@
 package com.eleven.domain.hotel;
 
-import com.eleven.common.SaleChannel;
-import com.eleven.core.web.annonation.AsInnerApi;
+import com.eleven.core.SaleChannel;
+import com.eleven.framework.web.annonation.AsInnerApi;
 import com.eleven.domain.plan.*;
 import com.eleven.domain.product.ProductKey;
 import io.swagger.v3.oas.annotations.Hidden;

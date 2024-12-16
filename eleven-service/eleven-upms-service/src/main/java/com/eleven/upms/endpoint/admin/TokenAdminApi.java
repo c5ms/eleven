@@ -1,7 +1,7 @@
 package com.eleven.upms.endpoint.admin;
 
 import cn.hutool.extra.servlet.JakartaServletUtil;
-import com.eleven.core.interfaces.annonation.AsAdminApi;
+import com.eleven.framework.interfaces.annonation.AsAdminApi;
 import com.eleven.upms.api.application.command.AccessTokenCreateCommand;
 import com.eleven.upms.application.service.TokenService;
 import io.swagger.v3.oas.annotations.Operation;

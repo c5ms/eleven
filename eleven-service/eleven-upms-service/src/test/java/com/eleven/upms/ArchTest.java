@@ -1,6 +1,6 @@
 package com.eleven.upms;
 
-import com.eleven.core.test.arch.ArchTestCase;
+import com.eleven.framework.test.arch.ArchTestCase;
 import org.junit.jupiter.api.Test;
 
 public class ArchTest {

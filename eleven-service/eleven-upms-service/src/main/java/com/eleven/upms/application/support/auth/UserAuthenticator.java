@@ -1,8 +1,8 @@
 package com.eleven.upms.application.support.auth;
 
-import com.eleven.core.authentic.Authenticator;
-import com.eleven.core.authentic.Principal;
-import com.eleven.core.authentic.Subject;
+import com.eleven.framework.authentic.Authenticator;
+import com.eleven.framework.authentic.Principal;
+import com.eleven.framework.authentic.Subject;
 import com.eleven.upms.domain.model.User;
 import com.eleven.upms.domain.model.UserRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,8 +1,8 @@
 package com.eleven.upms.api.application.support;
 
-import com.eleven.core.authentic.Principal;
-import com.eleven.core.authentic.Subject;
-import com.eleven.core.authentic.SubjectCreator;
+import com.eleven.framework.authentic.Principal;
+import com.eleven.framework.authentic.Subject;
+import com.eleven.framework.authentic.SubjectCreator;
 import com.eleven.upms.api.endpoint.UpmsClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

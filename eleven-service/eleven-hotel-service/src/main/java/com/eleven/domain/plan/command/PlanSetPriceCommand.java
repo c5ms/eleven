@@ -1,7 +1,7 @@
 package com.eleven.domain.plan.command;
 
-import com.eleven.common.ChargeType;
-import com.eleven.common.SaleChannel;
+import com.eleven.core.ChargeType;
+import com.eleven.core.SaleChannel;
 import lombok.Builder;
 import lombok.Getter;
 

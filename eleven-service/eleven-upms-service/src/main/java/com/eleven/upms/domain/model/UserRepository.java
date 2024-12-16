@@ -1,6 +1,6 @@
 package com.eleven.upms.domain.model;
 
-import com.eleven.core.data.DataFoundException;
+import com.eleven.framework.data.DataFoundException;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

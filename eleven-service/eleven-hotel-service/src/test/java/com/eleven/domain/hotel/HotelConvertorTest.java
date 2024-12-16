@@ -1,7 +1,7 @@
 package com.eleven.domain.hotel;
 
 import com.eleven.base.AsConvertorTest;
-import com.eleven.core.configure.ElevenCoreConfigure;
+import com.eleven.framework.configure.ElevenCoreConfigure;
 import com.eleven.domain.hotel.request.HotelCreateRequest;
 import com.eleven.domain.hotel.request.HotelUpdateRequest;
 import com.eleven.domain.hotel.values.Address;

@@ -1,8 +1,8 @@
 package com.eleven.upms.application.configure;
 
-import com.eleven.core.authentic.Authenticator;
-import com.eleven.core.authentic.Authorizer;
-import com.eleven.core.authentic.SubjectCreator;
+import com.eleven.framework.authentic.Authenticator;
+import com.eleven.framework.authentic.Authorizer;
+import com.eleven.framework.authentic.SubjectCreator;
 import com.eleven.upms.application.support.auth.LocalAuthorizer;
 import com.eleven.upms.application.support.auth.LocalSubjectCreator;
 import com.eleven.upms.application.support.auth.UserAuthenticator;

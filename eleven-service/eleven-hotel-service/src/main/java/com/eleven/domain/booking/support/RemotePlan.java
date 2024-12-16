@@ -1,6 +1,6 @@
 package com.eleven.domain.booking.support;
 
-import com.eleven.common.SaleChannel;
+import com.eleven.core.SaleChannel;
 import com.eleven.domain.booking.Plan;
 import com.eleven.domain.hotel.HotelClient;
 import com.eleven.domain.plan.PlanDto;

@@ -1,7 +1,7 @@
 package com.eleven.domain.room;
 
-import com.eleven.common.support.DomainEntity;
-import com.eleven.core.utils.ImmutableValues;
+import com.eleven.core.support.DomainEntity;
+import com.eleven.framework.utils.ImmutableValues;
 import com.eleven.domain.hotel.values.Occupancy;
 import com.eleven.domain.inventory.RoomInventory;
 import com.eleven.domain.room.event.*;
@@ -13,8 +13,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
-import org.apache.catalina.util.ToStringUtil;
-import org.springframework.beans.BeanUtils;
 
 import java.util.HashSet;
 import java.util.Objects;

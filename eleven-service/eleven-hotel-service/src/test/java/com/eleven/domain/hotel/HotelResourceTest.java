@@ -1,6 +1,6 @@
 package com.eleven.domain.hotel;
 
-import com.eleven.core.authorize.NoPrincipalException;
+import com.eleven.framework.authorize.NoPrincipalException;
 import com.eleven.domain.hotel.command.HotelCreateCommand;
 import com.eleven.domain.hotel.command.HotelUpdateCommand;
 import com.eleven.domain.hotel.request.HotelCreateRequest;

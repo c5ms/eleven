@@ -1,11 +1,11 @@
 package com.eleven.domain.product;
 
-import com.eleven.common.ChargeType;
-import com.eleven.common.SaleChannel;
-import com.eleven.common.SaleState;
-import com.eleven.common.SaleType;
-import com.eleven.core.error.DomainValidator;
-import com.eleven.core.utils.ImmutableValues;
+import com.eleven.core.ChargeType;
+import com.eleven.core.SaleChannel;
+import com.eleven.core.SaleState;
+import com.eleven.core.SaleType;
+import com.eleven.framework.error.DomainValidator;
+import com.eleven.framework.utils.ImmutableValues;
 import com.eleven.domain.plan.Plan;
 import com.eleven.domain.plan.PlanErrors;
 import com.eleven.domain.room.Room;

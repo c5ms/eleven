@@ -1,6 +1,6 @@
 package com.eleven.domain.hotel;
 
-import com.eleven.common.support.DomainEntity;
+import com.eleven.core.support.DomainEntity;
 import com.eleven.domain.hotel.event.HotelActiveEvent;
 import com.eleven.domain.hotel.event.HotelCreatedEvent;
 import com.eleven.domain.hotel.event.HotelDeactivateEvent;

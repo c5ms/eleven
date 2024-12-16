@@ -1,11 +1,11 @@
 package com.eleven.upms.domain.model;
 
-import com.eleven.core.data.AbstractEntity;
-import com.eleven.core.data.Audition;
-import com.eleven.core.data.LogicDeletable;
-import com.eleven.core.authentic.Principal;
-import com.eleven.core.authentic.ToPrincipal;
-import com.eleven.core.time.TimeHelper;
+import com.eleven.framework.data.AbstractEntity;
+import com.eleven.framework.data.Audition;
+import com.eleven.framework.data.LogicDeletable;
+import com.eleven.framework.authentic.Principal;
+import com.eleven.framework.authentic.ToPrincipal;
+import com.eleven.framework.time.TimeHelper;
 import com.eleven.upms.api.domain.event.UserDeletedEvent;
 import com.eleven.upms.api.domain.event.UserLoginEvent;
 import com.eleven.upms.api.domain.event.UserStatusChangedEvent;
