@@ -14,7 +14,6 @@
         <module>eleven-parent</module>
         <module>eleven-framework</module>
         <module>eleven-service</module>
-        <module>eleven-app</module>
     </modules>
 
 </project>

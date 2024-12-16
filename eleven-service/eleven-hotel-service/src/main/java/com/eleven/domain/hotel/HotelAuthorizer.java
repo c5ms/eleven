@@ -19,4 +19,5 @@ public class HotelAuthorizer extends TypedObjectAuthorizer<Hotel> {
     protected boolean checkIsWritable(Hotel hotel) {
         return false;
     }
+
 }
