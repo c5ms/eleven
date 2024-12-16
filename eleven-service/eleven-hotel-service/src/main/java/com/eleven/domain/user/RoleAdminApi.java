@@ -1,4 +1,4 @@
-package com.eleven.domain;
+package com.eleven.domain.user;
 
 import com.eleven.framework.interfaces.annonation.AsAdminApi;
 import com.eleven.upms.api.application.command.RoleCreateCommand;
@@ -26,7 +26,7 @@ public class RoleAdminApi {
 
     @Operation(summary = "get role")
     @GetMapping("/{id}")
-    public Optional<RoleDetail> getRole(@PathVariable("id") String id)  {
+    public Optional<RoleDetail> getRole(@PathVariable("id") String id) {
         return roleService.getRole(id);
     }
 

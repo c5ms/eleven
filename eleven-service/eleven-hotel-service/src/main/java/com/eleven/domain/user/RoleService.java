@@ -1,15 +1,15 @@
 package com.eleven.domain.user;
 
-import com.eleven.framework.data.DomainHelper;
-import com.eleven.upms.api.application.command.RoleCreateCommand;
-import com.eleven.upms.api.application.command.RoleUpdateCommand;
-import com.eleven.upms.api.application.model.RoleDetail;
-import com.eleven.upms.application.convert.RoleConvertor;
 import com.eleven.domain.user.manager.AuthorityManager;
 import com.eleven.domain.user.manager.RoleManager;
 import com.eleven.domain.user.model.Authority;
 import com.eleven.domain.user.model.Role;
 import com.eleven.domain.user.model.RoleRepository;
+import com.eleven.framework.data.DomainHelper;
+import com.eleven.upms.api.application.command.RoleCreateCommand;
+import com.eleven.upms.api.application.command.RoleUpdateCommand;
+import com.eleven.upms.api.application.model.RoleDetail;
+import com.eleven.upms.application.convert.RoleConvertor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

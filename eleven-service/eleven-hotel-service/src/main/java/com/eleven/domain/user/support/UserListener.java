@@ -1,8 +1,8 @@
 package com.eleven.domain.user.support;
 
+import com.eleven.domain.user.model.UserRepository;
 import com.eleven.upms.api.domain.event.UserCreatedEvent;
 import com.eleven.upms.api.domain.event.UserStatusChangedEvent;
-import com.eleven.domain.user.model.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;

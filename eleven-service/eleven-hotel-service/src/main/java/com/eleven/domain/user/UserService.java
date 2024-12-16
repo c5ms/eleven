@@ -1,20 +1,6 @@
 package com.eleven.domain.user;
 
-import com.eleven.framework.application.query.PageResult;
-import com.eleven.framework.data.Audition;
-import com.eleven.framework.data.DomainHelper;
-import com.eleven.framework.data.QuerySupport;
-import com.eleven.framework.time.TimeHelper;
-import com.eleven.upms.api.application.command.UserCreateCommand;
-import com.eleven.upms.api.application.command.UserQueryCommand;
-import com.eleven.upms.api.application.command.UserStatusChangeCommand;
-import com.eleven.upms.api.application.model.UserDetail;
-import com.eleven.upms.api.domain.model.UserStatus;
-import com.eleven.upms.application.convert.UserConvertor;
-import com.eleven.domain.user.manager.AuthorityManager;
-import com.eleven.domain.user.manager.UserManager;
-import com.eleven.domain.user.model.User;
-import com.eleven.domain.user.model.UserRepository;
+import com.eleven.domain.user.command.UserQueryCommand;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
@@ -23,7 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

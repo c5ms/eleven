@@ -1,4 +1,4 @@
-package com.eleven.domain;
+package com.eleven.domain.user;
 
 import com.eleven.framework.authentic.Subject;
 import com.eleven.framework.authentic.Token;

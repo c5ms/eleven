@@ -1,9 +1,9 @@
 package com.eleven.domain.user.validate;
 
-import com.eleven.upms.api.domain.core.UpmsConstants;
 import com.eleven.domain.user.manager.UserValidator;
 import com.eleven.domain.user.model.User;
 import com.eleven.domain.user.model.UserRepository;
+import com.eleven.upms.api.domain.core.UpmsConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

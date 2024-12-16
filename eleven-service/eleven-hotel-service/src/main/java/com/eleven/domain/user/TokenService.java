@@ -1,11 +1,11 @@
 package com.eleven.domain.user;
 
-import com.eleven.framework.authentic.SecurityManager;
-import com.eleven.upms.api.domain.core.UpmsConstants;
 import com.eleven.domain.user.manager.UserManager;
 import com.eleven.domain.user.model.AccessToken;
 import com.eleven.domain.user.model.AccessTokenRepository;
 import com.eleven.domain.user.model.User;
+import com.eleven.framework.authentic.SecurityManager;
+import com.eleven.upms.api.domain.core.UpmsConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

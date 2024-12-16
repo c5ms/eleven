@@ -1,12 +1,8 @@
-package com.eleven.domain;
+package com.eleven.domain.user;
 
-import com.eleven.framework.application.query.PageResult;
-import com.eleven.framework.interfaces.annonation.AsAdminApi;
-import com.eleven.upms.api.application.command.UserCreateCommand;
-import com.eleven.upms.api.application.command.UserQueryCommand;
-import com.eleven.upms.api.application.command.UserStatusChangeCommand;
-import com.eleven.upms.api.application.model.UserDetail;
-import com.eleven.upms.application.service.UserService;
+import cn.hutool.db.PageResult;
+import com.eleven.domain.user.command.UserQueryCommand;
+import com.eleven.framework.web.annonation.AsRestApi;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +16,7 @@ import java.util.Optional;
 @Slf4j
 @Tag(name = "user")
 @RequestMapping("/users")
-@AsAdminApi
+@AsRestApi
 @RequiredArgsConstructor
 public class UserAdminApi {
 
@@ -34,7 +30,7 @@ public class UserAdminApi {
 
     @Operation(summary = "get user")
     @GetMapping("/{id}")
-    public Optional<UserDetail> getUser(@PathVariable("id") String id)  {
+    public Optional<UserDetail> getUser(@PathVariable("id") String id) {
         return userService.getUser(id);
     }
 

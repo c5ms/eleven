@@ -2,7 +2,8 @@ package com.eleven.domain.user.support.auth;
 
 import com.eleven.domain.user.Authority;
 import com.eleven.domain.user.AuthorityManager;
-import com.eleven.framework.security.*;
+import com.eleven.framework.security.Authorizer;
+import com.eleven.framework.security.Principal;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 

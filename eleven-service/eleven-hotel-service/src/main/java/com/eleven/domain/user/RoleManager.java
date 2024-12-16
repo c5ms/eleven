@@ -1,9 +1,9 @@
 package com.eleven.domain.user;
 
-import com.eleven.framework.data.DomainException;
-import com.eleven.upms.api.domain.core.UpmsConstants;
 import com.eleven.domain.user.model.Role;
 import com.eleven.domain.user.model.RoleRepository;
+import com.eleven.framework.data.DomainException;
+import com.eleven.upms.api.domain.core.UpmsConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

@@ -1,6 +1,8 @@
 package com.eleven.domain.user;
 
-import com.eleven.framework.security.*;
+import com.eleven.framework.security.Identifiable;
+import com.eleven.framework.security.Principal;
+import com.eleven.framework.security.ToPrincipal;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,9 +1,9 @@
 package com.eleven.domain.user;
 
-import com.eleven.framework.data.DomainHelper;
 import com.eleven.domain.user.model.Authority;
 import com.eleven.domain.user.model.AuthorityRepository;
 import com.eleven.domain.user.model.User;
+import com.eleven.framework.data.DomainHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

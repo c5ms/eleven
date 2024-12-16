@@ -1,4 +1,4 @@
-package com.eleven.domain;
+package com.eleven.domain.user;
 
 import cn.hutool.extra.servlet.JakartaServletUtil;
 import com.eleven.framework.interfaces.annonation.AsAdminApi;
@@ -45,7 +45,7 @@ public class TokenAdminApi {
             throw new AccessDeniedException("您无权访问");
         }
         return tokenService.getSubject(value)
-            .filter(subject1 -> subject1.getPrincipal().equals(SecurityContext.requirePrincipal()));
+                .filter(subject1 -> subject1.getPrincipal().equals(SecurityContext.requirePrincipal()));
     }
 
 
