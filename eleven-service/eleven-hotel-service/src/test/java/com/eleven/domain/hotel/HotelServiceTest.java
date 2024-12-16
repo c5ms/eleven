@@ -2,8 +2,9 @@ package com.eleven.domain.hotel;
 
 import com.eleven.base.AsServiceTest;
 import com.eleven.framework.authorize.NoPrincipalException;
-import com.eleven.domain.hotel.command.HotelCreateCommand;
-import com.eleven.domain.hotel.command.HotelUpdateCommand;
+import com.eleven.travel.domain.hotel.*;
+import com.eleven.travel.domain.hotel.command.HotelCreateCommand;
+import com.eleven.travel.domain.hotel.command.HotelUpdateCommand;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

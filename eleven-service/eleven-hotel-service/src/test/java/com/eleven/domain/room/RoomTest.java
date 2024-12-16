@@ -1,9 +1,12 @@
 package com.eleven.domain.room;
 
-import com.eleven.domain.hotel.values.Occupancy;
-import com.eleven.domain.room.event.RoomActiveEvent;
-import com.eleven.domain.room.event.RoomCreatedEvent;
-import com.eleven.domain.room.event.RoomDeactivateEvent;
+import com.eleven.travel.domain.hotel.values.Occupancy;
+import com.eleven.travel.domain.room.Room;
+import com.eleven.travel.domain.room.RoomBasic;
+import com.eleven.travel.domain.room.RoomStock;
+import com.eleven.travel.domain.room.event.RoomActiveEvent;
+import com.eleven.travel.domain.room.event.RoomCreatedEvent;
+import com.eleven.travel.domain.room.event.RoomDeactivateEvent;
 import com.eleven.utils.DateRangeTestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;

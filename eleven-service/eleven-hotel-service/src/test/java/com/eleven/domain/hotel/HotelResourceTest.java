@@ -1,10 +1,11 @@
 package com.eleven.domain.hotel;
 
 import com.eleven.framework.authorize.NoPrincipalException;
-import com.eleven.domain.hotel.command.HotelCreateCommand;
-import com.eleven.domain.hotel.command.HotelUpdateCommand;
-import com.eleven.domain.hotel.request.HotelCreateRequest;
-import com.eleven.domain.hotel.request.HotelUpdateRequest;
+import com.eleven.travel.domain.hotel.*;
+import com.eleven.travel.domain.hotel.command.HotelCreateCommand;
+import com.eleven.travel.domain.hotel.command.HotelUpdateCommand;
+import com.eleven.travel.domain.hotel.request.HotelCreateRequest;
+import com.eleven.travel.domain.hotel.request.HotelUpdateRequest;
 import com.eleven.utils.TestUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

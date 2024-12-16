@@ -1,7 +1,7 @@
 package com.eleven.utils;
 
-import com.eleven.core.DateRange;
-import com.eleven.core.DateTimeRange;
+import com.eleven.travel.core.DateRange;
+import com.eleven.travel.core.DateTimeRange;
 import lombok.experimental.UtilityClass;
 
 import java.time.DayOfWeek;

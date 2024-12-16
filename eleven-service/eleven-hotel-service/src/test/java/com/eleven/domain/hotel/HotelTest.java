@@ -1,14 +1,15 @@
 package com.eleven.domain.hotel;
 
-import com.eleven.domain.hotel.command.HotelUpdateCommand;
-import com.eleven.domain.hotel.event.HotelActiveEvent;
-import com.eleven.domain.hotel.event.HotelCreatedEvent;
-import com.eleven.domain.hotel.event.HotelDeactivateEvent;
-import com.eleven.domain.hotel.event.HotelUpdatedEvent;
-import com.eleven.domain.hotel.values.Address;
-import com.eleven.domain.hotel.values.CheckPolicy;
-import com.eleven.domain.hotel.values.HotelBasic;
-import com.eleven.domain.hotel.values.Position;
+import com.eleven.travel.domain.hotel.Hotel;
+import com.eleven.travel.domain.hotel.command.HotelUpdateCommand;
+import com.eleven.travel.domain.hotel.event.HotelActiveEvent;
+import com.eleven.travel.domain.hotel.event.HotelCreatedEvent;
+import com.eleven.travel.domain.hotel.event.HotelDeactivateEvent;
+import com.eleven.travel.domain.hotel.event.HotelUpdatedEvent;
+import com.eleven.travel.domain.hotel.values.Address;
+import com.eleven.travel.domain.hotel.values.CheckPolicy;
+import com.eleven.travel.domain.hotel.values.HotelBasic;
+import com.eleven.travel.domain.hotel.values.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
