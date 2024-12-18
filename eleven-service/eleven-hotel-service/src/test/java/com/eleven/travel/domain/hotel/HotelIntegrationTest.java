@@ -1,7 +1,7 @@
-package com.eleven.domain.hotel;
+package com.eleven.travel.domain.hotel;
 
-import com.eleven.base.AsIntegrationTest;
-import com.eleven.utils.TestUtils;
+import com.eleven.travel.base.AsIntegrationTest;
+import com.eleven.travel.utils.TestUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

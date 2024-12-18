@@ -1,8 +1,7 @@
 package com.eleven.travel.domain.hotel;
 
-import com.eleven.travel.core.SaleChannel;
 import com.eleven.framework.web.annonation.AsInnerApi;
-import com.eleven.domain.plan.*;
+import com.eleven.travel.core.SaleChannel;
 import com.eleven.travel.domain.plan.*;
 import com.eleven.travel.domain.product.ProductKey;
 import io.swagger.v3.oas.annotations.Hidden;

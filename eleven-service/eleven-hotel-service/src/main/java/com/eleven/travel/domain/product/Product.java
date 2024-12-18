@@ -1,11 +1,11 @@
 package com.eleven.travel.domain.product;
 
+import com.eleven.framework.error.DomainValidator;
+import com.eleven.framework.utils.ImmutableValues;
 import com.eleven.travel.core.ChargeType;
 import com.eleven.travel.core.SaleChannel;
 import com.eleven.travel.core.SaleState;
 import com.eleven.travel.core.SaleType;
-import com.eleven.framework.error.DomainValidator;
-import com.eleven.framework.utils.ImmutableValues;
 import com.eleven.travel.domain.plan.Plan;
 import com.eleven.travel.domain.plan.PlanErrors;
 import com.eleven.travel.domain.room.Room;

@@ -1,4 +1,4 @@
-package com.eleven;
+package com.eleven.travel;
 
 import com.eleven.framework.configure.EnableElevenCore;
 import com.eleven.framework.configure.EnableElevenDomain;
@@ -9,6 +9,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.modulith.Modulith;
+import org.springframework.modulith.Modulithic;
 
 @EnableElevenCore
 @EnableElevenDomain
@@ -17,6 +19,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableDiscoveryClient
 @EnableFeignClients
 @SpringBootApplication
+@Modulithic(sharedModules = "core")
 public class Application {
 
     public static void main(String[] args) {

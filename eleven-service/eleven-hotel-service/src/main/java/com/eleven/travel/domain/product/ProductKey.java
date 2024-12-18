@@ -1,7 +1,6 @@
 package com.eleven.travel.domain.product;
 
 import com.eleven.travel.domain.plan.PlanKey;
-import com.eleven.travel.domain.room.RoomKey;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
@@ -51,7 +50,4 @@ public class ProductKey implements Serializable {
         return PlanKey.of(this.hotelId, this.planId);
     }
 
-    public RoomKey toRoomKey() {
-        return RoomKey.of(this.hotelId, this.roomId);
-    }
 }

@@ -1,4 +1,4 @@
-package com.eleven.utils;
+package com.eleven.travel.utils;
 
 import lombok.experimental.UtilityClass;
 import org.springframework.util.LinkedMultiValueMap;

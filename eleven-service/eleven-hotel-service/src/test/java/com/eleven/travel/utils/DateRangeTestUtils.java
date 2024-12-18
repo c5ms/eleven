@@ -1,4 +1,4 @@
-package com.eleven.utils;
+package com.eleven.travel.utils;
 
 import com.eleven.travel.core.DateRange;
 import com.eleven.travel.core.DateTimeRange;

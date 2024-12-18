@@ -1,4 +1,4 @@
-package com.eleven.domain.hotel;
+package com.eleven.travel.domain.hotel;
 
 import com.eleven.travel.domain.hotel.Hotel;
 import com.eleven.travel.domain.hotel.command.HotelUpdateCommand;

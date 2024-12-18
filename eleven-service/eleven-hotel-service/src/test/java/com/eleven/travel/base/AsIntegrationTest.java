@@ -1,4 +1,4 @@
-package com.eleven.base;
+package com.eleven.travel.base;
 
 import java.lang.annotation.*;
 

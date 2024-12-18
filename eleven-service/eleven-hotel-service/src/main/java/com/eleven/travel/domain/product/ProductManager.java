@@ -1,7 +1,7 @@
 package com.eleven.travel.domain.product;
 
-import com.eleven.travel.domain.hotel.HotelErrors;
 import com.eleven.travel.domain.plan.Plan;
+import com.eleven.travel.domain.room.RoomErrors;
 import com.eleven.travel.domain.room.RoomKey;
 import com.eleven.travel.domain.room.RoomRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class ProductManager {
 
         for (Long roomId : rooms) {
             var roomKey = RoomKey.of(plan.getHotelId(), roomId);
-            var room = roomRepository.findByRoomKey(roomKey).orElseThrow(HotelErrors.ROOM_NOT_FOUND::toException);
+            var room = roomRepository.findByRoomKey(roomKey).orElseThrow(RoomErrors.ROOM_NOT_FOUND::toException);
             var product = Product.of(plan, room);
             productRepository.save(product);
         }
