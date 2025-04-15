@@ -18,5 +18,11 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
+
+      - name: Set up Maven
+        uses: actions/setup-maven@v3
+        with:
+          maven-version: '3.9.5'
+
       - name: Build with Maven
         run: mvn clean package -DskipTests=true
