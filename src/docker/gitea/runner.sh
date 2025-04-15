@@ -1,0 +1,1 @@
+docker run -e GITEA_INSTANCE_URL=http://localhost:3000 -e GITEA_RUNNER_REGISTRATION_TOKEN=36570c69d74e053f5dcfa1225591794cf8da8dd5 -v /var/run/docker.sock:/var/run/docker.sock --name my_runner gitea/act_runner:nightly
