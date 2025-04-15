@@ -1,9 +1,12 @@
 name: Gitea Actions Demo
 run-name: ${{ gitea.actor }} is testing out Gitea Actions 🚀
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  Explore-Gitea-Actions:
+  build:
     runs-on: maven:3.8.5-openjdk-17
     steps:
-      - run: mvn clean package  -DskipTests=true
+      - run: mvn clean package -DskipTests=true
