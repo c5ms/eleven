@@ -21,6 +21,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -33,6 +34,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 
 
+@ComponentScan("com.eleven.framework.web")
 @EnableElevenCore
 @EnableConfigurationProperties(ElevenRestProperties.class)
 @RequiredArgsConstructor

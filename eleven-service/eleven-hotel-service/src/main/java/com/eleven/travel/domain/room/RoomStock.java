@@ -45,8 +45,8 @@ public final class RoomStock implements Serializable {
             return new HashSet<>();
         }
         return getAvailablePeriod()
-                .dates()
-                .filter(localDate -> localDate.isAfter(LocalDate.now()))
-                .collect(Collectors.toSet());
+            .dates()
+            .filter(localDate -> localDate.isAfter(LocalDate.now()))
+            .collect(Collectors.toSet());
     }
 }

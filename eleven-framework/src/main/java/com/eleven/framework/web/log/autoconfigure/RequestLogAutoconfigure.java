@@ -1,6 +1,6 @@
-package com.eleven.framework.log.autoconfigure;
+package com.eleven.framework.web.log.autoconfigure;
 
-import com.eleven.framework.log.RequestLogInterceptor;
+import com.eleven.framework.web.log.RequestLogInterceptor;
 import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;

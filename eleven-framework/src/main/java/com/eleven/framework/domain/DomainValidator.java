@@ -1,4 +1,4 @@
-package com.eleven.framework.error;
+package com.eleven.framework.domain;
 
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.BooleanUtils;

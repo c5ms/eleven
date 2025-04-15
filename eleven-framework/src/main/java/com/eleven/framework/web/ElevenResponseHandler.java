@@ -62,20 +62,6 @@ public class ElevenResponseHandler implements ResponseBodyAdvice<Object> {
             }
         }
 
-//        if (statusCode < 300 && statusCode >= 200) {
-//            if (request.getMethod() == HttpMethod.DELETE) {
-//                response.setStatusCode(HttpStatus.NO_CONTENT);
-//            }
-//
-//            if (request.getMethod() == HttpMethod.POST) {
-//                response.setStatusCode(HttpStatus.CREATED);
-//            }
-//
-//            if (request.getMethod() == HttpMethod.PUT) {
-//                response.setStatusCode(HttpStatus.ACCEPTED);
-//            }
-//        }
-
         if (body instanceof PageResponse<?> pageResponse) {
             response.getHeaders().set(HTTP_HEADER_TOTAL_COUNT, String.valueOf(pageResponse.getTotal()));
             body = pageResponse.getItems();

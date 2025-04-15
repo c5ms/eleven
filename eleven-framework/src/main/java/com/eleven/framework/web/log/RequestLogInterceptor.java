@@ -1,7 +1,7 @@
-package com.eleven.framework.log;
+package com.eleven.framework.web.log;
 
 import com.eleven.framework.security.AuthenticContext;
-import com.eleven.framework.log.annonation.UseRequestLog;
+import com.eleven.framework.web.log.annonation.UseRequestLog;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.http.HttpServletRequest;

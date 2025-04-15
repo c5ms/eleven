@@ -1,4 +1,4 @@
-package com.eleven.framework.log.annonation;
+package com.eleven.framework.web.log.annonation;
 
 import java.lang.annotation.*;
 

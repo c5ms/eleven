@@ -17,12 +17,12 @@ public class HotelService {
 
     public Hotel create(HotelCreateCommand command) {
         var hotel = Hotel.builder()
-                .basic(command.getBasic())
-                .address(command.getAddress())
-                .checkPolicy(command.getCheckPolicy())
-                .position(command.getPosition())
-                .checkPolicy(command.getCheckPolicy())
-                .build();
+            .basic(command.getBasic())
+            .address(command.getAddress())
+            .checkPolicy(command.getCheckPolicy())
+            .position(command.getPosition())
+            .checkPolicy(command.getCheckPolicy())
+            .build();
         hotelManager.validate(hotel);
         hotelRepository.saveAndFlush(hotel);
         return hotel;
@@ -38,7 +38,6 @@ public class HotelService {
 
     public void open(Long hotelId) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(ContextSupport::noPrincipalException);
-
         hotel.active();
         hotelRepository.saveAndFlush(hotel);
     }

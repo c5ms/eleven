@@ -1,4 +1,4 @@
-package com.eleven.framework.error;
+package com.eleven.framework.domain;
 
 import lombok.Data;
 

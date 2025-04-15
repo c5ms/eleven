@@ -1,6 +1,6 @@
 package com.eleven.travel.domain.booking.validate;
 
-import com.eleven.framework.error.DomainError;
+import com.eleven.framework.domain.DomainError;
 import com.eleven.travel.domain.booking.Booking;
 import com.eleven.travel.domain.booking.BookingValidator;
 import lombok.RequiredArgsConstructor;
