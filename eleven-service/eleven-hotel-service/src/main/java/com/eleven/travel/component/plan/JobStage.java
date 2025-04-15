@@ -10,13 +10,13 @@ import lombok.RequiredArgsConstructor;
 public class JobStage {
 
 	private Job job;
-	private LocalDate startData;
+	private LocalDate startDate;
 	private LocalDate endDate;
 
-	private JobStage(Job job, LocalDate startData, Duration duration) {
+	private JobStage(Job job, LocalDate startDate, Duration duration) {
 		this.job = job;
-		this.startData = startData;
-		this.endDate = this.startData.plusDays(duration.toDays());
+		this.startDate = startDate;
+		this.endDate = this.startDate.plusDays(duration.toDays());
 	}
 
 	static JobStage of(Job job, LocalDate startData, Duration duration) {
@@ -28,25 +28,25 @@ public class JobStage {
 	}
 
 	void forward(Duration duration) {
-		this.startData = this.startData.plusDays(duration.toDays());
+		this.startDate = this.startDate.plusDays(duration.toDays());
 		this.endDate = this.endDate.plusDays(duration.toDays());
 	}
 
 	void backward(Duration duration) {
-		this.startData = this.startData.minusDays(duration.toDays());
+		this.startDate = this.startDate.minusDays(duration.toDays());
 		this.endDate = this.endDate.minusDays(duration.toDays());
 	}
 
 	void forwardDuration(Duration duration) {
-		this.endDate = this.startData.plusDays(duration.toDays());
+		this.endDate = this.startDate.plusDays(duration.toDays());
 	}
 
 	void backwardDuration(Duration duration) {
-		this.startData = this.endDate.minusDays(duration.toDays());
+		this.startDate = this.endDate.minusDays(duration.toDays());
 	}
 
 	public Duration getDuration() {
-		return Duration.between(this.startData.atStartOfDay(), this.endDate.atStartOfDay());
+		return Duration.between(this.startDate.atStartOfDay(), this.endDate.atStartOfDay());
 	}
 
 	public String getStageName() {
@@ -55,7 +55,7 @@ public class JobStage {
 
 	@Override
 	public String toString() {
-		return job.getName() + "[" + startData + "," + endDate + "]";
+		return job.getName() + "[" + startDate + "," + endDate + "]";
 	}
 
 }
