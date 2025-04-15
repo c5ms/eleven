@@ -1,7 +1,7 @@
 package com.eleven.framework.log;
 
 import cn.hutool.json.JSONUtil;
-import com.eleven.framework.web.PageResponse;
+import com.eleven.framework.web.model.PageResponse;
 import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;

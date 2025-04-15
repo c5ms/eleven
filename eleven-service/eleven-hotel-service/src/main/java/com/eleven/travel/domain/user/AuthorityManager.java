@@ -3,7 +3,7 @@ package com.eleven.travel.domain.user;
 import com.eleven.domain.user.model.Authority;
 import com.eleven.domain.user.model.AuthorityRepository;
 import com.eleven.domain.user.model.User;
-import com.eleven.framework.data.DomainHelper;
+import com.eleven.framework.domain.DomainHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

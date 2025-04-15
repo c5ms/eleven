@@ -1,7 +1,7 @@
 package com.eleven.travel.domain.user.event;
 
 
-import com.eleven.framework.data.DomainEvent;
+import com.eleven.framework.domain.DomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

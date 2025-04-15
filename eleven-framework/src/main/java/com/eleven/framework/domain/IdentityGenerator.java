@@ -1,4 +1,4 @@
-package com.eleven.framework.data;
+package com.eleven.framework.domain;
 
 public interface IdentityGenerator {
 

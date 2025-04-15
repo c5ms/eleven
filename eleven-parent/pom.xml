@@ -30,7 +30,7 @@
 
         <!--  spring -->
         <version.spring-boot>3.4.0</version.spring-boot>
-        <version.spring-cloud>2024.0.0</version.spring-cloud>
+        <version.spring-cloud>2023.0.5</version.spring-cloud>
 
         <!-- common utils -->
         <version.hutool>5.8.31</version.hutool>

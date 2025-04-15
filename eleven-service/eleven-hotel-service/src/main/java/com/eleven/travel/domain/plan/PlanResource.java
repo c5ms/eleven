@@ -1,6 +1,6 @@
 package com.eleven.travel.domain.plan;
 
-import com.eleven.framework.web.PageResponse;
+import com.eleven.framework.web.model.PageResponse;
 import com.eleven.framework.web.annonation.AsRestApi;
 import com.eleven.travel.core.ChargeType;
 import com.eleven.travel.core.SaleChannel;

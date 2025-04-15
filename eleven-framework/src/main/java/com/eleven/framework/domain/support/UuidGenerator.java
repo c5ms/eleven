@@ -1,7 +1,7 @@
-package com.eleven.framework.data.support;
+package com.eleven.framework.domain.support;
 
 import cn.hutool.core.util.IdUtil;
-import com.eleven.framework.data.IdentityGenerator;
+import com.eleven.framework.domain.IdentityGenerator;
 
 public class UuidGenerator implements IdentityGenerator {
 

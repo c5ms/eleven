@@ -1,6 +1,7 @@
 package com.eleven.framework.web;
 
 import com.eleven.framework.web.annonation.AsInnerApi;
+import com.eleven.framework.web.model.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpMethod;

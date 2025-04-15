@@ -1,9 +1,9 @@
 package com.eleven.framework.configure;
 
 import cn.hutool.core.lang.Snowflake;
-import com.eleven.framework.data.DomainAuditorAware;
-import com.eleven.framework.data.IdentityGenerator;
-import com.eleven.framework.data.support.*;
+import com.eleven.framework.domain.DomainAuditorAware;
+import com.eleven.framework.domain.IdentityGenerator;
+import com.eleven.framework.domain.support.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

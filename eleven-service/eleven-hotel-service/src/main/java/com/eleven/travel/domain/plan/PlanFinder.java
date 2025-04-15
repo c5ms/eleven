@@ -1,6 +1,6 @@
 package com.eleven.travel.domain.plan;
 
-import com.eleven.framework.data.Specifications;
+import com.eleven.framework.domain.Specifications;
 import com.eleven.travel.core.support.ContextSupport;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;

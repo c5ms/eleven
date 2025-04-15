@@ -1,4 +1,4 @@
-package com.eleven.framework.web;
+package com.eleven.framework.web.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Max;

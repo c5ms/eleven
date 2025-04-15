@@ -1,7 +1,7 @@
 package com.eleven.travel.domain.hotel;
 
-import com.eleven.framework.web.PageRequest;
-import com.eleven.framework.web.PageResponse;
+import com.eleven.framework.web.model.PageRequest;
+import com.eleven.framework.web.model.PageResponse;
 import com.eleven.framework.web.Rests;
 import com.eleven.framework.web.annonation.AsRestApi;
 import com.eleven.travel.core.support.ContextSupport;
