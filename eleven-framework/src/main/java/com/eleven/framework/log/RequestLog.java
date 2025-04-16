@@ -1,4 +1,4 @@
-package com.eleven.framework.web.log;
+package com.eleven.framework.log;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

@@ -1,8 +1,8 @@
-package com.eleven.demo.demo;
+package com.eleven.ross;
 
-import java.util.Optional;
-import com.eleven.demo.hotel.HotelClient;
+import java.util.List;
 import com.eleven.framework.web.annonation.AsRestApi;
+import com.eleven.framework.web.model.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,11 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class DemoResource {
 
-  private final HotelClient hotelClient;
-
-  @GetMapping("/rooms")
-  public Optional<String> rooms(String roomId) {
-    return hotelClient.readPlan(1L, 1L);
-  }
+    @GetMapping
+    public PageResponse<String> rooms() {
+        return PageResponse.of(List.of("user","page"),10);
+    }
 
 }

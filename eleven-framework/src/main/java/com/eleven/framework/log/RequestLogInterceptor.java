@@ -1,7 +1,7 @@
-package com.eleven.framework.web.log;
+package com.eleven.framework.log;
 
 import com.eleven.framework.security.AuthenticContext;
-import com.eleven.framework.web.log.annonation.UseRequestLog;
+import com.eleven.framework.log.annonation.UseRequestLog;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +20,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @Component
 @RequiredArgsConstructor
 public class RequestLogInterceptor implements HandlerInterceptor {
-
 
     @Override
     public boolean preHandle(@Nonnull HttpServletRequest request, @Nonnull HttpServletResponse response, @Nonnull Object handler) {

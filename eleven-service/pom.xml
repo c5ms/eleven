@@ -29,6 +29,7 @@
     <modules>
         <module>eleven-hotel-service</module>
         <module>eleven-demo-service</module>
+        <module>eleven-motives-service</module>
     </modules>
 
 
