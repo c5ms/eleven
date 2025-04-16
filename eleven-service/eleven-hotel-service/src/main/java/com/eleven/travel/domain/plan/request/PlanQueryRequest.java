@@ -1,6 +1,6 @@
 package com.eleven.travel.domain.plan.request;
 
-import com.eleven.framework.web.PageRequest;
+import com.eleven.framework.web.model.PageRequest;
 import lombok.Getter;
 import lombok.Setter;
 

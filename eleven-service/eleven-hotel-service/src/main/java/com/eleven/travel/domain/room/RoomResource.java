@@ -29,9 +29,9 @@ public class RoomResource {
     @GetMapping
     public List<RoomDto> listRoom(@PathVariable("hotelId") Long hotelId) {
         return roomFinder.listRoom(hotelId)
-                .stream()
-                .map(roomConverter::toDto)
-                .collect(Collectors.toList());
+            .stream()
+            .map(roomConverter::toDto)
+            .collect(Collectors.toList());
     }
 
     @Operation(summary = "read room")

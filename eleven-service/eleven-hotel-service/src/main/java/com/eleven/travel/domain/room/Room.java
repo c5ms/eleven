@@ -78,9 +78,9 @@ public class Room extends DomainEntity {
 
     public boolean isBookable(RoomInventory roomInventory) {
         return Predicates.<RoomInventory>notNull()
-                .and(theInv -> theInv.getRoomKey().equals(toKey()))
-                .and(theInv -> getStock().getAvailablePeriod().contains(theInv.getKey().getDate()))
-                .test(roomInventory);
+            .and(theInv -> theInv.getRoomKey().equals(toKey()))
+            .and(theInv -> getStock().getAvailablePeriod().contains(theInv.getKey().getDate()))
+            .test(roomInventory);
     }
 
     public void deactivate() {
@@ -97,14 +97,6 @@ public class Room extends DomainEntity {
         }
         this.setActive(true);
         this.addEvent(RoomActiveEvent.of(this));
-    }
-
-    public void setStock(RoomStock stock) {
-        if (Objects.equals(stock, this.stock)) {
-            return;
-        }
-        this.stock = stock;
-        this.addEvent(RoomStockChangedEvent.of(this));
     }
 
     @Nonnull
@@ -126,6 +118,14 @@ public class Room extends DomainEntity {
 
     public RoomStock getStock() {
         return Optional.ofNullable(stock).orElseGet(RoomStock::empty);
+    }
+
+    public void setStock(RoomStock stock) {
+        if (Objects.equals(stock, this.stock)) {
+            return;
+        }
+        this.stock = stock;
+        this.addEvent(RoomStockChangedEvent.of(this));
     }
 
     public RoomBasic getBasic() {

@@ -2,9 +2,9 @@ package com.eleven.travel.domain.user;
 
 import com.eleven.framework.authentic.Principal;
 import com.eleven.framework.authentic.ToPrincipal;
-import com.eleven.framework.data.AbstractEntity;
-import com.eleven.framework.data.Audition;
-import com.eleven.framework.data.LogicDeletable;
+import com.eleven.framework.domain.AbstractEntity;
+import com.eleven.framework.domain.Audition;
+import com.eleven.framework.domain.LogicDeletable;
 import com.eleven.framework.time.TimeHelper;
 import com.eleven.upms.api.domain.event.UserDeletedEvent;
 import com.eleven.upms.api.domain.event.UserLoginEvent;

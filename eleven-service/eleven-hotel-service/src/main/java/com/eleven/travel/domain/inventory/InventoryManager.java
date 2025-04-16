@@ -16,8 +16,8 @@ public class InventoryManager {
         var inventories = roomInventoryRepository.findByRoomKey(room.toKey());
         var dates = room.getStock().getAvailableDates();
         var inventoryBuilder = RoomInventory.builder()
-                .roomKey(room.toKey())
-                .stock(room.getStock().getQuantity());
+            .roomKey(room.toKey())
+            .stock(room.getStock().getQuantity());
 
         inventories.forEach(roomInventory -> dates.remove(roomInventory.getKey().getDate()));
         for (RoomInventory roomInventory : inventories) {
@@ -29,9 +29,9 @@ public class InventoryManager {
         }
 
         dates.stream()
-                .map(inventoryBuilder::date)
-                .map(RoomInventory.RoomInventoryBuilder::build)
-                .forEach(inventories::add);
+            .map(inventoryBuilder::date)
+            .map(RoomInventory.RoomInventoryBuilder::build)
+            .forEach(inventories::add);
         roomInventoryRepository.saveAllAndFlush(inventories);
     }
 

@@ -1,7 +1,7 @@
 package com.eleven.framework.web;
 
-import com.eleven.framework.error.DomainError;
-import com.eleven.framework.error.SimpleDomainError;
+import com.eleven.framework.domain.DomainError;
+import com.eleven.framework.domain.SimpleDomainError;
 
 public interface RestErrors {
     DomainError ERROR_REQUEST_BODY_FAILED = SimpleDomainError.of("request_body_failed", "Process request body failed");

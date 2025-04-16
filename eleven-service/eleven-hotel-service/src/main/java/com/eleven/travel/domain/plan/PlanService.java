@@ -30,14 +30,14 @@ public class PlanService {
     public Plan createPlan(Long hotelId, PlanCreateCommand command) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(ContextSupport::noPrincipalException);
         var plan = Plan.normal()
-                .hotelId(hotel.getHotelId())
-                .salePeriod(command.getSalePeriod())
-                .preSellPeriod(command.getPreSalePeriod())
-                .stayPeriod(command.getStayPeriod())
-                .basic(command.getBasic())
-                .stock(command.getStock())
-                .saleChannels(command.getChannels())
-                .create();
+            .hotelId(hotel.getHotelId())
+            .salePeriod(command.getSalePeriod())
+            .preSellPeriod(command.getPreSalePeriod())
+            .stayPeriod(command.getStayPeriod())
+            .basic(command.getBasic())
+            .stock(command.getStock())
+            .saleChannels(command.getChannels())
+            .create();
         planManager.validate(plan);
         planRepository.saveAndFlush(plan);
         productManager.createProducts(plan, command.getRooms());

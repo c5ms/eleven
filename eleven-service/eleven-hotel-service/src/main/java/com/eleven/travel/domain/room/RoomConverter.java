@@ -19,29 +19,29 @@ public class RoomConverter {
 
     public RoomDto toDto(Room room) {
         return new RoomDto()
-                .setHotelId(room.getHotelId())
-                .setRoomId(room.getRoomId())
-                .setImages(room.getImages().toSet())
-                .setStock(modelMapper.map(room.getStock(), RoomStockVo.class))
-                .setBasic(modelMapper.map(room.getBasic(), RoomBasicVo.class))
-                .setOccupancy(modelMapper.map(room.getOccupancy(), OccupancyVo.class));
+            .setHotelId(room.getHotelId())
+            .setRoomId(room.getRoomId())
+            .setImages(room.getImages().toSet())
+            .setStock(modelMapper.map(room.getStock(), RoomStockVo.class))
+            .setBasic(modelMapper.map(room.getBasic(), RoomBasicVo.class))
+            .setOccupancy(modelMapper.map(room.getOccupancy(), OccupancyVo.class));
     }
 
     public RoomUpdateCommand toCommand(RoomUpdateRequest request) {
         return RoomUpdateCommand.builder()
-                .stock(modelMapper.map(request.getStock(), RoomStock.class))
-                .basic(modelMapper.map(request.getBasic(), RoomBasic.class))
-                .occupancy(modelMapper.map(request.getOccupancy(), Occupancy.class))
-                .images(request.getImages())
-                .build();
+            .stock(modelMapper.map(request.getStock(), RoomStock.class))
+            .basic(modelMapper.map(request.getBasic(), RoomBasic.class))
+            .occupancy(modelMapper.map(request.getOccupancy(), Occupancy.class))
+            .images(request.getImages())
+            .build();
     }
 
     public RoomCreateCommand toCommand(RoomCreateRequest request) {
         return RoomCreateCommand.builder()
-                .stock(modelMapper.map(request.getStock(), RoomStock.class))
-                .basic(modelMapper.map(request.getBasic(), RoomBasic.class))
-                .occupancy(modelMapper.map(request.getOccupancy(), Occupancy.class))
-                .images(request.getImages())
-                .build();
+            .stock(modelMapper.map(request.getStock(), RoomStock.class))
+            .basic(modelMapper.map(request.getBasic(), RoomBasic.class))
+            .occupancy(modelMapper.map(request.getOccupancy(), Occupancy.class))
+            .images(request.getImages())
+            .build();
     }
 }

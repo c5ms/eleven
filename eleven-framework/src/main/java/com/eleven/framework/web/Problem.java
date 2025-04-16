@@ -1,6 +1,6 @@
 package com.eleven.framework.web;
 
-import com.eleven.framework.error.DomainError;
+import com.eleven.framework.domain.DomainError;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(chain = true)
 public class Problem {
+
     private String error;
     private String message;
 

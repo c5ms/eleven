@@ -1,6 +1,6 @@
 package com.eleven.travel.domain.room;
 
-import com.eleven.framework.data.Specifications;
+import com.eleven.framework.domain.Specifications;
 import com.eleven.travel.core.support.ContextSupport;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +24,13 @@ public class RoomFinder {
 
     private final RoomRepository roomRepository;
 
+    private static Specification<Room> getSpec(RoomFilter filter) {
+        return Specifications.query(Room.class)
+            .and(Objects.nonNull(filter.getHotelId()), Specs.hotelIdIs(filter.getHotelId()))
+            .and(StringUtils.isNotBlank(filter.getPlanName()), Specs.nameLike(filter.getPlanName()))
+            .getSpec();
+    }
+
     @Transactional(readOnly = true)
     public Optional<Room> readRoom(RoomKey roomKey) {
         return roomRepository.findByRoomKey(roomKey).filter(ContextSupport::mustReadable);
@@ -40,24 +47,17 @@ public class RoomFinder {
         return roomRepository.findAll(spec, pageable);
     }
 
-    private static Specification<Room> getSpec(RoomFilter filter) {
-        return Specifications.query(Room.class)
-                .and(Objects.nonNull(filter.getHotelId()), Specs.hotelIdIs(filter.getHotelId()))
-                .and(StringUtils.isNotBlank(filter.getPlanName()), Specs.nameLike(filter.getPlanName()))
-                .getSpec();
-    }
-
     @UtilityClass
     public class Specs {
 
         Specification<Room> nameLike(@Nullable String name) {
             return (root, query, builder) ->
-                    builder.like(root.get(Room.Fields.basic).get(RoomBasic.Fields.name), "%" + name + "%");
+                builder.like(root.get(Room.Fields.basic).get(RoomBasic.Fields.name), "%" + name + "%");
         }
 
         Specification<Room> hotelIdIs(@Nullable Long hotelId) {
             return (root, query, builder) ->
-                    builder.equal(root.get(Room.Fields.hotelId), hotelId);
+                builder.equal(root.get(Room.Fields.hotelId), hotelId);
         }
     }
 

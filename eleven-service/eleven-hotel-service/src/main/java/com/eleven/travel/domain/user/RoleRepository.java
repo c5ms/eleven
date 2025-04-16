@@ -1,7 +1,7 @@
 package com.eleven.travel.domain.user;
 
 
-import com.eleven.framework.data.DataFoundException;
+import com.eleven.framework.domain.DataFoundException;
 import org.springframework.data.repository.ListCrudRepository;
 
 import java.util.Optional;

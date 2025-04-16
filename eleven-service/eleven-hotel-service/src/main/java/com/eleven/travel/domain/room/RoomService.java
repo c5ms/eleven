@@ -25,12 +25,12 @@ public class RoomService {
         var hotel = hotelRepository.findById(hotelId).orElseThrow(NoPrincipalException::new);
 
         var room = Room.builder()
-                .hotelId(hotel.getHotelId())
-                .basic(command.getBasic())
-                .occupancy(command.getOccupancy())
-                .stock(command.getStock())
-                .images(command.getImages())
-                .build();
+            .hotelId(hotel.getHotelId())
+            .basic(command.getBasic())
+            .occupancy(command.getOccupancy())
+            .stock(command.getStock())
+            .images(command.getImages())
+            .build();
 
         roomManager.validate(room);
         roomRepository.save(room);
