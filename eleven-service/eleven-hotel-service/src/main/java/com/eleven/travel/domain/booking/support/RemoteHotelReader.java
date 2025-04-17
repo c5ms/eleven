@@ -19,8 +19,8 @@ public class RemoteHotelReader implements HotelReader {
     @Override
     public Optional<Hotel> readHotel(Long hotelId) {
         return hotelClient.readHotel(hotelId)
-                .map(RemoteHotel::new)
-                ;
+            .map(RemoteHotel::new)
+            ;
     }
 
 }

@@ -1,7 +1,7 @@
 package com.eleven.travel.domain.booking;
 
 
-import com.eleven.framework.error.DomainError;
+import com.eleven.framework.domain.DomainError;
 
 import java.util.Optional;
 

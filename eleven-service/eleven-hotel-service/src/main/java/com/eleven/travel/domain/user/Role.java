@@ -1,6 +1,6 @@
 package com.eleven.travel.domain.user;
 
-import com.eleven.framework.data.AbstractEntity;
+import com.eleven.framework.domain.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

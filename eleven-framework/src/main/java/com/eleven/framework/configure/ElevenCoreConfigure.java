@@ -30,6 +30,7 @@ import java.time.LocalTime;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 
+
 @PropertySource("classpath:/config/application-core.properties")
 @EnableConfigurationProperties(ElevenCoreProperties.class)
 @RequiredArgsConstructor

@@ -1,7 +1,7 @@
 package com.eleven.travel.domain.plan;
 
-import com.eleven.framework.error.DomainError;
-import com.eleven.framework.error.SimpleDomainError;
+import com.eleven.framework.domain.DomainError;
+import com.eleven.framework.domain.SimpleDomainError;
 
 public interface PlanErrors {
 

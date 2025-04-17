@@ -1,6 +1,6 @@
 package com.eleven.travel.domain.plan;
 
-import com.eleven.framework.data.Specifications;
+import com.eleven.framework.domain.Specifications;
 import com.eleven.travel.core.support.ContextSupport;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
@@ -32,9 +32,9 @@ public class PlanFinder {
     @Transactional(readOnly = true)
     public Page<Plan> queryPage(PlanFilter filter, Pageable pageable) {
         var spec = Specifications.query(Plan.class)
-                .and(StringUtils.isNotBlank(filter.getPlanName()), Specs.nameLike(filter.getPlanName()))
-                .and(Objects.nonNull(filter.getHotelId()), Specs.hotelIdIs(filter.getHotelId()))
-                .getSpec();
+            .and(StringUtils.isNotBlank(filter.getPlanName()), Specs.nameLike(filter.getPlanName()))
+            .and(Objects.nonNull(filter.getHotelId()), Specs.hotelIdIs(filter.getHotelId()))
+            .getSpec();
         return planRepository.findAll(spec, pageable);
 
     }
@@ -44,12 +44,12 @@ public class PlanFinder {
 
         Specification<Plan> nameLike(@Nullable String name) {
             return (root, query, builder) ->
-                    builder.like(root.get(Plan.Fields.basic).get(PlanBasic.Fields.name), "%" + name + "%");
+                builder.like(root.get(Plan.Fields.basic).get(PlanBasic.Fields.name), "%" + name + "%");
         }
 
         Specification<Plan> hotelIdIs(@Nullable Long hotelId) {
             return (root, query, builder) ->
-                    builder.equal(root.get(Plan.Fields.hotelId), hotelId);
+                builder.equal(root.get(Plan.Fields.hotelId), hotelId);
         }
     }
 

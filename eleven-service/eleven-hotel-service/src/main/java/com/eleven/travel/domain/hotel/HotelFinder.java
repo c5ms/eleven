@@ -1,6 +1,6 @@
 package com.eleven.travel.domain.hotel;
 
-import com.eleven.framework.data.Specifications;
+import com.eleven.framework.domain.Specifications;
 import com.eleven.travel.domain.plan.PlanBasic;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +30,8 @@ public class HotelFinder {
     @Transactional(readOnly = true)
     public Page<Hotel> queryPage(HotelFilter filter, Pageable pageable) {
         var spec = Specifications.query(Hotel.class)
-                .and(StringUtils.isNotBlank(filter.getHotelName()), Specs.nameLike(filter.getHotelName()))
-                .getSpec();
+            .and(StringUtils.isNotBlank(filter.getHotelName()), Specs.nameLike(filter.getHotelName()))
+            .getSpec();
         return hotelRepository.findAll(spec, pageable);
     }
 
@@ -40,7 +40,7 @@ public class HotelFinder {
 
         Specification<Hotel> nameLike(@Nullable String name) {
             return (root, query, builder) ->
-                    builder.like(root.get(Hotel.Fields.basic).get(PlanBasic.Fields.name), "%" + name + "%");
+                builder.like(root.get(Hotel.Fields.basic).get(PlanBasic.Fields.name), "%" + name + "%");
         }
 
     }

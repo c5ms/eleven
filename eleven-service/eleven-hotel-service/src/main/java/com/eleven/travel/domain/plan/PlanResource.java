@@ -1,7 +1,7 @@
 package com.eleven.travel.domain.plan;
 
-import com.eleven.framework.web.PageResponse;
 import com.eleven.framework.web.annonation.AsRestApi;
+import com.eleven.framework.web.model.PageResponse;
 import com.eleven.travel.core.ChargeType;
 import com.eleven.travel.core.SaleChannel;
 import com.eleven.travel.domain.plan.command.PlanSetPriceCommand;
@@ -35,9 +35,9 @@ public class PlanResource {
     @GetMapping
     public PageResponse<PlanDto> queryPlan(@PathVariable("hotelId") Long hotelId, @ParameterObject @Validated PlanQueryRequest request) {
         var filter = PlanFilter.builder()
-                .hotelId(hotelId)
-                .planName(request.getPlanName())
-                .build();
+            .hotelId(hotelId)
+            .planName(request.getPlanName())
+            .build();
         var page = planFinder.queryPage(filter, request.toPagerequest()).map(planConverter::toDto);
         return PageResponse.of(page.getContent(), page.getTotalElements());
     }
@@ -83,10 +83,10 @@ public class PlanResource {
                          @PathVariable("roomId") Long roomId) {
         // todo
         var command = PlanSetPriceCommand.builder()
-                .chargeType(ChargeType.BY_ROOM)
-                .saleChannel(SaleChannel.DP)
-                .wholeRoomPrice(BigDecimal.valueOf(200))
-                .build();
+            .chargeType(ChargeType.BY_ROOM)
+            .saleChannel(SaleChannel.DP)
+            .wholeRoomPrice(BigDecimal.valueOf(200))
+            .build();
         var planKey = PlanKey.of(hotelId, planId);
         planService.setPrice(planKey, roomId, command);
     }

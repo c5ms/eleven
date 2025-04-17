@@ -107,6 +107,10 @@ public class Plan extends DomainEntity {
         return ImmutableValues.of(saleChannels);
     }
 
+    private void setSaleChannels(Set<SaleChannel> saleChannels) {
+        Validate.notEmpty(saleChannels, "saleChannels can not be empty");
+        this.saleChannels = saleChannels;
+    }
 
     @Nonnull
     public PlanKey toKey() {
@@ -118,8 +122,8 @@ public class Plan extends DomainEntity {
             return false;
         }
         return BooleanUtils.or(new boolean[]{
-                getSalePeriod().isCurrent(),
-                getPreSalePeriod().isCurrent(),
+            getSalePeriod().isCurrent(),
+            getPreSalePeriod().isCurrent(),
         });
     }
 
@@ -137,11 +141,6 @@ public class Plan extends DomainEntity {
         Validate.notNull(salePeriod, "salePeriod must not be null");
         Validate.isTrue(!salePeriod.isEmpty(), "salePeriod must not be empty");
         this.salePeriod = salePeriod;
-    }
-
-    private void setSaleChannels(Set<SaleChannel> saleChannels) {
-        Validate.notEmpty(saleChannels, "saleChannels can not be empty");
-        this.saleChannels = saleChannels;
     }
 
     private void setStayPeriod(DateRange stayPeriod) {

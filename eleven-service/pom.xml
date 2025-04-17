@@ -20,14 +20,16 @@
         <docker.expose>9000</docker.expose>
         <docker.base-image>openjdk:17</docker.base-image>
         <!-- use -Ddocker.host to instead of  -->
-        <!--        <docker.host>http://127.0.0.1:2375</docker.host>-->
-        <!--        <docker.registry>192.168.2.30:5000</docker.registry>-->
-        <!--        <docker.username>admin</docker.username>-->
-        <!--        <docker.password>111111</docker.password>-->
+        <docker.host>http://127.0.0.1:2375</docker.host>
+        <docker.registry>192.168.2.30:5000</docker.registry>
+        <docker.username>admin</docker.username>
+        <docker.password>111111</docker.password>
     </properties>
 
     <modules>
         <module>eleven-hotel-service</module>
+        <module>eleven-demo-service</module>
+        <module>eleven-motives-service</module>
     </modules>
 
 

@@ -3,7 +3,7 @@ package com.eleven.framework.web;
 import cn.hutool.core.exceptions.ExceptionUtil;
 import com.eleven.framework.authorize.NoAuthorityException;
 import com.eleven.framework.authorize.NoPrincipalException;
-import com.eleven.framework.error.DomainException;
+import com.eleven.framework.domain.DomainException;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;

@@ -1,9 +1,9 @@
 package com.eleven.travel.domain.hotel;
 
-import com.eleven.framework.web.PageRequest;
-import com.eleven.framework.web.PageResponse;
 import com.eleven.framework.web.Rests;
 import com.eleven.framework.web.annonation.AsRestApi;
+import com.eleven.framework.web.model.PageRequest;
+import com.eleven.framework.web.model.PageResponse;
 import com.eleven.travel.core.support.ContextSupport;
 import com.eleven.travel.domain.hotel.request.HotelCreateRequest;
 import com.eleven.travel.domain.hotel.request.HotelQueryRequest;
@@ -35,8 +35,8 @@ public class HotelResource {
     public PageResponse<HotelDto> queryHotel(@ParameterObject @Validated HotelQueryRequest request,
                                              @ParameterObject @Validated PageRequest pageRequest) {
         var filter = HotelFilter.builder()
-                .hotelName(request.getHotelName())
-                .build();
+            .hotelName(request.getHotelName())
+            .build();
         var page = pageRequest.toPagerequest();
         var result = hotelFinder.queryPage(filter, page).map(hotelConvertor::toDto);
         return PageResponse.of(result.getContent(), result.getTotalElements());
@@ -68,8 +68,8 @@ public class HotelResource {
     @PostMapping("/{hotelId:[0-9]+}/commands/open")
     public void openHotel(@PathVariable("hotelId") Long hotelId) {
         hotelFinder.read(hotelId)
-                .filter(ContextSupport::mustWritable)
-                .orElseThrow(Rests::throw404);
+            .filter(ContextSupport::mustWritable)
+            .orElseThrow(Rests::throw404);
         hotelService.open(hotelId);
     }
 
@@ -77,8 +77,8 @@ public class HotelResource {
     @PostMapping("/{hotelId:[0-9]+]}/commands/close")
     public void closeHotel(@PathVariable("hotelId") Long hotelId) {
         hotelFinder.read(hotelId)
-                .filter(ContextSupport::mustWritable)
-                .orElseThrow(Rests::throw404);
+            .filter(ContextSupport::mustWritable)
+            .orElseThrow(Rests::throw404);
         hotelService.close(hotelId);
     }
 }

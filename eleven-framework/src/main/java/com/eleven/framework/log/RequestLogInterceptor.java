@@ -21,7 +21,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @RequiredArgsConstructor
 public class RequestLogInterceptor implements HandlerInterceptor {
 
-
     @Override
     public boolean preHandle(@Nonnull HttpServletRequest request, @Nonnull HttpServletResponse response, @Nonnull Object handler) {
         if (handler instanceof HandlerMethod handlerMethod) {

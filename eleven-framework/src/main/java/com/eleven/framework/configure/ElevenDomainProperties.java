@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "eleven.data")
+@ConfigurationProperties(prefix = "eleven.domain")
 class ElevenDomainProperties {
 
     private IdGeneratorType idType = IdGeneratorType.RAINDROP;

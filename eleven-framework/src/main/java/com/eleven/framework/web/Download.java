@@ -15,11 +15,16 @@ public class Download {
     private Handler handler;
     private String contentType = "application/octet-stream";
 
-    public Download() {
+    public  static Download of(String filename,InputStream inputStream) {
+        return new Download()
+            .setFilename(filename)
+            .setInputStream(inputStream);
     }
 
-    public Download(String filename) {
-        this.filename = filename;
+    public  static Download of(String filename,Handler handler) {
+        return new Download()
+            .setFilename(filename)
+            .setHandler(handler);
     }
 
     @FunctionalInterface

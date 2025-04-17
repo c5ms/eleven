@@ -5,7 +5,7 @@ import com.eleven.domain.user.manager.RoleManager;
 import com.eleven.domain.user.model.Authority;
 import com.eleven.domain.user.model.Role;
 import com.eleven.domain.user.model.RoleRepository;
-import com.eleven.framework.data.DomainHelper;
+import com.eleven.framework.domain.DomainHelper;
 import com.eleven.upms.api.application.command.RoleCreateCommand;
 import com.eleven.upms.api.application.command.RoleUpdateCommand;
 import com.eleven.upms.api.application.model.RoleDetail;

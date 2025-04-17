@@ -1,6 +1,7 @@
 package com.eleven.framework.web;
 
 import com.eleven.framework.web.annonation.AsInnerApi;
+import com.eleven.framework.web.model.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpMethod;
@@ -60,20 +61,6 @@ public class ElevenResponseHandler implements ResponseBodyAdvice<Object> {
                 return null;
             }
         }
-
-//        if (statusCode < 300 && statusCode >= 200) {
-//            if (request.getMethod() == HttpMethod.DELETE) {
-//                response.setStatusCode(HttpStatus.NO_CONTENT);
-//            }
-//
-//            if (request.getMethod() == HttpMethod.POST) {
-//                response.setStatusCode(HttpStatus.CREATED);
-//            }
-//
-//            if (request.getMethod() == HttpMethod.PUT) {
-//                response.setStatusCode(HttpStatus.ACCEPTED);
-//            }
-//        }
 
         if (body instanceof PageResponse<?> pageResponse) {
             response.getHeaders().set(HTTP_HEADER_TOTAL_COUNT, String.valueOf(pageResponse.getTotal()));

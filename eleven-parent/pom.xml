@@ -29,8 +29,8 @@
         <docker.baseImage>azul/zulu-openjdk:17-jre</docker.baseImage>
 
         <!--  spring -->
-        <version.spring-boot>3.4.0</version.spring-boot>
-        <version.spring-cloud>2024.0.0</version.spring-cloud>
+        <version.spring-boot>3.4.4</version.spring-boot>
+        <version.spring-cloud>2024.0.1</version.spring-cloud>
 
         <!-- common utils -->
         <version.hutool>5.8.31</version.hutool>
@@ -40,12 +40,12 @@
         <version.commons-compress>1.21</version.commons-compress>
         <version.commons-text>1.9</version.commons-text>
         <version.commons-net>3.8.0</version.commons-net>
-        <version.commons-vfs2>2.9.0</version.commons-vfs2>
+        <version.commons-vfs2>2.11.0</version.commons-vfs2>
         <version.modelmapper>3.0.0</version.modelmapper>
         <version.easyPoi>4.4.0</version.easyPoi>
         <version.easyexcel>3.1.1</version.easyexcel>
         <version.javassist>3.29.2-GA</version.javassist>
-        <version.redisson>3.28.0</version.redisson>
+        <version.redisson>3.45.1</version.redisson>
         <version.jetcache>2.7.4</version.jetcache>
 
         <!-- data -->
@@ -54,7 +54,7 @@
         <version.kryo5>5.5.0</version.kryo5>
 
         <!-- dev & runtime & monitor -->
-        <version.springdoc>2.7.0</version.springdoc>
+        <version.springdoc>2.8.6</version.springdoc>
         <version.knife4j>4.5.0</version.knife4j>
         <version.findbugs>3.0.2</version.findbugs>
         <version.mapstruct>1.5.5.Final</version.mapstruct>
@@ -248,6 +248,29 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
+
+        <!-- test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
