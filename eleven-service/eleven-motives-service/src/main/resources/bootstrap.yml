@@ -1,0 +1,47 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: @artifactId@
+  profiles:
+    active: @facility@
+
+  datasource:
+    url: ${db.hotel.url}
+    username: ${db.hotel.username}
+    password: ${db.hotel.password}
+
+  liquibase:
+    database-change-log-table: 001_DATABASECHANGELOG
+    database-change-log-lock-table: 001_DATABASECHANGELOGLOCK
+    enabled: false
+
+  jpa:
+    generate-ddl: true
+
+eleven:
+  cache:
+    duration: PT8H
+  domain:
+    id-type: raindrop
+  logs:
+    logstash:
+      enabled: false
+  web:
+    open-api:
+      title: Hotel API
+      description: ross hotel management tool
+      version: @version@
+      terms-of-service: https://www.demcia.com/
+      contact:
+        email: demcia@demcia.com
+        name: 德玛西亚小分队
+        url: https://www.demcia.com/
+      license:
+        name: Apache 2.0
+        url: https://www.demcia.com/
+
+springdoc:
+  api-docs:
+    path: /api-docs

@@ -1,4 +1,4 @@
-package com.eleven.framework.web.log;
+package com.eleven.framework.log;
 
 import com.eleven.framework.security.AuthenticContext;
 import com.fasterxml.jackson.core.JsonGenerator;

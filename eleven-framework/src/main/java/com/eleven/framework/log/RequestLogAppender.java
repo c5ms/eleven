@@ -1,4 +1,4 @@
-package com.eleven.framework.web.log;
+package com.eleven.framework.log;
 
 public interface RequestLogAppender {
     /**

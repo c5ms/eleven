@@ -1,4 +1,4 @@
-package com.eleven.framework.web.log;
+package com.eleven.framework.log;
 
 import cn.hutool.core.net.NetUtil;
 import cn.hutool.extra.servlet.JakartaServletUtil;

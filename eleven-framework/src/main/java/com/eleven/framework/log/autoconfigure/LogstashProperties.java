@@ -1,4 +1,4 @@
-package com.eleven.framework.web.log.autoconfigure;
+package com.eleven.framework.log.autoconfigure;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
