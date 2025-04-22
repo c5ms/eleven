@@ -59,8 +59,11 @@ public class ElevenExceptionHandler {
 
         // 403
         else if (e instanceof AccessDeniedException) {
-            var problem = Problem.of(RestErrors.ERROR_ACCESS_DENIED);
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(problem);
+            if (log.isDebugEnabled()) {
+                ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body( Problem.of(RestErrors.ERROR_ACCESS_DENIED));
+            }
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
         //404
@@ -100,9 +103,6 @@ public class ElevenExceptionHandler {
         else {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
             var problem = Problem.of("system_internal", ExceptionUtils.getRootCauseMessage(e));
-//            if(log.isErrorEnabled()){
-//                log.error(ExceptionUtil.getMessage(e), e);
-//            }
             if (log.isDebugEnabled()) {
                 return ResponseEntity.status(status).body(problem);
             }

@@ -5,15 +5,18 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import java.util.regex.Pattern;
+
 @Component
 public class ResourceIdConverter implements Converter<String, ResourceId> {
+    private static final Pattern PATTERN = Pattern.compile("^[a-zA-Z0-9_\\-]+$");
 
     @Override
-    public ResourceId convert(@Nonnull String from) {
-        var dig = StringUtils.getDigits(from);
-        if (StringUtils.isBlank(dig)) {
-            throw Rests.throw404();
+    public ResourceId convert(@Nonnull String original) {
+        if(!PATTERN.asMatchPredicate().test(original)) {
+            return null;
         }
-        return new ResourceId(Long.parseLong(dig));
+        var id =Long.parseLong(original);
+        return new ResourceId(id);
     }
 }

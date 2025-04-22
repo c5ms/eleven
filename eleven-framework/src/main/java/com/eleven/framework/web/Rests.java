@@ -7,19 +7,19 @@ import org.springframework.web.server.ResponseStatusException;
 @UtilityClass
 public class Rests {
 
-    public static ResponseStatusException throwFor(HttpStatus status) {
+    public static ResponseStatusException createEx(HttpStatus status) {
         return new ResponseStatusException(status);
     }
 
-    public static ResponseStatusException throw404() {
+    public static ResponseStatusException create404() {
         return new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
-    public static ResponseStatusException throw401() {
+    public static ResponseStatusException create401() {
         return new ResponseStatusException(HttpStatus.UNAUTHORIZED);
     }
 
-    public static ResponseStatusException throw403() {
+    public static ResponseStatusException create403() {
         return new ResponseStatusException(HttpStatus.FORBIDDEN);
     }
 

@@ -5,6 +5,9 @@ import lombok.Data;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -14,10 +17,11 @@ import java.util.Set;
 public class Subject implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
+    private static final String ROLE_PREFIX = "ROLE_";
 
     private static final String ANONYMOUS_SUBJECT_NICK_NAME = "anonymous";
     private static final String ANONYMOUS_SUBJECT_USER_ID = "anonymous";
-    private static final Set<String> ANONYMOUS_AUTHORITIES = Set.of("ROLE_anonymous");
+    private static final Set<String> ANONYMOUS_AUTHORITIES = new HashSet<>(List.of(ROLE_PREFIX+"anonymous"));
 
     public static final Subject ANONYMOUS_INSTANCE = new Subject(
             ANONYMOUS_SUBJECT_USER_ID,
@@ -61,25 +65,6 @@ public class Subject implements Serializable {
         this.principal = principal;
         this.authorities = authorities;
     }
-
-    /**
-     * 授权
-     *
-     * @param authorities 权限
-     */
-    public void grant(Set<String> authorities) {
-        this.authorities.addAll(authorities);
-    }
-
-    /**
-     * 重新授权
-     *
-     * @param authorities 权限
-     */
-    public void reGrant(Set<String> authorities) {
-        this.authorities.addAll(authorities);
-    }
-
 
     public boolean isAnonymous() {
         return ANONYMOUS_SUBJECT_NICK_NAME.equals(nickName);

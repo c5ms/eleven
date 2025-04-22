@@ -69,7 +69,7 @@ public class HotelResource {
     public void openHotel(@PathVariable("hotelId") Long hotelId) {
         hotelFinder.read(hotelId)
             .filter(ContextSupport::mustWritable)
-            .orElseThrow(Rests::throw404);
+            .orElseThrow(Rests::create404);
         hotelService.open(hotelId);
     }
 
@@ -78,7 +78,7 @@ public class HotelResource {
     public void closeHotel(@PathVariable("hotelId") Long hotelId) {
         hotelFinder.read(hotelId)
             .filter(ContextSupport::mustWritable)
-            .orElseThrow(Rests::throw404);
+            .orElseThrow(Rests::create404);
         hotelService.close(hotelId);
     }
 }

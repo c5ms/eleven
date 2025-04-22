@@ -1,11 +1,6 @@
-package com.eleven.ross;
+package com.motiveschina.erp;
 
-import com.eleven.framework.configure.EnableElevenCore;
-import com.eleven.framework.configure.EnableElevenDomain;
 import com.eleven.framework.configure.EnableElevenFramework;
-import com.eleven.framework.configure.EnableElevenLog;
-import com.eleven.framework.configure.EnableElevenRest;
-import com.eleven.framework.configure.EnableElevenSecurity;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
