@@ -1,4 +1,4 @@
-package com.motiveschina.erp.application.queyr;
+package com.motiveschina.erp.application.query;
 
 import lombok.Builder;
 import lombok.Getter;

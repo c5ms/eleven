@@ -1,4 +1,4 @@
-package com.motiveschina.erp.application;
+package com.motiveschina.erp.application.service;
 
 import com.motiveschina.erp.application.command.InventoryStockInCommand;
 import com.motiveschina.erp.domain.inventory.Inventory;
@@ -25,19 +25,20 @@ public class InventoryService {
     public void check() {
         var lows = inventoryRepository.findLowInventories();
         for (Inventory low : lows) {
-            // notify
+
         }
     }
 
     public void stockIn(InventoryStockInCommand command) {
         var purchaseOrder = purchaseOrderRepository.findById(command.getPurchaseOrderId()).orElseThrow(DomainSupport::noPrincipalException);
 
-        var manifest = StockInManifest.empty();
         for (PurchaseOrderItem item : purchaseOrder.getItems()) {
-            manifest.add(item.getProductId(), item.getQuantity());
+            var manifest = StockInManifest.of(item.getProductId(), item.getQuantity());
+            // lock product
+            inventoryManager.stockIn(manifest);
+            // release produce Lock
         }
 
-        inventoryManager.stockIn(manifest);
     }
 
 

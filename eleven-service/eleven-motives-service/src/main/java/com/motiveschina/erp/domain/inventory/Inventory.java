@@ -51,13 +51,6 @@ public class Inventory implements DomainEntity {
         return inventory;
     }
 
-    public static Inventory of(StockInManifest.Item item) {
-        var inventory = new Inventory();
-        inventory.setProductId(item.produceId());
-        inventory.setCurrentQuantity(0);
-        inventory.setSafetyStock(0);
-        return inventory;
-    }
 
     public void stockIn(int quantity) {
         var finalQuantity = currentQuantity + quantity;

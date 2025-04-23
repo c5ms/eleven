@@ -12,29 +12,26 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class InventoryManager {
 
-    private final InventoryRepository inventoryRepository;
+	private final InventoryRepository inventoryRepository;
 
-    public void stockIn(StockInManifest manifest) {
-        for (StockInManifest.Item item : manifest.getItems()) {
+	public void stockIn(StockInManifest manifest) {
+		var inventory = getInventoryOf(manifest);
+		inventory.stockIn(manifest.getQuantity());
+		inventoryRepository.saveAndFlush(inventory);
 
-            var inventory = getInventoryOf(item);
-            inventory.stockIn(item.quantity());
-            inventoryRepository.saveAndFlush(inventory);
+		{
+			var event = InventoryStockInEvent.of(inventory, manifest.getQuantity());
+			DomainSupport.publishDomainEvent(event);
+		}
 
-            {
-                var event = InventoryStockInEvent.of(inventory, item.quantity());
-                DomainSupport.publishDomainEvent(event);
-            }
+		if (inventory.isLow()) {
+			var event = InventoryLowStockEvent.of(inventory, manifest.getQuantity());
+			DomainSupport.publishDomainEvent(event);
+		}
+	}
 
-            if (inventory.isLow()) {
-                var event = InventoryLowStockEvent.of(inventory, item.quantity());
-                DomainSupport.publishDomainEvent(event);
-            }
-        }
-    }
-
-    private Inventory getInventoryOf(StockInManifest.Item item) {
-        return inventoryRepository.findByProductId(item.produceId())
-            .orElseGet(() -> Inventory.of(item));
-    }
+	private Inventory getInventoryOf(StockInManifest manifest) {
+		return inventoryRepository.findByProductId(manifest.getProduceId())
+				.orElseGet(() -> Inventory.of(manifest.getProduceId(), 0));
+	}
 }

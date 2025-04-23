@@ -1,4 +1,4 @@
-package com.motiveschina.erp.application;
+package com.motiveschina.erp.application.service;
 
 import java.util.UUID;
 import java.util.stream.Collectors;
