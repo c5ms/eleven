@@ -66,17 +66,6 @@ public class PurchaseService {
     public void completePurchaseOrder(PurchaseOrderCompleteCommand command) {
         var order = purchaseOrderRepository.findById(command.getOrderId()).orElseThrow(DomainSupport::noPrincipalException);
 
-        // 1. complete by the domain logic
         purchaseOrderManager.complete(order);
-
-        // 2. stock in for each item in the order
-        for (PurchaseOrderItem item : order.getItems()) {
-            var transaction = Transaction.fromPurchase()
-                .productId(item.getProductId())
-                .quantity(item.getQuantity())
-                .purchaseOrderId(item.getPurchaseOrder().getOrderId())
-                .build();
-            inventoryManager.stockIn(transaction);
-        }
     }
 }

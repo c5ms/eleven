@@ -1,5 +1,6 @@
 package com.motiveschina.erp.application;
 
+import com.motiveschina.erp.application.command.InventoryStockInCommand;
 import com.motiveschina.erp.domain.purchase.event.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class PurchaseListener {
+
+    private final InventoryService inventoryService;
 
     @EventListener(PurchaseOrderCreatedEvent.class)
     public void on(PurchaseOrderCreatedEvent event) {
@@ -34,5 +37,13 @@ public class PurchaseListener {
     @EventListener(PurchaseOrderRejectedEvent.class)
     public void on(PurchaseOrderRejectedEvent event) {
         log.info("PurchaseOrder has been rejected : {}", event.getOrder().getOrderId());
+    }
+
+    @EventListener(PurchaseOrderCompletedEvent.class)
+    public void on(PurchaseOrderCompletedEvent event) {
+        var command = InventoryStockInCommand.builder()
+            .purchaseOrderId(event.getOrder().getOrderId())
+            .build();
+        inventoryService.stockIn(command);
     }
 }

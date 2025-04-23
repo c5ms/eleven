@@ -1,6 +1,5 @@
 package com.motiveschina.erp.domain.inventory;
 
-import com.motiveschina.core.distributed.DistributedLock;
 import com.motiveschina.core.domain.DomainSupport;
 import com.motiveschina.erp.domain.inventory.event.InventoryLowStockEvent;
 import com.motiveschina.erp.domain.inventory.event.InventoryStockInEvent;
@@ -13,24 +12,14 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class InventoryManager {
 
-    private final DistributedLock distributedLock;
     private final InventoryRepository inventoryRepository;
     private final TransactionRepository transactionRepository;
 
     public void stockIn(Transaction transaction) {
-        try {
-            distributedLock.lock(transaction);
-            doStockIn(transaction);
-        } finally {
-            distributedLock.unlock(transaction);
-        }
-    }
-
-    private void doStockIn(Transaction transaction) {
         transactionRepository.save(transaction);
 
         var produceId = transaction.getProductId();
-        var inventory= getInventoryOf(produceId);
+        var inventory = getInventoryOf(produceId);
         var quantity = transaction.getQuantity();
 
         inventory.stockIn(quantity);

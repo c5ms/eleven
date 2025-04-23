@@ -1,7 +1,9 @@
 package com.motiveschina.erp.application;
 
+import com.motiveschina.erp.application.command.InventoryStockInCommand;
 import com.motiveschina.erp.domain.inventory.event.InventoryLowStockEvent;
 import com.motiveschina.erp.domain.inventory.event.InventoryStockInEvent;
+import com.motiveschina.erp.domain.purchase.event.PurchaseOrderCompletedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class InventoryListener {
+
 
     @EventListener(InventoryStockInEvent.class)
     public void on(InventoryStockInEvent event) {
