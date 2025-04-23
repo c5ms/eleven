@@ -1,6 +1,8 @@
 package com.motiveschina.erp.purchase;
 
+import java.util.Set;
 import com.motiveschina.erp.purchase.event.PurchaseOrderApprovedEvent;
+import com.motiveschina.erp.purchase.event.PurchaseOrderCompletedEvent;
 import com.motiveschina.erp.purchase.event.PurchaseOrderCreatedEvent;
 import com.motiveschina.erp.purchase.event.PurchaseOrderDeletedEvent;
 import com.motiveschina.erp.purchase.event.PurchaseOrderRejectedEvent;
@@ -17,7 +19,8 @@ public class PurchaseOrderManager {
 
     private final PurchaseOrderRepository purchaseOrderRepository;
 
-    public void createOrder(PurchaseOrder order) {
+    public void createOrder(PurchaseOrder order, Set<PurchaseOrderItem> items) {
+        items.forEach(order::addItem);
         purchaseOrderRepository.save(order);
 
         var event = PurchaseOrderCreatedEvent.of(order);
@@ -57,4 +60,11 @@ public class PurchaseOrderManager {
     }
 
 
+    public void completeOrder(PurchaseOrder order) {
+//        order.complete();
+        purchaseOrderRepository.save(order);
+
+        var event = PurchaseOrderCompletedEvent.of(order);
+        DomainSupport.publishDomainEvent(event);
+    }
 }

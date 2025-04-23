@@ -3,6 +3,7 @@ package com.motiveschina.erp.purchase;
 import java.util.Optional;
 import com.eleven.framework.web.ResourceId;
 import com.eleven.framework.web.annonation.AsRestApi;
+import com.motiveschina.erp.purchase.command.PurchaseOrderCompleteCommand;
 import com.motiveschina.erp.purchase.command.PurchaseOrderCreateCommand;
 import com.motiveschina.erp.purchase.command.PurchaseOrderDeleteCommand;
 import com.motiveschina.erp.purchase.command.PurchaseOrderReviewCommand;
@@ -74,5 +75,14 @@ public class PurchaseOrderResource {
             .pass(request.getPass())
             .build();
         purchaseService.reviewPurchaseOrder(command);
+    }
+
+    @Operation(summary = "complete a purchase order")
+    @PostMapping("/{id}/commands/complete")
+    public void completePurchaseOrder(@PathVariable("id") ResourceId resourceId) {
+        var command = PurchaseOrderCompleteCommand.builder()
+            .orderId(resourceId.asLong())
+            .build();
+        purchaseService.completePurchaseOrder(command);
     }
 }

@@ -23,7 +23,7 @@ public class Inventory {
     @Id
     @Column(name = "inventory_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long inventory_id;
+    private Long inventoryId;
 
     @Column(name = "product_id", unique = true, nullable = false)
     private Long productId;
@@ -33,4 +33,25 @@ public class Inventory {
 
     @Column(name = "safety_stock", nullable = false)
     private int safetyStock;
+
+    public static Inventory of(Long productId, int safetyStock) {
+        var inventory = new Inventory();
+        inventory.setProductId(productId);
+        inventory.setCurrentQuantity(0);
+        inventory.setSafetyStock(safetyStock);
+        return inventory;
+    }
+
+    public static Inventory of(StockInManifest.Item item) {
+        var inventory = new Inventory();
+        inventory.setProductId(item.produceId());
+        inventory.setCurrentQuantity(0);
+        inventory.setSafetyStock(0);
+        return inventory;
+    }
+
+    public void stockIn(int quantity) {
+        var finalQuantity = currentQuantity + quantity;
+        this.setCurrentQuantity(finalQuantity);
+    }
 }
