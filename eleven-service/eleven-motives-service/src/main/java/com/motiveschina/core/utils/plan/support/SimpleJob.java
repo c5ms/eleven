@@ -1,6 +1,6 @@
-package com.eleven.travel.component.plan.support;
+package com.motiveschina.core.utils.plan.support;
 
-import com.eleven.travel.component.plan.Job;
+import com.motiveschina.core.utils.plan.Job;
 import lombok.Getter;
 
 @Getter

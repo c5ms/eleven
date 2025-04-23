@@ -1,10 +1,6 @@
 package com.motiveschina.erp.application;
 
-import com.motiveschina.erp.domain.purchase.event.PurchaseOrderApprovedEvent;
-import com.motiveschina.erp.domain.purchase.event.PurchaseOrderCreatedEvent;
-import com.motiveschina.erp.domain.purchase.event.PurchaseOrderDeletedEvent;
-import com.motiveschina.erp.domain.purchase.event.PurchaseOrderRejectedEvent;
-import com.motiveschina.erp.domain.purchase.event.PurchaseOrderSubmittedEvent;
+import com.motiveschina.erp.domain.purchase.event.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;

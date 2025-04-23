@@ -1,4 +1,4 @@
-package com.eleven.travel.component.plan;
+package com.motiveschina.core.utils.plan;
 
 public interface Job {
 

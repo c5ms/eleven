@@ -14,18 +14,17 @@ import org.springframework.data.domain.Pageable;
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
-@Hidden
 public class Pagination {
 
     @NotNull(message = "页码不能为空")
     @Min(value = 0, message = "页码不能为负")
-    @Schema(description = "页码", defaultValue = "1")
+    @Schema(description = "页码", defaultValue = "1",example = "1")
     private int page = 0;
 
     @NotNull(message = "每页条数不能为空")
     @Min(value = 1, message = "每页条数至少为1条")
     @Max(value = 1000, message = "每页条数不能超过1000")
-    @Schema(description = "页长", defaultValue = "20")
+    @Schema(description = "页长", defaultValue = "20",example = "20")
     private int size = 20;
 
     public Pageable toPageable() {

@@ -1,4 +1,4 @@
-package com.motiveschina.erp.application;
+package com.motiveschina.erp.application.command;
 
 import lombok.Builder;
 import lombok.Getter;

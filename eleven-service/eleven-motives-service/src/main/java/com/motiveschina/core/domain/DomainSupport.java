@@ -1,4 +1,4 @@
-package com.motiveschina.core;
+package com.motiveschina.core.domain;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.eleven.framework.authorize.NoPrincipalException;

@@ -1,25 +1,25 @@
 package com.motiveschina.erp.application;
 
-import java.util.UUID;
-import java.util.stream.Collectors;
-import com.motiveschina.erp.application.command.PurchaseOrderCompleteCommand;
-import com.motiveschina.erp.application.command.PurchaseOrderCreateCommand;
-import com.motiveschina.erp.application.command.PurchaseOrderDeleteCommand;
-import com.motiveschina.erp.application.command.PurchaseOrderReviewCommand;
-import com.motiveschina.erp.application.command.PurchaseOrderSubmitCommand;
+import com.motiveschina.core.domain.DomainSupport;
+import com.motiveschina.erp.application.command.*;
 import com.motiveschina.erp.application.convertor.PurchaseConvertor;
+import com.motiveschina.erp.domain.inventory.InventoryManager;
+import com.motiveschina.erp.domain.inventory.Transaction;
 import com.motiveschina.erp.domain.purchase.PurchaseOrder;
+import com.motiveschina.erp.domain.purchase.PurchaseOrderItem;
 import com.motiveschina.erp.domain.purchase.PurchaseOrderManager;
 import com.motiveschina.erp.domain.purchase.PurchaseOrderRepository;
-import com.motiveschina.core.DomainSupport;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+import java.util.stream.Collectors;
+
 @Slf4j
-@Component
+@Service
 @Transactional
 @PreAuthorize("isAnonymous()")
 @RequiredArgsConstructor
@@ -28,16 +28,16 @@ public class PurchaseService {
     private final PurchaseOrderManager purchaseOrderManager;
     private final PurchaseOrderRepository purchaseOrderRepository;
     private final PurchaseConvertor purchaseConvertor;
+    private final InventoryManager inventoryManager;
 
     public PurchaseOrder createPurchaseOrder(PurchaseOrderCreateCommand command) {
         var number = UUID.randomUUID().toString().toUpperCase();
-        var order = PurchaseOrder.of(number, command.getSupplierId());
-
-        var items = command.getItems()
-            .stream()
-            .map(purchaseConvertor::toDomain)
-            .collect(Collectors.toSet());
-
+        var items = purchaseConvertor.toDomain(command.getItems());
+        var order = PurchaseOrder.builder()
+            .orderNumber(number)
+            .items(items)
+            .supplierId(command.getSupplierId())
+            .build();
         purchaseOrderManager.createOrder(order, items);
         return order;
     }
@@ -65,6 +65,18 @@ public class PurchaseService {
 
     public void completePurchaseOrder(PurchaseOrderCompleteCommand command) {
         var order = purchaseOrderRepository.findById(command.getOrderId()).orElseThrow(DomainSupport::noPrincipalException);
+
+        // 1. complete by the domain logic
         purchaseOrderManager.complete(order);
+
+        // 2. stock in for each item in the order
+        for (PurchaseOrderItem item : order.getItems()) {
+            var transaction = Transaction.fromPurchase()
+                .productId(item.getProductId())
+                .quantity(item.getQuantity())
+                .purchaseOrderId(item.getPurchaseOrder().getOrderId())
+                .build();
+            inventoryManager.stockIn(transaction);
+        }
     }
 }

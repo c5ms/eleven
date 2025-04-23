@@ -1,9 +1,11 @@
-package com.eleven.travel.component.plan;
+
+import com.motiveschina.core.utils.plan.Direction;
+import com.motiveschina.core.utils.plan.JobPlanner;
+import com.motiveschina.core.utils.plan.support.SimpleJob;
+import org.junit.jupiter.api.Assertions;
 
 import java.time.Duration;
 import java.time.LocalDate;
-import com.eleven.travel.component.plan.support.SimpleJob;
-import org.junit.jupiter.api.Assertions;
 
 class JobPlannerTest {
 

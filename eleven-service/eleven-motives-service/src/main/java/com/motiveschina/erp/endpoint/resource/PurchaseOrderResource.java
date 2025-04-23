@@ -1,19 +1,13 @@
 package com.motiveschina.erp.endpoint.resource;
 
-import java.util.Optional;
 import com.eleven.framework.web.ResourceId;
 import com.eleven.framework.web.annonation.AsRestApi;
 import com.eleven.framework.web.model.PageResult;
 import com.eleven.framework.web.model.Pagination;
-import com.motiveschina.erp.application.convertor.PurchaseConvertor;
-import com.motiveschina.erp.application.PurchaseOrderFilter;
 import com.motiveschina.erp.application.PurchaseOrderFinder;
 import com.motiveschina.erp.application.PurchaseService;
-import com.motiveschina.erp.application.command.PurchaseOrderCompleteCommand;
-import com.motiveschina.erp.application.command.PurchaseOrderCreateCommand;
-import com.motiveschina.erp.application.command.PurchaseOrderDeleteCommand;
-import com.motiveschina.erp.application.command.PurchaseOrderReviewCommand;
-import com.motiveschina.erp.application.command.PurchaseOrderSubmitCommand;
+import com.motiveschina.erp.application.command.*;
+import com.motiveschina.erp.application.convertor.PurchaseConvertor;
 import com.motiveschina.erp.application.dto.PurchaseOrderDto;
 import com.motiveschina.erp.endpoint.request.PurchaseOrderCreateRequest;
 import com.motiveschina.erp.endpoint.request.PurchaseOrderQuery;
@@ -23,14 +17,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.Optional;
 
 @Slf4j
-@Tag(name = "purchase-orders")
+@Tag(name = "purchase-order")
 @AsRestApi
 @RequiredArgsConstructor
 @RequestMapping("/purchase-orders")
@@ -103,6 +96,7 @@ public class PurchaseOrderResource {
     public void completePurchaseOrder(@PathVariable("id") ResourceId resourceId) {
         var command = PurchaseOrderCompleteCommand.builder()
             .orderId(resourceId.asLong())
+            .stockDate(LocalDate.now())
             .build();
         purchaseService.completePurchaseOrder(command);
     }

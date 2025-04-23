@@ -1,5 +1,7 @@
-package com.motiveschina.core.concurrency;
+package com.motiveschina.core.distributed;
 
 public interface Lockable {
+
     String getLockKey();
+
 }

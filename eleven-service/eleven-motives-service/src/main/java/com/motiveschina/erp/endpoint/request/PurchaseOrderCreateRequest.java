@@ -1,9 +1,10 @@
 package com.motiveschina.erp.endpoint.request;
 
-import java.util.List;
-import com.motiveschina.erp.application.dto.PurchaseOrderItemDto;
 import com.motiveschina.core.layer.HttpRequest;
+import com.motiveschina.erp.application.dto.PurchaseOrderItemDto;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class PurchaseOrderCreateRequest implements HttpRequest {

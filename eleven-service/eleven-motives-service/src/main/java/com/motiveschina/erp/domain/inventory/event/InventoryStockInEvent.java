@@ -1,7 +1,7 @@
 package com.motiveschina.erp.domain.inventory.event;
 
-import com.motiveschina.erp.domain.inventory.Inventory;
 import com.motiveschina.core.layer.DomainEvent;
+import com.motiveschina.erp.domain.inventory.Inventory;
 import lombok.AllArgsConstructor;
 import lombok.Value;
 

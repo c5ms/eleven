@@ -1,17 +1,13 @@
 package com.motiveschina.erp.domain.purchase;
 
-import java.util.List;
-import java.util.Set;
-import com.motiveschina.erp.domain.purchase.event.PurchaseOrderApprovedEvent;
-import com.motiveschina.erp.domain.purchase.event.PurchaseOrderCompletedEvent;
-import com.motiveschina.erp.domain.purchase.event.PurchaseOrderCreatedEvent;
-import com.motiveschina.erp.domain.purchase.event.PurchaseOrderDeletedEvent;
-import com.motiveschina.erp.domain.purchase.event.PurchaseOrderRejectedEvent;
-import com.motiveschina.erp.domain.purchase.event.PurchaseOrderSubmittedEvent;
-import com.motiveschina.core.DomainSupport;
+import com.motiveschina.core.domain.DomainSupport;
+import com.motiveschina.erp.domain.purchase.event.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Component
@@ -21,7 +17,7 @@ public final class PurchaseOrderManager {
     private final List<PurchaseOrderInterceptor> interceptors;
     private final PurchaseOrderRepository purchaseOrderRepository;
 
-    public void createOrder(PurchaseOrder order, Set<PurchaseOrderItem> items) {
+    public void createOrder(PurchaseOrder order, List<PurchaseOrderItem> items) {
         items.forEach(order::addItem);
 
         interceptors.forEach(purchaseOrderInterceptor -> purchaseOrderInterceptor.preCreate(order));

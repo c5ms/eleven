@@ -1,7 +1,7 @@
 package com.motiveschina.erp.application;
 
-import java.util.Objects;
 import com.eleven.framework.domain.Specifications;
+import com.motiveschina.erp.application.command.InventoryFilter;
 import com.motiveschina.erp.domain.inventory.Inventory;
 import com.motiveschina.erp.domain.inventory.InventoryRepository;
 import jakarta.annotation.Nullable;
@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Objects;
 
 @Slf4j
 @Component

@@ -2,8 +2,9 @@ package com.motiveschina.core.layer;
 
 import java.io.Serializable;
 import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-@Hidden
+@Schema
 public interface HttpRequest extends Serializable {
 
 }

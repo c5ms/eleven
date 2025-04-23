@@ -1,4 +1,4 @@
-package com.motiveschina.core;
+package com.motiveschina.core.domain;
 
 import java.time.LocalDateTime;
 import jakarta.persistence.Column;

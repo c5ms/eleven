@@ -1,4 +1,4 @@
-package com.eleven.travel.component.plan;
+package com.motiveschina.core.utils.plan;
 
 import java.time.Duration;
 import java.time.LocalDate;

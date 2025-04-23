@@ -1,8 +1,8 @@
 package com.motiveschina.erp.domain.purchase.support;
 
 import com.motiveschina.erp.domain.purchase.PurchaseOrder;
-import com.motiveschina.erp.domain.purchase.PurchaseOrderItem;
 import com.motiveschina.erp.domain.purchase.PurchaseOrderInterceptor;
+import com.motiveschina.erp.domain.purchase.PurchaseOrderItem;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
