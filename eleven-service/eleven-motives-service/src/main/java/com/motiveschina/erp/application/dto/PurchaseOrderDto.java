@@ -3,7 +3,7 @@ package com.motiveschina.erp.application.dto;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import com.motiveschina.erp.support.layer.Dto;
+import com.motiveschina.core.layer.Dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

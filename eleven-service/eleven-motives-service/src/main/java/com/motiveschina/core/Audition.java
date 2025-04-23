@@ -1,4 +1,4 @@
-package com.motiveschina.erp.support;
+package com.motiveschina.core;
 
 import java.time.LocalDateTime;
 import jakarta.persistence.Column;

@@ -1,4 +1,4 @@
-package com.motiveschina.erp.application.service;
+package com.motiveschina.erp.application;
 
 import java.util.concurrent.TimeUnit;
 import com.motiveschina.erp.application.command.InventoryStockInCommand;

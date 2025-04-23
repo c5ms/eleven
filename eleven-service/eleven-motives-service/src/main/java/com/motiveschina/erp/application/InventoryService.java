@@ -1,4 +1,4 @@
-package com.motiveschina.erp.application.service;
+package com.motiveschina.erp.application;
 
 import com.motiveschina.erp.application.command.InventoryStockInCommand;
 import com.motiveschina.erp.domain.inventory.Inventory;
@@ -7,7 +7,7 @@ import com.motiveschina.erp.domain.inventory.InventoryRepository;
 import com.motiveschina.erp.domain.inventory.StockInManifest;
 import com.motiveschina.erp.domain.purchase.PurchaseOrderItem;
 import com.motiveschina.erp.domain.purchase.PurchaseOrderRepository;
-import com.motiveschina.erp.support.DomainSupport;
+import com.motiveschina.core.DomainSupport;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

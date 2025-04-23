@@ -1,4 +1,4 @@
-package com.motiveschina.erp.application.service;
+package com.motiveschina.erp.application;
 
 import com.motiveschina.erp.domain.purchase.event.PurchaseOrderApprovedEvent;
 import com.motiveschina.erp.domain.purchase.event.PurchaseOrderCreatedEvent;

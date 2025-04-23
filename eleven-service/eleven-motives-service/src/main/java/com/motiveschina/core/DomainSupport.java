@@ -1,4 +1,4 @@
-package com.motiveschina.erp.support;
+package com.motiveschina.core;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.eleven.framework.authorize.NoPrincipalException;
@@ -6,7 +6,7 @@ import com.eleven.framework.authorize.NoReadAuthorityException;
 import com.eleven.framework.authorize.NoWriteAuthorityException;
 import com.eleven.framework.authorize.ObjectSecurityManager;
 import com.eleven.framework.domain.DomainError;
-import com.motiveschina.erp.support.layer.DomainEvent;
+import com.motiveschina.core.layer.DomainEvent;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

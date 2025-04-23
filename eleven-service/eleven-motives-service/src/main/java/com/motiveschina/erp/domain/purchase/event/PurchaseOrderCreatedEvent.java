@@ -1,7 +1,7 @@
 package com.motiveschina.erp.domain.purchase.event;
 
 import com.motiveschina.erp.domain.purchase.PurchaseOrder;
-import com.motiveschina.erp.support.layer.DomainEvent;
+import com.motiveschina.core.layer.DomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Value;
 

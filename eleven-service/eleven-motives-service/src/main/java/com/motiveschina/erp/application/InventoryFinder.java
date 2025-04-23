@@ -1,4 +1,4 @@
-package com.motiveschina.erp.application.query;
+package com.motiveschina.erp.application;
 
 import java.util.Objects;
 import com.eleven.framework.domain.Specifications;

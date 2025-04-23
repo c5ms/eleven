@@ -8,7 +8,7 @@ import com.motiveschina.erp.domain.purchase.event.PurchaseOrderCreatedEvent;
 import com.motiveschina.erp.domain.purchase.event.PurchaseOrderDeletedEvent;
 import com.motiveschina.erp.domain.purchase.event.PurchaseOrderRejectedEvent;
 import com.motiveschina.erp.domain.purchase.event.PurchaseOrderSubmittedEvent;
-import com.motiveschina.erp.support.DomainSupport;
+import com.motiveschina.core.DomainSupport;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -84,7 +84,7 @@ public final class PurchaseOrderManager {
     public void complete(PurchaseOrder order) {
         interceptors.forEach(purchaseOrderInterceptor -> purchaseOrderInterceptor.preComplete(order));
 
-        order.complete();
+//        order.complete();
         purchaseOrderRepository.save(order);
 
         interceptors.forEach(purchaseOrderInterceptor -> purchaseOrderInterceptor.afterComplete(order));

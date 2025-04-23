@@ -1,4 +1,4 @@
-package com.motiveschina.erp.support.layer;
+package com.motiveschina.core.layer;
 
 import java.io.Serializable;
 import io.swagger.v3.oas.annotations.Hidden;
