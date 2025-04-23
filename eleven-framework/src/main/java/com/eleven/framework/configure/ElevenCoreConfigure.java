@@ -1,5 +1,7 @@
 package com.eleven.framework.configure;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.json.JsonReadFeature;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -46,7 +48,7 @@ public class ElevenCoreConfigure {
             .setImplicitMappingEnabled(true)
             .setMethodAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
             .setFieldAccessLevel(org.modelmapper.config.Configuration.AccessLevel.PRIVATE)
-            .setMatchingStrategy(MatchingStrategies.LOOSE)
+            .setMatchingStrategy(MatchingStrategies.STRICT)
         ;
         return modelMapper;
     }
@@ -56,6 +58,7 @@ public class ElevenCoreConfigure {
         var properties = coreProperties.getJson();
 
         return builder -> builder
+
             .serializerByType(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern(properties.getDateFormat())))
             .serializerByType(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern(properties.getTimeFormat())))
             .serializerByType(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(properties.getDatetimeFormat())))
@@ -68,6 +71,7 @@ public class ElevenCoreConfigure {
 
 //                .propertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
 
+//            .visibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY)
             .timeZone(properties.getTimeZone())
             .featuresToDisable(
                 SerializationFeature.FAIL_ON_EMPTY_BEANS,

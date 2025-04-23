@@ -9,14 +9,9 @@ import java.util.regex.Pattern;
 
 @Component
 public class ResourceIdConverter implements Converter<String, ResourceId> {
-    private static final Pattern PATTERN = Pattern.compile("^[a-zA-Z0-9_\\-]+$");
 
     @Override
     public ResourceId convert(@Nonnull String original) {
-        if(!PATTERN.asMatchPredicate().test(original)) {
-            return null;
-        }
-        var id =Long.parseLong(original);
-        return new ResourceId(id);
+        return new ResourceId(original);
     }
 }

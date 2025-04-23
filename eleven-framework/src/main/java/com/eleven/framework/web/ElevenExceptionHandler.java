@@ -72,6 +72,9 @@ public class ElevenExceptionHandler {
         } else if (e instanceof NoResourceFoundException) {
             status = HttpStatus.NOT_FOUND;
         }
+        else if (e instanceof ResourceIdNotValidException) {
+            status = HttpStatus.NOT_FOUND;
+        }
 
         // 415 405
         else if (e instanceof HttpMediaTypeException) {

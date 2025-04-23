@@ -3,6 +3,7 @@ package com.eleven.framework.utils;
 import jakarta.annotation.Nonnull;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 public class ImmutableValues<T> implements Iterable<T> {
@@ -61,7 +62,11 @@ public class ImmutableValues<T> implements Iterable<T> {
         return new HashSet<>(values);
     }
 
-    public ArrayList<T> toList() {
+    public List<T> toList() {
         return new ArrayList<>(values);
+    }
+
+    public <D> List<D> toList(Function<T,D> convertor) {
+        return this.values.stream().map(convertor).toList();
     }
 }

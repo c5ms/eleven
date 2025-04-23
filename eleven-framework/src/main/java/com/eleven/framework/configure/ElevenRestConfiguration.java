@@ -77,7 +77,7 @@ final class ElevenRestConfiguration implements WebMvcConfigurer {
   GroupedOpenApi innerApi() {
     return GroupedOpenApi.builder()
       .group("inner-api")
-      .displayName("internal")
+      .displayName("inner")
       .pathsToMatch(API_PREFIX_INTERNAL + "/**")
       .build();
   }
