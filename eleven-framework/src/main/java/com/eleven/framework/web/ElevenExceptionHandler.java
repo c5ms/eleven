@@ -44,8 +44,7 @@ public class ElevenExceptionHandler {
 
         //400 - payload
         if (e instanceof HttpMessageConversionException) {
-            var problem = Problem.of(RestErrors.ERROR_REQUEST_BODY_FAILED);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } else if (e instanceof BindException ex) {
             var problem = ValidationProblem.empty();
             ex.getAllErrors()
@@ -60,8 +59,7 @@ public class ElevenExceptionHandler {
         // 403
         else if (e instanceof AccessDeniedException) {
             if (log.isDebugEnabled()) {
-                ResponseEntity.status(HttpStatus.FORBIDDEN)
-                .body( Problem.of(RestErrors.ERROR_ACCESS_DENIED));
+                ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             }
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
@@ -92,14 +90,12 @@ public class ElevenExceptionHandler {
         // inner error system
         else if (e instanceof DomainException ex) {
             var problem = Problem.of(ex);
-            // todo with exception or not?
             log.warn(ExceptionUtil.getMessage(ex));
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problem);
         } else if (e instanceof NoPrincipalException) {
             status = HttpStatus.NOT_FOUND;
         } else if (e instanceof NoAuthorityException) {
-            var problem = Problem.of(RestErrors.ERROR_ACCESS_DENIED);
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(problem);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
         // 500

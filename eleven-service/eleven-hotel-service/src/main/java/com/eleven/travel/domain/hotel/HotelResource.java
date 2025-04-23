@@ -2,8 +2,8 @@ package com.eleven.travel.domain.hotel;
 
 import com.eleven.framework.web.Rests;
 import com.eleven.framework.web.annonation.AsRestApi;
-import com.eleven.framework.web.model.PageRequest;
-import com.eleven.framework.web.model.PageResponse;
+import com.eleven.framework.web.model.Pagination;
+import com.eleven.framework.web.model.PageResult;
 import com.eleven.travel.core.support.ContextSupport;
 import com.eleven.travel.domain.hotel.request.HotelCreateRequest;
 import com.eleven.travel.domain.hotel.request.HotelQueryRequest;
@@ -32,14 +32,14 @@ public class HotelResource {
 
     @Operation(summary = "query hotel")
     @GetMapping
-    public PageResponse<HotelDto> queryHotel(@ParameterObject @Validated HotelQueryRequest request,
-                                             @ParameterObject @Validated PageRequest pageRequest) {
+    public PageResult<HotelDto> queryHotel(@ParameterObject @Validated HotelQueryRequest request,
+                                           @ParameterObject @Validated Pagination pagination) {
         var filter = HotelFilter.builder()
             .hotelName(request.getHotelName())
             .build();
-        var page = pageRequest.toPagerequest();
+        var page = pagination.toPageable();
         var result = hotelFinder.queryPage(filter, page).map(hotelConvertor::toDto);
-        return PageResponse.of(result.getContent(), result.getTotalElements());
+        return PageResult.of(result.getContent(), result.getTotalElements());
     }
 
     @Operation(summary = "read hotel")

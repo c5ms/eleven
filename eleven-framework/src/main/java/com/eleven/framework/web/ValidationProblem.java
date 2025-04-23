@@ -14,7 +14,7 @@ public class ValidationProblem extends Problem {
     private final List<Field> fields = new ArrayList<>();
 
     public ValidationProblem() {
-        super(RestErrors.ERROR_VALIDATE_FAILED.getError(), RestErrors.ERROR_VALIDATE_FAILED.getMessage());
+        super("validate_failed", "Validate failed");
     }
 
     public static ValidationProblem empty() {
@@ -26,9 +26,8 @@ public class ValidationProblem extends Problem {
         return this;
     }
 
-    public ValidationProblem addField(Field field) {
+    public void addField(Field field) {
         this.fields.add(field);
-        return this;
     }
 
     @Hidden

@@ -21,7 +21,7 @@ public class DomainSupport {
     }
 
     public void must(Boolean check, DomainError domainError) throws NoWriteAuthorityException {
-        if(!check){
+        if (!check) {
             domainError.throwException();
         }
     }
@@ -30,7 +30,7 @@ public class DomainSupport {
         return new NoPrincipalException();
     }
 
-    public void publishDomainEvent(DomainEvent event){
+    public void publishDomainEvent(DomainEvent event) {
         SpringUtil.publishEvent(event);
     }
 }

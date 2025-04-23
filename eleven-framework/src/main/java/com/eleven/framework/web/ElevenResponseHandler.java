@@ -1,7 +1,7 @@
 package com.eleven.framework.web;
 
 import com.eleven.framework.web.annonation.AsInnerApi;
-import com.eleven.framework.web.model.PageResponse;
+import com.eleven.framework.web.model.PageResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpMethod;
@@ -62,9 +62,9 @@ public class ElevenResponseHandler implements ResponseBodyAdvice<Object> {
             }
         }
 
-        if (body instanceof PageResponse<?> pageResponse) {
-            response.getHeaders().set(HTTP_HEADER_TOTAL_COUNT, String.valueOf(pageResponse.getTotal()));
-            body = pageResponse.getItems();
+        if (body instanceof PageResult<?> pageResult) {
+            response.getHeaders().set(HTTP_HEADER_TOTAL_COUNT, String.valueOf(pageResult.getTotal()));
+            body = pageResult.getItems();
         }
 
         return body;

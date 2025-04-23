@@ -1,7 +1,7 @@
 package com.eleven.travel.domain.plan;
 
 import com.eleven.framework.web.annonation.AsRestApi;
-import com.eleven.framework.web.model.PageResponse;
+import com.eleven.framework.web.model.PageResult;
 import com.eleven.travel.core.ChargeType;
 import com.eleven.travel.core.SaleChannel;
 import com.eleven.travel.domain.plan.command.PlanSetPriceCommand;
@@ -33,13 +33,13 @@ public class PlanResource {
 
     @Operation(summary = "query plan")
     @GetMapping
-    public PageResponse<PlanDto> queryPlan(@PathVariable("hotelId") Long hotelId, @ParameterObject @Validated PlanQueryRequest request) {
+    public PageResult<PlanDto> queryPlan(@PathVariable("hotelId") Long hotelId, @ParameterObject @Validated PlanQueryRequest request) {
         var filter = PlanFilter.builder()
             .hotelId(hotelId)
             .planName(request.getPlanName())
             .build();
-        var page = planFinder.queryPage(filter, request.toPagerequest()).map(planConverter::toDto);
-        return PageResponse.of(page.getContent(), page.getTotalElements());
+        var page = planFinder.queryPage(filter, request.toPageable()).map(planConverter::toDto);
+        return PageResult.of(page.getContent(), page.getTotalElements());
     }
 
     @Operation(summary = "read plan")

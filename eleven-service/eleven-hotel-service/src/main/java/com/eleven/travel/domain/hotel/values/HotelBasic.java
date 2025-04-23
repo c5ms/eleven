@@ -49,7 +49,6 @@ public final class HotelBasic implements Serializable {
         return new HotelBasic();
     }
 
-
     public static HotelBasic of(String name,
                                 String description,
                                 String email,

@@ -35,7 +35,7 @@ public class ElevenAuthentication extends AbstractAuthenticationToken {
 
     @Override
     public boolean isAuthenticated() {
-        return true;
+        return !subject.isAnonymous();
     }
 
     @Override
