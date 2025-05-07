@@ -1,5 +1,0 @@
-@startuml
-
-Bon -> ALice :hello
-
-@enduml
