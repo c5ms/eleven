@@ -61,6 +61,12 @@
 > 比如builder模式，静态的of方法，复杂的构造方法，都可以。
 > 好处就是，一来避免了一堆不必要的setter方法；二来能保证构造出来的实体数据非常完整；
 
+### 分层
+DDD是一种思想模式，不是一种落地方案，所以所有符合思想的落方案都可。
+DDD没有提供任何代码结构约束，实现的时候选择一种分层架构（洋葱圈/六边形。etc.）或者自己设计一套，符合自己业务场景即可。
+我们不是一定要按照/application/infrastructure/domain/interfaces这几个词来组织代码结构，而是按照自己的业务场景和架构设计做到干净，整洁，统一即可。
+DDD要求的是有设计，而不是如何设计，单反你的设计自圆其说，不触犯反模式，团队公认，就可以。
+
 ### 杂叙
 1. 《领域驱动》这本书写的真是太抽象和理想化了，并且例子太少，前三遍看的时候都是云里雾里。
 2. 《实现领域驱动》这本书内容具体了很多，并且例子丰富起来了，很有参考价值，但是应该研究过书中的源代码就会发现，这实现的代码简直就是扯淡。
@@ -92,12 +98,13 @@
    - 我觉得重构100遍不算多。
 
 #### 依赖顺序
-- xxxService
-  - xxxManager
-    - xxxSupport
-      - xxxEr/Or
-      - xxxUtil is the static util you can use it anywhere
-      - xxxContext is the static util with application context component, you can use it as a xxxUtil
+- xxxService            Bean 级别的 Application service
+  - xxxManager          Bean 级别的 domain service, we don't put it into the domain layer, it acts as a common logic serving for the application.
+    - xxxSupport        Bean 级别业务公共方法类
+      - xxxEr/Or        Bean 级别的底层工具类，无层级依赖，他通常是业务级别的
+        - xxxUtil       与业务无关的静态工具类
+        - xxxHelper     与业务相关的静态工具类
+        - xxxContext    与框架相关的静态工具类
 
 #### 前言
 首先请你清楚的了解什么是 DDD，我不打算说明白什么是 DDD， 但是我首先要告诉你 DDD 并没有要求你做的事情。

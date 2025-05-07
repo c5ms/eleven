@@ -1,0 +1,11 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: @artifactId@
+
+optaplanner:
+    solver:
+        termination:
+            spent-limit: 5s

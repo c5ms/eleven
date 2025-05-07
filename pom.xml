@@ -10,14 +10,10 @@
 
     <version>1.0.0-SNAPSHOT</version>
 
-    <name>eleven</name>
-    <description>Eleven development stack</description>
-
     <modules>
         <module>eleven-parent</module>
-        <module>eleven-starter</module>
+        <module>eleven-framework</module>
         <module>eleven-service</module>
-        <module>eleven-app</module>
     </modules>
 
 </project>

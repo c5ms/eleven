@@ -1,0 +1,55 @@
+@startgantt
+'https://plantuml.com/gantt-diagram
+
+Project starts 2025-03-01
+today is 2025-04-11 and is colored in #AAF
+'projectscale weekly
+'saturday are closed
+'sunday are closed
+
+
+
+
+[项目规划] requires 4 weeks
+'note bottom
+'  形成《ERP系统项目需求说明》，列出所有待解决的问题及其优先级。
+'end note
+
+then  [该要设计与详细设计] requires 8 weeks
+'note bottom
+'  完成《系统总体设计文档》，为后续开发提供蓝图
+'end note
+
+then [开发与测试] requires 40 weeks
+'note bottom
+'  逐步构建完整的ERP2.0系统。
+'end note
+
+then [初始化] requires 4 weeks
+'note bottom
+'  顺利完成新老ERP基础数据同步，确保新系统上线时数据无误。
+'end note
+
+then [培训] requires 2 weeks
+'note bottom
+'  系统经过业务使用，发现潜在问题，达到全部业务上线标准。
+'end note
+
+then [试运行] requires 12 weeks
+'note bottom
+'  系统经过业务使用，发现潜在问题，达到全部业务上线标准。
+'end note
+
+then [系统切换] requires 20 weeks
+'note bottom
+'  新系统全面上线，员工能够独立操作，业务流程顺畅。
+'end note
+
+
+'[改造方案讨论]-> [模块划分与详细设计]
+'[模块划分与详细设计] -> [按模块开发和基本测试]
+'[按模块开发和基本测试] ->  [历史数据同步]
+'[历史数据同步]-> [系统试运行与问题修改]
+'[系统试运行与问题修改]-> [培训与过渡]
+
+@endgantt

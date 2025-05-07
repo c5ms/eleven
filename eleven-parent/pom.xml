@@ -29,33 +29,30 @@
         <docker.baseImage>azul/zulu-openjdk:17-jre</docker.baseImage>
 
         <!--  spring -->
-        <version.spring-boot>3.3.4</version.spring-boot>
-        <version.spring-cloud>2023.0.3</version.spring-cloud>
-        <version.spring-cloud-alibaba>2023.0.1.0</version.spring-cloud-alibaba>
+        <version.spring-boot>3.4.5</version.spring-boot>
+        <version.spring-cloud>2024.0.1</version.spring-cloud>
 
         <!-- common utils -->
         <version.hutool>5.8.31</version.hutool>
-        <version.commons-io>2.11.0</version.commons-io>
-        <version.commons-lang3>3.12.0</version.commons-lang3>
+        <version.commons-io>2.17.0</version.commons-io>
+        <version.commons-lang3>3.17.0</version.commons-lang3>
         <version.commons-collections>4.4</version.commons-collections>
-        <version.commons-compress>1.21</version.commons-compress>
-        <version.commons-text>1.9</version.commons-text>
-        <version.commons-net>3.8.0</version.commons-net>
-        <version.commons-vfs2>2.9.0</version.commons-vfs2>
-        <version.modelmapper>3.0.0</version.modelmapper>
-        <version.easyPoi>4.4.0</version.easyPoi>
-        <version.easyexcel>3.1.1</version.easyexcel>
-        <version.javassist>3.29.2-GA</version.javassist>
-        <version.redisson>3.28.0</version.redisson>
+        <version.commons-compress>1.27</version.commons-compress>
+        <version.commons-text>1.13.0</version.commons-text>
+        <version.commons-net>3.11.1</version.commons-net>
+        <version.commons-vfs2>2.11.0</version.commons-vfs2>
+        <version.modelmapper>3.2.2</version.modelmapper>
+        <version.javassist>3.30.2-GA</version.javassist>
+        <version.redisson>3.45.1</version.redisson>
         <version.jetcache>2.7.4</version.jetcache>
 
         <!-- data -->
-        <version.datasource-micrometer-spring-boot>1.0.5</version.datasource-micrometer-spring-boot>
+        <version.datasource-micrometer-spring-boot>1.1.0</version.datasource-micrometer-spring-boot>
         <version.mybatis>3.0.3</version.mybatis>
         <version.kryo5>5.5.0</version.kryo5>
 
         <!-- dev & runtime & monitor -->
-        <version.springdoc>2.3.0</version.springdoc>
+        <version.springdoc>2.8.6</version.springdoc>
         <version.knife4j>4.5.0</version.knife4j>
         <version.findbugs>3.0.2</version.findbugs>
         <version.mapstruct>1.5.5.Final</version.mapstruct>
@@ -65,6 +62,31 @@
         <verson.logstash>8.0</verson.logstash>
 
     </properties>
+
+    <repositories>
+        <!--<repository>
+            <id>central</id>
+            <name>aliyah maven</name>
+            <url>https://maven.aliyun.com/nexus/content/groups/public/</url>
+            <layout>default</layout>
+            &lt;!&ndash; 是否开启发布版构件下载 &ndash;&gt;
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            &lt;!&ndash; 是否开启快照版构件下载 &ndash;&gt;
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>-->
+        <!--<repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>-->
+    </repositories>
 
     <dependencyManagement>
         <dependencies>
@@ -83,15 +105,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${version.spring-cloud-alibaba}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
 
             <!-- hutool util工具组件 -->
             <dependency>
@@ -158,13 +171,6 @@
                 <version>${version.mybatis}</version>
             </dependency>
 
-            <!-- easy excel-->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>easyexcel</artifactId>
-                <version>${version.easyexcel}</version>
-            </dependency>
-
             <!-- redis -->
             <dependency>
                 <groupId>org.redisson</groupId>
@@ -207,6 +213,11 @@
                 <artifactId>modelmapper</artifactId>
                 <version>${version.modelmapper}</version>
             </dependency>
+            <dependency>
+                <groupId>org.modelmapper.extensions</groupId>
+                <artifactId>modelmapper-spring</artifactId>
+                <version>${version.modelmapper}</version>
+            </dependency>
 
             <!-- log -->
             <dependency>
@@ -231,11 +242,11 @@
                 <artifactId>springdoc-openapi-starter-common</artifactId>
                 <version>${version.springdoc}</version>
             </dependency>
-            <dependency>
+            <!--<dependency>
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
                 <version>${version.knife4j}</version>
-            </dependency>
+            </dependency>-->
 
             <!--test-->
             <dependency>
@@ -247,7 +258,6 @@
     </dependencyManagement>
 
     <dependencies>
-
         <!-- dev -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -259,21 +269,28 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-       <!-- <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-            <scope>provided</scope>
+
+        <!-- test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-processor</artifactId>
-            <scope>provided</scope>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok-mapstruct-binding</artifactId>
-            <scope>provided</scope>
-        </dependency>-->
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 
@@ -341,8 +358,7 @@
                         <binFolder>bin</binFolder>
                         <configurationDirectory>config</configurationDirectory>
                         <copyConfigurationDirectory>false</copyConfigurationDirectory>
-                        <configurationSourceDirectory>${project.basedir}/src/main/resources
-                        </configurationSourceDirectory>
+                        <configurationSourceDirectory>${project.basedir}/src/main/resources</configurationSourceDirectory>
                         <includeConfigurationDirectoryInClasspath>true</includeConfigurationDirectoryInClasspath>
                         <generateRepository>false</generateRepository>
                         <encoding>UTF-8</encoding>
@@ -482,7 +498,7 @@
                     <!-- @see https://dmp.fabric8.io/#build-configuration -->
                     <groupId>io.fabric8</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
-                    <version>0.45.0</version>
+                    <version>0.46.0</version>
                     <configuration>
                         <buildArchiveOnly>false</buildArchiveOnly>
                         <outputDirectory>${app.output}/docker</outputDirectory>
@@ -583,7 +599,6 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-
         <plugins>
             <plugin>
                 <groupId>io.github.git-commit-id</groupId>
@@ -595,32 +610,5 @@
             </plugin>
         </plugins>
     </build>
-
-
-    <repositories>
-        <!--<repository>
-            <id>central</id>
-            <name>aliyah maven</name>
-            <url>https://maven.aliyun.com/nexus/content/groups/public/</url>
-            <layout>default</layout>
-            &lt;!&ndash; 是否开启发布版构件下载 &ndash;&gt;
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            &lt;!&ndash; 是否开启快照版构件下载 &ndash;&gt;
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>-->
-        <!--<repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>-->
-    </repositories>
-
 
 </project>
