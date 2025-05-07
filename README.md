@@ -1,4 +1,4 @@
-[![Java CI with Maven](https://github.com/c5ms/eleven/actions/workflows/maven.yml/badge.svg)](https://github.com/c5ms/ddd-sample-cargotracker/actions/workflows/maven.yml)
+[![Java CI with Maven](https://github.com/c5ms/eleven/actions/workflows/maven.yml/badge.svg)](https://github.com/c5ms/eleven/actions/workflows/maven.yml)
 
 # 🛠️ Eleven
 **低成本可落地的领域驱动设计（DDD）技术方案脚手架**
