@@ -23,6 +23,9 @@ import com.motiveschina.erp.domain.purchase.PurchaseOrderItem;
 import com.motiveschina.erp.domain.purchase.PurchaseOrderManager;
 import com.motiveschina.erp.domain.purchase.PurchaseOrderMaterial;
 import com.motiveschina.erp.domain.purchase.PurchaseOrderPatch;
+import io.micrometer.tracing.SpanName;
+import io.micrometer.tracing.Tracer;
+import jdk.jfr.StackTrace;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -47,6 +50,8 @@ public class PurchaseService implements ApplicationService {
     private final MaterialFinder materialFinder;
     private final PurchaseOrderFinder purchaseOrderFinder;
 
+
+    @SpanName("createPurchaseOrder")
     public PurchaseOrder createPurchaseOrder(PurchaseOrderCreateCommand command) {
         // 1. create the entire order
         var order = PurchaseOrder.builder()

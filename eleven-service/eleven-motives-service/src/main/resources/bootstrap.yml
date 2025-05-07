@@ -21,6 +21,12 @@ spring:
   jpa:
     generate-ddl: true
 
+management:
+    tracing:
+        enabled: false
+        sampling:
+            probability: 1
+
 eleven:
   cache:
     duration: PT8H

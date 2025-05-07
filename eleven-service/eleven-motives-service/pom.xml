@@ -54,6 +54,12 @@
             <artifactId>mysql-connector-j</artifactId>
         </dependency>
 
+        <!-- tracing -->
+        <dependency>
+            <groupId>io.opentelemetry</groupId>
+            <artifactId>opentelemetry-exporter-zipkin</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>io.hypersistence</groupId>
             <artifactId>hypersistence-utils-hibernate-63</artifactId>
