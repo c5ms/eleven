@@ -1,7 +1,7 @@
 package com.motiveschina.hotel.features.booking.command;
 
-import com.motiveschina.hotel.core.DateRange;
-import com.motiveschina.hotel.core.SaleChannel;
+import com.motiveschina.hotel.common.DateRange;
+import com.motiveschina.hotel.common.SaleChannel;
 import lombok.Builder;
 import lombok.Getter;
 

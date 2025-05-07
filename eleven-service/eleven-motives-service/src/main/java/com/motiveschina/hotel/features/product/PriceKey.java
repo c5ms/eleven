@@ -1,7 +1,7 @@
 package com.motiveschina.hotel.features.product;
 
 import java.io.Serializable;
-import com.motiveschina.hotel.core.SaleChannel;
+import com.motiveschina.hotel.common.SaleChannel;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

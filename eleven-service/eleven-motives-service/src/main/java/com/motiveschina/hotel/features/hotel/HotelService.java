@@ -1,6 +1,6 @@
 package com.motiveschina.hotel.features.hotel;
 
-import com.motiveschina.hotel.core.support.ContextSupport;
+import com.motiveschina.hotel.common.support.ContextSupport;
 import com.motiveschina.hotel.features.hotel.command.HotelCreateCommand;
 import com.motiveschina.hotel.features.hotel.command.HotelUpdateCommand;
 import lombok.RequiredArgsConstructor;

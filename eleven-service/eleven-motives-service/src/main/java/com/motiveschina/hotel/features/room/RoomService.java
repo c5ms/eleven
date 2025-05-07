@@ -1,7 +1,7 @@
 package com.motiveschina.hotel.features.room;
 
 import com.eleven.framework.domain.NoDomainEntityException;
-import com.motiveschina.hotel.core.support.ContextSupport;
+import com.motiveschina.hotel.common.support.ContextSupport;
 import com.motiveschina.hotel.features.hotel.HotelRepository;
 import com.motiveschina.hotel.features.inventory.RoomInventoryRepository;
 import com.motiveschina.hotel.features.room.command.RoomCreateCommand;

@@ -1,4 +1,4 @@
-package com.motiveschina.hotel.core.support;
+package com.motiveschina.hotel.common.support;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.eleven.framework.authorize.NoReadAuthorityException;

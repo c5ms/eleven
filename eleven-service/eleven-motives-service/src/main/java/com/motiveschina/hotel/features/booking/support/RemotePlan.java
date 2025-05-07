@@ -1,7 +1,7 @@
 package com.motiveschina.hotel.features.booking.support;
 
 import java.math.BigDecimal;
-import com.motiveschina.hotel.core.SaleChannel;
+import com.motiveschina.hotel.common.SaleChannel;
 import com.motiveschina.hotel.features.booking.Plan;
 import com.motiveschina.hotel.features.hotel.HotelClient;
 import com.motiveschina.hotel.features.plan.PlanDto;

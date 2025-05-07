@@ -1,8 +1,8 @@
-package com.motiveschina.hotel.core;
+package com.motiveschina.hotel.common;
 
 import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.motiveschina.hotel.core.layer.Vo;
+import com.motiveschina.hotel.common.layer.Vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;

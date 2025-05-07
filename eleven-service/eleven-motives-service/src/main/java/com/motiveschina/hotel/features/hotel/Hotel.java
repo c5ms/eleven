@@ -1,6 +1,6 @@
 package com.motiveschina.hotel.features.hotel;
 
-import com.motiveschina.hotel.core.support.DomainEntity;
+import com.motiveschina.hotel.common.support.DomainEntity;
 import com.motiveschina.hotel.features.hotel.event.HotelActiveEvent;
 import com.motiveschina.hotel.features.hotel.event.HotelCreatedEvent;
 import com.motiveschina.hotel.features.hotel.event.HotelDeactivateEvent;

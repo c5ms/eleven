@@ -1,7 +1,7 @@
 package com.motiveschina.hotel.features.hotel.vo;
 
 import java.time.YearMonth;
-import com.motiveschina.hotel.core.layer.Vo;
+import com.motiveschina.hotel.common.layer.Vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;

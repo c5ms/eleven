@@ -2,8 +2,8 @@ package com.motiveschina.hotel.utils;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import com.motiveschina.hotel.core.DateRange;
-import com.motiveschina.hotel.core.DateTimeRange;
+import com.motiveschina.hotel.common.DateRange;
+import com.motiveschina.hotel.common.DateTimeRange;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

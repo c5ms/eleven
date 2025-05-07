@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.Set;
 import com.eleven.framework.utils.ImmutableValues;
 import com.google.common.base.Predicates;
-import com.motiveschina.hotel.core.support.DomainEntity;
+import com.motiveschina.hotel.common.support.DomainEntity;
 import com.motiveschina.hotel.features.hotel.values.Occupancy;
 import com.motiveschina.hotel.features.inventory.RoomInventory;
 import com.motiveschina.hotel.features.room.event.RoomActiveEvent;

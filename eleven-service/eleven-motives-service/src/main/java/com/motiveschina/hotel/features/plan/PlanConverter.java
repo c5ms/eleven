@@ -1,9 +1,9 @@
 package com.motiveschina.hotel.features.plan;
 
-import com.motiveschina.hotel.core.DateRange;
-import com.motiveschina.hotel.core.DateRangeVo;
-import com.motiveschina.hotel.core.DateTimeRange;
-import com.motiveschina.hotel.core.DateTimeRangeVo;
+import com.motiveschina.hotel.common.DateRange;
+import com.motiveschina.hotel.common.DateRangeVo;
+import com.motiveschina.hotel.common.DateTimeRange;
+import com.motiveschina.hotel.common.DateTimeRangeVo;
 import com.motiveschina.hotel.features.plan.command.PlanCreateCommand;
 import com.motiveschina.hotel.features.plan.command.PlanUpdateCommand;
 import com.motiveschina.hotel.features.plan.request.PlanCreateRequest;

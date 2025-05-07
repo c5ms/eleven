@@ -2,7 +2,7 @@ package com.motiveschina.hotel.features.hotel;
 
 import java.math.BigDecimal;
 import java.util.Optional;
-import com.motiveschina.hotel.core.SaleChannel;
+import com.motiveschina.hotel.common.SaleChannel;
 import com.motiveschina.hotel.features.plan.PlanDto;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.cloud.openfeign.FeignClient;

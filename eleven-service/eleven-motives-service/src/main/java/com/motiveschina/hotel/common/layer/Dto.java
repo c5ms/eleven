@@ -1,4 +1,4 @@
-package com.motiveschina.hotel.core.layer;
+package com.motiveschina.hotel.common.layer;
 
 import java.io.Serializable;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;

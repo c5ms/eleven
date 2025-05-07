@@ -1,7 +1,7 @@
 package com.motiveschina.hotel.features.booking;
 
 import java.math.BigDecimal;
-import com.motiveschina.hotel.core.SaleChannel;
+import com.motiveschina.hotel.common.SaleChannel;
 
 /**
  * A plan has multiple rooms in, each room known as a product of the plan.

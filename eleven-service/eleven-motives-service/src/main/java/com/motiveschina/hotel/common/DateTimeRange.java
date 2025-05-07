@@ -1,4 +1,4 @@
-package com.motiveschina.hotel.core;
+package com.motiveschina.hotel.common;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

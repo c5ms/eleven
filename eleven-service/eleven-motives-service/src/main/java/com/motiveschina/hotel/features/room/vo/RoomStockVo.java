@@ -1,8 +1,8 @@
 package com.motiveschina.hotel.features.room.vo;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import com.motiveschina.hotel.core.DateRangeVo;
-import com.motiveschina.hotel.core.layer.Vo;
+import com.motiveschina.hotel.common.DateRangeVo;
+import com.motiveschina.hotel.common.layer.Vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

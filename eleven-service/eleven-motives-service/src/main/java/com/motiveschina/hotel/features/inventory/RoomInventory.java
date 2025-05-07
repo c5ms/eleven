@@ -1,7 +1,7 @@
 package com.motiveschina.hotel.features.inventory;
 
 import java.time.LocalDate;
-import com.motiveschina.hotel.core.support.DomainEntity;
+import com.motiveschina.hotel.common.support.DomainEntity;
 import com.motiveschina.hotel.features.room.RoomKey;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;

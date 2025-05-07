@@ -5,7 +5,7 @@ import com.eleven.framework.web.Rests;
 import com.eleven.framework.web.annonation.AsRestApi;
 import com.eleven.framework.web.model.PageResult;
 import com.eleven.framework.web.model.Pagination;
-import com.motiveschina.hotel.core.support.ContextSupport;
+import com.motiveschina.hotel.common.support.ContextSupport;
 import com.motiveschina.hotel.features.hotel.request.HotelCreateRequest;
 import com.motiveschina.hotel.features.hotel.request.HotelQueryRequest;
 import com.motiveschina.hotel.features.hotel.request.HotelUpdateRequest;

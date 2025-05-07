@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-import com.motiveschina.hotel.core.DateRange;
+import com.motiveschina.hotel.common.DateRange;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

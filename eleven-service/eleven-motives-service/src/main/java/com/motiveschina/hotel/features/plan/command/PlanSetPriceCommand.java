@@ -1,8 +1,8 @@
 package com.motiveschina.hotel.features.plan.command;
 
 import java.math.BigDecimal;
-import com.motiveschina.hotel.core.ChargeType;
-import com.motiveschina.hotel.core.SaleChannel;
+import com.motiveschina.hotel.common.ChargeType;
+import com.motiveschina.hotel.common.SaleChannel;
 import lombok.Builder;
 import lombok.Getter;
 

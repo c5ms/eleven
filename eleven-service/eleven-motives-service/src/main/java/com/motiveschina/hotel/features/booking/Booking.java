@@ -2,8 +2,8 @@ package com.motiveschina.hotel.features.booking;
 
 import java.math.BigDecimal;
 import cn.hutool.core.date.DateRange;
-import com.motiveschina.hotel.core.SaleChannel;
-import com.motiveschina.hotel.core.support.DomainEntity;
+import com.motiveschina.hotel.common.SaleChannel;
+import com.motiveschina.hotel.common.support.DomainEntity;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;

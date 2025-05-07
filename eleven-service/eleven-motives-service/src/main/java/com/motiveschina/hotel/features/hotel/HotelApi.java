@@ -3,7 +3,7 @@ package com.motiveschina.hotel.features.hotel;
 import java.math.BigDecimal;
 import java.util.Optional;
 import com.eleven.framework.web.annonation.AsInnerApi;
-import com.motiveschina.hotel.core.SaleChannel;
+import com.motiveschina.hotel.common.SaleChannel;
 import com.motiveschina.hotel.features.plan.PlanConverter;
 import com.motiveschina.hotel.features.plan.PlanDto;
 import com.motiveschina.hotel.features.plan.PlanFinder;

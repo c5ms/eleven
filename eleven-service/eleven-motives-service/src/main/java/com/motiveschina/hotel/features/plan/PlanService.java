@@ -1,8 +1,8 @@
 package com.motiveschina.hotel.features.plan;
 
 import java.math.BigDecimal;
-import com.motiveschina.hotel.core.SaleChannel;
-import com.motiveschina.hotel.core.support.ContextSupport;
+import com.motiveschina.hotel.common.SaleChannel;
+import com.motiveschina.hotel.common.support.ContextSupport;
 import com.motiveschina.hotel.features.hotel.HotelRepository;
 import com.motiveschina.hotel.features.plan.command.PlanCreateCommand;
 import com.motiveschina.hotel.features.plan.command.PlanSetPriceCommand;

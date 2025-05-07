@@ -1,4 +1,4 @@
-package com.motiveschina.hotel.core;
+package com.motiveschina.hotel.common;
 
 public enum SaleChannel {
     DH,

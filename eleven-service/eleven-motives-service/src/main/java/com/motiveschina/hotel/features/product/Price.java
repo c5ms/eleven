@@ -1,8 +1,8 @@
 package com.motiveschina.hotel.features.product;
 
 import java.math.BigDecimal;
-import com.motiveschina.hotel.core.ChargeType;
-import com.motiveschina.hotel.core.SaleChannel;
+import com.motiveschina.hotel.common.ChargeType;
+import com.motiveschina.hotel.common.SaleChannel;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
